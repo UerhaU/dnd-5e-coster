@@ -37,6 +37,19 @@ dist/
 *.sqlite-*
 *.sqlite3
 *.sqlite3-*
+*.accdb
+!/База заклинаний.accdb
+*.laccdb
+*.mdb
+*.ldb
+*.building
+/database/equipment/
+/database/spells/backups/
+/database/spells/work/
+
+# Python build cache
+__pycache__/
+*.pyc
 
 # Logs, temporary files and local agent output
 *.log

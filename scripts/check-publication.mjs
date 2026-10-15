@@ -19,12 +19,14 @@ function git(args) {
 }
 
 function isPrivateFile(file) {
-  if (file === '.env.example' || file === 'storage/.gitkeep') return false;
+  if (file === '.env.example' || file === 'storage/.gitkeep' || file === 'База заклинаний.accdb') return false;
   return /(^|\/)(book|books|node_modules|dist|\.vite|\.codex-logs|\.idea|\.vscode)(\/|$)/i.test(file)
     || /^storage\//i.test(file)
+    || /^database\/(equipment|spells\/(backups|work))\//i.test(file)
     || /(^|\/)\.env(?:\.|$)/i.test(file)
     || /\.local(?:\.|$)/i.test(file)
-    || /\.(pdf|epub|djvu|mobi|msi|exe|zip|7z|rar|pem|key|p12|pfx|log|tsbuildinfo|tmp|bak|backup)$/i.test(file)
+    || /\.(pdf|epub|djvu|mobi|msi|exe|zip|7z|rar|pem|key|p12|pfx|log|tsbuildinfo|tmp|bak|backup|accdb|laccdb|mdb|ldb|building|pyc)$/i.test(file)
+    || /(^|\/)__pycache__\//i.test(file)
     || /\.(db|sqlite|sqlite3)(?:-.*)?$/i.test(file)
     || /(^|\/)(query|\.DS_Store|Thumbs\.db|Desktop\.ini)$/i.test(file);
 }

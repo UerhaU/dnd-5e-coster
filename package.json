@@ -4,6 +4,11 @@
   "version": "0.1.0-alpha.1",
   "type": "module",
   "scripts": {
+    "dev:spellbook": "concurrently -k -n catalog,page -c yellow,cyan \"npm:dev:spellbook:api\" \"npm:dev:spellbook:page\"",
+    "dev:spellbook:api": "tsx watch backend/src/spell-catalog/server.ts",
+    "dev:spellbook:page": "vite --host 127.0.0.1 --port 5181 --strictPort",
+    "spellbook:init": "node scripts/build-spell-catalog.mjs",
+    "test:spellbook": "node --import tsx --test scripts/test-spell-catalog.mjs",
     "dev": "concurrently -n backend,frontend -c green,cyan \"npm:dev:backend\" \"npm:dev:frontend\"",
     "dev:frontend": "vite --host 0.0.0.0",
     "dev:backend": "tsx watch backend/src/server.ts",

@@ -1,0 +1,6 @@
+{
+  "version": "1.2",
+  "userVersion": 102,
+  "removeFields": { "spell_material_requirements": ["requirement_text"] },
+  "requireFields": { "spell_material_requirements": ["item_id"] }
+}

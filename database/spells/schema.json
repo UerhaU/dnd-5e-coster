@@ -1,0 +1,3862 @@
+{
+  "version": "1.1",
+  "created": "2026-10-15",
+  "scope": "schema_only_no_spell_records",
+  "tables": [
+    {
+      "name": "Редакции",
+      "technical": "editions",
+      "description": "Совместимость записи с редакцией; не степень автоматизации.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "5e_2014",
+          "Название": "D&D 5e 2014",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "5e_2024",
+          "Название": "D&D 2024",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "universal_5e_2014_2024",
+          "Название": "Совместимо с 2014 и 2024",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "unknown",
+          "Название": "Редакция не определена",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "conflict",
+          "Название": "Конфликт редакций",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ШколыМагии",
+      "technical": "magic_schools",
+      "description": "Школа магии, а не тип урона.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "abjuration",
+          "Название": "Ограждение",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "conjuration",
+          "Название": "Вызов",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "divination",
+          "Название": "Прорицание",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "enchantment",
+          "Название": "Очарование",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "evocation",
+          "Название": "Воплощение",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "illusion",
+          "Название": "Иллюзия",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "necromancy",
+          "Название": "Некромантия",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "transmutation",
+          "Название": "Преобразование",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ТипыДействий",
+      "technical": "action_types",
+      "description": "Стоимость накладывания в экономике действий.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "action",
+          "Название": "Действие",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "bonus_action",
+          "Название": "Бонусное действие",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "reaction",
+          "Название": "Реакция",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "special",
+          "Название": "Особое",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ЕдиницыВремени",
+      "technical": "time_units",
+      "description": "Единицы для времени накладывания и длительности.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "round",
+          "Название": "Раунд",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "turn",
+          "Название": "Ход",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "minute",
+          "Название": "Минута",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "hour",
+          "Название": "Час",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "day",
+          "Название": "День",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "year",
+          "Название": "Год",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВидыДистанции",
+      "technical": "range_types",
+      "description": "Способ задания дальности; область хранится отдельно.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "self",
+          "Название": "На себя",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "touch",
+          "Название": "Касание",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "distance",
+          "Название": "Расстояние в футах",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "sight",
+          "Название": "В пределах видимости",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "unlimited",
+          "Название": "Неограниченная",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "special",
+          "Название": "Особая",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВидыДлительности",
+      "technical": "duration_types",
+      "description": "Способ завершения эффекта; точное условие хранится текстом.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "instant",
+          "Название": "Мгновенная",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "timed",
+          "Название": "Ограниченное время",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "dispelled",
+          "Название": "Пока не рассеяно",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "dismissed",
+          "Название": "Пока не прекращено",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "trigger",
+          "Название": "До события",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "special",
+          "Название": "Особая",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВидыКомпонентов",
+      "technical": "component_types",
+      "description": "В/С/М не являются продаваемыми предметами.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "V",
+          "Название": "Вербальный",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "S",
+          "Название": "Соматический",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "M",
+          "Название": "Материальный",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Классы",
+      "technical": "classes",
+      "description": "Справочник обычных игровых классов; доступ к конкретному заклинанию задаётся связью.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "bard",
+          "Название": "Бард",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "barbarian",
+          "Название": "Варвар",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "fighter",
+          "Название": "Воин",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "wizard",
+          "Название": "Волшебник",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "druid",
+          "Название": "Друид",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "cleric",
+          "Название": "Жрец",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "artificer",
+          "Название": "Изобретатель",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "warlock",
+          "Название": "Колдун",
+          "Описание": ""
+        },
+        {
+          "ID": 9,
+          "Код": "monk",
+          "Название": "Монах",
+          "Описание": ""
+        },
+        {
+          "ID": 10,
+          "Код": "paladin",
+          "Название": "Паладин",
+          "Описание": ""
+        },
+        {
+          "ID": 11,
+          "Код": "rogue",
+          "Название": "Плут",
+          "Описание": ""
+        },
+        {
+          "ID": 12,
+          "Код": "ranger",
+          "Название": "Следопыт",
+          "Описание": ""
+        },
+        {
+          "ID": 13,
+          "Код": "sorcerer",
+          "Название": "Чародей",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Подклассы",
+      "technical": "subclasses",
+      "description": "Подклассы добавляются при заполнении каталога.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 180,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "КлассID",
+          "technical": "class_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Классы"
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ТипыУрона",
+      "technical": "damage_types",
+      "description": "Общие для заклинаний, будущего оружия и других эффектов.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Иконка",
+          "technical": "icon_url",
+          "type": "text",
+          "required": false,
+          "size": 500,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "acid",
+          "Название": "Кислота",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "bludgeoning",
+          "Название": "Дробящий",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "cold",
+          "Название": "Холод",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "fire",
+          "Название": "Огонь",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "force",
+          "Название": "Силовое поле",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "lightning",
+          "Название": "Электричество",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "necrotic",
+          "Название": "Некротическая энергия",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "piercing",
+          "Название": "Колющий",
+          "Описание": ""
+        },
+        {
+          "ID": 9,
+          "Код": "poison",
+          "Название": "Яд",
+          "Описание": ""
+        },
+        {
+          "ID": 10,
+          "Код": "psychic",
+          "Название": "Психическая энергия",
+          "Описание": ""
+        },
+        {
+          "ID": 11,
+          "Код": "radiant",
+          "Название": "Излучение",
+          "Описание": ""
+        },
+        {
+          "ID": 12,
+          "Код": "slashing",
+          "Название": "Рубящий",
+          "Описание": ""
+        },
+        {
+          "ID": 13,
+          "Код": "thunder",
+          "Название": "Звук",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Кубики",
+      "technical": "dice",
+      "description": "Только тип кубика. Количество и прибавки принадлежат формуле.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Граней",
+          "technical": "sides",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">1",
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "d4",
+          "Название": "к4",
+          "Описание": "",
+          "Граней": 4
+        },
+        {
+          "ID": 2,
+          "Код": "d6",
+          "Название": "к6",
+          "Описание": "",
+          "Граней": 6
+        },
+        {
+          "ID": 3,
+          "Код": "d8",
+          "Название": "к8",
+          "Описание": "",
+          "Граней": 8
+        },
+        {
+          "ID": 4,
+          "Код": "d10",
+          "Название": "к10",
+          "Описание": "",
+          "Граней": 10
+        },
+        {
+          "ID": 5,
+          "Код": "d12",
+          "Название": "к12",
+          "Описание": "",
+          "Граней": 12
+        },
+        {
+          "ID": 6,
+          "Код": "d20",
+          "Название": "к20",
+          "Описание": "",
+          "Граней": 20
+        },
+        {
+          "ID": 7,
+          "Код": "d100",
+          "Название": "к100",
+          "Описание": "",
+          "Граней": 100
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВидыЭффектов",
+      "technical": "effect_types",
+      "description": "Один эффект описывает один результат; у заклинания их может быть несколько.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "damage",
+          "Название": "Урон",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "healing",
+          "Название": "Лечение",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "temporary_hp",
+          "Название": "Временные хиты",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "condition",
+          "Название": "Состояние",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "modifier",
+          "Название": "Изменение показателя",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "summoning",
+          "Название": "Призыв",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "creation",
+          "Название": "Создание",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "control",
+          "Название": "Контроль",
+          "Описание": ""
+        },
+        {
+          "ID": 9,
+          "Код": "information",
+          "Название": "Получение информации",
+          "Описание": ""
+        },
+        {
+          "ID": 10,
+          "Код": "other",
+          "Название": "Другое",
+          "Описание": ""
+        },
+        {
+          "ID": 11,
+          "Код": "resistance",
+          "Название": "Сопротивление урону",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Характеристики",
+      "technical": "abilities",
+      "description": "Для спасбросков и явных модификаторов формулы.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "strength",
+          "Название": "Сила",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "dexterity",
+          "Название": "Ловкость",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "constitution",
+          "Название": "Телосложение",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "intelligence",
+          "Название": "Интеллект",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "wisdom",
+          "Название": "Мудрость",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "charisma",
+          "Название": "Харизма",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ФормыОбласти",
+      "technical": "area_shapes",
+      "description": "Геометрия области, не дистанция до её центра.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "sphere",
+          "Название": "Сфера",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "cube",
+          "Название": "Куб",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "cone",
+          "Название": "Конус",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "line",
+          "Название": "Линия",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "cylinder",
+          "Название": "Цилиндр",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "circle",
+          "Название": "Круг",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "square",
+          "Название": "Квадрат",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "special",
+          "Название": "Особая",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Состояния",
+      "technical": "conditions",
+      "description": "Справочник имён состояний; сложные правила остаются в описании эффекта.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "blinded",
+          "Название": "Ослеплённый",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "charmed",
+          "Название": "Очарованный",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "deafened",
+          "Название": "Оглохший",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "frightened",
+          "Название": "Испуганный",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "grappled",
+          "Название": "Схваченный",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "incapacitated",
+          "Название": "Недееспособный",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "invisible",
+          "Название": "Невидимый",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "paralyzed",
+          "Название": "Парализованный",
+          "Описание": ""
+        },
+        {
+          "ID": 9,
+          "Код": "petrified",
+          "Название": "Окаменевший",
+          "Описание": ""
+        },
+        {
+          "ID": 10,
+          "Код": "poisoned",
+          "Название": "Отравленный",
+          "Описание": ""
+        },
+        {
+          "ID": 11,
+          "Код": "prone",
+          "Название": "Сбитый с ног",
+          "Описание": ""
+        },
+        {
+          "ID": 12,
+          "Код": "restrained",
+          "Название": "Опутанный",
+          "Описание": ""
+        },
+        {
+          "ID": 13,
+          "Код": "stunned",
+          "Название": "Ошеломлённый",
+          "Описание": ""
+        },
+        {
+          "ID": 14,
+          "Код": "unconscious",
+          "Название": "Бессознательный",
+          "Описание": ""
+        },
+        {
+          "ID": 15,
+          "Код": "exhaustion",
+          "Название": "Истощение",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ЕдиницыКоличества",
+      "technical": "quantity_units",
+      "description": "Единица запаса или требования; не выдумывает количество из описания.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "piece",
+          "Название": "Штука",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "pinch",
+          "Название": "Щепотка",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "drop",
+          "Название": "Капля",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "ounce",
+          "Название": "Унция",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "pound",
+          "Название": "Фунт",
+          "Описание": ""
+        },
+        {
+          "ID": 6,
+          "Код": "handful",
+          "Название": "Горсть",
+          "Описание": ""
+        },
+        {
+          "ID": 7,
+          "Код": "portion",
+          "Название": "Порция",
+          "Описание": ""
+        },
+        {
+          "ID": 8,
+          "Код": "set",
+          "Название": "Набор",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "СпособыРасхода",
+      "technical": "consumption_modes",
+      "description": "Отделяет отсутствие проверки от явно подтверждённого расхода/сохранения.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 64,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "unknown",
+          "Название": "Не проверено",
+          "Описание": ""
+        },
+        {
+          "ID": 2,
+          "Код": "not_consumed",
+          "Название": "Не расходуется",
+          "Описание": ""
+        },
+        {
+          "ID": 3,
+          "Код": "consumed",
+          "Название": "Расходуется",
+          "Описание": ""
+        },
+        {
+          "ID": 4,
+          "Код": "partial",
+          "Название": "Расходуется частично",
+          "Описание": ""
+        },
+        {
+          "ID": 5,
+          "Код": "conditional",
+          "Название": "Расходуется при условии",
+          "Описание": ""
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Источники",
+      "technical": "sources",
+      "description": "Книги/источники DnD.su, не локальные PDF.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "НазваниеОригинал",
+          "technical": "name_original",
+          "type": "text",
+          "required": false,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "РедакцияID",
+          "technical": "edition_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Редакции"
+        },
+        {
+          "name": "Адрес",
+          "technical": "url",
+          "type": "text",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "PHB_2014",
+          "Название": "Книга игрока (2014)",
+          "НазваниеОригинал": "Player's Handbook (2014)",
+          "РедакцияID": 1
+        },
+        {
+          "ID": 2,
+          "Код": "TCE_2014",
+          "Название": "Котёл Таши со всякой всячиной",
+          "НазваниеОригинал": "Tasha's Cauldron of Everything",
+          "РедакцияID": 1
+        }
+      ],
+      "lookupName": "Название"
+    },
+    {
+      "name": "Предметы",
+      "technical": "items",
+      "description": "Единый будущий каталог предметов и товаров; свойства использования задаются отдельно.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ЕдиницаID",
+          "technical": "unit_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ЕдиницыКоличества"
+        },
+        {
+          "name": "ЦенаММ",
+          "technical": "price_cp",
+          "type": "currency",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or (>=0 And =Fix([ЦенаММ]))",
+          "description": "Базовая цена, не минимальная стоимость компонента. Целое число медных монет; неизвестное — пусто."
+        },
+        {
+          "name": "ВесФунты",
+          "technical": "weight_lb",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >=0",
+          "description": "Неизвестный вес оставляется пустым."
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Иконка",
+          "technical": "icon_url",
+          "type": "text",
+          "required": false,
+          "size": 500,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ФормулыБросков",
+      "technical": "roll_formulas",
+      "description": "Переиспользуемый бросок. Его слагаемые структурированы и не исполняются как код.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 180,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ИсходнаяФормула",
+          "technical": "source_expression",
+          "type": "text",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ОсобыеПравила",
+          "technical": "special_rules",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "СлагаемыеБросков",
+      "technical": "roll_terms",
+      "description": "Кубики, константы и модификаторы одной формулы.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ФормулаID",
+          "technical": "formula_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ФормулыБросков"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "Вид",
+          "technical": "kind",
+          "type": "text",
+          "required": true,
+          "size": 40,
+          "default": null,
+          "rule": "In (\"кубики\",\"константа\",\"модификатор\",\"мастерство\")",
+          "description": ""
+        },
+        {
+          "name": "КубикID",
+          "technical": "die_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Кубики"
+        },
+        {
+          "name": "КоличествоКубиков",
+          "technical": "dice_count",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "Константа",
+          "technical": "constant_value",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ХарактеристикаID",
+          "technical": "ability_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Характеристики"
+        },
+        {
+          "name": "МодификаторЗаклинателя",
+          "technical": "use_spellcasting_ability",
+          "type": "boolean",
+          "required": true,
+          "size": 255,
+          "default": "False",
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Коэффициент",
+          "technical": "coefficient",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": "1",
+          "rule": "<>0",
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ФормулаID",
+          "Порядок"
+        ]
+      ],
+      "rule": "([Вид]=\"кубики\" And [КубикID] Is Not Null And [КоличествоКубиков] Is Not Null And [Константа] Is Null And [ХарактеристикаID] Is Null And [МодификаторЗаклинателя]=False) Or ([Вид]=\"константа\" And [Константа] Is Not Null And [КубикID] Is Null And [КоличествоКубиков] Is Null And [ХарактеристикаID] Is Null And [МодификаторЗаклинателя]=False) Or ([Вид]=\"модификатор\" And [КубикID] Is Null And [КоличествоКубиков] Is Null And [Константа] Is Null And (([ХарактеристикаID] Is Not Null And [МодификаторЗаклинателя]=False) Or ([ХарактеристикаID] Is Null And [МодификаторЗаклинателя]=True))) Or ([Вид]=\"мастерство\" And [КубикID] Is Null And [КоличествоКубиков] Is Null And [Константа] Is Null And [ХарактеристикаID] Is Null And [МодификаторЗаклинателя]=False)",
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "Заклинания",
+      "technical": "spells",
+      "description": "Ревизии заклинаний. Код стабилен, ревизия меняется при изменении механики.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "canonical_id",
+          "type": "text",
+          "required": true,
+          "size": 160,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Ревизия",
+          "technical": "revision",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": "1",
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "НазваниеОригинал",
+          "technical": "name_original",
+          "type": "text",
+          "required": false,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ДругиеНазвания",
+          "technical": "aliases",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Уровень",
+          "technical": "level",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": "Between 0 And 9",
+          "description": "0 — заговор; уровень не является отдельным справочником."
+        },
+        {
+          "name": "ШколаID",
+          "technical": "school_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ШколыМагии"
+        },
+        {
+          "name": "РедакцияID",
+          "technical": "edition_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Редакции"
+        },
+        {
+          "name": "Ритуал",
+          "technical": "is_ritual",
+          "type": "boolean",
+          "required": true,
+          "size": 255,
+          "default": "False",
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Концентрация",
+          "technical": "requires_concentration",
+          "type": "boolean",
+          "required": true,
+          "size": 255,
+          "default": "False",
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ВидДистанцииID",
+          "technical": "range_type_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ВидыДистанции"
+        },
+        {
+          "name": "ДистанцияФуты",
+          "technical": "range_ft",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >=0",
+          "description": ""
+        },
+        {
+          "name": "ДистанцияТекст",
+          "technical": "range_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ВидДлительностиID",
+          "technical": "duration_type_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ВидыДлительности"
+        },
+        {
+          "name": "ДлительностьЧисло",
+          "technical": "duration_value",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ЕдиницаДлительностиID",
+          "technical": "duration_unit_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ЕдиницыВремени"
+        },
+        {
+          "name": "ДлительностьТекст",
+          "technical": "duration_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Сохраняет точный момент окончания и особые условия."
+        },
+        {
+          "name": "КомпонентыТекст",
+          "technical": "components_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ЦелиТекст",
+          "technical": "targets_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "НаВысокихУровнях",
+          "technical": "higher_levels_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "АдресDnDSu",
+          "technical": "source_url",
+          "type": "text",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "IDНаСайте",
+          "technical": "site_id",
+          "type": "text",
+          "required": false,
+          "size": 80,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "СтатусПроверки",
+          "technical": "review_status",
+          "type": "text",
+          "required": true,
+          "size": 40,
+          "default": "\"черновик\"",
+          "rule": "In (\"черновик\",\"требует проверки\",\"проверено\")",
+          "description": ""
+        },
+        {
+          "name": "ПровереноДата",
+          "technical": "reviewed_at",
+          "type": "datetime",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Иконка",
+          "technical": "icon_url",
+          "type": "text",
+          "required": false,
+          "size": 500,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код",
+          "Ревизия"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВремяНакладывания",
+      "technical": "spell_casting_times",
+      "description": "Разделяет действие/реакцию и длительное накладывание; допускает варианты.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "ДействиеID",
+          "technical": "action_type_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ТипыДействий"
+        },
+        {
+          "name": "КоличествоДействий",
+          "technical": "action_count",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ВремяЧисло",
+          "technical": "time_value",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ЕдиницаВремениID",
+          "technical": "time_unit_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ЕдиницыВремени"
+        },
+        {
+          "name": "УсловиеРеакции",
+          "technical": "reaction_trigger",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ИсходныйТекст",
+          "technical": "source_text",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "Порядок"
+        ]
+      ],
+      "rule": "([ДействиеID] Is Not Null And [КоличествоДействий] Is Not Null And [ВремяЧисло] Is Null And [ЕдиницаВремениID] Is Null) Or ([ДействиеID] Is Null And [КоличествоДействий] Is Null And [ВремяЧисло] Is Not Null And [ЕдиницаВремениID] Is Not Null) Or ([ДействиеID] Is Null And [КоличествоДействий] Is Null And [ВремяЧисло] Is Null And [ЕдиницаВремениID] Is Null And [ИсходныйТекст] Is Not Null)",
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "КлассыЗаклинаний",
+      "technical": "spell_classes",
+      "description": "Доступность с указанием источника/условия; не выдаёт заклинание персонажу сама по себе.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "КлассID",
+          "technical": "class_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Классы"
+        },
+        {
+          "name": "ИсточникПравилаID",
+          "technical": "rule_source_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Источники"
+        },
+        {
+          "name": "ПравилоДоступа",
+          "technical": "access_rule",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "КлассID",
+          "ИсточникПравилаID"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ПодклассыЗаклинаний",
+      "technical": "spell_subclasses",
+      "description": "Доступность с указанием источника/условия; не выдаёт заклинание персонажу сама по себе.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "ПодклассID",
+          "technical": "subclass_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Подклассы"
+        },
+        {
+          "name": "ИсточникПравилаID",
+          "technical": "rule_source_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Источники"
+        },
+        {
+          "name": "ПравилоДоступа",
+          "technical": "access_rule",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "ПодклассID",
+          "ИсточникПравилаID"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ИсточникиЗаклинаний",
+      "technical": "spell_sources",
+      "description": "Все подтверждённые источники одной ревизии.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "ИсточникID",
+          "technical": "source_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Источники"
+        },
+        {
+          "name": "Страница",
+          "technical": "page_reference",
+          "type": "text",
+          "required": false,
+          "size": 80,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Адрес",
+          "technical": "url",
+          "type": "text",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "ИсточникID"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "КомпонентыЗаклинаний",
+      "technical": "spell_components",
+      "description": "Отдельная строка для В, С и М.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "ВидКомпонентаID",
+          "technical": "component_type_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ВидыКомпонентов"
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "ВидКомпонентаID"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ГруппыМатериалов",
+      "technical": "spell_material_groups",
+      "description": "Группы соединяются И; внутри группы — все предметы или один из вариантов.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "Выбор",
+          "technical": "selection_mode",
+          "type": "text",
+          "required": true,
+          "size": 25,
+          "default": "\"все\"",
+          "rule": "In (\"все\",\"один из\")",
+          "description": ""
+        },
+        {
+          "name": "МинимумГруппыММ",
+          "technical": "minimum_group_value_cp",
+          "type": "currency",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or (>=0 And =Fix([МинимумГруппыММ]))",
+          "description": "Стоимость всего набора, например нескольких алмазов вместе. Целое число медных монет; неизвестное — пусто."
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "Порядок"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "МатериалыЗаклинаний",
+      "technical": "spell_material_requirements",
+      "description": "Требование к предмету в конкретном заклинании, не характеристика товара вообще.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ГруппаID",
+          "technical": "group_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ГруппыМатериалов"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "ПредметID",
+          "technical": "item_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Предметы"
+        },
+        {
+          "name": "ТребованиеТекст",
+          "technical": "requirement_text",
+          "type": "memo",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Количество",
+          "technical": "quantity",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ЕдиницаID",
+          "technical": "unit_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ЕдиницыКоличества"
+        },
+        {
+          "name": "МинимумПредметаММ",
+          "technical": "minimum_item_value_cp",
+          "type": "currency",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or (>=0 And =Fix([МинимумПредметаММ]))",
+          "description": "Минимальная стоимость подходящего предмета, а не цена покупки. Целое число медных монет; неизвестное — пусто."
+        },
+        {
+          "name": "СпособРасходаID",
+          "technical": "consumption_mode_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": "1",
+          "rule": null,
+          "description": "Не проверено, не расходуется, расходуется, частично или при условии. Цена не определяет расход.",
+          "references": "СпособыРасхода"
+        },
+        {
+          "name": "РасходКоличество",
+          "technical": "consumed_quantity",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "УсловиеРасхода",
+          "technical": "consumption_condition",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ОсобыеТребования",
+          "technical": "special_requirements",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ГруппаID",
+          "Порядок"
+        ]
+      ],
+      "rule": "([Количество] Is Null And [ЕдиницаID] Is Null) Or ([Количество] Is Not Null And [ЕдиницаID] Is Not Null)",
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "Эффекты",
+      "technical": "effects",
+      "description": "Переиспользуемые шаблоны результата для заклинаний и будущих предметов/оружия.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 200,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ВидЭффектаID",
+          "technical": "effect_type_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ВидыЭффектов"
+        },
+        {
+          "name": "ФормулаID",
+          "technical": "roll_formula_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ФормулыБросков"
+        },
+        {
+          "name": "ТипУронаID",
+          "technical": "damage_type_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ТипыУрона"
+        },
+        {
+          "name": "ВыборТипаУрона",
+          "technical": "choose_damage_type",
+          "type": "boolean",
+          "required": true,
+          "size": 255,
+          "default": "False",
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "СостояниеID",
+          "technical": "condition_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Состояния"
+        },
+        {
+          "name": "ИзменяемыйПоказатель",
+          "technical": "modified_stat",
+          "type": "text",
+          "required": false,
+          "size": 120,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Автоматизация",
+          "technical": "automation",
+          "type": "text",
+          "required": true,
+          "size": 30,
+          "default": "\"справочно\"",
+          "rule": "In (\"справочно\",\"с подтверждением\",\"полностью\")",
+          "description": ""
+        },
+        {
+          "name": "Примечания",
+          "technical": "notes",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": "([ВыборТипаУрона]=False) Or ([ВыборТипаУрона]=True And [ТипУронаID] Is Null)",
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВариантыУронаЭффекта",
+      "technical": "effect_damage_choices",
+      "description": "Разрешённые типы при выборе; несколько строк — альтернативы, не одновременный урон.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЭффектID",
+          "technical": "effect_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Эффекты"
+        },
+        {
+          "name": "ТипУронаID",
+          "technical": "damage_type_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ТипыУрона"
+        }
+      ],
+      "unique": [
+        [
+          "ЭффектID",
+          "ТипУронаID"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ВыборыЭффектовЗаклинаний",
+      "technical": "spell_effect_choices",
+      "description": "Независимые группы выбора варианта; выбранный вариант может включать несколько результатов.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 100,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 180,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ВариантыЭффектовЗаклинаний",
+      "technical": "spell_effect_options",
+      "description": "Внутри одного выбора используется один вариант; все его связанные эффекты действуют вместе.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ВыборID",
+          "technical": "choice_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ВыборыЭффектовЗаклинаний"
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 100,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Название",
+          "technical": "name_ru",
+          "type": "text",
+          "required": true,
+          "size": 180,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ВыборID",
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": "Название"
+    },
+    {
+      "name": "ЭффектыЗаклинаний",
+      "technical": "spell_effects",
+      "description": "Связь заклинания с результатом и контекстом применения.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "ЭффектID",
+          "technical": "effect_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Эффекты"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "Воздействие",
+          "technical": "resolution_type",
+          "type": "text",
+          "required": true,
+          "size": 40,
+          "default": "\"особое\"",
+          "rule": "In (\"автоматически\",\"рукопашная атака\",\"дальнобойная атака\",\"спасбросок\",\"проверка\",\"особое\")",
+          "description": ""
+        },
+        {
+          "name": "ХарактеристикаСпасброскаID",
+          "technical": "save_ability_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Характеристики"
+        },
+        {
+          "name": "ПриУспехе",
+          "technical": "on_success",
+          "type": "text",
+          "required": false,
+          "size": 80,
+          "default": null,
+          "rule": null,
+          "description": "Например: половина урона. Не предполагается автоматически."
+        },
+        {
+          "name": "УсловиеПрименения",
+          "technical": "application_condition",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "МоментСрабатывания",
+          "technical": "trigger_timing",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "ВариантID",
+          "technical": "option_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Пусто — общий эффект. Непусто — часть выбранного набора результатов; принадлежность тому же заклинанию проверяется при наполнении.",
+          "references": "ВариантыЭффектовЗаклинаний"
+        },
+        {
+          "name": "ОписаниеЦели",
+          "technical": "target_description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "Порядок"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "УсиленияЗаклинаний",
+      "technical": "spell_scaling",
+      "description": "Усиление конкретной связи заклинания с эффектом; не меняет общий шаблон для оружия.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЭффектЗаклинанияID",
+          "technical": "spell_effect_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ЭффектыЗаклинаний"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "ОтЧегоЗависит",
+          "technical": "basis",
+          "type": "text",
+          "required": true,
+          "size": 40,
+          "default": null,
+          "rule": "In (\"уровень ячейки\",\"уровень персонажа\",\"уровень класса\",\"особое\")",
+          "description": ""
+        },
+        {
+          "name": "Порог",
+          "technical": "threshold",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "Шаг",
+          "technical": "step",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "КлассID",
+          "technical": "class_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Классы"
+        },
+        {
+          "name": "Операция",
+          "technical": "operation",
+          "type": "text",
+          "required": true,
+          "size": 40,
+          "default": null,
+          "rule": "In (\"добавить формулу\",\"заменить формулу\",\"другой результат\")",
+          "description": ""
+        },
+        {
+          "name": "ФормулаID",
+          "technical": "roll_formula_id",
+          "type": "long",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ФормулыБросков"
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЭффектЗаклинанияID",
+          "Порядок"
+        ]
+      ],
+      "rule": "([Операция]=\"другой результат\" And [Описание] Is Not Null) Or ([Операция] In (\"добавить формулу\",\"заменить формулу\") And [ФормулаID] Is Not Null)",
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ОбластиЗаклинаний",
+      "technical": "spell_areas",
+      "description": "Размеры в футах. Несколько строк допускают составную/альтернативную область с пояснением.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "ЗаклинаниеID",
+          "technical": "spell_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "Заклинания"
+        },
+        {
+          "name": "Порядок",
+          "technical": "ordinal",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": ">0",
+          "description": ""
+        },
+        {
+          "name": "ФормаID",
+          "technical": "shape_id",
+          "type": "long",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "",
+          "references": "ФормыОбласти"
+        },
+        {
+          "name": "РадиусФуты",
+          "technical": "radius_ft",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ДлинаФуты",
+          "technical": "length_ft",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ШиринаФуты",
+          "technical": "width_ft",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "ВысотаФуты",
+          "technical": "height_ft",
+          "type": "double",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": "Is Null Or >0",
+          "description": ""
+        },
+        {
+          "name": "Описание",
+          "technical": "description",
+          "type": "memo",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "ЗаклинаниеID",
+          "Порядок"
+        ]
+      ],
+      "rule": null,
+      "seeds": [],
+      "lookupName": null
+    },
+    {
+      "name": "ИнформацияОБазе",
+      "technical": "schema_information",
+      "description": "Начните проверку базы с этой таблицы или запроса 00_ПрочитайМеня.",
+      "fields": [
+        {
+          "name": "ID",
+          "technical": "id",
+          "type": "counter",
+          "required": false,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": "Внутренний ключ записи."
+        },
+        {
+          "name": "Код",
+          "technical": "code",
+          "type": "text",
+          "required": true,
+          "size": 80,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Раздел",
+          "technical": "section",
+          "type": "text",
+          "required": true,
+          "size": 150,
+          "default": null,
+          "rule": null,
+          "description": ""
+        },
+        {
+          "name": "Пояснение",
+          "technical": "explanation",
+          "type": "memo",
+          "required": true,
+          "size": 255,
+          "default": null,
+          "rule": null,
+          "description": ""
+        }
+      ],
+      "unique": [
+        [
+          "Код"
+        ]
+      ],
+      "rule": null,
+      "seeds": [
+        {
+          "ID": 1,
+          "Код": "version",
+          "Раздел": "Версия",
+          "Пояснение": "Структура заклинаний v1, 2026-10-15. На проверку. Заклинания и предметы пока не заполнены."
+        },
+        {
+          "ID": 2,
+          "Код": "start",
+          "Раздел": "Как смотреть",
+          "Пояснение": "Начните с запросов 00_ПрочитайМеня и 01_ЗаклинанияОбзор. Таблицы имеют русские имена, связанные поля — списки выбора. Связи: Работа с базами данных → Схема данных → Все связи."
+        },
+        {
+          "ID": 3,
+          "Код": "materials",
+          "Раздел": "Компоненты и торговля",
+          "Пояснение": "Предметы — общий каталог. Расход и минимальная стоимость хранятся в МатериалыЗаклинаний/ГруппыМатериалов и относятся к конкретному заклинанию. ЦенаММ в Предметы — отдельная цена товара. Группы требуются вместе; внутри группы выбор «все» или «один из»."
+        },
+        {
+          "ID": 4,
+          "Код": "damage",
+          "Раздел": "Урон и кубики",
+          "Пояснение": "ТипыУрона, Кубики, ФормулыБросков и Эффекты общие. СлагаемыеБросков хранят количество кубиков, константу или модификатор. Оружие позже сможет ссылаться на те же таблицы."
+        },
+        {
+          "ID": 5,
+          "Код": "time",
+          "Раздел": "Действие и время",
+          "Пояснение": "«1 действие» — один вариант времени накладывания, а не ещё один независимый дублирующий параметр. Реакция имеет условие, длительное накладывание — число и единицу времени. Дистанция и размер области разделены."
+        },
+        {
+          "ID": 6,
+          "Код": "empty",
+          "Раздел": "Что заполнено",
+          "Пояснение": "Только справочники и эта инструкция. Игровых записей и демонстрационных заклинаний нет. Сначала проверяем схему, потом импортируем данные."
+        },
+        {
+          "ID": 7,
+          "Код": "mysql",
+          "Раздел": "Будущий MySQL",
+          "Пояснение": "Перенос после проверки пользователем. В database/spells/schema.json сохранены английские технические имена таблиц и полей. Эта база не подключается к серверу и не меняет SQLite приложения."
+        },
+        {
+          "ID": 8,
+          "Код": "limitations",
+          "Раздел": "Границы схемы",
+          "Пояснение": "Структура хранит данные, но сама не исполняет правила D&D. Неоднозначные механики остаются в тексте со статусом проверки. Незаполненное значение — неизвестно, не ноль. Условные правила, число доступных вариантов и полноту В/С/М проверяет отдельная проверка данных при заполнении."
+        }
+      ],
+      "lookupName": null
+    }
+  ],
+  "queries": [
+    {
+      "name": "00_ПрочитайМеня",
+      "sql": "SELECT [Раздел], [Пояснение] FROM [ИнформацияОБазе] ORDER BY [ID]"
+    },
+    {
+      "name": "01_ЗаклинанияОбзор",
+      "sql": "SELECT s.[ID], s.[Название], s.[Уровень], m.[Название] AS [Школа], e.[Название] AS [Редакция], s.[Ритуал], s.[Концентрация], s.[СтатусПроверки] FROM ([Заклинания] AS s INNER JOIN [ШколыМагии] AS m ON s.[ШколаID]=m.[ID]) INNER JOIN [Редакции] AS e ON s.[РедакцияID]=e.[ID] ORDER BY s.[Уровень], s.[Название]"
+    },
+    {
+      "name": "02_КлассыЗаклинаний",
+      "sql": "SELECT s.[Название] AS [Заклинание], c.[Название] AS [Класс], b.[Название] AS [Источник], x.[ПравилоДоступа] FROM (([КлассыЗаклинаний] AS x INNER JOIN [Заклинания] AS s ON x.[ЗаклинаниеID]=s.[ID]) INNER JOIN [Классы] AS c ON x.[КлассID]=c.[ID]) INNER JOIN [Источники] AS b ON x.[ИсточникПравилаID]=b.[ID]"
+    },
+    {
+      "name": "03_Материалы",
+      "sql": "SELECT s.[Название] AS [Заклинание], g.[Порядок] AS [Группа], g.[Выбор], g.[МинимумГруппыММ], r.[ТребованиеТекст], i.[Название] AS [Предмет], r.[Количество], u.[Название] AS [Единица], r.[МинимумПредметаММ], c.[Название] AS [Расход], r.[УсловиеРасхода] FROM (((([МатериалыЗаклинаний] AS r INNER JOIN [ГруппыМатериалов] AS g ON r.[ГруппаID]=g.[ID]) INNER JOIN [Заклинания] AS s ON g.[ЗаклинаниеID]=s.[ID]) INNER JOIN [СпособыРасхода] AS c ON r.[СпособРасходаID]=c.[ID]) LEFT JOIN [Предметы] AS i ON r.[ПредметID]=i.[ID]) LEFT JOIN [ЕдиницыКоличества] AS u ON r.[ЕдиницаID]=u.[ID]"
+    },
+    {
+      "name": "04_Эффекты",
+      "sql": "SELECT s.[Название] AS [Заклинание], e.[Название] AS [Эффект], k.[Название] AS [Вид], d.[Название] AS [Урон], e.[ВыборТипаУрона], f.[Название] AS [Формула], x.[Воздействие], x.[ПриУспехе], x.[УсловиеПрименения], e.[Автоматизация] FROM (((([ЭффектыЗаклинаний] AS x INNER JOIN [Заклинания] AS s ON x.[ЗаклинаниеID]=s.[ID]) INNER JOIN [Эффекты] AS e ON x.[ЭффектID]=e.[ID]) INNER JOIN [ВидыЭффектов] AS k ON e.[ВидЭффектаID]=k.[ID]) LEFT JOIN [ТипыУрона] AS d ON e.[ТипУронаID]=d.[ID]) LEFT JOIN [ФормулыБросков] AS f ON e.[ФормулаID]=f.[ID]"
+    },
+    {
+      "name": "05_ВремяНакладывания",
+      "sql": "SELECT s.[Название] AS [Заклинание], a.[Название] AS [Действие], t.[КоличествоДействий], t.[ВремяЧисло], u.[Название] AS [ЕдиницаВремени], t.[УсловиеРеакции], t.[ИсходныйТекст] FROM (([ВремяНакладывания] AS t INNER JOIN [Заклинания] AS s ON t.[ЗаклинаниеID]=s.[ID]) LEFT JOIN [ТипыДействий] AS a ON t.[ДействиеID]=a.[ID]) LEFT JOIN [ЕдиницыВремени] AS u ON t.[ЕдиницаВремениID]=u.[ID]"
+    }
+  ]
+}

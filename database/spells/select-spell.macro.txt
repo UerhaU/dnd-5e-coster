@@ -1,0 +1,21 @@
+Version =196611
+ColumnsShown =0
+Begin
+    Action ="SearchForRecord"
+    Argument ="2"
+    Argument ="КаталогЗаклинаний"
+    Argument ="2"
+    Argument ="=\"[ID]=\" & [Forms]![КаталогЗаклинаний]![ВыборЗаклинания]"
+End
+Begin
+    Action ="Requery"
+    Argument ="СвязанныеЭффекты"
+End
+Begin
+    Action ="Requery"
+    Argument ="СвязанныеМатериалы"
+End
+Begin
+    Action ="Requery"
+    Argument ="СвязаннаяДоступность"
+End
