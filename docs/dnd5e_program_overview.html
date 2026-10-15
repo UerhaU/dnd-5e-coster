@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Интерактивный компаньон D&D 5e</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 18mm 20mm;
+    }
+
+    :root {
+      --ink: #241812;
+      --muted: #6f5845;
+      --red: #8f1f1b;
+      --red-dark: #5e1210;
+      --gold: #b78a37;
+      --paper: #f1e1be;
+      --paper-deep: #dfc99b;
+      --panel: rgba(255, 248, 226, 0.72);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.48;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 38%),
+        linear-gradient(135deg, #f6e9c9 0%, #e6d1a3 44%, #c5a66f 100%);
+    }
+
+    .page {
+      min-height: 260mm;
+      position: relative;
+      padding: 8mm;
+      border: 2px solid var(--red-dark);
+      outline: 5px double rgba(143, 31, 27, 0.55);
+      background:
+        linear-gradient(rgba(255, 248, 226, 0.9), rgba(255, 248, 226, 0.9)),
+        repeating-linear-gradient(45deg, transparent 0 11px, rgba(95, 60, 30, 0.035) 11px 12px);
+      box-shadow: inset 0 0 0 3px rgba(183, 138, 55, 0.35);
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .cover {
+      display: flex;
+      min-height: 260mm;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px auto 10px;
+      max-width: 700px;
+      color: var(--red-dark);
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--red-dark);
+      font-size: 25px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      border-bottom: 2px solid rgba(143, 31, 27, 0.35);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      color: var(--red);
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 13.5px;
+    }
+
+    ul {
+      margin: 0 0 12px 18px;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 0 5px;
+      font-size: 13.2px;
+    }
+
+    .subtitle {
+      max-width: 620px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .sigil {
+      width: 92px;
+      height: 92px;
+      margin: 18px auto;
+      border: 3px solid var(--red-dark);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--red-dark);
+      font-size: 46px;
+      font-weight: 700;
+      box-shadow:
+        inset 0 0 0 5px rgba(183, 138, 55, 0.35),
+        0 0 0 2px rgba(183, 138, 55, 0.55);
+    }
+
+    .rule {
+      width: 72%;
+      height: 2px;
+      margin: 18px auto;
+      background: linear-gradient(90deg, transparent, var(--red-dark), var(--gold), var(--red-dark), transparent);
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      margin-bottom: 12px;
+      padding: 12px 14px;
+      border: 1px solid rgba(94, 18, 16, 0.42);
+      background: var(--panel);
+      box-shadow: inset 0 0 0 2px rgba(183, 138, 55, 0.18);
+    }
+
+    .callout {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 5px solid var(--red);
+      background: rgba(143, 31, 27, 0.08);
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+
+    .toc {
+      width: 78%;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .toc div {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 7px 0;
+      border-bottom: 1px dotted rgba(36, 24, 18, 0.38);
+      font-size: 14px;
+    }
+
+    .footer {
+      position: absolute;
+      right: 10mm;
+      bottom: 7mm;
+      left: 10mm;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      border-top: 1px solid rgba(36, 24, 18, 0.2);
+      padding-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="eyebrow">Локальный инструмент для кампании</div>
+    <div class="sigil">20</div>
+    <h1>Интерактивный компаньон D&D 5e</h1>
+    <p class="subtitle">Веб-приложение для персонажей, инвентаря, заклинаний, торговцев, NPC и мастерского контроля. Проект работает на твоем компьютере и не предназначен для публикации.</p>
+    <div class="rule"></div>
+    <div class="toc">
+      <div><span>Замысел программы</span><span>1</span></div>
+      <div><span>Режим игрока</span><span>2</span></div>
+      <div><span>Режим мастера</span><span>3</span></div>
+      <div><span>Локальная разработка</span><span>4</span></div>
+    </div>
+    <div class="footer">
+      <span>D&D 5e 2014 Companion</span>
+      <span>Проектное описание</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Замысел программы</h2>
+    <p>Приложение создается как личный цифровой стол помощника для D&D 5e 2014. Оно не заменяет карту, миниатюры и живые решения мастера, а берет на себя рутину: листы персонажей, ресурсы, предметы, заклинания, торговлю, историю действий и быстрые исправления.</p>
+    <p>По ощущению интерфейс должен быть ближе к современной RPG: игрок выбирает расу, класс, заклинания и снаряжение, а приложение сразу показывает доступные варианты, последствия выбора и подсказки.</p>
+
+    <div class="callout">Главное правило: приложение помогает считать и помнить, но последнее слово всегда остается за мастером.</div>
+
+    <div class="columns">
+      <div class="card">
+        <h3>Источники</h3>
+        <ul>
+          <li>Все добавленные тобой книги D&D 5e могут использоваться локально.</li>
+          <li>Каждая запись хранит источник: книга, страница, язык, тип.</li>
+          <li>Homebrew живет рядом с официальными данными, но помечается отдельно.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Границы</h3>
+        <ul>
+          <li>Проект не публикуется.</li>
+          <li>Хостинг на раннем этапе не нужен.</li>
+          <li>Импорт книг делается позже, когда локальный MVP станет устойчивым.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Ключевые модули</h3>
+    <ul>
+      <li>Интерактивный лист персонажа с автоматическими расчетами.</li>
+      <li>Инвентарь, экипировка, деньги, документы и будущий 3D-просмотр предметов.</li>
+      <li>Заклинания, фокусы, ячейки, эффекты, ресурсы классов.</li>
+      <li>Торговцы, кражи, покупка, продажа и подтверждение мастера.</li>
+      <li>NPC, библиотека кампании, награды, история действий и отмена мискликов.</li>
+    </ul>
+    <div class="footer">
+      <span>Глава 1</span>
+      <span>Замысел</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Режим игрока</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Персонаж</h3>
+        <p>Игрок создает персонажа через пошаговый редактор: портрет, раса, класс, характеристики, навыки, снаряжение и заклинания. Интерфейс показывает только то, что нужно выбрать сейчас.</p>
+      </div>
+      <div class="card">
+        <h3>Заклинания</h3>
+        <p>Заклинания открываются карточками с компонентами, дистанцией, длительностью, уроном, лечением и описанием. Ячейки списываются автоматически, если мастер включил такой режим.</p>
+      </div>
+      <div class="card">
+        <h3>Инвентарь</h3>
+        <p>Предметы можно использовать, передавать, экипировать, осматривать и открывать в подробном описании. Для документов появятся записи, рисунки и расход чернил.</p>
+      </div>
+      <div class="card">
+        <h3>Homebrew</h3>
+        <p>Если мастер разрешил, игрок создает свои предметы, классы, расы, заклинания и эффекты через структурированные формы, чтобы они работали в листе персонажа.</p>
+      </div>
+    </div>
+
+    <h3>Важные игровые удобства</h3>
+    <ul>
+      <li>Прогноз урона оружия именно для текущего персонажа.</li>
+      <li>Предупреждение, если персонаж не владеет оружием или броней.</li>
+      <li>Автоматическое лечение от зелий и история броска.</li>
+      <li>Запрос мастеру при случайном использовании ячейки или предмета.</li>
+      <li>Компактная панель ресурсов для будущего overlay-режима.</li>
+    </ul>
+    <div class="footer">
+      <span>Глава 2</span>
+      <span>Игрок</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Режим мастера</h2>
+    <p>Мастерский интерфейс должен быть мощным, но не тяжелым. Мастер видит состояние партии, управляет NPC, открывает торговцев, выдает награды, подтверждает спорные действия и может отменить ошибку из истории.</p>
+
+    <div class="columns">
+      <div class="card">
+        <h3>Партия</h3>
+        <ul>
+          <li>HP, AC, эффекты, ресурсы и инвентарь игроков.</li>
+          <li>Быстрые правки состояния.</li>
+          <li>История действий каждого персонажа.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>NPC и торговцы</h3>
+        <ul>
+          <li>Готовые, созданные вручную и случайные NPC.</li>
+          <li>Торговые сцены с активным покупателем.</li>
+          <li>Кражи через запрос и подтверждение мастера.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Библиотека кампании</h3>
+        <ul>
+          <li>Предметы, оружие, броня, свитки и зелья.</li>
+          <li>Заклинания, эффекты, ячейки и черты.</li>
+          <li>Списки наград, папки и быстрый поиск.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Контроль</h3>
+        <ul>
+          <li>Выдать временно или навсегда.</li>
+          <li>Продлить или завершить эффект.</li>
+          <li>Отменить действие из журнала.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">Мастерская история действий является сердцем надежности: любое важное изменение должно быть видно, объяснимо и, если возможно, отменяемо.</div>
+    <div class="footer">
+      <span>Глава 3</span>
+      <span>Мастер</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Локальная разработка</h2>
+    <p>Первая версия создается только для твоего ПК. Это ускоряет разработку: не нужен хостинг, облачное хранилище и ранняя система публикации. Все данные живут рядом с проектом, а импорт книг откладывается до момента, когда основные механики уже хорошо работают.</p>
+
+    <div class="columns">
+      <div class="card">
+        <h3>Технологии</h3>
+        <ul>
+          <li>React, TypeScript, Vite.</li>
+          <li>Fastify или NestJS для backend.</li>
+          <li>Prisma и SQLite для MVP.</li>
+          <li>Three.js для будущего 3D.</li>
+          <li>Vitest и Playwright для тестов.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Локальные адреса</h3>
+        <ul>
+          <li>Frontend: http://localhost:5173</li>
+          <li>Backend: http://localhost:3000</li>
+          <li>Книги: папка book</li>
+          <li>Файлы приложения: папка storage</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Этапы</h3>
+    <ul>
+      <li>MVP-1: кампании, роли, лист персонажа, инвентарь, заклинания, история.</li>
+      <li>MVP-2: редактор персонажа, торговцы, кражи, базовый homebrew.</li>
+      <li>MVP-3: документы, NPC, библиотека кампании, временные эффекты.</li>
+      <li>MVP-4: 3D-предметы, overlay, dockable-интерфейс мастера.</li>
+      <li>Позже: импорт всех нужных книг и расширенная локальная база правил.</li>
+    </ul>
+
+    <p class="small">Документ является кратким проектным описанием. Полное техническое задание лежит рядом в `dnd5e_2014_interactive_app_spec.md`.</p>
+    <div class="footer">
+      <span>Глава 4</span>
+      <span>Локальная разработка</span>
+    </div>
+  </section>
+</body>
+</html>
