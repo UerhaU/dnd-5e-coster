@@ -9,6 +9,10 @@
     "dev:spellbook:page": "vite --host 127.0.0.1 --port 5181 --strictPort",
     "spellbook:init": "node scripts/build-spell-catalog.mjs",
     "test:spellbook": "node --import tsx --test scripts/test-spell-catalog.mjs",
+    "equipment:install": "node scripts/install-equipment-catalog.mjs",
+    "test:equipment": "node --import tsx --test scripts/test-equipment-catalog.mjs",
+    "catalog:audit:apply": "node scripts/apply-catalog-audit.mjs",
+    "test:catalog-audit": "node --import tsx --test scripts/test-catalog-audit.mjs",
     "dev": "concurrently -n backend,frontend -c green,cyan \"npm:dev:backend\" \"npm:dev:frontend\"",
     "dev:frontend": "vite --host 0.0.0.0",
     "dev:backend": "tsx watch backend/src/server.ts",
@@ -23,7 +27,11 @@
     "report:dndsu:review": "node scripts/report-dndsu-import-review.mjs",
     "start:backend": "node backend/dist/server.js",
     "typecheck": "tsc -b",
-    "release:check": "node scripts/check-publication.mjs"
+    "release:check": "node scripts/check-publication.mjs",
+    "spells:install": "node scripts/install-full-spells.mjs",
+    "test:full-spells": "node --import tsx --test scripts/test-full-spells.mjs",
+    "races:install": "node scripts/install-race-samples.mjs",
+    "test:races": "node --import tsx --test scripts/test-race-catalog.mjs"
   },
   "dependencies": {
     "@fastify/cors": "^11.2.0",

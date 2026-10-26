@@ -12,6 +12,6 @@ export default defineConfig({
     },
   },
   build: {
-    rollupOptions: { input: { main: 'index.html', spellbook: 'spellbook.html' } },
+    rollupOptions: { input: { main: 'index.html', spellbook: 'spellbook.html', equipment: 'equipment.html',races:'races.html' } },
   },
 });

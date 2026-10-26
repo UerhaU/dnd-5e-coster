@@ -1,0 +1,24 @@
+{
+  "checkedOn": "2026-10-16",
+  "edition": "5e_2014",
+  "checks": [
+    {
+      "url": "https://5e14.dnd.su/items/1-adamantine-armor/",
+      "name": "Адамантиновый доспех",
+      "sameDescription": true,
+      "sameType": true
+    },
+    {
+      "url": "https://5e14.dnd.su/items/54-defender/",
+      "name": "Защитник",
+      "sameDescription": true,
+      "sameType": true
+    },
+    {
+      "url": "https://5e14.dnd.su/items/254-shield-1-2-3/",
+      "name": "Щит +1, +2, +3",
+      "sameDescription": true,
+      "sameType": true
+    }
+  ]
+}

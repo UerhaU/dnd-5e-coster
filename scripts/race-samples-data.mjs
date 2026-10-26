@@ -1,0 +1,47 @@
+import { readFileSync } from 'node:fs';
+export const raceSampleData={
+ version:1,edition:'5e_2014',sources:JSON.parse(readFileSync(new URL('../database/races/source-checks.json',import.meta.url),'utf8')),
+ sizes:[['tiny','Крошечный',0.5],['small','Маленький',1],['medium','Средний',1],['large','Большой',2],['huge','Огромный',4],['gargantuan','Громадный',8]],
+ languages:[['common','Общий'],['dwarvish','Дварфийский'],['elvish','Эльфийский'],['giant','Великаний'],['gnomish','Гномий'],['goblin','Гоблинский'],['halfling','Полуросличий'],['orc','Орочий'],['abyssal','Бездны',true],['celestial','Небесный',true],['draconic','Драконий',true],['deep_speech','Глубинная Речь',true],['infernal','Инфернальный',true],['primordial','Первичный',true],['sylvan','Сильван',true],['undercommon','Подземный',true]],
+ bodyDescriptions:{
+  human:{height_min_in:60,height_max_in:72,weight_min_lb:125,weight_max_lb:250,adult_age_years:20,adulthood_basis:'approximate',lifespan_years:100,lifespan_qualifier:'under',notes:'Рост и вес — ориентиры из описания, а не обязательные пределы персонажа.'},
+  dwarf:{height_min_in:48,height_max_in:60,weight_average_lb:150,adult_age_years:50,adulthood_basis:'social',lifespan_years:350,lifespan_qualifier:'over',notes:'Возраст 50 лет обозначает признанную зрелость. Физическое взросление происходит примерно как у людей.'},
+  elf:{height_min_in:60,height_max_in:72,weight_min_lb:100,weight_max_lb:145,adult_age_years:100,adulthood_basis:'social',lifespan_years:750,lifespan_qualifier:'up_to',notes:'Возраст 100 лет обозначает признанную зрелость. Рост и вес из описания не ограничивают результат случайной таблицы.'},
+ },
+ generators:{
+  human:{baseHeightIn:56,heightDice:[2,10],baseWeightLb:110,weightDice:[2,4]},
+  hill_dwarf:{baseHeightIn:44,heightDice:[2,4],baseWeightLb:115,weightDice:[2,6]},
+  mountain_dwarf:{baseHeightIn:48,heightDice:[2,4],baseWeightLb:130,weightDice:[2,6]},
+  high_elf:{baseHeightIn:54,heightDice:[2,10],baseWeightLb:90,weightDice:[1,4]},
+  wood_elf:{baseHeightIn:54,heightDice:[2,10],baseWeightLb:100,weightDice:[1,4]},
+ },
+ proficiencies:[
+  {code:'perception',name:'Восприятие',kind:'skill',ability:'wisdom'},
+  {code:'smith_tools',name:'Инструменты кузнеца',kind:'tool'},
+  {code:'brewer_tools',name:'Инструменты пивовара',kind:'tool'},
+  {code:'mason_tools',name:'Инструменты каменщика',kind:'tool'},
+  ...[['battleaxe',31],['handaxe',22],['light_hammer',19],['warhammer',30],['longsword',35],['shortsword',37],['shortbow',26],['longbow',48]].map(([code,base])=>({code,kind:'weapon',gearCode:`equipment:base:${base}`})),
+  {code:'light_armor',name:'Лёгкие доспехи',kind:'armor',category:'light_armor'},
+  {code:'medium_armor',name:'Средние доспехи',kind:'armor',category:'medium_armor'},
+ ],
+ traits:[
+  {code:'darkvision_60',name:'Тёмное зрение',description:'Тусклое освещение воспринимается как яркое, темнота — как тусклое; цвета в темноте не различаются.',rules:[{stat:'darkvision',op:'set',value:60,stacking:'highest'}]},
+  {code:'dwarven_speed',name:'Дварфийская скорость',description:'Недостаточная Сила для тяжёлого доспеха не уменьшает скорость. Это не отменяет прочие штрафы доспехов или нагрузки.',rules:[{stat:'armor_strength_speed_penalty',statName:'Штраф скорости тяжёлого доспеха из-за Силы',op:'ignore'}]},
+  {code:'dwarven_resilience',name:'Дварфийская устойчивость',description:'Защита от яда включает два разных эффекта.',rules:[{stat:'saving_throws',op:'advantage',fact:'saving_throw_against_poison',factName:'Спасбросок против яда'},{stat:'damage_taken',op:'resistance',damage:'poison',stacking:'highest'}]},
+  {code:'stonecunning',name:'Знание камня',description:'Для определения происхождения каменной кладки персонаж считается владеющим Историей и использует удвоенный бонус мастерства.',rules:[{stat:'history_proficiency',statName:'Владение Историей',op:'grant',value:1,fact:'history_check_stonework_origin',factName:'Проверка Истории о происхождении работы по камню'},{stat:'history_proficiency_multiplier',statName:'Множитель бонуса мастерства Истории',op:'set',value:2,fact:'history_check_stonework_origin',factName:'Проверка Истории о происхождении работы по камню'}]},
+  {code:'dwarven_toughness',name:'Дварфийская выдержка',description:'Добавляет 1 к максимуму хитов за каждый уровень персонажа, включая первый.',rules:[{stat:'maximum_hp',op:'add',value:1,basis:'character_level'}]},
+  {code:'fey_ancestry',name:'Наследие фей',description:'Преимущество против очарования и защита от магического сна действуют раздельно.',rules:[{stat:'saving_throws',op:'advantage',fact:'avoid_charmed',factName:'Спасбросок против очарования'},{stat:'magical_sleep',statName:'Магический сон',op:'immunity'}]},
+  {code:'trance',name:'Транс',description:'Полубессознательная медитация заменяет необходимый сон; во время неё сохраняется сознание. Особенность не даёт общего иммунитета к бессознательности.',rules:[{stat:'daily_meditation_hours',statName:'Часов медитации в сутки',op:'set',value:4},{stat:'requires_sleep',statName:'Необходимость сна',op:'set',value:0}]},
+  {code:'fleet_of_foot',name:'Быстрые ноги',description:'Устанавливает базовую скорость ходьбы 35 футов; не прибавляет 35 к расовой скорости.'},
+  {code:'mask_of_wild',name:'Маскировка в дикой местности',description:'Позволяет пробовать спрятаться при лёгкой заслонённости природным явлением. Проверка Скрытности всё равно нужна.',rules:[{stat:'attempt_hide',statName:'Попытка спрятаться',op:'grant',fact:'lightly_obscured_by_nature',factName:'Слабая заслонённость природными явлениями'}]},
+ ],
+ entries:[
+  {id:300081,code:'human_phb',name:'Человек',original:'Human',source:81,requiresSubrace:false,body:'human',generator:'human',speed:30,description:'Стандартные особенности человека из Книги игрока 2014. Альтернативный человек в этот образец не включён.',bonuses:{strength:1,dexterity:1,constitution:1,intelligence:1,wisdom:1,charisma:1},languages:['common'],choices:[{code:'extra_language',name:'Дополнительный язык',kind:'language',count:1}]},
+  {id:300078,code:'dwarf_phb',name:'Дварф',original:'Dwarf',source:78,requiresSubrace:true,body:'dwarf',speed:25,description:'Общие особенности дварфов; для полного набора нужно выбрать разновидность.',bonuses:{constitution:2},languages:['common','dwarvish'],proficiencies:['battleaxe','handaxe','light_hammer','warhammer'],traits:['darkvision_60','dwarven_speed','dwarven_resilience','stonecunning'],choices:[{code:'artisan_tools',name:'Ремесленные инструменты',kind:'proficiency',count:1,options:['smith_tools','brewer_tools','mason_tools']}]},
+  {id:310078,code:'hill_dwarf_phb',name:'Холмовой дварф',original:'Hill dwarf',source:78,anchor:'hill',parent:'dwarf_phb',generator:'hill_dwarf',bonuses:{wisdom:1},traits:['dwarven_toughness']},
+  {id:320078,code:'mountain_dwarf_phb',name:'Горный дварф',original:'Mountain dwarf',source:78,anchor:'mountain',parent:'dwarf_phb',generator:'mountain_dwarf',bonuses:{strength:2},proficiencies:['light_armor','medium_armor']},
+  {id:300079,code:'elf_phb',name:'Эльф',original:'Elf',source:79,requiresSubrace:true,body:'elf',speed:30,description:'Общие особенности эльфов; разновидность добавляет свои особенности к общим.',bonuses:{dexterity:2},languages:['common','elvish'],proficiencies:['perception'],traits:['darkvision_60','fey_ancestry','trance']},
+  {id:310079,code:'high_elf_phb',name:'Высший эльф',original:'High elf',source:79,anchor:'vysshij_jelf',parent:'elf_phb',generator:'high_elf',bonuses:{intelligence:1},proficiencies:['longsword','shortsword','shortbow','longbow'],choices:[{code:'wizard_cantrip',name:'Заговор волшебника',kind:'spell',count:1,class:'wizard',level:0,castingAbility:'intelligence'},{code:'extra_language',name:'Дополнительный язык',kind:'language',count:1}]},
+  {id:320079,code:'wood_elf_phb',name:'Лесной эльф',original:'Wood elf',source:79,anchor:'lesnoj_jelf',parent:'elf_phb',generator:'wood_elf',speed:35,bonuses:{wisdom:1},proficiencies:['longsword','shortsword','shortbow','longbow'],traits:['fleet_of_foot','mask_of_wild']},
+ ],
+};

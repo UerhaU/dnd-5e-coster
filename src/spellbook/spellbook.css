@@ -74,3 +74,6 @@ button, input, select, summary, a { -webkit-tap-highlight-color: transparent; }
 .sb-page-footer { max-width: 1376px; margin: 0 auto; padding: 0 28px 25px; color: #80705b; font-size: 12px; }
 @media (max-width: 900px) { .sb-layout { grid-template-columns: 280px minmax(0, 1fr); gap: 16px; padding: 20px; } .sb-card { padding: 25px; } .sb-stats { grid-template-columns: 1fr; gap: 15px; } }
 @media (max-width: 680px) { .sb-masthead { padding: 22px 18px; align-items: start; } .sb-masthead p:last-child { font-size: 12px; } .sb-test-label { font-size: 10px; padding: 5px 8px; } .sb-layout { grid-template-columns: minmax(0, 1fr); padding: 15px; } .sb-sidebar { position: static; padding: 18px; } .sb-card { padding: 22px 18px; } .sb-spell-list { max-height: 250px; overflow-y: auto; } .sb-stats { grid-template-columns: 1fr 1fr; gap: 18px; } .sb-stats > div:last-child { grid-column: 1 / -1; } .sb-card-heading { gap: 12px; } .sb-icon-large { width: 44px; height: 44px; } .sb-page-footer { padding-inline: 18px; } }
+.sb-spell-list { max-height: 55vh; overflow-y: auto; overscroll-behavior: contain; }
+.sb-material-children { padding-left: 1rem; border-left: 1px solid #ded1ba; }
+.sb-material-branch { margin: .75rem 0; }

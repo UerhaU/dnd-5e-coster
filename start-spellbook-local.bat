@@ -15,6 +15,8 @@ if not exist storage\spell-catalog.sqlite (
   )
 )
 echo Open http://127.0.0.1:5181/spellbook.html
+echo Equipment http://127.0.0.1:5181/equipment.html
+echo Races http://127.0.0.1:5181/races.html
 echo Close this window or press Ctrl+C to stop the spellbook.
 call npm run dev:spellbook
 pause

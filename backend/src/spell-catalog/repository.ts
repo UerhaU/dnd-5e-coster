@@ -1,12 +1,15 @@
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
 import type { ClassAccess, IllustratedEntry, MaterialGroup, NamedEntry, SpellDetail, SpellEffect, SpellFilters, SpellList, SpellLookups, SpellSummary } from './types.js';
 import { formatDuration, formatQuantity } from './format.js';
+import { readRoll } from './roll.js';
+import { hasAudit } from './rule-context.js';
+import { readFullSpellDetails } from './full-spell-details.js';
 
 type Row = Record<string, unknown>;
 const text = (value: unknown): string | null => value == null ? null : String(value);
 const number = (value: unknown): number | null => value == null ? null : Number(value);
 const fold = (value: string) => value.toLocaleLowerCase('ru').replaceAll('ё', 'е');
-const componentSymbols: Record<string, string> = { V: 'В', S: 'С', M: 'М' };
+const componentSymbols: Record<string, string> = { V: 'В', S: 'С', M: 'М', R:'А (авторские отчисления)' };
 
 export class SpellCatalog {
   private readonly database: DatabaseSync;
@@ -26,23 +29,12 @@ export class SpellCatalog {
   }
 
   private roll(formulaId: unknown): string | null {
-    if (formulaId == null) return null;
-    const terms = this.rows(`SELECT t.*, d.name_ru AS die_name, a.name_ru AS ability_name FROM roll_terms t
-      LEFT JOIN dice d ON d.id=t.die_id LEFT JOIN abilities a ON a.id=t.ability_id WHERE t.formula_id=? ORDER BY t.ordinal`, Number(formulaId));
-    if (!terms.length) return text(this.rows('SELECT source_expression FROM roll_formulas WHERE id=?', Number(formulaId))[0]?.source_expression);
-    return terms.map((term, index) => {
-      let coefficient = Number(term.coefficient);
-      let label: string;
-      if (term.kind === 'кубики') label = `${Math.abs(coefficient) * Number(term.dice_count)}${term.die_name}`;
-      else if (term.kind === 'константа') {
-        coefficient *= Number(term.constant_value);
-        label = String(Math.abs(coefficient));
-      } else {
-        const base = term.kind === 'мастерство' ? 'бонус мастерства' : term.use_spellcasting_ability ? 'модификатор заклинателя' : `модификатор (${term.ability_name})`;
-        label = Math.abs(coefficient) === 1 ? base : `${Math.abs(coefficient)} × ${base}`;
-      }
-      return `${index === 0 ? coefficient < 0 ? '-' : '' : coefficient < 0 ? ' - ' : ' + '}${label}`;
-    }).join('');
+    return readRoll(this.database,formulaId);
+  }
+
+  private successResult(effectId:number,audited:boolean,fallback:unknown):string|null {
+    const numeric=audited?this.rows('SELECT success_numerator,success_denominator FROM spell_effect_rule_links WHERE spell_effect_id=? AND success_denominator IS NOT NULL',effectId)[0]:null;
+    return numeric?Number(numeric.success_numerator)===1&&Number(numeric.success_denominator)===2?'Половина урона':`${numeric.success_numerator}/${numeric.success_denominator} урона`:text(fallback);
   }
 
   private summary(row: Row): SpellSummary {
@@ -93,6 +85,11 @@ export class SpellCatalog {
       JOIN range_types r ON r.id=s.range_type_id JOIN duration_types dt ON dt.id=s.duration_type_id
       LEFT JOIN time_units tu ON tu.id=s.duration_unit_id WHERE s.id=?`, id)[0];
     if (!row) return null;
+    const audited=hasAudit(this.database);
+    const catalog=readFullSpellDetails(this.database,id);
+    const numeric=audited?this.rows('SELECT * FROM spell_numeric_rules WHERE spell_id=?',id)[0]:null;
+    const creatureNames:Record<string,string>={undead:'Нежить',construct:'Конструкт'};
+    const numericRules=numeric?{maximumTargets:number(numeric.maximum_targets),additionalTargetsPerSlot:Number(numeric.additional_targets_per_slot),baseSlotLevel:number(numeric.base_slot_level),continuousTouch:Boolean(numeric.requires_continuous_touch),excludedCreatureTypes:numeric.condition_group_id==null?[]:this.rows("SELECT t.code_value FROM rule_condition_tests t JOIN rule_facts f ON f.id=t.fact_id WHERE t.group_id=? AND f.code='target_creature_type' AND t.comparison='ne'",Number(numeric.condition_group_id)).map(t=>creatureNames[String(t.code_value)]??String(t.code_value))}:null;
     const classAccess = this.rows(`SELECT c.id, c.name_ru AS name, b.name_ru AS source, x.access_rule AS rule
       FROM spell_classes x JOIN classes c ON c.id=x.class_id JOIN sources b ON b.id=x.rule_source_id WHERE x.spell_id=?`, id) as unknown as ClassAccess[];
     const subclasses = this.rows(`SELECT sc.id, sc.name_ru AS name, c.name_ru AS className, b.name_ru AS source, x.access_rule AS rule
@@ -123,16 +120,17 @@ export class SpellCatalog {
       damageChoices: this.rows(`SELECT d.id, d.name_ru AS name, d.icon_url AS iconUrl FROM effect_damage_choices c
         JOIN damage_types d ON d.id=c.damage_type_id WHERE c.effect_id=?`, Number(effect.effect_id)) as unknown as IllustratedEntry[],
       description: text(effect.effect_description), resolution: String(effect.resolution_type), saveAbility: text(effect.save_ability),
-      onSuccess: text(effect.on_success), condition: text(effect.application_condition), target: text(effect.target_description), option: text(effect.option_name),
+      onSuccess: this.successResult(Number(effect.id),audited,effect.on_success), condition: text(effect.application_condition), target: text(effect.target_description), option: text(effect.option_name),
+      ruleTargets:audited?this.rows('SELECT s.name_ru AS stat,o.name_ru AS operator FROM spell_effect_rule_links l JOIN rule_stats s ON s.id=l.stat_id JOIN rule_operators o ON o.id=l.operator_id WHERE l.spell_effect_id=?',Number(effect.id)) as unknown as SpellEffect['ruleTargets']:[],
       scaling: this.rows('SELECT * FROM spell_scaling WHERE spell_effect_id=? ORDER BY ordinal', Number(effect.id)).map((scaling) => {
         const roll = this.roll(scaling.roll_formula_id);
-        const description = scaling.operation === 'другой результат' || !roll ? text(scaling.description)
+        const description = scaling.operation==='другой результат'&&numericRules&&numericRules.additionalTargetsPerSlot>0?`Добавить целей: ${numericRules.additionalTargetsPerSlot} за каждый уровень ячейки выше ${numericRules.baseSlotLevel}.`:scaling.operation === 'другой результат' || !roll ? text(scaling.description)
           : `${scaling.operation === 'добавить формулу' ? 'Добавить' : 'Заменить бросок на'} ${roll}${scaling.threshold == null ? '' : `, начиная с уровня ${scaling.threshold}`}${scaling.step == null ? '' : `, шаг ${scaling.step}`}.`;
         return { basis: String(scaling.basis), description, roll };
       }),
     }));
     return {
-      ...this.summary(row), edition: String(row.edition_name),
+      ...this.summary(row), edition: String(row.edition_name),catalog,
       castingTimes: this.rows(`SELECT x.*, a.code AS action_code, a.name_ru AS action_name, u.code AS unit_code, u.name_ru AS unit_name
         FROM spell_casting_times x LEFT JOIN action_types a ON a.id=x.action_type_id
         LEFT JOIN time_units u ON u.id=x.time_unit_id WHERE x.spell_id=? ORDER BY x.ordinal`, id).map((entry) => {
@@ -144,15 +142,16 @@ export class SpellCatalog {
       range: row.range_code === 'distance' ? row.range_ft == null ? null : formatQuantity(Number(row.range_ft), 'foot', 'Фут')
         : row.range_code === 'special' ? text(row.range_text) : String(row.range_name),
       duration: row.duration_code === 'timed' && row.duration_value != null && row.duration_unit_id != null
-        ? formatDuration(Number(row.duration_value), text(row.duration_unit_code), text(row.duration_unit_name), Boolean(row.requires_concentration))
+        ? catalog?.durationUpTo&&!row.requires_concentration?formatDuration(Number(row.duration_value),text(row.duration_unit_code),text(row.duration_unit_name),true).replace(', концентрация',''):formatDuration(Number(row.duration_value), text(row.duration_unit_code), text(row.duration_unit_name), Boolean(row.requires_concentration))
         : ['special', 'trigger'].includes(String(row.duration_code)) ? text(row.duration_text) : String(row.duration_name),
       components: this.rows(`SELECT c.code FROM spell_components x JOIN component_types c ON c.id=x.component_type_id
         WHERE x.spell_id=? ORDER BY CASE c.code WHEN 'V' THEN 1 WHEN 'S' THEN 2 ELSE 3 END`, id)
         .map((component) => componentSymbols[String(component.code)] ?? String(component.code)).join(', ') || null,
-      targets: text(row.targets_text), description: text(row.description),
-      higherLevels: effects.flatMap((effect) => effect.scaling.map((scaling) => scaling.description).filter(Boolean)).join('\n') || text(row.higher_levels_text),
+      targets:numericRules?.maximumTargets?`Максимум целей (${numeric?.target_kind==='creature_or_object'?'существо или предмет':'существа'}): ${numericRules.maximumTargets}.${numericRules.excludedCreatureTypes.length?` Не действует на: ${numericRules.excludedCreatureTypes.join(', ')}.`:''}${numericRules.continuousTouch?' Требуется касание в течение всего накладывания.':''}`:text(row.targets_text), description: text(row.description),
+      higherLevels: catalog?.rules.length?text(row.higher_levels_text):effects.flatMap((effect) => effect.scaling.map((scaling) => scaling.description).filter(Boolean)).join('\n')||text(row.higher_levels_text),
       sourceUrl: text(row.source_url),
       classAccess, subclasses, materials, effects,
+      numericRules,
       areas: this.rows(`SELECT a.name_ru AS shape, x.radius_ft AS radiusFt, x.length_ft AS lengthFt, x.width_ft AS widthFt,
         x.height_ft AS heightFt, x.description FROM spell_areas x JOIN area_shapes a ON a.id=x.shape_id WHERE x.spell_id=? ORDER BY x.ordinal`, id) as unknown as SpellDetail['areas'],
       sources: this.rows(`SELECT b.name_ru AS name, x.page_reference AS page, COALESCE(x.url,b.url) AS url

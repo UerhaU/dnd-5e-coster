@@ -43,7 +43,12 @@ dist/
 *.mdb
 *.ldb
 *.building
-/database/equipment/
+/database/equipment/*
+!/database/equipment/catalog-data.json
+!/database/equipment/schema.sqlite.sql
+!/database/equipment/source-checks.json
+!/database/equipment/source-audit.json
+!/database/equipment/audit-schema.sqlite.sql
 /database/spells/backups/
 /database/spells/work/
 

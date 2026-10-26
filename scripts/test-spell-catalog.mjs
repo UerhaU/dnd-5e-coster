@@ -11,7 +11,7 @@ import { buildSpellCatalogServer } from '../backend/src/spell-catalog/app.ts';
 
 const directory = mkdtempSync(join(tmpdir(), 'dnd-spell-catalog-'));
 const path = join(directory, 'catalog.sqlite');
-createCatalog(path);
+createCatalog(path,{includeEquipment:false});
 const database = new DatabaseSync(path);
 const catalog = new SpellCatalog(path);
 const server = buildSpellCatalogServer(path, false);
@@ -60,7 +60,7 @@ test('ограничения уровня, ревизии, денег, слаг�
 
 test('карточка собирается из ID и чисел, а не дублирующих готовых фраз', () => {
   const workingPath = join(directory, 'structured.sqlite');
-  createCatalog(workingPath);
+  createCatalog(workingPath,{includeEquipment:false});
   const workingDatabase = new DatabaseSync(workingPath);
   const workingCatalog = new SpellCatalog(workingPath);
   try {
@@ -87,7 +87,7 @@ test('карточка собирается из ID и чисел, а не ду�
 
 test('миграция сохраняет материалы, условия, ссылки и количество; повтор безопасен', () => {
   const oldPath = join(directory, 'legacy.sqlite');
-  createCatalog(oldPath);
+  createCatalog(oldPath,{includeEquipment:false});
   const old = new DatabaseSync(oldPath);
   old.exec('ALTER TABLE spell_material_requirements ADD COLUMN requirement_text TEXT; PRAGMA user_version=101;');
   const update = old.prepare('UPDATE spell_material_requirements SET requirement_text=? WHERE id=?');

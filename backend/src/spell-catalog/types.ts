@@ -1,3 +1,4 @@
+import type { FullSpellDetails } from './full-spell-details.js';
 export interface NamedEntry { id: number; name: string }
 export interface IllustratedEntry extends NamedEntry { iconUrl: string | null }
 export interface ClassAccess extends NamedEntry { source: string; rule: string | null }
@@ -45,9 +46,11 @@ export interface SpellEffect {
   condition: string | null;
   target: string | null;
   option: string | null;
+  ruleTargets: {stat:string;operator:string}[];
   scaling: { basis: string; description: string | null; roll: string | null }[];
 }
 export interface SpellDetail extends SpellSummary {
+  catalog:FullSpellDetails|null;
   edition: string;
   castingTimes: string[];
   range: string | null;
@@ -63,6 +66,7 @@ export interface SpellDetail extends SpellSummary {
   effects: SpellEffect[];
   areas: { shape: string; radiusFt: number | null; lengthFt: number | null; widthFt: number | null; heightFt: number | null; description: string | null }[];
   sources: { name: string; page: string | null; url: string | null }[];
+  numericRules:{maximumTargets:number|null;additionalTargetsPerSlot:number;baseSlotLevel:number|null;continuousTouch:boolean;excludedCreatureTypes:string[]}|null;
 }
 export interface SpellLookups {
   schools: NamedEntry[];

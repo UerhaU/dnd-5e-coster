@@ -47,6 +47,10 @@ const optionalNotes={
   'Сеть':'Не наносит обычного урона. Опутывает подходящую цель; условия освобождения и ограничения см. источник.',
 };
 for(const entry of base)entry.specialDescription=optionalNotes[entry.name]??null;
-const payload={version:1,edition:'5e_2014',base,magic:magic.map((row)=>({siteId:Number(row.url.match(/\/items\/(\d+)-/)[1]),name:row.name,originalName:row.originalName,url:row.url,typeLine:row.mechanics.typeLine,description:row.payload.details.descriptionText,requiresAttunement:row.mechanics.requiresAttunement,sourceTitles:row.payload.sourceTitles,originalEditionStatus:row.edition,priceText:row.mechanics.priceText??null}))};
+const ammunition=[];
+for(const row of inventory[2].slice(5,9))ammunition.push({name:row[0].replace(/\s*\(\d+\)/,''),quantity:Number(row[0].match(/\((\d+)\)/)[1]),priceCp:price(row[1]),weightLb:weight(row[2]),source:"Player's Handbook"});
+for(const row of firearms[0].filter(row=>row.length===5&&['Пули (10)','Патроны (10)','Батарея'].includes(row[0])))ammunition.push({name:row[0].replace(/\s*\(\d+\)/,''),quantity:Number(row[0].match(/\((\d+)\)/)?.[1]??1),priceCp:price(row[1]),weightLb:weight(row[3]),source:"Dungeon Master's Guide"});
+ammunition.push({name:'Большие стрелы',quantity:1,priceCp:null,weightLb:null,source:'Waterdeep: Dragon Heist'});
+const payload={version:1,edition:'5e_2014',base,ammunition,magic:magic.map((row)=>({siteId:Number(row.url.match(/\/items\/(\d+)-/)[1]),name:row.name,originalName:row.originalName,url:row.url,typeLine:row.mechanics.typeLine,description:row.payload.details.descriptionText,requiresAttunement:row.mechanics.requiresAttunement,sourceTitles:row.payload.sourceTitles,originalEditionStatus:row.edition,priceText:row.mechanics.priceText??null}))};
 writeFileSync('database/equipment/catalog-data.json',JSON.stringify(payload,null,2)+'\n');
 console.log(JSON.stringify({base:base.length,magic:payload.magic.length,ordinaryWeapons:base.filter(x=>x.kind==='weapon').length,armorAndShields:base.filter(x=>x.kind!=='weapon').length}));

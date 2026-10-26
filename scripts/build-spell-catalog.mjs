@@ -2,6 +2,11 @@ import { DatabaseSync } from 'node:sqlite';
 import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applyEquipment } from './equipment-model.mjs';
+import { applyCatalogAudit } from './catalog-audit-model.mjs';
+import { applyAuditCorrections,applyAuditSemantics,applyRuidiumTravel,applyDelayedOutcomes } from './catalog-audit-corrections.mjs';
+import { applyFullSpells } from './full-spell-catalog.mjs';
+import { applyRaceSamples } from './race-samples-model.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const quote = (name) => `"${name.replaceAll('"', '""')}"`;
@@ -61,7 +66,7 @@ export function catalogDdl() {
   return statements.join('\n\n') + '\n';
 }
 
-export function createCatalog(output, { exportPath = resolve(root, 'database/spells/access-export.json') } = {}) {
+export function createCatalog(output, { exportPath = resolve(root, 'database/spells/access-export.json'), includeEquipment = true, includeFullSpells = includeEquipment, includeRaceSamples = includeFullSpells } = {}) {
   output = resolve(output);
   if (existsSync(output)) throw new Error(`Database already exists; nothing was overwritten: ${output}`);
   const source = JSON.parse(readFileSync(exportPath, 'utf8').replace(/^\uFEFF/, ''));
@@ -70,6 +75,7 @@ export function createCatalog(output, { exportPath = resolve(root, 'database/spe
   const temporary = `${output}.building`;
   if (existsSync(temporary)) throw new Error(`Unfinished database exists: ${temporary}`);
   const database = new DatabaseSync(temporary);
+  let tableCount,spellCount;
   try {
     database.exec(catalogDdl());
     database.exec('BEGIN');
@@ -88,7 +94,12 @@ export function createCatalog(output, { exportPath = resolve(root, 'database/spe
     }
     if (database.prepare('PRAGMA foreign_key_check').all().length) throw new Error('Broken foreign keys');
     database.exec('COMMIT;');
+    if(includeEquipment){applyEquipment(database);applyCatalogAudit(database);applyAuditCorrections(database);applyAuditSemantics(database);applyRuidiumTravel(database);applyDelayedOutcomes(database);}
+    if(includeFullSpells){if(!includeEquipment)throw new Error('Full spell catalog requires the shared equipment rule dictionaries.');applyFullSpells(database);}
+    if(includeRaceSamples)applyRaceSamples(database);
     if (database.prepare('PRAGMA integrity_check').get().integrity_check !== 'ok') throw new Error('Database integrity check failed');
+    tableCount = database.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='table' AND name<>'sqlite_sequence'").get().n;
+    spellCount=database.prepare('SELECT count(*) n FROM spells').get().n;
   } catch (error) {
     database.close();
     rmSync(temporary);
@@ -96,7 +107,7 @@ export function createCatalog(output, { exportPath = resolve(root, 'database/spe
   }
   database.close();
   renameSync(temporary, output);
-  return { database: output, tables: schema.tables.length, spells: source.tables.spells.length };
+  return { database: output, tables: tableCount, spells: spellCount };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

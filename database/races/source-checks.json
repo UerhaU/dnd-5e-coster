@@ -1,0 +1,35 @@
+[
+  {
+    "code": 78,
+    "slug": "dwarf",
+    "url": "https://5e14.dnd.su/race/78-dwarf/",
+    "sha256": "6eec6ae41c8f98d93f8df3eff10857afd7dc4a0a25b1e4f6af888b91faac624d",
+    "checkedOn": "2026-10-16"
+  },
+  {
+    "code": 79,
+    "slug": "elf",
+    "url": "https://5e14.dnd.su/race/79-elf/",
+    "sha256": "dc33f3d4e22ddb3b69ecc7bc2dc0454b486db31c2fff795300b396ecc7b47f7a",
+    "checkedOn": "2026-10-16"
+  },
+  {
+    "code": 81,
+    "slug": "human",
+    "url": "https://5e14.dnd.su/race/81-human/",
+    "sha256": "9245bb4eb364543058ef6ebf02f0a8d98c70e81770e6609495c154f32e1974c5",
+    "checkedOn": "2026-10-16"
+  },
+  {
+    "code": "body_table",
+    "url": "https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background",
+    "sha256": "1aa6833a52129c9b43e45b0503167b4a031bd85a0166c5ee16c19cceabacd386",
+    "checkedOn": "2026-10-16"
+  },
+  {
+    "code": "carrying",
+    "url": "https://www.dndbeyond.com/sources/dnd/basic-rules-2014/using-ability-scores",
+    "sha256": "01ed9858501eedfeb37a8d545b49f9b854194d355909d3081c6f6fd653a80622",
+    "checkedOn": "2026-10-16"
+  }
+]

@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { PrismaClient } from '@prisma/client';
+import { descriptionParagraphs } from './dndsu-description.mjs';
 
 const ROOT = process.cwd();
 const CATALOG_JSON = path.join(ROOT, 'storage', 'imports', 'dndsu-5e2014-catalog.json');
@@ -168,15 +169,14 @@ function extractSpellDetails(html) {
     }
   }
 
-  const descHtml = html.match(/<li class="subsection desc"><div itemprop="description">([\s\S]*?)<\/div><\/li>/i)?.[1] ?? '';
-  if (descHtml) {
-    const paragraphs = [...descHtml.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
+  const paragraphs = descriptionParagraphs(html);
+  if (paragraphs.length) {
     const higherIndex = paragraphs.findIndex((paragraph) => /На больших уровнях\./i.test(paragraph));
     if (higherIndex >= 0) {
       detail.descriptionText = paragraphs.slice(0, higherIndex).join('\n\n') || null;
       detail.higherLevelsText = paragraphs.slice(higherIndex).join('\n\n').replace(/^На больших уровнях\.\s*/i, '') || null;
     } else {
-      detail.descriptionText = paragraphs.join('\n\n') || stripHtml(descHtml) || null;
+      detail.descriptionText = paragraphs.join('\n\n') || null;
     }
   }
 
@@ -205,12 +205,7 @@ function extractMagicItemDetails(html) {
   const typeLineHtml =
     html.match(/<li[^>]+class=["'][^"']*size-type-alignment[^"']*["'][^>]*>([\s\S]*?)<\/li>/i)?.[1] ?? '';
   const priceHtml = html.match(/<li[^>]+class=["'][^"']*price[^"']*["'][^>]*>([\s\S]*?)<\/li>/i)?.[1] ?? '';
-  const descHtml = html.match(/<li class="subsection desc"><div itemprop="description">([\s\S]*?)<\/div><\/li>/i)?.[1] ?? '';
-  const descriptionText = descHtml
-    ? [...descHtml.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((match) => stripHtml(match[1])).filter(Boolean).join('\n\n') ||
-      stripHtml(descHtml) ||
-      null
-    : null;
+  const descriptionText = descriptionParagraphs(html).join('\n\n') || null;
   const typeLine = stripHtml(typeLineHtml) || null;
   const priceText = stripHtml(priceHtml).replace(/^Рекомендованная стоимость:\s*/i, '') || null;
   const priceNumbers = priceText ? [...priceText.matchAll(/\d+/g)].map((match) => Number(match[0])) : [];
@@ -219,7 +214,7 @@ function extractMagicItemDetails(html) {
     typeLine,
     priceText,
     priceMinGp: priceNumbers[0] ?? null,
-    priceMaxGp: priceNumbers[1] ?? priceNumbers[0] ?? null,
+    priceMaxGp: priceNumbers[1] ?? (/^от\s/i.test(priceText??'')?null:priceNumbers[0]) ?? null,
     requiresAttunementText: typeLine ? /требуется настройка/i.test(typeLine) : null,
     descriptionText,
     imageUrl: extractMetaContent(html, 'og:image') || null,
