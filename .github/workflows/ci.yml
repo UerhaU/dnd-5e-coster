@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-and-build:
+    name: Проверки и сборка zip (Windows x64)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Установка зависимостей
+        run: npm ci
+
+      - name: Проверки (lint + typecheck + тесты)
+        run: npm run check
+
+      - name: Сборка портативного zip
+        run: npm run dist
+
+      - name: Сохранить zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: koster-win-x64
+          path: apps/desktop/release/*.zip
+          if-no-files-found: error
