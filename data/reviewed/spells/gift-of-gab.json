@@ -1,0 +1,15 @@
+{
+  "id": "spell:gift-of-gab",
+  "dndsuId": 1922,
+  "nameRu": "Подарок болтуна",
+  "fixes": {
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": null,
+      "royalty": { "text": "2 зм", "costCp": 200 }
+    },
+    "reason": "На DnD.su «М (А 2 зм)»: это компонент А (гонорар) за 2 зм, материального компонента нет. Подтвердил автор, как в v0.1."
+  },
+  "provenance": ["fixes: решение автора по сверке с v0.1, этап 1"]
+}
