@@ -1,5 +1,10 @@
-// Заготовка пакета. Импорт DnD.su появится на этапе 1.
-// Пакет не входит в собранную программу.
+// Импорт DnD.su и сборка catalog.db (раздел 6). Только для разработки:
+// пакет не входит в собранную программу. Команды — в src/cli/.
 
-/** Источник данных каталога. */
-export const IMPORT_SOURCE = 'https://dnd.su';
+export {
+  buildCatalog,
+  IMPORTER_VERSION,
+  type BuildOptions,
+  type BuildResult,
+} from './build/build-catalog.ts';
+export { parseSpellPage, type RawSpellPage } from './spells/parse-page.ts';
