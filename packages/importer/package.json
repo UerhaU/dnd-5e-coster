@@ -1,0 +1,11 @@
+{
+  "name": "@koster/importer",
+  "version": "2.0.0-alpha.0",
+  "private": true,
+  "description": "Импорт DnD.su и сборка catalog.db, только для разработки (этап 1)",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

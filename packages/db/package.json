@@ -1,0 +1,11 @@
+{
+  "name": "@koster/db",
+  "version": "2.0.0-alpha.0",
+  "private": true,
+  "description": "Схемы Drizzle, миграции и доступ к catalog.db и user.db (этап 1)",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

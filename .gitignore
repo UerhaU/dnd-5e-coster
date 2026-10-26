@@ -1,13 +1,14 @@
-# Dependencies and generated builds
+# Зависимости и сборки
 node_modules/
+out/
 dist/
+release/
 .vite/
 *.tsbuildinfo
 
-# Local configuration and credentials (only the example is public)
+# Локальные настройки и секреты
 .env
 .env.*
-!.env.example
 *.local
 *.local.*
 *.pem
@@ -15,7 +16,7 @@ dist/
 *.p12
 *.pfx
 
-# Downloaded books, installers and archives
+# Книги, установщики и архивы
 /book/
 /books/
 *.pdf
@@ -28,7 +29,7 @@ dist/
 *.7z
 *.rar
 
-# Campaign data, backups, imported content and downloaded page cache
+# Кэш страниц DnD.su, рабочие базы разработчика, архив v0.1 (storage/legacy-v0.1/)
 /storage/*
 !/storage/.gitkeep
 *.db
@@ -38,28 +39,22 @@ dist/
 *.sqlite3
 *.sqlite3-*
 *.accdb
-!/База заклинаний.accdb
 *.laccdb
 *.mdb
 *.ldb
-*.building
-/database/equipment/
-/database/spells/backups/
-/database/spells/work/
 
-# Python build cache
+# Кэш Python
 __pycache__/
 *.pyc
 
-# Logs, temporary files and local agent output
+# Журналы, временные файлы и вывод ассистентов
 *.log
 /.codex-logs/
-/query
 *.tmp
 *.bak
 *.backup
 
-# Editor and OS metadata
+# Редакторы и система
 .idea/
 .vscode/
 .DS_Store
