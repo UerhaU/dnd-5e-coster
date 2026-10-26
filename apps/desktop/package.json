@@ -1,0 +1,34 @@
+{
+  "name": "@koster/desktop",
+  "version": "2.0.0-alpha.0",
+  "private": true,
+  "description": "Костёр — портативная программа для игры в D&D 5e (2014)",
+  "author": "UerhaU",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "dist": "electron-vite build && electron-builder --win dir --x64 && node scripts/package-zip.mts",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "postinstall": "install-electron"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "fastify": "^5.12.7"
+  },
+  "devDependencies": {
+    "@koster/server": "2.0.0-alpha.0",
+    "@koster/shared": "2.0.0-alpha.0",
+    "@koster/ui": "2.0.0-alpha.0",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "44.9.3",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^5.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "^7.3.7"
+  }
+}
