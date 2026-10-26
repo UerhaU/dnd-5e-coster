@@ -27,7 +27,7 @@ function cspPlugin(): Plugin {
 // Пакеты монорепозитория — это исходники на TS, их нужно собрать в бандл.
 // Наружу остаются зависимости из dependencies (better-sqlite3, fastify):
 // electron-builder копирует их в программу вместе с их зависимостями.
-const workspacePackages = ['@koster/server', '@koster/shared'];
+const workspacePackages = ['@koster/db', '@koster/server', '@koster/shared'];
 
 export default defineConfig({
   main: {

@@ -2,12 +2,15 @@ import path from 'node:path';
 import { createServer, listenLocal } from '@koster/server';
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import { IPC_GET_SERVER_URL } from '../shared/ipc';
+import { openProgramCatalog } from './catalog';
 import { createLogger } from './log';
 import { originOf } from './origin';
 import {
   DataFolderError,
   prepareDataFolders,
+  resolveCatalogFile,
   resolvePortablePaths,
+  type PathsInput,
   type PortablePaths,
 } from './paths';
 import { APP_ORIGIN, registerAppScheme, serveRenderer } from './renderer-protocol';
@@ -23,12 +26,16 @@ function fail(message: string): void {
  * Пути — самым первым делом, до готовности приложения:
  * иначе Electron создаст свои папки в AppData (раздел 4.2).
  */
-function setUpPortablePaths(): PortablePaths | null {
-  const paths = resolvePortablePaths({
+function pathsInput(): PathsInput {
+  return {
     isPackaged: app.isPackaged,
     exePath: app.getPath('exe'),
     appPath: app.getAppPath(),
-  });
+  };
+}
+
+function setUpPortablePaths(): PortablePaths | null {
+  const paths = resolvePortablePaths(pathsInput());
 
   try {
     prepareDataFolders(paths);
@@ -50,6 +57,9 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
 
   log(`Запуск ${app.getVersion()}, данные: ${paths.data}`);
 
+  // Каталог пока только открывается; API каталога подключит этап 1, часть Б.
+  const catalog = openProgramCatalog(resolveCatalogFile(pathsInput()), app.isPackaged, log);
+
   const server = createServer({
     appVersion: app.getVersion(),
     sqliteVersion: readSqliteVersion(),
@@ -60,6 +70,7 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
 
   app.on('before-quit', () => {
     void server.close();
+    catalog?.close();
   });
 
   ipcMain.handle(IPC_GET_SERVER_URL, (event) => {

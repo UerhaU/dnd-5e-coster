@@ -34,6 +34,18 @@ export function resolvePortablePaths(input: PathsInput): PortablePaths {
   };
 }
 
+/**
+ * catalog.db программы (Р21): в собранной программе — `resources/catalog.db` рядом с app.asar,
+ * в разработке — `apps/desktop/resources/catalog.db` (его собирает `npm run catalog:build`).
+ * Файл только читается, поэтому он не входит в PortablePaths.
+ */
+export function resolveCatalogFile(input: PathsInput): string {
+  const resources = input.isPackaged
+    ? path.dirname(input.appPath)
+    : path.join(input.appPath, 'resources');
+  return path.join(resources, 'catalog.db');
+}
+
 export class DataFolderError extends Error {
   constructor(
     readonly folder: string,

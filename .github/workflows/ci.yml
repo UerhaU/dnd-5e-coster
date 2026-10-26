@@ -25,6 +25,10 @@ jobs:
       - name: Проверки (lint + typecheck + тесты)
         run: npm run check
 
+      # Кэша DnD.su в git нет (Р47): в CI каталог собирается из тестовых страниц data/fixtures/.
+      - name: Сборка тестового catalog.db
+        run: npm run catalog:build -- --fixtures --strict
+
       - name: Сборка портативного zip
         run: npm run dist
 
