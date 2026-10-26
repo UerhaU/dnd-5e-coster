@@ -1,0 +1,33 @@
+{
+  "id": "spell:barkskin",
+  "dndsuId": 74,
+  "nameRu": "Дубовая кора",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "minimum",
+        "value": 16,
+        "conditionText": "КД цели не может быть ниже 16, вне зависимости от надетого доспеха."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Дубовая кора",
+    "quantity": 1,
+    "unit": "handful",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

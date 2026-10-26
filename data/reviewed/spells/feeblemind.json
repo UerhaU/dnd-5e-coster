@@ -1,0 +1,39 @@
+{
+  "id": "spell:feeblemind",
+  "dndsuId": 317,
+  "nameRu": "Слабоумие",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Глиняные шарики",
+        "quantity": 1,
+        "unit": "handful",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Хрустальные шарики",
+        "quantity": 1,
+        "unit": "handful",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Стеклянные шарики",
+        "quantity": 1,
+        "unit": "handful",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Минеральные шарики",
+        "quantity": 1,
+        "unit": "handful",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

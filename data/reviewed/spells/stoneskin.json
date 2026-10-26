@@ -1,0 +1,48 @@
+{
+  "id": "spell:stoneskin",
+  "dndsuId": 129,
+  "nameRu": "Каменная кожа",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "damage_taken",
+        "op": "resistance",
+        "damageType": "bludgeoning",
+        "conditionText": "Немагический урон."
+      },
+      {
+        "type": "modifier",
+        "stat": "damage_taken",
+        "op": "resistance",
+        "damageType": "piercing",
+        "conditionText": "Немагический урон."
+      },
+      {
+        "type": "modifier",
+        "stat": "damage_taken",
+        "op": "resistance",
+        "damageType": "slashing",
+        "conditionText": "Немагический урон."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Алмазная пыль",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 10000
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

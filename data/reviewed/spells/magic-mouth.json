@@ -1,0 +1,26 @@
+{
+  "id": "spell:magic-mouth",
+  "dndsuId": 28,
+  "nameRu": "Волшебные уста",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Медовые соты",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Нефритовая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "minimumValueCp": 1000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

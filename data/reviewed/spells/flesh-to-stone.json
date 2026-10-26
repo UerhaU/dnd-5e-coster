@@ -1,0 +1,32 @@
+{
+  "id": "spell:flesh-to-stone",
+  "dndsuId": 209,
+  "nameRu": "Окаменение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Известь",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Земля",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

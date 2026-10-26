@@ -1,0 +1,13 @@
+{
+  "id": "spell:tensers-floating-disk",
+  "dndsuId": 346,
+  "nameRu": "Тензеров парящий диск",
+  "materials": {
+    "kind": "item",
+    "name": "Ртуть",
+    "quantity": 1,
+    "unit": "drop",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

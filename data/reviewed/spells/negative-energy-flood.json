@@ -1,0 +1,25 @@
+{
+  "id": "spell:negative-energy-flood",
+  "dndsuId": 488,
+  "nameRu": "Поток негативной энергии",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Сломанная кость",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Чёрный шёлк",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

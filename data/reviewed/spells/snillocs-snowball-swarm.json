@@ -1,0 +1,25 @@
+{
+  "id": "spell:snillocs-snowball-swarm",
+  "dndsuId": 409,
+  "nameRu": "Снежный шквал Сниллока",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Лёд",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Осколок белого камня",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

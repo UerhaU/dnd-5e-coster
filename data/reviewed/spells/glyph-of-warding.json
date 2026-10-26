@@ -1,0 +1,26 @@
+{
+  "id": "spell:glyph-of-warding",
+  "dndsuId": 219,
+  "nameRu": "Охранная руна",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Алмазная пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      }
+    ],
+    "minimumGroupValueCp": 20000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

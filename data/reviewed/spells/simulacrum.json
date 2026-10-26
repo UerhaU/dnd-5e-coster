@@ -1,0 +1,48 @@
+{
+  "id": "spell:simulacrum",
+  "dndsuId": 237,
+  "nameRu": "Подобие",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Снег",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed",
+            "special": "Достаточно для точной копии существа."
+          },
+          {
+            "kind": "item",
+            "name": "Лёд",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed",
+            "special": "Достаточно для точной копии существа."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "name": "Часть тела существа",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Волосы, ногти или другие части исходного существа."
+      },
+      {
+        "kind": "item",
+        "name": "Рубиновая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "minimumValueCp": 150000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

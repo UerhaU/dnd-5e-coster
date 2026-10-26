@@ -1,0 +1,25 @@
+{
+  "id": "spell:transmute-rock",
+  "dndsuId": 402,
+  "nameRu": "Преобразование камня",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Глина",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-construct",
+  "dndsuId": 3065,
+  "nameRu": "Призыв духа конструкта",
+  "materials": {
+    "kind": "item",
+    "name": "Каменная и металлическая шкатулка",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 40000,
+    "special": "С замком."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:whirlwind",
+  "dndsuId": 408,
+  "nameRu": "Смерч",
+  "materials": {
+    "kind": "item",
+    "name": "Соломинка",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

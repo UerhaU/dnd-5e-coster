@@ -1,0 +1,37 @@
+{
+  "id": "spell:mass-suggestion",
+  "dndsuId": 169,
+  "nameRu": "Множественное внушение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Язык змеи",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Медовые соты",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Сладкое масло",
+            "quantity": 1,
+            "unit": "drop",
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "spell:spiritual-weapon",
+  "dndsuId": 11,
+  "nameRu": "Божественное оружие",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d8+SC",
+        "damageType": "force",
+        "resolution": "melee_spell_attack",
+        "scalingDice": "1d8",
+        "scalingStart": 4,
+        "scalingStep": 2
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

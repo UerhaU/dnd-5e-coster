@@ -1,0 +1,28 @@
+{
+  "id": "spell:reincarnate",
+  "dndsuId": 365,
+  "nameRu": "Реинкарнация",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Масло",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "special": "Редкое."
+      },
+      {
+        "kind": "item",
+        "name": "Мазь",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "special": "Редкая."
+      }
+    ],
+    "minimumGroupValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

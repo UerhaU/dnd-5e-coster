@@ -1,0 +1,41 @@
+{
+  "id": "spell:false-life",
+  "dndsuId": 287,
+  "nameRu": "Псевдожизнь",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "temporary_hp",
+        "op": "set",
+        "value": null,
+        "dice": "1d4+4",
+        "scalarPerSlot": 5
+      }
+    ]
+  },
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Алкоголь",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Дистиллированный спирт",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

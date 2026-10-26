@@ -1,0 +1,13 @@
+{
+  "id": "spell:wall-of-force",
+  "dndsuId": 314,
+  "nameRu": "Силовая стена",
+  "materials": {
+    "kind": "item",
+    "name": "Порошок прозрачного драгоценного камня",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

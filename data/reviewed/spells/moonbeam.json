@@ -1,0 +1,25 @@
+{
+  "id": "spell:moonbeam",
+  "dndsuId": 146,
+  "nameRu": "Лунный луч",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Семена лунносемянника",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Опалесцирующий полевой шпат",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

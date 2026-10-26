@@ -1,0 +1,14 @@
+{
+  "id": "spell:infernal-calling",
+  "dndsuId": 485,
+  "nameRu": "Инфернальный зов",
+  "materials": {
+    "kind": "item",
+    "name": "Рубин",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 99900
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

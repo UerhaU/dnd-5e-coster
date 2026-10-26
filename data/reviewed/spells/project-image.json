@@ -1,0 +1,14 @@
+{
+  "id": "spell:project-image",
+  "dndsuId": 283,
+  "nameRu": "Проекция",
+  "materials": {
+    "kind": "item",
+    "name": "Копия заклинателя",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

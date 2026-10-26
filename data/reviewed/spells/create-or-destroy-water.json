@@ -1,0 +1,27 @@
+{
+  "id": "spell:create-or-destroy-water",
+  "dndsuId": 333,
+  "nameRu": "Сотворение или уничтожение воды",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Вода",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed",
+        "special": "Если вода создаётся."
+      },
+      {
+        "kind": "item",
+        "name": "Песок",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Несколько песчинок, если вода уничтожается."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

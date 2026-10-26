@@ -1,0 +1,18 @@
+{
+  "id": "spell:divine-favor",
+  "dndsuId": 10,
+  "nameRu": "Божественное благоволение",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d4",
+        "damageType": "radiant",
+        "trigger": "on_hit",
+        "scope": "weapon"
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

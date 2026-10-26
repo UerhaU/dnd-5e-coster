@@ -1,0 +1,13 @@
+{
+  "id": "spell:sunbeam",
+  "dndsuId": 329,
+  "nameRu": "Солнечный луч",
+  "materials": {
+    "kind": "item",
+    "name": "Увеличительное стекло",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:spray-of-cards",
+  "dndsuId": 4664,
+  "nameRu": "Разбрасывание карт",
+  "materials": {
+    "kind": "item",
+    "name": "Колода карт",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

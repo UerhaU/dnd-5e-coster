@@ -1,0 +1,56 @@
+{
+  "id": "spell:guards-and-wards",
+  "dndsuId": 341,
+  "nameRu": "Стражи",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Горящие."
+      },
+      {
+        "kind": "item",
+        "name": "Сера",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Масло",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Тетива",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "special": "Завязана узлом."
+      },
+      {
+        "kind": "item",
+        "name": "Кровь бурого увальня",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Серебряный жезл",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 1000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

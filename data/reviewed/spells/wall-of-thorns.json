@@ -1,0 +1,13 @@
+{
+  "id": "spell:wall-of-thorns",
+  "dndsuId": 347,
+  "nameRu": "Терновая стена",
+  "materials": {
+    "kind": "item",
+    "name": "Шипы",
+    "quantity": 1,
+    "unit": "handful",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

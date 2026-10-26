@@ -1,0 +1,13 @@
+{
+  "id": "spell:friends",
+  "dndsuId": 71,
+  "nameRu": "Дружба",
+  "materials": {
+    "kind": "item",
+    "name": "Грим",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

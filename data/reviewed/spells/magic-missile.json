@@ -1,0 +1,19 @@
+{
+  "id": "spell:magic-missile",
+  "dndsuId": 27,
+  "nameRu": "Волшебная стрела",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d4+1",
+        "damageType": "force",
+        "resolution": "auto",
+        "repeatCount": 3,
+        "repeatPerSlot": 1
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

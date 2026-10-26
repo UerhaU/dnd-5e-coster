@@ -1,0 +1,25 @@
+{
+  "id": "spell:spike-growth",
+  "dndsuId": 77,
+  "nameRu": "Шипы",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Острый шип",
+        "quantity": 7,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Заострённая веточка",
+        "quantity": 7,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

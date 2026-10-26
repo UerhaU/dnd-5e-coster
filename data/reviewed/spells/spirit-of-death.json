@@ -1,0 +1,15 @@
+{
+  "id": "spell:spirit-of-death",
+  "dndsuId": 4663,
+  "nameRu": "Дух смерти",
+  "materials": {
+    "kind": "item",
+    "name": "Позолоченная игральная карта",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 40000,
+    "special": "Изображает аватара смерти."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

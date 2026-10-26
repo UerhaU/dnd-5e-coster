@@ -1,0 +1,25 @@
+{
+  "id": "spell:rope-trick",
+  "dndsuId": 350,
+  "nameRu": "Трюк с верёвкой",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Экстракт зерна",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Пергаментная петля",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

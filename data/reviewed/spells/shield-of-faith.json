@@ -1,0 +1,32 @@
+{
+  "id": "spell:shield-of-faith",
+  "dndsuId": 69,
+  "nameRu": "Щит веры",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "add",
+        "value": 2
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Пергамент со святыми письменами",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

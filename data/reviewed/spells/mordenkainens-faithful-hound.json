@@ -1,0 +1,32 @@
+{
+  "id": "spell:mordenkainens-faithful-hound",
+  "dndsuId": 17,
+  "nameRu": "Верный пёс Морденкайнена",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Серебряный свисток",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Кость",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Нитка",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

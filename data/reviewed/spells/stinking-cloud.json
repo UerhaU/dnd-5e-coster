@@ -1,0 +1,25 @@
+{
+  "id": "spell:stinking-cloud",
+  "dndsuId": 113,
+  "nameRu": "Зловонное облако",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Тухлое яйцо",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Гнилой лист капусты",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

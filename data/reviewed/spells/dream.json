@@ -1,0 +1,32 @@
+{
+  "id": "spell:dream",
+  "dndsuId": 19,
+  "nameRu": "Вещий сон",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Песок",
+        "quantity": 1,
+        "unit": "handful",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Чернила",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Перо спящей птицы",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

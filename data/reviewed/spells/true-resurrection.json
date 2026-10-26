@@ -1,0 +1,26 @@
+{
+  "id": "spell:true-resurrection",
+  "dndsuId": 125,
+  "nameRu": "Истинное воскрешение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Святая вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Алмаз",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "minimumGroupValueCp": 2500000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

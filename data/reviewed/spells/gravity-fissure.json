@@ -1,0 +1,13 @@
+{
+  "id": "spell:gravity-fissure",
+  "dndsuId": 2451,
+  "nameRu": "Гравитационный разлом",
+  "materials": {
+    "kind": "item",
+    "name": "Железные опилки",
+    "quantity": 1,
+    "unit": "handful",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

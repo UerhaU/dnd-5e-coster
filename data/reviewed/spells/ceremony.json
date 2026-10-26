@@ -1,0 +1,14 @@
+{
+  "id": "spell:ceremony",
+  "dndsuId": 465,
+  "nameRu": "Церемония",
+  "materials": {
+    "kind": "item",
+    "name": "Порошок серебра",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 2500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

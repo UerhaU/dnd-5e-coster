@@ -1,0 +1,25 @@
+{
+  "id": "spell:gaseous-form",
+  "dndsuId": 41,
+  "nameRu": "Газообразная форма",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Марля",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Дым",
+        "quantity": 1,
+        "unit": "portion",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

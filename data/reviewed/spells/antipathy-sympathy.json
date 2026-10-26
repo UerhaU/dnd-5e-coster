@@ -1,0 +1,27 @@
+{
+  "id": "spell:antipathy-sympathy",
+  "dndsuId": 2,
+  "nameRu": "Антипатия/симпатия",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Квасцы",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "special": "Пропитаны уксусом; для антипатии."
+      },
+      {
+        "kind": "item",
+        "name": "Мёд",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed",
+        "special": "Для симпатии."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

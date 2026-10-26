@@ -1,0 +1,13 @@
+{
+  "id": "spell:freedom-of-movement",
+  "dndsuId": 308,
+  "nameRu": "Свобода перемещения",
+  "materials": {
+    "kind": "item",
+    "name": "Кожаный ремешок",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

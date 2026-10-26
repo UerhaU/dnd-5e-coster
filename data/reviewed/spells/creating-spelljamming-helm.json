@@ -1,0 +1,14 @@
+{
+  "id": "spell:creating-spelljamming-helm",
+  "dndsuId": 4761,
+  "nameRu": "Сотворение магического руля",
+  "materials": {
+    "kind": "item",
+    "name": "Хрустальный жезл",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 500000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

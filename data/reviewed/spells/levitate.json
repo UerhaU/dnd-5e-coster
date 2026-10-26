@@ -1,0 +1,32 @@
+{
+  "id": "spell:levitate",
+  "dndsuId": 139,
+  "nameRu": "Левитация",
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Кожаная петля",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Золотая проволока в форме кубка",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": [
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

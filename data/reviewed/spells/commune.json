@@ -1,0 +1,37 @@
+{
+  "id": "spell:commune",
+  "dndsuId": 198,
+  "nameRu": "Общение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Флакон святой воды",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Флакон нечестивой воды",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

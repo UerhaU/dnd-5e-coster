@@ -1,0 +1,25 @@
+{
+  "id": "spell:hypnotic-pattern",
+  "dndsuId": 44,
+  "nameRu": "Гипнотический узор",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Горящая палочка благовоний",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Хрустальный сосуд с фосфоресцирующим материалом",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

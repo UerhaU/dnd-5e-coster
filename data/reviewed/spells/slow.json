@@ -1,0 +1,76 @@
+{
+  "id": "spell:slow",
+  "dndsuId": 83,
+  "nameRu": "Замедление",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "add",
+        "value": -2,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "dexterity_saves",
+        "op": "add",
+        "value": -2,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "speed",
+        "op": "multiply",
+        "value": 0.5,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "reactions",
+        "op": "set",
+        "value": 0,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "attacks_per_turn",
+        "op": "cap",
+        "value": 1,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        }
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 6,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Патока",
+    "quantity": 1,
+    "unit": "drop",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

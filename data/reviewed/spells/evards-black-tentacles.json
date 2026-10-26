@@ -1,0 +1,25 @@
+{
+  "id": "spell:evards-black-tentacles",
+  "dndsuId": 67,
+  "nameRu": "Эвардовы чёрные щупальца",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Щупальце гигантского осьминога",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Щупальце гигантского кальмара",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

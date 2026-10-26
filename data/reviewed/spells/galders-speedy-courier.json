@@ -1,0 +1,26 @@
+{
+  "id": "spell:galders-speedy-courier",
+  "dndsuId": 3848,
+  "nameRu": "Быстрый гонец Гальдера",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Золотая монета",
+        "quantity": 25,
+        "unit": "piece",
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Минералы",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      }
+    ],
+    "minimumGroupValueCp": 2500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

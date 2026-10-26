@@ -1,0 +1,25 @@
+{
+  "id": "spell:darkvision",
+  "dndsuId": 368,
+  "nameRu": "Тёмное зрение",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Сушёная морковь",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Агат",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

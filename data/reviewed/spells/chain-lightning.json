@@ -1,0 +1,51 @@
+{
+  "id": "spell:chain-lightning",
+  "dndsuId": 233,
+  "nameRu": "Пляшущая молния",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Мех зверя",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Янтарь",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Стекло",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Хрустальный жезл",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "name": "Серебряная булавка",
+        "quantity": 3,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

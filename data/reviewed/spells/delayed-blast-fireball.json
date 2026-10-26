@@ -1,0 +1,25 @@
+{
+  "id": "spell:delayed-blast-fireball",
+  "dndsuId": 87,
+  "nameRu": "Замедленный огненный шар",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Гуано летучей мыши",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Сера",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

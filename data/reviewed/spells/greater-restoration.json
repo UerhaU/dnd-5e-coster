@@ -1,0 +1,14 @@
+{
+  "id": "spell:greater-restoration",
+  "dndsuId": 39,
+  "nameRu": "Высшее восстановление",
+  "materials": {
+    "kind": "item",
+    "name": "Алмазная пыль",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 10000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

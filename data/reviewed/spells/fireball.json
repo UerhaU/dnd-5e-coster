@@ -1,0 +1,44 @@
+{
+  "id": "spell:fireball",
+  "dndsuId": 205,
+  "nameRu": "Огненный шар",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "8d6",
+        "damageType": "fire",
+        "save": {
+          "ability": "dex",
+          "onSuccess": "half"
+        },
+        "scalingDice": "1d6",
+        "conditionText": "Существа в сфере взрыва."
+      }
+    ]
+  },
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Гуано летучей мыши",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Сера",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": [
+    "rules: v0.1 storage/spell-catalog.sqlite (исходная проверенная запись)",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

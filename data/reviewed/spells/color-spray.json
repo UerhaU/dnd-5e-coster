@@ -1,0 +1,43 @@
+{
+  "id": "spell:color-spray",
+  "dndsuId": 306,
+  "nameRu": "Сверкающие брызги",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "control",
+        "stat": "affected_hit_point_pool",
+        "op": "set",
+        "dice": "6d10",
+        "condition": "blinded",
+        "scalingDice": "2d10"
+      }
+    ]
+  },
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Цветной порошок",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed",
+        "special": "Красный, жёлтый и синий цвета."
+      },
+      {
+        "kind": "item",
+        "name": "Цветной песок",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed",
+        "special": "Красный, жёлтый и синий цвета."
+      }
+    ]
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

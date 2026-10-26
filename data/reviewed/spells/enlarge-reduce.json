@@ -1,0 +1,72 @@
+{
+  "id": "spell:enlarge-reduce",
+  "dndsuId": 355,
+  "nameRu": "Увеличение/уменьшение",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d4",
+        "damageType": null,
+        "choice": "Увеличение",
+        "trigger": "on_hit",
+        "scope": "weapon",
+        "conditionText": "Дополнительный урон оружия, увеличенного вместе с целью."
+      },
+      {
+        "type": "modifier",
+        "stat": "damage_roll",
+        "op": "subtract",
+        "value": null,
+        "dice": "1d4",
+        "choice": "Уменьшение",
+        "scope": "weapon"
+      },
+      {
+        "type": "modifier",
+        "stat": "strength_checks",
+        "op": "advantage",
+        "value": null,
+        "choice": "Увеличение"
+      },
+      {
+        "type": "modifier",
+        "stat": "strength_saves",
+        "op": "advantage",
+        "value": null,
+        "choice": "Увеличение"
+      },
+      {
+        "type": "modifier",
+        "stat": "strength_checks",
+        "op": "disadvantage",
+        "value": null,
+        "choice": "Уменьшение"
+      },
+      {
+        "type": "modifier",
+        "stat": "strength_saves",
+        "op": "disadvantage",
+        "value": null,
+        "choice": "Уменьшение"
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Порошок железа",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

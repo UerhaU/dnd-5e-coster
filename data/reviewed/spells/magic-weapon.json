@@ -1,0 +1,45 @@
+{
+  "id": "spell:magic-weapon",
+  "dndsuId": 153,
+  "nameRu": "Магическое оружие",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "add",
+        "value": 1,
+        "scope": "weapon",
+        "slotScaling": [
+          {
+            "slotLevel": 4,
+            "value": 2
+          },
+          {
+            "slotLevel": 6,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "type": "modifier",
+        "stat": "damage_roll",
+        "op": "add",
+        "value": 1,
+        "scope": "weapon",
+        "slotScaling": [
+          {
+            "slotLevel": 4,
+            "value": 2
+          },
+          {
+            "slotLevel": 6,
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

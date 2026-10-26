@@ -1,0 +1,14 @@
+{
+  "id": "spell:illusory-script",
+  "dndsuId": 182,
+  "nameRu": "Невидимое письмо",
+  "materials": {
+    "kind": "item",
+    "name": "Свинцовые чернила",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 1000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

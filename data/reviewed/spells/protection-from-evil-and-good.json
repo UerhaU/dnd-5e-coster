@@ -1,0 +1,37 @@
+{
+  "id": "spell:protection-from-evil-and-good",
+  "dndsuId": 99,
+  "nameRu": "Защита от зла и добра",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Святая вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Порошок серебра",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Порошок железа",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

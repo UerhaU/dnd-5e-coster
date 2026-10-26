@@ -1,0 +1,13 @@
+{
+  "id": "spell:infestation",
+  "dndsuId": 456,
+  "nameRu": "Нашествие",
+  "materials": {
+    "kind": "item",
+    "name": "Живая блоха",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "spell:create-homunculus",
+  "dndsuId": 499,
+  "nameRu": "Сотворение гомункула",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Глина",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Пепел",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Корень мандрагоры",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Кинжал",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 100000,
+        "selector": "dagger",
+        "special": "Инкрустирован драгоценными камнями."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "spell:programmed-illusion",
+  "dndsuId": 82,
+  "nameRu": "Заданная иллюзия",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Овечья шерсть",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Нефритовая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "minimumValueCp": 2500
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

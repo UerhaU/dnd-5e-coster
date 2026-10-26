@@ -1,0 +1,14 @@
+{
+  "id": "spell:planar-binding",
+  "dndsuId": 231,
+  "nameRu": "Планарные узы",
+  "materials": {
+    "kind": "item",
+    "name": "Драгоценный камень",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

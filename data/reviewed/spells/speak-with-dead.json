@@ -1,0 +1,13 @@
+{
+  "id": "spell:speak-with-dead",
+  "dndsuId": 293,
+  "nameRu": "Разговор с мёртвыми",
+  "materials": {
+    "kind": "item",
+    "name": "Горящие благовония",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

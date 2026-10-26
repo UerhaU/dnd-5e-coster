@@ -1,0 +1,14 @@
+{
+  "id": "spell:gate",
+  "dndsuId": 36,
+  "nameRu": "Врата",
+  "materials": {
+    "kind": "item",
+    "name": "Алмаз",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 500000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

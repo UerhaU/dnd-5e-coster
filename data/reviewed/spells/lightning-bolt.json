@@ -1,0 +1,44 @@
+{
+  "id": "spell:lightning-bolt",
+  "dndsuId": 175,
+  "nameRu": "Молния",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Мех зверя",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Янтарный жезл",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Хрустальный жезл",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Стеклянный жезл",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "spell:mordenkainens-sword",
+  "dndsuId": 166,
+  "nameRu": "Меч Морденкайнена",
+  "materials": {
+    "kind": "item",
+    "name": "Миниатюрный платиновый меч",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 25000,
+    "special": "Рукоятка и навершие из меди и цинка."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "spell:ray-of-frost",
+  "dndsuId": 149,
+  "nameRu": "Луч холода",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d8",
+        "damageType": "cold",
+        "resolution": "ranged_spell_attack"
+      },
+      {
+        "type": "modifier",
+        "stat": "speed",
+        "op": "add",
+        "value": -10,
+        "conditionText": "При попадании, до начала следующего хода заклинателя."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

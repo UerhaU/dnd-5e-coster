@@ -1,0 +1,13 @@
+{
+  "id": "spell:wall-of-light",
+  "dndsuId": 492,
+  "nameRu": "Стена света",
+  "materials": {
+    "kind": "item",
+    "name": "Ручное зеркальце",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

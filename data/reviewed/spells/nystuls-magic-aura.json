@@ -1,0 +1,13 @@
+{
+  "id": "spell:nystuls-magic-aura",
+  "dndsuId": 188,
+  "nameRu": "Нистулова ложная аура",
+  "materials": {
+    "kind": "item",
+    "name": "Шёлк",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

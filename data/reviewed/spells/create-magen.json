@@ -1,0 +1,36 @@
+{
+  "id": "spell:create-magen",
+  "dndsuId": 3023,
+  "nameRu": "Сотворение магена",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Флакон ртути",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "consumed",
+        "minimumValueCp": 50000
+      },
+      {
+        "kind": "item",
+        "name": "Человеческая кукла",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "consumed",
+        "special": "В натуральную величину."
+      },
+      {
+        "kind": "item",
+        "name": "Хрустальный жезл",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 150000,
+        "special": "Замысловатой формы."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

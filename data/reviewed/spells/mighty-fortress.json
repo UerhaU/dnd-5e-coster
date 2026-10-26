@@ -1,0 +1,14 @@
+{
+  "id": "spell:mighty-fortress",
+  "dndsuId": 505,
+  "nameRu": "Могучая крепость",
+  "materials": {
+    "kind": "item",
+    "name": "Алмаз",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

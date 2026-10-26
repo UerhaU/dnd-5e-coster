@@ -1,0 +1,26 @@
+{
+  "id": "spell:clairvoyance",
+  "dndsuId": 238,
+  "nameRu": "Подсматривание",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Украшенный камнями рог",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Стеклянный глаз",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ],
+    "minimumGroupValueCp": 10000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "spell:mass-healing-word",
+  "dndsuId": 170,
+  "nameRu": "Множественное лечащее слово",
+  "targets": {
+    "maxCount": 6,
+    "extraPerSlot": 0
+  },
+  "provenance": ["targets: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

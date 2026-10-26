@@ -1,0 +1,13 @@
+{
+  "id": "spell:erupting-earth",
+  "dndsuId": 384,
+  "nameRu": "Извержение земли",
+  "materials": {
+    "kind": "item",
+    "name": "Обсидиан",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

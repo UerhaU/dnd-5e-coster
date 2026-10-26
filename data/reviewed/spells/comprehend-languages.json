@@ -1,0 +1,25 @@
+{
+  "id": "spell:comprehend-languages",
+  "dndsuId": 252,
+  "nameRu": "Понимание языков",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Сажа",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Соль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

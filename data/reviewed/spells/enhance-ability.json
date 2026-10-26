@@ -1,0 +1,32 @@
+{
+  "id": "spell:enhance-ability",
+  "dndsuId": 103,
+  "nameRu": "Улучшение характеристики",
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 1
+  },
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Мех зверя",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Перо зверя",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": [
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "spell:bane",
+  "dndsuId": 254,
+  "nameRu": "Порча",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "subtract",
+        "value": null,
+        "dice": "1d4",
+        "save": {
+          "ability": "cha",
+          "onSuccess": null
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "saving_throws",
+        "op": "subtract",
+        "value": null,
+        "dice": "1d4",
+        "save": {
+          "ability": "cha",
+          "onSuccess": null
+        }
+      }
+    ]
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Кровь",
+    "quantity": 1,
+    "unit": "drop",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

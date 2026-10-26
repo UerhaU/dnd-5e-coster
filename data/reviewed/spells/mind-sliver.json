@@ -1,0 +1,32 @@
+{
+  "id": "spell:mind-sliver",
+  "dndsuId": 3050,
+  "nameRu": "Расщепление разума",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d6",
+        "damageType": "psychic",
+        "save": {
+          "ability": "int",
+          "onSuccess": "none"
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "saving_throws",
+        "op": "subtract",
+        "value": null,
+        "dice": "1d4",
+        "save": {
+          "ability": "int",
+          "onSuccess": null
+        },
+        "conditionText": "При провале, из следующего спасброска до конца следующего хода заклинателя."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

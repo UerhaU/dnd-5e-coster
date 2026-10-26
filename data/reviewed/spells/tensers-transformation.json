@@ -1,0 +1,13 @@
+{
+  "id": "spell:tensers-transformation",
+  "dndsuId": 500,
+  "nameRu": "Трансформация Тензера",
+  "materials": {
+    "kind": "item",
+    "name": "Волос быка",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "spell:augury",
+  "dndsuId": 40,
+  "nameRu": "Гадание",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Палочки для гадания",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "С отметинами."
+      },
+      {
+        "kind": "item",
+        "name": "Костяшки для гадания",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "С отметинами."
+      },
+      {
+        "kind": "item",
+        "name": "Фигурки для гадания",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "С отметинами."
+      }
+    ],
+    "minimumGroupValueCp": 2500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

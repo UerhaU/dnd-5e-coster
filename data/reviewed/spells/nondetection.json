@@ -1,0 +1,14 @@
+{
+  "id": "spell:nondetection",
+  "dndsuId": 185,
+  "nameRu": "Необнаружимость",
+  "materials": {
+    "kind": "item",
+    "name": "Алмазная пыль",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "consumed",
+    "minimumValueCp": 2500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

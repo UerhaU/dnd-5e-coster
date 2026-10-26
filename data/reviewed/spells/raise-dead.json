@@ -1,0 +1,14 @@
+{
+  "id": "spell:raise-dead",
+  "dndsuId": 208,
+  "nameRu": "Оживление",
+  "materials": {
+    "kind": "item",
+    "name": "Алмаз",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

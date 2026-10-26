@@ -1,0 +1,14 @@
+{
+  "id": "spell:time-ravage",
+  "dndsuId": 2456,
+  "nameRu": "Утрата времени",
+  "materials": {
+    "kind": "item",
+    "name": "Песочные часы с алмазной пылью",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 500000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "spell:clone",
+  "dndsuId": 54,
+  "nameRu": "Двойник",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Алмаз",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "consumed",
+        "minimumValueCp": 100000
+      },
+      {
+        "kind": "item",
+        "name": "Плоть существа",
+        "quantity": 1,
+        "unit": "cubic_inch",
+        "consumption": "consumed",
+        "special": "Плоть клонируемого существа."
+      },
+      {
+        "kind": "item",
+        "name": "Сосуд для клона",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 200000,
+        "special": "С запираемой крышкой, достаточно большой для существа."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

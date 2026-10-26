@@ -1,0 +1,51 @@
+{
+  "id": "spell:haste",
+  "dndsuId": 100,
+  "nameRu": "Ускорение",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "add",
+        "value": 2
+      },
+      {
+        "type": "modifier",
+        "stat": "dexterity_saves",
+        "op": "advantage",
+        "value": null
+      },
+      {
+        "type": "modifier",
+        "stat": "speed",
+        "op": "multiply",
+        "value": 2
+      },
+      {
+        "type": "modifier",
+        "stat": "additional_actions",
+        "op": "add",
+        "value": 1,
+        "conditionText": "Только Атака (одна атака оружием), Рывок, Отход, Засада или Использование предмета."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Стружка корня лакрицы",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

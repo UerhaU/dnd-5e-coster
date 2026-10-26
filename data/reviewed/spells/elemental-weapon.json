@@ -1,0 +1,45 @@
+{
+  "id": "spell:elemental-weapon",
+  "dndsuId": 339,
+  "nameRu": "Стихийное оружие",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "add",
+        "value": 1,
+        "scope": "weapon",
+        "slotScaling": [
+          {
+            "slotLevel": 5,
+            "value": 2
+          },
+          {
+            "slotLevel": 7,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "type": "damage",
+        "dice": "1d4",
+        "damageType": null,
+        "choices": ["acid", "cold", "fire", "lightning", "thunder"],
+        "scope": "weapon",
+        "slotScaling": [
+          {
+            "slotLevel": 5,
+            "dice": "2d4"
+          },
+          {
+            "slotLevel": 7,
+            "dice": "3d4"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

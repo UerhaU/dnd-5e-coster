@@ -1,0 +1,10 @@
+{
+  "id": "spell:healing-word",
+  "dndsuId": 144,
+  "nameRu": "Лечащее слово",
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "provenance": ["targets: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

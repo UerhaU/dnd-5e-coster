@@ -1,0 +1,13 @@
+{
+  "id": "spell:locate-animals-or-plants",
+  "dndsuId": 242,
+  "nameRu": "Поиск животных или растений",
+  "materials": {
+    "kind": "item",
+    "name": "Мех ищейки",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:telepathy",
+  "dndsuId": 345,
+  "nameRu": "Телепатия",
+  "materials": {
+    "kind": "item",
+    "name": "Переплетённое серебряное кольцо",
+    "quantity": 2,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

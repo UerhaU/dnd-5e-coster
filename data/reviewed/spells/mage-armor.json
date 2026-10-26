@@ -1,0 +1,34 @@
+{
+  "id": "spell:mage-armor",
+  "dndsuId": 60,
+  "nameRu": "Доспехи мага",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "base",
+        "value": 13,
+        "ability": "dex",
+        "conditionText": "Цель не носит доспех."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Выделанная кожа",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

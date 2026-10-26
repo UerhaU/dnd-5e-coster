@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-beast",
+  "dndsuId": 3063,
+  "nameRu": "Призыв духа зверя",
+  "materials": {
+    "kind": "item",
+    "name": "Позолоченный жёлудь",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 20000,
+    "special": "Содержит перо, мех и рыбий хвост."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

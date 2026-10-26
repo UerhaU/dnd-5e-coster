@@ -1,0 +1,27 @@
+{
+  "id": "spell:legend-lore",
+  "dndsuId": 115,
+  "nameRu": "Знание легенд",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "minimumValueCp": 25000
+      },
+      {
+        "kind": "item",
+        "name": "Пластинка из слоновой кости",
+        "quantity": 4,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 5000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

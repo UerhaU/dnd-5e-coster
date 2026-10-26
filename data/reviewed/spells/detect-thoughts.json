@@ -1,0 +1,13 @@
+{
+  "id": "spell:detect-thoughts",
+  "dndsuId": 196,
+  "nameRu": "Обнаружение мыслей",
+  "materials": {
+    "kind": "item",
+    "name": "Медная монета",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

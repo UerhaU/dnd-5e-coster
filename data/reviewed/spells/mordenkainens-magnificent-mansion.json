@@ -1,0 +1,35 @@
+{
+  "id": "spell:mordenkainens-magnificent-mansion",
+  "dndsuId": 16,
+  "nameRu": "Великолепный особняк Морденкайнена",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Миниатюрная дверь из слоновой кости",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 500
+      },
+      {
+        "kind": "item",
+        "name": "Полированный мрамор",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 500
+      },
+      {
+        "kind": "item",
+        "name": "Серебряная ложка",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 500
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

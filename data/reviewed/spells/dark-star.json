@@ -1,0 +1,25 @@
+{
+  "id": "spell:dark-star",
+  "dndsuId": 2453,
+  "nameRu": "Тёмная звезда",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Оникс",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Кровь заклинателя",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

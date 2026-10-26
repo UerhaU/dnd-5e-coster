@@ -1,0 +1,13 @@
+{
+  "id": "spell:thorn-whip",
+  "dndsuId": 348,
+  "nameRu": "Терновый кнут",
+  "materials": {
+    "kind": "item",
+    "name": "Стебель растения с шипами",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

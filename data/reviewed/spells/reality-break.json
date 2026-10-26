@@ -1,0 +1,13 @@
+{
+  "id": "spell:reality-break",
+  "dndsuId": 2454,
+  "nameRu": "Брешь в реальности",
+  "materials": {
+    "kind": "item",
+    "name": "Хрустальная призма",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

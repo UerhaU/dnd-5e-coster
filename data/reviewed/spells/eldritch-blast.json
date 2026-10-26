@@ -1,0 +1,32 @@
+{
+  "id": "spell:eldritch-blast",
+  "dndsuId": 168,
+  "nameRu": "Мистический заряд",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d10",
+        "damageType": "force",
+        "resolution": "ranged_spell_attack",
+        "repeatCount": 1,
+        "beamsByCharacterLevel": [
+          {
+            "characterLevel": 5,
+            "count": 2
+          },
+          {
+            "characterLevel": 11,
+            "count": 3
+          },
+          {
+            "characterLevel": 17,
+            "count": 4
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

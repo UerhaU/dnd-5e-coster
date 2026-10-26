@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-fiend",
+  "dndsuId": 3064,
+  "nameRu": "Призыв духа исчадия",
+  "materials": {
+    "kind": "item",
+    "name": "Рубиновый флакон",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 60000,
+    "special": "Содержит кровь Гуманоида."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

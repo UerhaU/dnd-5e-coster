@@ -1,0 +1,25 @@
+{
+  "id": "spell:maddening-darkness",
+  "dndsuId": 506,
+  "nameRu": "Одуряющая тьма",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Смола",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Ртуть",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "spell:guidance",
+  "dndsuId": 105,
+  "nameRu": "Указание",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "ability_checks",
+        "op": "add",
+        "value": null,
+        "dice": "1d4",
+        "conditionText": "К одной проверке характеристики до окончания заклинания."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

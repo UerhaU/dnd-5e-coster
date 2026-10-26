@@ -1,0 +1,15 @@
+{
+  "id": "spell:booming-blade",
+  "dndsuId": 458,
+  "nameRu": "Громовой клинок",
+  "materials": {
+    "kind": "item",
+    "name": "Рукопашное оружие",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 10,
+    "selector": "melee_weapon"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

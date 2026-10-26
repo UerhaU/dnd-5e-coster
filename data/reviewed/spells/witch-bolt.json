@@ -1,0 +1,13 @@
+{
+  "id": "spell:witch-bolt",
+  "dndsuId": 15,
+  "nameRu": "Ведьмин снаряд",
+  "materials": {
+    "kind": "item",
+    "name": "Веточка дерева после удара молнии",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

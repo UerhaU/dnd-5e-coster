@@ -1,0 +1,14 @@
+{
+  "id": "spell:incite-greed",
+  "dndsuId": 1923,
+  "nameRu": "Спровоцированная жадность",
+  "materials": {
+    "kind": "item",
+    "name": "Драгоценный камень",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 5000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "spell:summon-undead",
+  "dndsuId": 3067,
+  "nameRu": "Призыв духа нежити",
+  "materials": {
+    "kind": "item",
+    "name": "Позолоченный череп",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 30000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

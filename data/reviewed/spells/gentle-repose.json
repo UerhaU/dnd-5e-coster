@@ -1,0 +1,27 @@
+{
+  "id": "spell:gentle-repose",
+  "dndsuId": 186,
+  "nameRu": "Нетленные останки",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Соль",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Медная монета",
+        "quantity": 1,
+        "unit": "piece",
+        "quantityBasis": "per_eye",
+        "consumption": "not_consumed",
+        "special": "Остаются на глазах всё время действия."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

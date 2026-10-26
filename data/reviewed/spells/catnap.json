@@ -1,0 +1,13 @@
+{
+  "id": "spell:catnap",
+  "dndsuId": 472,
+  "nameRu": "Дрёма",
+  "materials": {
+    "kind": "item",
+    "name": "Песок",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

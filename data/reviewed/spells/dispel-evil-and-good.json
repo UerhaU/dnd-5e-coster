@@ -1,0 +1,37 @@
+{
+  "id": "spell:dispel-evil-and-good",
+  "dndsuId": 300,
+  "nameRu": "Рассеивание зла и добра",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Святая вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Порошок серебра",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Порошок железа",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

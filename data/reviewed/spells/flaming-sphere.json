@@ -1,0 +1,32 @@
+{
+  "id": "spell:flaming-sphere",
+  "dndsuId": 289,
+  "nameRu": "Пылающий шар",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Сало",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Сера",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Порошок железа",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

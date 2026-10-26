@@ -1,0 +1,13 @@
+{
+  "id": "spell:mass-polymorph",
+  "dndsuId": 507,
+  "nameRu": "Множественное превращение",
+  "materials": {
+    "kind": "item",
+    "name": "Кокон гусеницы",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

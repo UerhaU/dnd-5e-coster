@@ -1,0 +1,14 @@
+{
+  "id": "spell:summon-celestial",
+  "dndsuId": 3066,
+  "nameRu": "Призыв духа небожителя",
+  "materials": {
+    "kind": "item",
+    "name": "Золотой реликварий",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

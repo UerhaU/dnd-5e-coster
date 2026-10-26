@@ -1,0 +1,34 @@
+{
+  "id": "spell:create-undead",
+  "dndsuId": 334,
+  "nameRu": "Сотворение нежити",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Глиняный горшок с могильной землёй",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Глиняный горшок с солоноватой водой",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Чёрный оникс",
+        "quantity": 1,
+        "unit": "piece",
+        "quantityBasis": "per_target",
+        "consumption": "not_consumed",
+        "minimumValueCp": 15000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}
