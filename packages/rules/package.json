@@ -1,0 +1,11 @@
+{
+  "name": "@koster/rules",
+  "version": "2.0.0-alpha.0",
+  "private": true,
+  "description": "Движок правил D&D 5e 2014: чистые функции без React, сервера и базы (этап 4)",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

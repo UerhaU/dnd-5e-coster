@@ -1,0 +1,32 @@
+# Сборка портативной программы для Windows x64 (раздел 4.2, Р18, Р26, Р41).
+# electron-builder собирает папку win-unpacked, а zip с корневой папкой Koster/
+# делает scripts/package-zip.ts.
+appId: io.github.uerhau.koster
+productName: Koster
+executableName: Koster
+copyright: Проект «Костёр», некоммерческий
+directories:
+  output: release
+  buildResources: resources
+files:
+  - out/**
+  - package.json
+  # Исходники SQLite и сборки better-sqlite3 под другие системы программе не нужны.
+  - '!**/node_modules/better-sqlite3/{deps,src}/**'
+  - '!**/node_modules/better-sqlite3/binding.gyp'
+  - '!**/node_modules/better-sqlite3/prebuilds/!(win32-x64.node)'
+extraFiles:
+  - from: resources/README.txt
+    to: README.txt
+asar: true
+# better-sqlite3 13 поставляется с готовой сборкой Node-API: она работает и в Node, и в Electron,
+# пересобирать её не нужно. Проверка — запуск собранного zip.
+npmRebuild: false
+electronLanguages:
+  - ru
+  - en-US
+win:
+  target:
+    - target: dir
+      arch: x64
+  signAndEditExecutable: true

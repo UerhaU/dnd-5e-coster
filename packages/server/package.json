@@ -1,0 +1,15 @@
+{
+  "name": "@koster/server",
+  "version": "2.0.0-alpha.0",
+  "private": true,
+  "description": "Встроенный сервер Fastify",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@koster/shared": "2.0.0-alpha.0",
+    "fastify": "^5.12.7"
+  }
+}

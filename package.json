@@ -1,48 +1,35 @@
 {
-  "name": "dnd-5e-coster",
+  "name": "koster",
+  "version": "2.0.0-alpha.0",
   "private": true,
-  "version": "0.1.0-alpha.1",
+  "description": "Костёр — портативная программа для игры в D&D 5e (2014) на русском языке",
   "type": "module",
-  "scripts": {
-    "dev:spellbook": "concurrently -k -n catalog,page -c yellow,cyan \"npm:dev:spellbook:api\" \"npm:dev:spellbook:page\"",
-    "dev:spellbook:api": "tsx watch backend/src/spell-catalog/server.ts",
-    "dev:spellbook:page": "vite --host 127.0.0.1 --port 5181 --strictPort",
-    "spellbook:init": "node scripts/build-spell-catalog.mjs",
-    "test:spellbook": "node --import tsx --test scripts/test-spell-catalog.mjs",
-    "dev": "concurrently -n backend,frontend -c green,cyan \"npm:dev:backend\" \"npm:dev:frontend\"",
-    "dev:frontend": "vite --host 0.0.0.0",
-    "dev:backend": "tsx watch backend/src/server.ts",
-    "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "tsc -b tsconfig.app.json tsconfig.node.json && vite build",
-    "build:backend": "prisma generate && tsc -p backend/tsconfig.json",
-    "preview": "vite preview --host 0.0.0.0",
-    "prisma:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:studio": "prisma studio",
-    "import:dndsu:content": "node scripts/import-dndsu-content.mjs",
-    "report:dndsu:review": "node scripts/report-dndsu-import-review.mjs",
-    "start:backend": "node backend/dist/server.js",
-    "typecheck": "tsc -b",
-    "release:check": "node scripts/check-publication.mjs"
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24"
   },
-  "dependencies": {
-    "@fastify/cors": "^11.2.0",
-    "@fastify/websocket": "^11.2.0",
-    "@prisma/client": "^6.19.3",
-    "fastify": "^5.8.5",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+  "scripts": {
+    "dev": "npm run dev -w @koster/desktop",
+    "build": "npm run build -w @koster/desktop",
+    "dist": "npm run dist -w @koster/desktop",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "check": "npm run lint && npm run typecheck && npm run test"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.3",
-    "@types/ws": "^8.18.1",
-    "@vitejs/plugin-react": "^4.4.1",
-    "concurrently": "^9.2.1",
-    "prisma": "^6.19.3",
-    "tsx": "^4.21.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.4"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.0.5"
   }
 }

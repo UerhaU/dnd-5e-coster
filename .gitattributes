@@ -1,0 +1,9 @@
+# Во всех текстовых файлах переводы строк LF, в том числе при checkout на Windows:
+# Prettier проверяет endOfLine: lf, и в CI на windows-latest иначе были бы CRLF.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.ttf binary
+*.woff2 binary
