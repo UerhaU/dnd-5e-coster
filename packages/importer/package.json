@@ -6,6 +6,15 @@
   "type": "module",
   "exports": "./src/index.ts",
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "catalog:build": "node src/cli/catalog-build.ts",
+    "catalog:fetch": "node src/cli/catalog-fetch.ts",
+    "catalog:compare-legacy": "node src/cli/compare-legacy.ts"
+  },
+  "dependencies": {
+    "@koster/db": "2.0.0-alpha.0",
+    "@koster/shared": "2.0.0-alpha.0",
+    "cheerio": "^1.2.0",
+    "domhandler": "^5.0.3"
   }
 }

@@ -17,6 +17,7 @@
     "fastify": "^5.12.7"
   },
   "devDependencies": {
+    "@koster/db": "2.0.0-alpha.0",
     "@koster/server": "2.0.0-alpha.0",
     "@koster/shared": "2.0.0-alpha.0",
     "@koster/ui": "2.0.0-alpha.0",
