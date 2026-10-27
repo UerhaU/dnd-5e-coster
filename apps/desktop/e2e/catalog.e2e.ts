@@ -72,6 +72,30 @@ test('справочник: найти «Длинный меч» в снаряж
   await expect(window.getByLabel('Группа')).toHaveValue('martial_melee');
 });
 
+// Доделки части Б: зелье лечения с эффектом (Р64) и скакун со столбцами таблицы (Р66).
+// Оба есть в обоих каталогах.
+test('справочник: зелье лечения и боевой конь в снаряжении', async () => {
+  const { window } = running;
+  const search = window.getByRole('searchbox', { name: 'Поиск снаряжения' });
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+
+  // Прошлый сценарий оставил фильтр «Воинское рукопашное».
+  await window.getByLabel('Группа').selectOption('');
+  await search.fill('зелье');
+  await results.getByRole('link', { name: /Зелье лечения/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Зелье лечения' })).toBeVisible();
+  await expect(window.getByTestId('item-use-effect')).toHaveText('Восстанавливает 2к4 + 2 хита');
+  await expect(window.getByText('Действие, предмет расходуется')).toBeVisible();
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await search.fill('боевой конь');
+  await results.getByRole('link', { name: /Боевой конь/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Боевой конь' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Скакун или животное');
+  await expect(window.getByText('Скорость', { exact: true })).toBeVisible();
+  await expect(window.getByText('Грузоподъёмность', { exact: true })).toBeVisible();
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);
