@@ -1,0 +1,287 @@
+/* Базовые стили временной темы. Только токены из tokens.css, без своих цветов. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--space-3);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--font-size-xxl);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+}
+
+h3 {
+  font-size: var(--font-size-l);
+}
+
+p {
+  margin: 0 0 var(--space-3);
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  padding: var(--space-2) var(--space-3);
+}
+
+button {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+}
+
+button:disabled {
+  color: var(--color-disabled);
+  cursor: default;
+}
+
+.page {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+}
+
+.error {
+  color: var(--color-danger);
+}
+
+/* Главное меню */
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 360px;
+  padding: 0;
+  margin: var(--space-5) 0;
+  list-style: none;
+}
+
+.main-menu__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-size-l);
+}
+
+a.main-menu__item:hover {
+  border-color: var(--color-accent);
+}
+
+.main-menu__item--disabled {
+  color: var(--color-disabled);
+}
+
+.main-menu__later {
+  font-size: var(--font-size-s);
+}
+
+/* Список заклинаний */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}
+
+.search {
+  width: 100%;
+  font-size: var(--font-size-l);
+  margin-bottom: var(--space-3);
+}
+
+.result-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.result-list li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.result {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-2);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.result:hover {
+  background: var(--color-surface);
+}
+
+.result__name {
+  font-size: var(--font-size-l);
+}
+
+.result__meta {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}
+
+.pager {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+/* Заглушка иконки по категории (Р13) */
+.category-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-m);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.category-icon--large {
+  width: 64px;
+  height: 64px;
+  font-size: var(--font-size-xl);
+}
+
+/* Карточка */
+.card-header {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.card-header h1 {
+  margin: 0;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-m);
+}
+
+.facts dt {
+  color: var(--color-text-muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-s);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}
+
+.badge--ok {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.text-blocks table {
+  border-collapse: collapse;
+  margin-bottom: var(--space-3);
+}
+
+.text-blocks th,
+.text-blocks td {
+  border: 1px solid var(--color-border);
+  padding: var(--space-1) var(--space-2);
+  text-align: left;
+}
+
+.text-blocks blockquote {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.text-blocks p {
+  white-space: pre-line;
+}
+
+.footer {
+  margin-top: var(--space-6);
+  font-size: var(--font-size-s);
+}

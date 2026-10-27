@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { createServer, listenLocal } from '@koster/server';
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { IPC_GET_SERVER_URL } from '../shared/ipc';
 import { openProgramCatalog } from './catalog';
 import { createLogger } from './log';
@@ -84,7 +84,9 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
   const window = new BrowserWindow(
     createWindowOptions(path.join(__dirname, '../preload/index.js')),
   );
-  lockDownWebContents(window.webContents, rendererOrigin);
+  lockDownWebContents(window.webContents, rendererOrigin, (url) => {
+    void shell.openExternal(url);
+  });
   window.once('ready-to-show', () => window.show());
 
   if (devRendererUrl) {

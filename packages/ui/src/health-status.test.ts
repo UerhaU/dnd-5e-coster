@@ -13,7 +13,25 @@ describe('describeHealth', () => {
       },
     });
 
-    expect(text).toBe('Сервер работает. Версия программы 2.0.0-alpha.0, SQLite 3.50.0.');
+    expect(text).toBe(
+      'Сервер работает. Версия программы 2.0.0-alpha.0, SQLite 3.50.0, каталога нет.',
+    );
+  });
+
+  it('показывает версию каталога и пометку тестового', () => {
+    const text = describeHealth({
+      kind: 'ok',
+      health: {
+        status: 'ok',
+        appVersion: '2.0.0',
+        sqliteVersion: '3.50.0',
+        catalog: { version: 2, contentHash: 'x', builtAt: 'y', sourceKind: 'fixtures' },
+      },
+    });
+
+    expect(text).toBe(
+      'Сервер работает. Версия программы 2.0.0, SQLite 3.50.0, каталог 2 (тестовый).',
+    );
   });
 
   it('объясняет ошибку', () => {

@@ -3,5 +3,13 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "include": ["src/main", "src/preload", "src/shared", "scripts", "electron.vite.config.ts"]
+  "include": [
+    "src/main",
+    "src/preload",
+    "src/shared",
+    "scripts",
+    "electron.vite.config.ts",
+    "e2e",
+    "playwright.config.ts"
+  ]
 }
