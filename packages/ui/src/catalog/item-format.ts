@@ -7,6 +7,7 @@ import {
   type ItemCategoryId,
   type ItemKindId,
   type ItemListItem,
+  type UseRules,
   type WeaponProperty,
 } from '@koster/shared';
 import { damageTypeName } from './spell-format';
@@ -89,6 +90,19 @@ export function costText(cp: number | null): string {
 /** Вес: 0.25 → «0,25 фнт.»; неизвестный — «—». */
 export function weightText(lb: number | null): string {
   return lb === null ? '—' : `${lb.toLocaleString('ru-RU', { maximumFractionDigits: 3 })} фнт.`;
+}
+
+/** Эффект расходуемого предмета: «Восстанавливает 2к4 + 2 хита» (как на DnD.su). */
+export function consumableEffectText(effect: UseRules['effects'][number]): string {
+  const [dice, bonus] = effect.dice.split('+');
+  const amount = bonus ? `${diceText(dice ?? '')} + ${bonus}` : diceText(dice ?? '');
+  return `Восстанавливает ${amount} хита`;
+}
+
+/** «Действие, предмет расходуется». */
+export function consumableActivationText(use: UseRules): string {
+  const activation = use.activation === 'bonus_action' ? 'Бонусное действие' : 'Действие';
+  return use.consumed ? `${activation}, предмет расходуется` : activation;
 }
 
 /** Краткая строка для списка: вид и главное число предмета. */

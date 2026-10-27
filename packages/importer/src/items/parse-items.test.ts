@@ -129,7 +129,7 @@ describe('нормализация снаряжения', () => {
   it('все тестовые строки попали в каталог без ошибок', () => {
     const { stats, issues } = collect();
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(stats).toMatchObject({ pages: 3, failedPages: 0, failed: 0, collected: 35 });
+    expect(stats).toMatchObject({ pages: 4, failedPages: 0, failed: 0, collected: 42 });
     // Описание без строки таблицы — в отчёт, предмет не создаётся.
     expect(issues).toContainEqual(
       expect.objectContaining({ severity: 'skip', message: expect.stringContaining('Безаварий') }),
@@ -213,5 +213,81 @@ describe('нормализация снаряжения', () => {
     expect(byId.get('item:pistol')?.links).toEqual([
       { toId: 'item:bullets', kind: 'uses_ammunition' },
     ]);
+  });
+});
+
+describe('скакуны и транспорт (Р66)', () => {
+  it('статья «Скакуны и транспорт»: книга без метки — первая из «Источники: …»', () => {
+    const article = parseArticlePage(cache.readPage(222) ?? '');
+    expect(article.sourceTitle).toBe("Player's Handbook");
+    const vehicles = article.tables.find(
+      (table) => table.heading === 'Водный и воздушный транспорт',
+    );
+    // «Экипаж» и «Пассажиры» одной ячейкой: столбцы не сдвигаются.
+    expect(vehicles?.rows.find((row) => row.name === 'Дьявольский гонщик')).toMatchObject({
+      cells: ['—', '12 миль/час (18 км/ч)', '1', '', '0,1', '23 (19)', '30'],
+      spans: [1, 1, 2, 0, 1, 1, 1],
+    });
+  });
+
+  it('скакун, седло из группы «Сёдла», повозка после группы', () => {
+    const { byId } = collect();
+    expect(byId.get('item:warhorse')?.data).toMatchObject({
+      kind: 'mount',
+      cost: { text: '400 зм', cp: 40000 },
+      stats: expect.arrayContaining([{ label: 'Скорость', value: '60 фт.' }]),
+    });
+    expect(byId.get('item:military-saddle')).toMatchObject({
+      nameRu: 'Седло, военное',
+      data: { kind: 'tack', category: 'saddle', weight: { lb: 30 } },
+    });
+    expect(byId.get('item:cart')?.data).toMatchObject({
+      kind: 'vehicle',
+      category: 'land_vehicle',
+    });
+  });
+
+  it('суда: группа — вид транспорта, метка книги у строки или у группы, цена «—» — null', () => {
+    const { byId } = collect();
+    expect(byId.get('item:canoe')?.data.category).toBe('waterborne_vehicle');
+    expect(byId.get('item:canoe')?.sources[0]?.source.code).toBe('TOA');
+    expect(byId.get('item:battle-balloon')?.data).toMatchObject({
+      category: 'airborne_vehicle',
+      cost: { text: '—', cp: null },
+    });
+    expect(byId.get('item:astral-brig')?.data.category).toBe('planar_vehicle');
+    expect(byId.get('item:astral-brig')?.sources[0]?.source.code).toBe('MTF');
+    expect(byId.get('item:devils-ride')?.data.stats).toContainEqual({
+      label: 'Экипаж / Пассажиры',
+      value: '1',
+    });
+    expect(byId.get('item:devils-ride')?.sources[0]?.source.code).toBe('BGDIA');
+  });
+
+  it('строка «Доспех ×4 ×2» — не предмет, в отчёт пропуском', () => {
+    const { byId, issues } = collect();
+    expect([...byId.values()].some((item) => item.nameRu === 'Доспех')).toBe(false);
+    expect(issues).toContainEqual(
+      expect.objectContaining({ severity: 'skip', message: expect.stringContaining('«Доспех»') }),
+    );
+  });
+});
+
+describe('зелье лечения (Р64)', () => {
+  it('эффект при использовании — из описания DnD.su', () => {
+    const { byId } = collect();
+    const potion = byId.get('item:potion-of-healing');
+    expect(potion?.automation).toBe('assisted');
+    expect(potion?.rules).toEqual({
+      schemaVersion: 'item-rules/v1',
+      weapon: null,
+      armor: null,
+      shield: null,
+      use: {
+        activation: 'action',
+        consumed: true,
+        effects: [{ type: 'healing', dice: '2d4+2' }],
+      },
+    });
   });
 });

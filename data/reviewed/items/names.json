@@ -1,5 +1,5 @@
 {
-  "$comment": "Английские названия обычного снаряжения для ID (Р11): в таблицах DnD.su их нет. Ключ match — название из таблицы без количества «(20)» и метки книги. category — вид оружия, если таблица его не указывает (взят из v0.1). ammunition — ID боеприпаса, который расходует оружие. descriptionTerms — заголовки описаний на странице, если они не совпадают с названием.",
+  "$comment": "Английские названия обычного снаряжения для ID (Р11): в таблицах DnD.su их нет. Ключ match — название из таблицы без количества «(20)» и метки книги. category — вид оружия, если таблица его не указывает (у дополнительного оружия DnD.su вид не пишет; значения из v0.1 ждут проверки автором, Р65), или вид транспорта. kind — вид предмета, если таблица смешанная. skipRows — строки таблиц, которые не предметы. ammunition — ID боеприпаса, который расходует оружие. descriptionTerms — заголовки описаний на странице, если они не совпадают с названием.",
   "items": [
     { "match": "Стёганый", "nameEn": "Padded armor" },
     { "match": "Кожаный", "nameEn": "Leather armor" },
@@ -272,7 +272,64 @@
     { "match": "Инструменты стеклодува", "nameEn": "Glassblower's tools" },
     { "match": "Инструменты ткача", "nameEn": "Weaver's tools" },
     { "match": "Инструменты художника", "nameEn": "Painter's supplies" },
-    { "match": "Инструменты ювелира", "nameEn": "Jeweler's tools" }
+    { "match": "Инструменты ювелира", "nameEn": "Jeweler's tools" },
+
+    { "match": "Боевой конь", "nameEn": "Warhorse" },
+    { "match": "Болотник", "nameEn": "Moorbounder" },
+    { "match": "Верблюд", "nameEn": "Camel" },
+    { "match": "Ездовая собака", "nameEn": "Sled dog" },
+    { "match": "Лошадь, ездовая", "nameEn": "Riding horse" },
+    { "match": "Лошадь, тягловая", "nameEn": "Draft horse" },
+    { "match": "Мастиф", "nameEn": "Mastiff" },
+    { "match": "Осёл или мул", "nameEn": "Donkey or mule" },
+    { "match": "Пони", "nameEn": "Pony" },
+    { "match": "Слон", "nameEn": "Elephant" },
+    { "match": "Топороклюв", "nameEn": "Axe beak" },
+
+    { "match": "Карета", "nameEn": "Chariot", "kind": "vehicle", "category": "land_vehicle" },
+    { "match": "Коляска", "nameEn": "Carriage", "kind": "vehicle", "category": "land_vehicle" },
+    { "match": "Конюшня (в день)", "nameEn": "Stabling (per day)" },
+    { "match": "Корм (в день)", "nameEn": "Feed (per day)" },
+    { "match": "Сани", "nameEn": "Sled", "kind": "vehicle", "category": "land_vehicle" },
+    { "match": "Седельные сумки", "nameEn": "Saddlebags" },
+    {
+      "match": "Собачья упряжка",
+      "nameEn": "Dogsled",
+      "kind": "vehicle",
+      "category": "land_vehicle"
+    },
+    { "match": "Седло, военное", "nameEn": "Military saddle" },
+    { "match": "Седло, грузовое", "nameEn": "Pack saddle" },
+    { "match": "Седло, ездовое", "nameEn": "Riding saddle" },
+    { "match": "Седло, экзотическое", "nameEn": "Exotic saddle" },
+    { "match": "Телега", "nameEn": "Cart", "kind": "vehicle", "category": "land_vehicle" },
+    { "match": "Упряжь и уздечка", "nameEn": "Bit and bridle" },
+    { "match": "Фургон", "nameEn": "Wagon", "kind": "vehicle", "category": "land_vehicle" },
+
+    { "match": "Каноэ", "nameEn": "Canoe" },
+    { "match": "Шлюпка", "nameEn": "Rowboat" },
+    { "match": "Килевая лодка", "nameEn": "Keelboat" },
+    { "match": "Ладья", "nameEn": "Longship" },
+    { "match": "Парусный корабль", "nameEn": "Sailing ship" },
+    { "match": "Военный корабль", "nameEn": "Warship" },
+    { "match": "Галера", "nameEn": "Galley" },
+    { "match": "Боевой воздушный шар", "nameEn": "Battle balloon" },
+    { "match": "Воздушный корабль", "nameEn": "Airship" },
+    { "match": "Небесный корабль", "nameEn": "Skyship" },
+    { "match": "Механический злобоглаз", "nameEn": "Mechanical beholder" },
+    { "match": "Астральный ялик", "nameEn": "Astral skiff" },
+    { "match": "Астральный бриг", "nameEn": "Astral brig" },
+    { "match": "Межпланарный рейдер", "nameEn": "Planar raider" },
+    { "match": "Дьявольский гонщик", "nameEn": "Devil's ride" },
+    { "match": "Дьявольский измельчитель", "nameEn": "Demon grinder" },
+    { "match": "Мусорщик", "nameEn": "Scavenger" },
+    { "match": "Палач", "nameEn": "Tormentor" }
+  ],
+  "skipRows": [
+    {
+      "match": "Доспех",
+      "reason": "строка «Доспех ×4 ×2» таблицы «Сёдла, упряжь и транспорт» — множитель цены и веса доспеха для скакуна, а не предмет со своей ценой"
+    }
   ],
   "tradeGoods": [
     { "match": "1 фунт пшеницы", "nameRu": "Пшеница (1 фунт)", "nameEn": "Wheat" },

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { entityIdSchema, idsOf, ITEM_CATEGORIES } from '@koster/shared';
+import { entityIdSchema, idsOf, ITEM_CATEGORIES, ITEM_KINDS } from '@koster/shared';
 import { z } from 'zod';
 
 // Ручные данные снаряжения (раздел 6, шаг review): data/reviewed/items/.
@@ -13,6 +13,8 @@ export const reviewedItemNameSchema = z.strictObject({
   /** Название из таблицы DnD.su без количества «(20)» и метки книги. */
   match: text,
   nameEn: text,
+  /** Вид предмета, если таблица смешанная: в «Сёдла, упряжь и транспорт» есть и повозки. */
+  kind: z.enum(idsOf(ITEM_KINDS)).optional(),
   category: z.enum(idsOf(ITEM_CATEGORIES)).optional(),
   ammunition: entityIdSchema.optional(),
   /** Заголовки описаний на странице, если не совпадают с названием. */
@@ -41,10 +43,14 @@ export const reviewedPackSchema = z.strictObject({
     .min(1),
 });
 
+/** Строка таблицы, которая не предмет: «Доспех ×4 ×2» — множитель цены доспеха скакуна. */
+export const reviewedSkipRowSchema = z.strictObject({ match: text, reason: text });
+
 const namesFileSchema = z.strictObject({
   $comment: z.string().optional(),
   items: z.array(reviewedItemNameSchema),
   tradeGoods: z.array(reviewedTradeGoodSchema),
+  skipRows: z.array(reviewedSkipRowSchema).default([]),
 });
 const packsFileSchema = z.strictObject({
   $comment: z.string().optional(),
@@ -59,6 +65,7 @@ export interface ReviewedItems {
   names: Map<string, ReviewedItemName>;
   tradeGoods: Map<string, ReviewedTradeGood>;
   packs: Map<string, ReviewedPack>;
+  skipRows: Map<string, z.infer<typeof reviewedSkipRowSchema>>;
   /** Ошибки файлов: файл не прочитан или повтор ключа. */
   invalid: { file: string; message: string }[];
 }
@@ -111,6 +118,7 @@ export function loadReviewedItems(folder: string): ReviewedItems {
     names: byKey('names.json', names?.items ?? [], invalid),
     tradeGoods: byKey('names.json', names?.tradeGoods ?? [], invalid),
     packs: byKey('packs.json', packs?.packs ?? [], invalid),
+    skipRows: byKey('names.json', names?.skipRows ?? [], invalid),
     invalid,
   };
 }

@@ -98,7 +98,7 @@ export function collectItems(
           message,
         });
       };
-      usedNames.add(nameKey(item.nameRu));
+      usedNames.add(nameKey(item.reviewedMatch));
       if (entities.has(item.id)) {
         // Р11: при совпадении английских названий добавляется суффикс источника.
         const suffixed = `${item.id}-${item.source.id}`;

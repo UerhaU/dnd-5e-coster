@@ -35,14 +35,22 @@ export class ItemSources {
   }
 
   private make(code: string, title: string): NormalizedSource {
-    return (
-      this.known.get(code) ?? {
-        id: code.toLowerCase(),
-        code,
-        nameEn: title,
-        dndsuSourceId: null,
-        edition: /24$/.test(code) ? '5e_2024' : '5e_2014',
-      }
-    );
+    const known = this.known.get(code);
+    if (known) {
+      return known;
+    }
+    const made: NormalizedSource = {
+      id: code.toLowerCase(),
+      code,
+      nameEn: title,
+      dndsuSourceId: null,
+      edition: /24$/.test(code) ? '5e_2024' : '5e_2014',
+    };
+    // Метка без подсказки («Каноэ (TOA)») — после метки с названием книги: одна строка
+    // `sources`. Подсказку берёт первая встреченная метка с названием.
+    if (title !== code) {
+      this.known.set(code, made);
+    }
+    return made;
   }
 }

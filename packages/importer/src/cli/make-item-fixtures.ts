@@ -51,6 +51,14 @@ const FIXTURE_ITEMS: Record<string, string> = {
   Батарея: 'вес в унциях',
   Бомба: 'взрывчатка, раздел h3',
   Гранатомёт: 'описание в разделе «Гранаты»',
+  'Боевой конь': 'скакун: скорость и грузоподъёмность столбцами',
+  Военное: 'подпункт группы «Сёдла» с отступом пробелом → «Седло, военное»',
+  Телега: 'строка после группы «Сёдла» без отступа — не седло, а транспорт',
+  Доспех: 'строка «×4 ×2» — не предмет (skipRows)',
+  Каноэ: 'водный транспорт с меткой книги (TOA)',
+  'Боевой воздушный шар': 'воздушный транспорт, цена «—»',
+  'Астральный бриг': 'метка книги у группы «Межпланарный транспорт (MTF)»',
+  'Дьявольский гонщик': 'объединённая ячейка «Экипаж / Пассажиры» (BGDIA)',
 };
 
 /** Общие описания, к которым относятся предметы из списка. */
@@ -96,9 +104,16 @@ for (const page of cache.list.pages) {
   // Абзацы: «Термин. Текст» и его продолжения — только для предметов из списка;
   // разделы h3 с меткой книги (дополнительное оружие, взрывчатка) — тоже.
   let context = false;
-  body.find('h2, h3, p').each((_, node) => {
+  body.find('h2, h3, p, ul, ol').each((_, node) => {
     const element = $(node);
     const text = cleanText(element.text());
+    // Списки — как абзацы: остаются только в разделе предмета из списка.
+    if (node.tagName === 'ul' || node.tagName === 'ol') {
+      if (!context && element.parents('table').length === 0 && !element.hasClass('params')) {
+        element.remove();
+      }
+      return;
+    }
     if (node.tagName !== 'p') {
       context = kept(text);
       if (!context && node.tagName === 'h3' && splitSourceMark(text).source) {
@@ -118,7 +133,16 @@ for (const page of cache.list.pages) {
       element.remove();
     }
   });
-  body.find('script, .gallery, .comments').remove();
+  body.find('script, .gallery, .comments, img').remove();
+  // Блоки статистики кораблей (свёрнутые `.hide-wrapper`) — только у предметов из списка;
+  // обёртки, от которых ничего не осталось, — тоже прочь.
+  body.find('.hide-wrapper').each((_, node) => {
+    const headings = $(node).find('h2, h3').toArray();
+    if (!headings.some((heading) => kept(cleanText($(heading).text())))) $(node).remove();
+  });
+  body.find('div').each((_, node) => {
+    if (!cleanText($(node).text())) $(node).remove();
+  });
 
   const html = [
     '<!doctype html>',

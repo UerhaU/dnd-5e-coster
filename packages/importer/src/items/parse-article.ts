@@ -28,6 +28,11 @@ export interface RawRow {
   source: RawSourceMark | null;
   /** Остальные ячейки строки по порядку столбцов. */
   cells: string[];
+  /**
+   * Сколько столбцов занимает каждая ячейка `cells`: 1 — обычная, 2 — объединённая
+   * с соседней («Экипаж» и «Пассажиры» одной ячейкой), 0 — столбец занят ячейкой слева.
+   */
+  spans: number[];
   /** Строка с отступом: относится к последней группе таблицы. */
   inGroup: boolean;
   /** Все строки-группы таблицы выше этой строки, по порядку: «эпоха Возрождения», «Боеприпасы». */
@@ -115,7 +120,8 @@ function readCells($: CheerioAPI, row: Cheerio<Element>): Cell[] {
     .map((cell) => ({
       text: inlineText($, $(cell)).replace(/\n/g, ' '),
       span: Number($(cell).attr('colspan') ?? 1),
-      pad: $(cell).hasClass('pad'),
+      // Подпункт группы: класс `pad` или, в статье «Скакуны и транспорт», пробел в начале.
+      pad: $(cell).hasClass('pad') || /^\s+\S/.test($(cell).text()),
     }));
 }
 
@@ -156,16 +162,29 @@ function readTable(
         }
         continue;
       }
-      if (cells.length !== width) {
+      const covered = cells.reduce((sum, cell) => sum + cell.span, 0);
+      if (covered !== width || first.span !== 1) {
         throw new ArticleParseError(
           `Строка таблицы «${heading ?? headerCells.join(', ')}»: ${cells.length} ячеек вместо ${width}`,
         );
+      }
+      // Объединённая ячейка раскладывается по столбцам: текст — в первый, остальные пустые.
+      const values: string[] = [];
+      const spans: number[] = [];
+      for (const cell of cells.slice(1)) {
+        values.push(cell.text);
+        spans.push(cell.span);
+        for (let rest = 1; rest < cell.span; rest += 1) {
+          values.push('');
+          spans.push(0);
+        }
       }
       const { name, source } = splitSourceMark(first.text, titles);
       out.push({
         name,
         source,
-        cells: cells.slice(1).map((cell) => cell.text),
+        cells: values,
+        spans,
         inGroup: first.pad,
         groups: [...groups],
       });
@@ -209,7 +228,9 @@ export function parseArticlePage(html: string): RawArticle {
   const titles = sourceTitles($);
   const title = cleanText($('h2.card-title').first().text() || $('title').text());
   const sourceLine = cleanText(bodies.first().find('li').first().text());
-  const sourceTitle = /Источник:\s*«(.+)»/.exec(sourceLine)?.[1] ?? null;
+  // «Источник: «Player's Handbook»»; в статье «Скакуны и транспорт» — «Источники: «…», «…»»:
+  // первая книга — та, к которой относятся строки без метки.
+  const sourceTitle = /Источники?:\s*«([^»]+)»/.exec(sourceLine)?.[1] ?? null;
   const url = $('meta[property="og:url"]').attr('content') ?? null;
 
   const tables: RawTable[] = [];

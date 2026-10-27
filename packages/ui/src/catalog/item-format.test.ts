@@ -7,6 +7,8 @@ import {
   equipTimeText,
   itemSummary,
   propertyText,
+  consumableActivationText,
+  consumableEffectText,
   weightText,
 } from './item-format';
 import { itemParamsFromSearch } from './list-params';
@@ -30,6 +32,16 @@ describe('подписи снаряжения', () => {
     expect(propertyText({ ...base, id: 'reload', shots: 2 })).toBe('Боекомплект (2 выстрела)');
     expect(propertyText({ ...base, id: 'reload', shots: 15 })).toBe('Боекомплект (15 выстрелов)');
     expect(propertyText({ ...base, id: 'finesse' })).toBe('Фехтовальное');
+  });
+
+  it('эффект зелья лечения (Р64)', () => {
+    const use = {
+      activation: 'action' as const,
+      consumed: true,
+      effects: [{ type: 'healing' as const, dice: '2d4+2' }],
+    };
+    expect(use.effects.map(consumableEffectText)).toEqual(['Восстанавливает 2к4 + 2 хита']);
+    expect(consumableActivationText(use)).toBe('Действие, предмет расходуется');
   });
 
   it('время, цена и вес; неизвестное — «—», а не 0', () => {

@@ -9,17 +9,20 @@ import {
   type ItemKindId,
   type ItemRules,
   type TextBlock,
+  type UseRules,
+  textBlocksToPlain,
 } from '@koster/shared';
 import type { ImportIssue } from '../report/issues.ts';
 import { nameKey, type ReviewedItems } from '../reviewed/reviewed-items.ts';
 import type { NormalizedSource } from '../spells/normalize-spell.ts';
 import { ArticleDescriptions, baseName } from './describe.ts';
-import type { RawArticle, RawRow, RawTable } from './parse-article.ts';
+import { splitSourceMark, type RawArticle, type RawRow, type RawTable } from './parse-article.ts';
 import {
   isDash,
   parseArmorClass,
   parseCostCp,
   parseDamage,
+  parseDice,
   parseEquipTime,
   parseStrength,
   parseWeaponProperties,
@@ -40,6 +43,8 @@ export interface NormalizedItem {
   source: NormalizedSource;
   /** Связи: `contains` (состав набора), `uses_ammunition`. Цели проверяет сборка. */
   links: { toId: string; kind: 'contains' | 'uses_ammunition' }[];
+  /** Ключ записи в data/reviewed/items/ — для проверки неиспользованных записей. */
+  reviewedMatch: string;
 }
 
 type Era = NonNullable<ItemData['firearm']>;
@@ -49,6 +54,8 @@ interface GroupMeaning {
   kind?: ItemKindId;
   category?: ItemCategoryId;
   era?: Era;
+  /** Подпункты группы получают название «Седло, военное». */
+  namePrefix?: string;
 }
 
 const GROUP_MEANINGS = new Map<string, GroupMeaning>([
@@ -62,6 +69,12 @@ const GROUP_MEANINGS = new Map<string, GroupMeaning>([
   [nameKey('эпоха Возрождения'), { era: 'renaissance' }],
   [nameKey('Современное'), { era: 'modern' }],
   [nameKey('Футуристическое'), { era: 'futuristic' }],
+  // Статья «Скакуны и транспорт».
+  [nameKey('Сёдла'), { category: 'saddle', namePrefix: 'Седло' }],
+  [nameKey('Водный транспорт'), { category: 'waterborne_vehicle' }],
+  [nameKey('Воздушный транспорт'), { category: 'airborne_vehicle' }],
+  [nameKey('Межпланарный транспорт'), { category: 'planar_vehicle' }],
+  [nameKey('Инфернальные военные машины'), { category: 'infernal_war_machine' }],
 ]);
 
 const ARMOR_CATEGORY = {
@@ -77,16 +90,29 @@ const WEAPON_CATEGORY = {
   martial_ranged: ['martial', 'ranged'],
 } as const;
 
-type TableKind = 'armor' | 'weapon' | 'gear' | 'tool' | 'explosive' | 'equip_time' | 'trade';
+type TableKind =
+  | 'armor'
+  | 'weapon'
+  | 'gear'
+  | 'tool'
+  | 'explosive'
+  | 'equip_time'
+  | 'trade'
+  | 'mount'
+  | 'tack'
+  | 'vehicle';
 
 function tableKind(table: RawTable): TableKind | null {
   const header = table.header.map(nameKey);
   const heading = nameKey(table.heading ?? '');
-  if (header.some((label) => label.startsWith('класс доспеха'))) return 'armor';
+  if (header.includes('класс доспеха (кд)')) return 'armor';
   if (header.includes('урон')) return 'weapon';
   if (header.includes('надевание')) return 'equip_time';
   if (header.includes('товар')) return 'trade';
+  if (header[0] === 'животное') return 'mount';
+  if (header[0] === 'судно') return 'vehicle';
   if (header.length === 3 && header[2] === 'вес') {
+    if (heading.startsWith('седла')) return 'tack';
     if (heading.startsWith('инструмент')) return 'tool';
     if (heading.startsWith('взрывчат')) return 'explosive';
     return 'gear';
@@ -94,13 +120,38 @@ function tableKind(table: RawTable): TableKind | null {
   return null;
 }
 
-const DEFAULT_KIND: Record<'armor' | 'weapon' | 'gear' | 'tool' | 'explosive', ItemKindId> = {
+type RowTableKind = Exclude<TableKind, 'equip_time' | 'trade'>;
+
+const DEFAULT_KIND: Record<RowTableKind, ItemKindId> = {
   armor: 'armor',
   weapon: 'weapon',
   gear: 'adventuring_gear',
   tool: 'tool',
   explosive: 'explosive',
+  mount: 'mount',
+  tack: 'tack',
+  vehicle: 'vehicle',
 };
+
+/** Группа с меткой книги: «Межпланарный транспорт (MTF)» → «Межпланарный транспорт». */
+function groupMeaning(label: string): GroupMeaning | undefined {
+  return GROUP_MEANINGS.get(nameKey(splitSourceMark(label).name));
+}
+
+/** «…восстанавливает 2к4 + 2 хита. Зелье выпивается или заливается в рот другому действием». */
+function parseUseRules(description: TextBlock[]): UseRules | null {
+  const plain = textBlocksToPlain(description);
+  const healing = /восстанавливает\s+(\d+\s*к\s*\d+)(?:\s*\+\s*(\d+))?\s+хит/i.exec(plain);
+  const dice = healing ? parseDice(healing[1] ?? '') : null;
+  if (!healing || !dice || !/\sдействием/.test(plain)) {
+    return null;
+  }
+  return {
+    activation: /бонусным действием/.test(plain) ? 'bonus_action' : 'action',
+    consumed: true,
+    effects: [{ type: 'healing', dice: healing[2] ? `${dice}+${healing[2]}` : dice }],
+  };
+}
 
 export class ItemNormalizer {
   private readonly descriptions: ArticleDescriptions;
@@ -186,13 +237,22 @@ export class ItemNormalizer {
     return index > 0 ? (row.cells[index - 1] ?? null) : null;
   }
 
-  private row(row: RawRow, table: RawTable, kind: Exclude<TableKind, 'equip_time' | 'trade'>) {
+  private row(row: RawRow, table: RawTable, kind: RowTableKind) {
     // «Зелье лечения [Potion of Healing]»: английское название в скобках убирается.
     const withoutEnglish = row.name.replace(/\s*\[[^\]]+\]\s*$/, '');
     const quantityMatch = /^(.*?)\s*\((\d+)\)$/.exec(withoutEnglish);
-    const nameRu = quantityMatch?.[1] ?? withoutEnglish;
+    const lastGroup = row.groups.at(-1);
+    const prefix = row.inGroup && lastGroup ? groupMeaning(lastGroup)?.namePrefix : undefined;
+    const ownName = quantityMatch?.[1] ?? withoutEnglish;
+    // «Сёдла» → «Военное»: «Седло, военное».
+    const nameRu = prefix ? `${prefix}, ${ownName.toLowerCase()}` : ownName;
     const quantity = quantityMatch ? Number(quantityMatch[2]) : 1;
 
+    const skip = this.reviewed.skipRows.get(nameKey(nameRu));
+    if (skip) {
+      this.issue(null, 'name', `«${nameRu}» — не предмет: ${skip.reason}`, 'skip');
+      return null;
+    }
     const review = this.reviewed.names.get(nameKey(nameRu));
     if (!review) {
       this.issue(
@@ -207,21 +267,25 @@ export class ItemNormalizer {
 
     const meaning: GroupMeaning = {};
     for (const label of row.groups) {
-      const known = GROUP_MEANINGS.get(nameKey(label));
+      const known = groupMeaning(label);
       if (known?.era) meaning.era = known.era;
     }
-    const lastGroup = row.groups.at(-1);
-    if (row.inGroup && lastGroup) {
-      const known = GROUP_MEANINGS.get(nameKey(lastGroup));
+    // В таблице транспорта строки групп не помечены отступом: группа — последняя выше.
+    const grouped = row.inGroup || kind === 'vehicle';
+    if (grouped && lastGroup) {
+      const known = groupMeaning(lastGroup);
       if (!known) {
         this.issue(id, 'group', `Неизвестная группа таблицы «${lastGroup}»`);
       }
       if (known?.kind) meaning.kind = known.kind;
       if (known?.category) meaning.category = known.category;
     }
-    const itemKind = meaning.kind ?? DEFAULT_KIND[kind];
+    const itemKind = review.kind ?? meaning.kind ?? DEFAULT_KIND[kind];
     const category = review.category ?? meaning.category ?? null;
-    const source = row.source ? this.sources.fromMark(row.source) : this.pageSource;
+    // Метка книги — у строки или у группы: «Межпланарный транспорт (MTF)».
+    const groupMark = grouped && lastGroup ? splitSourceMark(lastGroup).source : null;
+    const mark = row.source ?? groupMark;
+    const source = mark ? this.sources.fromMark(mark) : this.pageSource;
     if (!source) {
       return null;
     }
@@ -255,10 +319,7 @@ export class ItemNormalizer {
       // Дополнительное оружие из приключений и всё огнестрельное DMG — вариант правил.
       optionalRule: meaning.era !== undefined || (itemKind === 'weapon' && row.source !== null),
       firearm: meaning.era ?? null,
-      stats: table.header
-        .slice(1)
-        .map((label, index) => ({ label, value: row.cells[index] ?? '' }))
-        .filter((stat) => stat.label && stat.value),
+      stats: this.stats(row, table),
       contents: [],
       description: this.descriptions.find(candidates),
     };
@@ -268,7 +329,32 @@ export class ItemNormalizer {
     if (rules?.weapon?.ammunitionItemId) {
       links.push({ toId: rules.weapon.ammunitionItemId, kind: 'uses_ammunition' });
     }
-    return { id, nameRu, nameEn: review.nameEn, data, rules, source, links };
+    return {
+      id,
+      nameRu,
+      nameEn: review.nameEn,
+      data,
+      rules,
+      source,
+      links,
+      reviewedMatch: review.match,
+    };
+  }
+
+  /** Столбцы строки, кроме названия; объединённая ячейка — с подписью обоих столбцов. */
+  private stats(row: RawRow, table: RawTable): ItemData['stats'] {
+    const stats: ItemData['stats'] = [];
+    row.cells.forEach((value, index) => {
+      const span = row.spans[index] ?? 1;
+      const label = table.header
+        .slice(index + 1, index + 1 + span)
+        .filter((part) => part)
+        .join(' / ');
+      if (span > 0 && label && value) {
+        stats.push({ label, value });
+      }
+    });
+    return stats;
   }
 
   private cost(id: string, text: string | null): ItemData['cost'] {
@@ -372,7 +458,10 @@ export class ItemNormalizer {
         },
       };
     }
-    return null;
+
+    // Расходуемый предмет (Р64): эффект — из описания DnD.su.
+    const use = parseUseRules(data.description);
+    return use ? { ...base, use } : null;
   }
 
   private tradeGoods(table: RawTable): NormalizedItem[] {
@@ -400,6 +489,7 @@ export class ItemNormalizer {
           source: this.pageSource,
           links: [],
           rules: null,
+          reviewedMatch: review.match,
           data: {
             schemaVersion: ITEM_SCHEMA_VERSION,
             kind: 'trade_good',
@@ -453,6 +543,7 @@ export class ItemNormalizer {
         nameEn: review.nameEn,
         source,
         rules: null,
+        reviewedMatch: review.match,
         links: contents
           .filter((entry) => entry.itemId !== null)
           .map((entry) => ({ toId: entry.itemId as string, kind: 'contains' as const })),

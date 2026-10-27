@@ -7,6 +7,8 @@ import {
   equipTimeText,
   kindName,
   propertyText,
+  consumableActivationText,
+  consumableEffectText,
 } from '../catalog/item-format';
 import { CommonFacts, Fact } from '../components/CardParts';
 import { CategoryIcon } from '../components/CategoryIcon';
@@ -17,6 +19,9 @@ const FIREARM_ERAS = {
   modern: 'современное',
   futuristic: 'футуристическое',
 } as const;
+
+/** Столбцы таблицы, которые карточка показывает своими строками. */
+const OWN_STAT_LABELS = new Set(['цена', 'стоимость', 'вес']);
 
 const LINK_TITLES: Record<string, { to: string; from: string }> = {
   uses_ammunition: { to: 'Боеприпас', from: 'Используется оружием' },
@@ -60,6 +65,15 @@ export function ItemCardBody({ card }: { card: ItemEntityResponse }) {
         <Fact label="Вес">{data.weight.text ?? 'не указан'}</Fact>
         {data.quantity > 1 && <Fact label="В упаковке">{data.quantity} шт.</Fact>}
         {rules && <RulesFacts rules={rules} />}
+        {/* Без механики — столбцы таблицы как на DnD.su: скорость скакуна, экипаж судна. */}
+        {!rules &&
+          data.stats
+            .filter((stat) => !OWN_STAT_LABELS.has(stat.label.toLowerCase()))
+            .map((stat) => (
+              <Fact key={stat.label} label={stat.label}>
+                {stat.value}
+              </Fact>
+            ))}
         {links.length > 0 && <LinkFacts links={links} />}
         <CommonFacts card={card} />
       </dl>
@@ -123,6 +137,19 @@ function RulesFacts({ rules }: { rules: ItemRules }) {
         <Fact label="Надевание / снятие">
           {equipTimeText(armor.don)} / {equipTimeText(armor.doff)}
         </Fact>
+      </>
+    );
+  }
+  if (rules.use) {
+    const { use } = rules;
+    return (
+      <>
+        <Fact label="При использовании">
+          <span data-testid="item-use-effect">
+            {use.effects.map(consumableEffectText).join('; ')}
+          </span>
+        </Fact>
+        <Fact label="Как используется">{consumableActivationText(use)}</Fact>
       </>
     );
   }

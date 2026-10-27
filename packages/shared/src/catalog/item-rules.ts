@@ -62,20 +62,42 @@ export const shieldRulesSchema = z.strictObject({
   doff: equipTimeSchema,
 });
 
+/** Эффект при использовании: «восстанавливает 2к4 + 2 хита». */
+export const useEffectSchema = z.strictObject({
+  type: z.enum(['healing']),
+  /** Кость и прибавка: `2d4+2`. */
+  dice: diceSchema,
+});
+
+/** Расходуемый предмет (Р64): чем используется и что даёт. */
+export const useRulesSchema = z.strictObject({
+  activation: z.enum(['action', 'bonus_action']),
+  /** Предмет тратится при использовании. */
+  consumed: z.boolean(),
+  effects: z.array(useEffectSchema).min(1),
+});
+
 export const itemRulesSchema = z
   .strictObject({
     schemaVersion: z.literal(ITEM_RULES_SCHEMA_VERSION),
     weapon: weaponRulesSchema.nullable(),
     armor: armorRulesSchema.nullable(),
     shield: shieldRulesSchema.nullable(),
+    /**
+     * Добавлено в части Б этапа 2: у оружия и доспехов поля нет (а не `null`),
+     * чтобы их механика и хеш ревизии не изменились.
+     */
+    use: useRulesSchema.optional(),
   })
-  .refine((rules) => [rules.weapon, rules.armor, rules.shield].filter(Boolean).length === 1, {
-    message: 'Ровно один раздел механики: оружие, доспех или щит',
-  });
+  .refine(
+    (rules) => [rules.weapon, rules.armor, rules.shield, rules.use].filter(Boolean).length === 1,
+    { message: 'Ровно один раздел механики: оружие, доспех, щит или использование' },
+  );
 
 export type WeaponProperty = z.infer<typeof weaponPropertySchema>;
 export type WeaponRules = z.infer<typeof weaponRulesSchema>;
 export type ArmorRules = z.infer<typeof armorRulesSchema>;
 export type ShieldRules = z.infer<typeof shieldRulesSchema>;
 export type EquipTime = z.infer<typeof equipTimeSchema>;
+export type UseRules = z.infer<typeof useRulesSchema>;
 export type ItemRules = z.infer<typeof itemRulesSchema>;

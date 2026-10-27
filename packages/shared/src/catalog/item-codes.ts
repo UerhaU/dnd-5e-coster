@@ -13,6 +13,9 @@ export const ITEM_KINDS = [
   { id: 'tool', nameRu: 'Инструменты', nameEn: 'Tools' },
   { id: 'explosive', nameRu: 'Взрывчатка', nameEn: 'Explosive' },
   { id: 'trade_good', nameRu: 'Товар', nameEn: 'Trade good' },
+  { id: 'mount', nameRu: 'Скакун или животное', nameEn: 'Mount or other animal' },
+  { id: 'tack', nameRu: 'Сёдла и упряжь', nameEn: 'Tack and harness' },
+  { id: 'vehicle', nameRu: 'Транспорт', nameEn: 'Vehicle' },
 ] as const satisfies readonly ReferenceEntry[];
 
 /** Вид внутри категории: оружие, доспехи и группы из таблиц DnD.su. */
@@ -34,6 +37,16 @@ export const ITEM_CATEGORIES = [
   { id: 'artisans_tools', nameRu: 'Инструменты ремесленников', nameEn: "Artisan's tools" },
   { id: 'gaming_set', nameRu: 'Игровой набор', nameEn: 'Gaming set' },
   { id: 'musical_instrument', nameRu: 'Музыкальный инструмент', nameEn: 'Musical instrument' },
+  { id: 'saddle', nameRu: 'Седло', nameEn: 'Saddle' },
+  { id: 'land_vehicle', nameRu: 'Наземный транспорт', nameEn: 'Land vehicle' },
+  { id: 'waterborne_vehicle', nameRu: 'Водный транспорт', nameEn: 'Waterborne vehicle' },
+  { id: 'airborne_vehicle', nameRu: 'Воздушный транспорт', nameEn: 'Airborne vehicle' },
+  { id: 'planar_vehicle', nameRu: 'Межпланарный транспорт', nameEn: 'Planar vehicle' },
+  {
+    id: 'infernal_war_machine',
+    nameRu: 'Инфернальная военная машина',
+    nameEn: 'Infernal war machine',
+  },
 ] as const satisfies readonly ReferenceEntry[];
 
 export const WEAPON_PROPERTIES = [

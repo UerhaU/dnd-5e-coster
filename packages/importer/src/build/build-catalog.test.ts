@@ -295,9 +295,9 @@ describe('снаряжение в сборке (этап 2)', () => {
   it('заклинания и предметы в одном каталоге: индекс, свойства, связи', () => {
     const result = withItems();
     expect(result.issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(result.items).toMatchObject({ collected: 35, failed: 0 });
+    expect(result.items).toMatchObject({ collected: 42, failed: 0 });
     read((catalog) => {
-      expect(catalog.db.select().from(itemIndex).all()).toHaveLength(35);
+      expect(catalog.db.select().from(itemIndex).all()).toHaveLength(42);
       expect(catalog.db.select().from(itemIndexProperties).all().length).toBeGreaterThan(10);
       const links = catalog.db.select().from(contentLinks).all();
       expect(links).toContainEqual({
@@ -331,7 +331,7 @@ describe('снаряжение в сборке (этап 2)', () => {
     const again = withItems({ ledgerDir, now: new Date('2026-10-28T10:00:00Z') });
     expect(again.write).toMatchObject({ newRevisions: 0, catalogVersion: 1 });
     const lines = fs.readFileSync(path.join(ledgerDir, 'item.jsonl'), 'utf8').trim().split('\n');
-    expect(lines).toHaveLength(35);
+    expect(lines).toHaveLength(42);
     expect(lines.join('\n')).not.toContain('Стёганый');
   });
 });
