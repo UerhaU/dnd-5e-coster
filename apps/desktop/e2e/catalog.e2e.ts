@@ -44,6 +44,34 @@ test('справочник: найти «Огненный шар» по «огн
   await expect(window.getByRole('searchbox', { name: 'Поиск заклинаний' })).toHaveValue('огнен');
 });
 
+// Сценарий этапа 2: «Снаряжение» → фильтр «Воинское рукопашное» → поиск «меч» →
+// карточка «Длинного меча» с уроном и свойствами. Есть в обоих каталогах.
+test('справочник: найти «Длинный меч» в снаряжении и открыть карточку', async () => {
+  const { window } = running;
+
+  // Прошлый сценарий закончился в списке заклинаний.
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  await window.getByRole('link', { name: /Снаряжение/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Снаряжение' })).toBeVisible();
+
+  await window.getByLabel('Группа').selectOption('martial_melee');
+  await window.getByRole('searchbox', { name: 'Поиск снаряжения' }).fill('меч');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  const longsword = results.getByRole('link', { name: /Длинный меч/ });
+  await expect(longsword).toBeVisible();
+  await expect(longsword).toContainText('1к8 рубящий');
+
+  await longsword.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Длинный меч' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Воинское рукопашное оружие');
+  await expect(window.getByTestId('item-damage')).toHaveText('1к8 рубящий');
+  await expect(window.getByText('Универсальное (1к10)')).toBeVisible();
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await expect(window.getByRole('searchbox', { name: 'Поиск снаряжения' })).toHaveValue('меч');
+  await expect(window.getByLabel('Группа')).toHaveValue('martial_melee');
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);
