@@ -59,6 +59,9 @@ export const entitySourceSchema = z.object({
   url: z.string().nullable(),
 });
 
+/** Как заклинание доступно классу: списком класса, по TCE или через подкласс (Р53). */
+export const classAccessSchema = z.enum(['standard', 'optional', 'subclass']);
+
 export const spellListItemSchema = z.object({
   id: entityIdSchema,
   nameRu: z.string(),
@@ -70,6 +73,8 @@ export const spellListItemSchema = z.object({
   /** Коды источников, как на DnD.su: `PH14`, `XGE`. */
   sources: z.array(z.string()),
   reviewStatus: reviewStatusSchema,
+  /** Доступ к классу из фильтра `class`; без фильтра по классу — `null`. */
+  classAccess: classAccessSchema.nullable(),
 });
 
 export const spellListResponseSchema = z.object({
@@ -137,6 +142,7 @@ export const revisionParamsSchema = z.strictObject({
 export const categoryParamsSchema = z.strictObject({ category: z.string() });
 
 export type SpellListItem = z.infer<typeof spellListItemSchema>;
+export type ClassAccess = z.infer<typeof classAccessSchema>;
 export type SpellListResponse = z.infer<typeof spellListResponseSchema>;
 export type SpellFacetsResponse = z.infer<typeof spellFacetsResponseSchema>;
 export type CategoriesResponse = z.infer<typeof categoriesResponseSchema>;

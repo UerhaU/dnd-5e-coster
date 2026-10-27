@@ -98,6 +98,26 @@ describe('GET /api/catalog/spell — список', () => {
     expect(await names('class=class:wizard&level=0')).toContain('Иссушающий укол');
   });
 
+  it('при фильтре по классу — как заклинание доступно классу (Р53)', async () => {
+    const access = async (query: string) =>
+      Object.fromEntries(
+        spellListResponseSchema
+          .parse((await get(`/api/catalog/spell?${query}&pageSize=100`)).body)
+          .items.map((item) => [item.id, item.classAccess]),
+      );
+    expect(await access('class=class:cleric')).toMatchObject({
+      'spell:fireball': 'subclass',
+      'spell:detect-magic': 'standard',
+    });
+    expect(await access('class=class:wizard')).toMatchObject({
+      'spell:fireball': 'standard',
+      'spell:sapping-sting': 'subclass',
+    });
+    expect(await access('class=class:bard')).toMatchObject({
+      'spell:antipathy-sympathy': 'optional',
+    });
+  });
+
   it('сортировка по уровню', async () => {
     const levels = spellListResponseSchema
       .parse((await get('/api/catalog/spell?sort=level&pageSize=100')).body)
@@ -118,6 +138,7 @@ describe('GET /api/catalog/spell — список', () => {
         concentration: false,
         sources: ['POA', 'XGE'],
         reviewStatus: 'rules_verified',
+        classAccess: null,
       },
     ]);
   });

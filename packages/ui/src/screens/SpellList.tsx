@@ -3,7 +3,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router';
 import { useApi } from '../api/api-context';
 import { paramsFromSearch, withFilter, type FilterKey } from '../catalog/list-params';
-import { levelAndSchool } from '../catalog/spell-format';
+import { classAccessText, levelAndSchool } from '../catalog/spell-format';
 import { CategoryIcon } from '../components/CategoryIcon';
 import { QueryError } from '../components/QueryError';
 
@@ -54,6 +54,11 @@ export function SpellList() {
                     <span className="result__meta">
                       {levelAndSchool(spell.level, spell.school, spell.ritual)}
                       {spell.concentration ? ' · концентрация' : ''} · {spell.sources.join(', ')}
+                      {classAccessText(spell.classAccess) && (
+                        <span className="badge result__access">
+                          {classAccessText(spell.classAccess)}
+                        </span>
+                      )}
                     </span>
                   </span>
                 </Link>

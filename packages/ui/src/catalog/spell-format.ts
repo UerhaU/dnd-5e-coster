@@ -3,6 +3,7 @@ import {
   DAMAGE_TYPES,
   MAGIC_SCHOOLS,
   type Automation,
+  type ClassAccess,
   type ClassId,
   type MagicSchoolId,
   type ReviewStatus,
@@ -74,6 +75,18 @@ export function targetsText(data: Pick<SpellData, 'targets'>): string | null {
   return extraPerSlot > 0
     ? `до ${maxCount}, +${extraPerSlot} за каждый уровень ячейки выше`
     : `до ${maxCount}`;
+}
+
+/** Пометка в списке при фильтре по классу (Р53); обычный список класса — без пометки. */
+export function classAccessText(access: ClassAccess | null): string | null {
+  switch (access) {
+    case 'optional':
+      return 'доп. список TCE';
+    case 'subclass':
+      return 'через подкласс';
+    default:
+      return null;
+  }
 }
 
 export const REVIEW_STATUS_TEXT: Record<ReviewStatus, string> = {

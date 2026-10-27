@@ -50,6 +50,7 @@ interface SpellRow {
   concentration: number;
   reviewStatus: SpellListItem['reviewStatus'];
   sources: string | null;
+  classAccess: SpellListItem['classAccess'];
 }
 
 export function listSpells(catalog: CatalogConnection, query: SpellListQuery): SpellListResponse {
@@ -122,7 +123,13 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
       `SELECT e.id, e.name_ru AS nameRu, e.name_en AS nameEn, si.level, si.school_id AS school,
         si.ritual, si.concentration, e.review_status AS reviewStatus,
         (SELECT group_concat(s.code, ',') FROM entity_sources es JOIN sources s ON s.id = es.source_id
-          WHERE es.entity_id = e.id) AS sources
+          WHERE es.entity_id = e.id) AS sources,
+        ${
+          query.class
+            ? `(SELECT c.access FROM spell_index_classes c
+                WHERE c.entity_id = e.id AND c.class_id = @class)`
+            : 'NULL'
+        } AS classAccess
        ${from}
        ORDER BY ${order}
        LIMIT @limit OFFSET @offset`,
@@ -145,6 +152,7 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
       concentration: row.concentration === 1,
       sources: row.sources ? row.sources.split(',').sort() : [],
       reviewStatus: row.reviewStatus,
+      classAccess: row.classAccess,
     })),
     total,
     page: query.page,

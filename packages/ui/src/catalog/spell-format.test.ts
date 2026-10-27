@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  classAccessText,
   classesText,
   componentsText,
   levelAndSchool,
@@ -59,6 +60,13 @@ describe('подписи карточки', () => {
         subclasses: [{ name: 'домен света', classId: 'class:cleric', dndsuId: 152 }],
       }),
     ).toBe('домен света (жрец)');
+  });
+
+  it('пометка доступа при фильтре по классу', () => {
+    expect(classAccessText('subclass')).toBe('через подкласс');
+    expect(classAccessText('optional')).toBe('доп. список TCE');
+    expect(classAccessText('standard')).toBeNull();
+    expect(classAccessText(null)).toBeNull();
   });
 
   it('число целей', () => {

@@ -185,6 +185,10 @@ a.main-menu__item:hover {
   color: var(--color-text-muted);
 }
 
+.result__access {
+  margin-left: var(--space-2);
+}
+
 .pager {
   display: flex;
   gap: var(--space-3);
