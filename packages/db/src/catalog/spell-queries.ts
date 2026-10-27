@@ -9,6 +9,7 @@ import {
 } from '@koster/shared';
 import type { CatalogConnection } from './open.ts';
 import { toFtsQuery } from './search-query.ts';
+import { normalizeSearchText } from './search-text.ts';
 
 // Чтение каталога для API (раздел 7, «Каталог»). Запросы — на SQL: фильтры
 // собираются из частей, а поиск FTS5 Drizzle не описывает.
@@ -96,9 +97,14 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
     query.sort === 'level'
       ? `si.level, ${byName}`
       : query.sort === 'relevance' && fts
-        ? // Веса столбцов: entity_id, category, name_ru, name_en, aliases, body.
-          `bm25(content_search, 0, 0, 10, 10, 5, 1), ${byName}`
+        ? // Сначала точное совпадение названия («щит» → «Щит»), потом bm25.
+          // Веса столбцов: entity_id, category, name_ru, name_en, aliases, body.
+          `CASE WHEN content_search.name_ru = @exact OR content_search.name_en = @exact
+             THEN 0 ELSE 1 END, bm25(content_search, 0, 0, 10, 10, 5, 1), ${byName}`
         : byName;
+  const exact = normalizeSearchText(query.q ?? '')
+    .trim()
+    .replace(/\s+/g, ' ');
 
   const from = `FROM content_entities e
     JOIN spell_index si ON si.entity_id = e.id
@@ -123,6 +129,7 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
     )
     .all({
       ...params,
+      ...(order.includes('@exact') ? { exact } : {}),
       limit: query.pageSize,
       offset: (query.page - 1) * query.pageSize,
     }) as SpellRow[];

@@ -80,6 +80,16 @@ describe('npm run catalog:build', () => {
         classId: 'class:bard',
         access: 'optional',
       });
+      // Доступ только через подкласс тоже попадает в индекс (решение автора).
+      expect(bard).toContainEqual({
+        entityId: 'spell:sapping-sting',
+        classId: 'class:wizard',
+        access: 'subclass',
+      });
+      // Класс из обычного списка не дублируется строкой «через подкласс».
+      expect(
+        bard.filter((row) => row.entityId === 'spell:fireball' && row.classId === 'class:wizard'),
+      ).toEqual([{ entityId: 'spell:fireball', classId: 'class:wizard', access: 'standard' }]);
 
       const found = catalog.sqlite
         .prepare(

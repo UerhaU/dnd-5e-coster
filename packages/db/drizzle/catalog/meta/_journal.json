@@ -15,6 +15,13 @@
       "when": 1793046219370,
       "tag": "0001_content_search",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793088048013,
+      "tag": "0002_spell_class_subclass",
+      "breakpoints": true
     }
   ]
 }

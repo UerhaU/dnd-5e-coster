@@ -351,16 +351,17 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
             concentration: entity.data.concentration,
           })
           .run();
-        const classes = [
-          ...entity.data.classes.map((classId) => ({ classId, access: 'standard' })),
-          ...entity.data.optionalClasses
-            .filter((classId) => !entity.data.classes.includes(classId))
-            .map((classId) => ({ classId, access: 'optional' })),
-        ];
-        for (const entry of classes) {
-          tx.insert(spellIndexClasses)
-            .values({ entityId: entity.id, ...entry })
-            .run();
+        // Один класс — одна строка: обычный список важнее TCE, TCE важнее подкласса.
+        const access = new Map<string, 'standard' | 'optional' | 'subclass'>();
+        for (const classId of entity.data.classes) access.set(classId, 'standard');
+        for (const classId of entity.data.optionalClasses) {
+          if (!access.has(classId)) access.set(classId, 'optional');
+        }
+        for (const { classId } of entity.data.subclasses) {
+          if (!access.has(classId)) access.set(classId, 'subclass');
+        }
+        for (const [classId, kind] of access) {
+          tx.insert(spellIndexClasses).values({ entityId: entity.id, classId, access: kind }).run();
         }
       }
       for (const row of previous?.entitySources ?? []) {

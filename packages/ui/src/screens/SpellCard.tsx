@@ -1,7 +1,7 @@
 import type { SpellEntityResponse } from '@koster/shared';
 import { useQuery } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { useApi } from '../api/api-context';
 import {
   AUTOMATION_TEXT,
@@ -27,12 +27,16 @@ const TAG_NAMES: Record<string, string> = {
 export function SpellCard() {
   const api = useApi();
   const navigate = useNavigate();
+  const location = useLocation();
   const { id = '' } = useParams();
+  // Карточку открыли без истории (первый экран окна): «назад» некуда — ведём к списку.
+  const back = () =>
+    location.key === 'default' ? void navigate('/reference/spell') : void navigate(-1);
   const card = useQuery({ queryKey: ['entity', id], queryFn: () => api.spell(id) });
 
   return (
     <main className="page">
-      <button type="button" className="back-link" onClick={() => void navigate(-1)}>
+      <button type="button" className="back-link" onClick={back}>
         ← К списку
       </button>
       {card.isPending && <p className="muted">Загрузка…</p>}

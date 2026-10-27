@@ -131,8 +131,8 @@ export const spellIndex = sqliteTable(
 );
 
 /**
- * Классы, которым доступно заклинание. `class_id` — код (`class:wizard`) без
- * внешнего ключа: таблица классов появится на этапе 3.
+ * Классы, которым доступно заклинание: списком класса, по TCE или через подкласс.
+ * `class_id` — код (`class:wizard`) без внешнего ключа: таблица классов появится на этапе 3.
  */
 export const spellIndexClasses = sqliteTable(
   'spell_index_classes',
@@ -141,13 +141,20 @@ export const spellIndexClasses = sqliteTable(
       .notNull()
       .references(() => spellIndex.entityId),
     classId: text('class_id').notNull(),
-    /** `standard` — обычный список; `optional` — дополнительный список TCE. */
+    /**
+     * `standard` — обычный список; `optional` — дополнительный список TCE;
+     * `subclass` — только через подкласс этого класса (решение автора: фильтр
+     * по классу показывает и такие заклинания).
+     */
     access: text('access').notNull(),
   },
   (table) => [
     primaryKey({ columns: [table.entityId, table.classId] }),
     index('spell_index_classes_class').on(table.classId),
-    check('spell_index_classes_access', sql`${table.access} IN ('standard', 'optional')`),
+    check(
+      'spell_index_classes_access',
+      sql`${table.access} IN ('standard', 'optional', 'subclass')`,
+    ),
   ],
 );
 

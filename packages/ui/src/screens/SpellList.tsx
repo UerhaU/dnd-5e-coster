@@ -1,4 +1,4 @@
-import type { SpellFacetsResponse } from '@koster/shared';
+import { CATALOG_QUERY_MAX, type SpellFacetsResponse } from '@koster/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router';
 import { useApi } from '../api/api-context';
@@ -98,6 +98,7 @@ function SearchInput({ value, onChange }: { value: string; onChange: (value: str
       type="search"
       placeholder="Поиск по названию и тексту: «огнен», «fireball»"
       aria-label="Поиск заклинаний"
+      maxLength={CATALOG_QUERY_MAX}
       value={value}
       onChange={(event) => onChange(event.target.value)}
     />

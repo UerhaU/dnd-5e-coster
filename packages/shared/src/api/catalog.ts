@@ -15,13 +15,15 @@ import { spellDataSchema } from '../catalog/spell.ts';
 
 export const CATALOG_PAGE_SIZE_MAX = 100;
 export const CATALOG_PAGE_SIZE_DEFAULT = 25;
+/** Длина поискового запроса: поле поиска не даёт ввести больше. */
+export const CATALOG_QUERY_MAX = 200;
 
 const flag = z.enum(['true', 'false']).transform((value) => value === 'true');
 
 /** `GET /api/catalog/spell?…` */
 export const spellListQuerySchema = z.strictObject({
   /** Поиск по названию (русскому и английскому) и тексту, по началу слова. */
-  q: z.string().trim().max(200).optional(),
+  q: z.string().trim().max(CATALOG_QUERY_MAX).optional(),
   page: z.coerce.number().int().min(1).default(1),
   pageSize: z.coerce
     .number()

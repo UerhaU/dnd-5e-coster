@@ -92,6 +92,10 @@ describe('GET /api/catalog/spell — список', () => {
     ]);
     expect(await names('class=class:wizard&level=3')).toContain('Огненный шар');
     expect(await names('class=class:paladin&level=3')).not.toContain('Огненный шар');
+    // Через подкласс: Огненный шар — у жреца домена света, Иссушающий укол — у волшебника
+    // (хронургия), хотя в списках классов их нет.
+    expect(await names('class=class:cleric&level=3')).toContain('Огненный шар');
+    expect(await names('class=class:wizard&level=0')).toContain('Иссушающий укол');
   });
 
   it('сортировка по уровню', async () => {
@@ -130,6 +134,11 @@ describe('GET /api/catalog/spell?q= — поиск FTS5', () => {
     expect(await names('q=ОГНЁМ')).toContain('Власть над огнём');
     expect(await names('q=пёрышком')).toEqual(['Падение пёрышком']);
     expect(await names('q=перыш')).toEqual(['Падение пёрышком']);
+  });
+
+  it('точное совпадение названия — первым', async () => {
+    expect((await names('q=огненный шар'))[0]).toBe('Огненный шар');
+    expect((await names('q=  ЗНАК '))[0]).toBe('Знак');
   });
 
   it('по английскому названию и по нескольким словам', async () => {
