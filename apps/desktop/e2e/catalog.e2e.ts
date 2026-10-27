@@ -122,6 +122,39 @@ test('справочник: найти разновидность «дроу» �
   await expect(window.getByTestId('race-speed')).toHaveText('30 фт.');
   await expect(window.getByTestId('race-languages')).toHaveText('Общий, Эльфийский');
   await expect(window.getByRole('link', { name: 'Высший эльф' })).toBeVisible();
+  // Р69: возраст и рост числами из особенностей «Возраст» и «Размер».
+  await expect(window.getByTestId('race-age')).toHaveText('зрелость — 100 лет, жизнь — 750 лет');
+  await expect(window.getByTestId('race-height')).toHaveText('5 фт. – 6 фт. (152 – 183 см)');
+});
+
+// Этап 2, часть В: поиск по всему справочнику (Р54) и связь заклинания с компонентом
+// (Р60). «Щит», «Огненный шар» и «Гуано летучей мыши» есть в обоих каталогах.
+test('справочник: поиск везде, огненный шар → компонент «Гуано летучей мыши»', async () => {
+  const { window } = running;
+
+  await window.getByRole('link', { name: 'Все расы' }).click();
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  const search = window.getByRole('searchbox', { name: 'Поиск по всему справочнику' });
+  await search.fill('щит');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await expect(results.getByTestId('result-category').first()).toHaveText(/^Снаряжение · Щит/);
+  await expect(
+    results.getByTestId('result-category').filter({ hasText: /^(Раса|Разновидность расы)/ }),
+  ).not.toHaveCount(0);
+
+  await search.fill('огненный шар');
+  await results
+    .getByRole('link', { name: /Огненный шар/ })
+    .first()
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Огненный шар' })).toBeVisible();
+  await window
+    .getByTestId('spell-material-items')
+    .getByRole('link', { name: 'Гуано летучей мыши' })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Гуано летучей мыши' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Компонент заклинания');
+  await expect(window.getByRole('link', { name: 'Огненный шар', exact: true })).toBeVisible();
 });
 
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
