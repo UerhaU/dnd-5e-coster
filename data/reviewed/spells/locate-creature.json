@@ -1,0 +1,13 @@
+{
+  "id": "spell:locate-creature",
+  "dndsuId": 247,
+  "nameRu": "Поиск существа",
+  "materials": {
+    "kind": "item",
+    "name": "Мех ищейки",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

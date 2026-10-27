@@ -1,0 +1,31 @@
+{
+  "id": "spell:vicious-mockery",
+  "dndsuId": 112,
+  "nameRu": "Злая насмешка",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d4",
+        "damageType": "psychic",
+        "save": {
+          "ability": "wis",
+          "onSuccess": "none"
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "disadvantage",
+        "value": null,
+        "save": {
+          "ability": "wis",
+          "onSuccess": null
+        },
+        "conditionText": "На следующую атаку до конца следующего хода цели; цель должна слышать заклинателя."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

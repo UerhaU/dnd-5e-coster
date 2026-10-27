@@ -1,0 +1,13 @@
+{
+  "id": "spell:antagonize",
+  "dndsuId": 4660,
+  "nameRu": "Враждебность",
+  "materials": {
+    "kind": "item",
+    "name": "Игральная карта с изображением плута",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

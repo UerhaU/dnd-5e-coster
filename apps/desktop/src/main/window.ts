@@ -29,9 +29,36 @@ export function createWindowOptions(preloadPath: string): BrowserWindowConstruct
   };
 }
 
+/**
+ * Ссылки, которые можно открыть во внешнем браузере: только страницы DnD.su
+ * по https (карточка каталога ссылается на источник). Остальное не открывается.
+ */
+export function isAllowedExternalUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return (
+      parsed.protocol === 'https:' &&
+      parsed.port === '' &&
+      parsed.username === '' &&
+      (parsed.hostname === 'dnd.su' || parsed.hostname.endsWith('.dnd.su'))
+    );
+  } catch {
+    return false;
+  }
+}
+
 /** Окно не открывает новых окон, не уходит на чужие адреса и не выдаёт разрешений. */
-export function lockDownWebContents(contents: WebContents, allowedOrigin: string): void {
-  contents.setWindowOpenHandler(() => ({ action: 'deny' }));
+export function lockDownWebContents(
+  contents: WebContents,
+  allowedOrigin: string,
+  openExternal: (url: string) => void,
+): void {
+  contents.setWindowOpenHandler(({ url }) => {
+    if (isAllowedExternalUrl(url)) {
+      openExternal(url);
+    }
+    return { action: 'deny' };
+  });
 
   contents.on('will-navigate', (event, url) => {
     if (originOf(url) !== allowedOrigin) {

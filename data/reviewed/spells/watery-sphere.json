@@ -1,0 +1,13 @@
+{
+  "id": "spell:watery-sphere",
+  "dndsuId": 377,
+  "nameRu": "Водяная сфера",
+  "materials": {
+    "kind": "item",
+    "name": "Вода",
+    "quantity": 1,
+    "unit": "drop",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

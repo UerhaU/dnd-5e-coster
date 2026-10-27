@@ -1,0 +1,13 @@
+{
+  "id": "spell:web",
+  "dndsuId": 227,
+  "nameRu": "Паутина",
+  "materials": {
+    "kind": "item",
+    "name": "Паутина",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

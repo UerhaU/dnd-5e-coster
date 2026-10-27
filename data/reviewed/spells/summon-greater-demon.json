@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-greater-demon",
+  "dndsuId": 481,
+  "nameRu": "Призыв высшего демона",
+  "materials": {
+    "kind": "item",
+    "name": "Сосуд с кровью Гуманоида",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "conditional",
+    "consumptionCondition": "Кровь расходуется, если из неё создаётся защитный круг.",
+    "special": "Кровь Гуманоида, убитого за последние 24 часа."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

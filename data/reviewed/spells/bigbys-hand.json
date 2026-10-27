@@ -1,0 +1,25 @@
+{
+  "id": "spell:bigbys-hand",
+  "dndsuId": 57,
+  "nameRu": "Длань Бигби",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Яичная скорлупа",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Перчатка из змеиной кожи",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

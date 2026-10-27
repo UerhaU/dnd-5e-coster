@@ -1,0 +1,15 @@
+{
+  "id": "spell:shapechange",
+  "dndsuId": 251,
+  "nameRu": "Полное превращение",
+  "materials": {
+    "kind": "item",
+    "name": "Нефритовый обруч",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 150000,
+    "special": "Надет на голову перед накладыванием."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

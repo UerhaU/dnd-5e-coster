@@ -1,0 +1,13 @@
+{
+  "id": "spell:cloud-of-daggers",
+  "dndsuId": 190,
+  "nameRu": "Облако кинжалов",
+  "materials": {
+    "kind": "item",
+    "name": "Осколок стекла",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

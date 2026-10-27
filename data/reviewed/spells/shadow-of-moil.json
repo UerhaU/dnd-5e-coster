@@ -1,0 +1,14 @@
+{
+  "id": "spell:shadow-of-moil",
+  "dndsuId": 478,
+  "nameRu": "Облачение тени",
+  "materials": {
+    "kind": "item",
+    "name": "Глазное яблоко нежити в драгоценном камне",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 15000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

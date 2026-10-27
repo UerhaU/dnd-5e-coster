@@ -1,0 +1,43 @@
+{
+  "id": "spell:identify",
+  "dndsuId": 210,
+  "nameRu": "Опознание",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "information",
+        "conditionText": "Узнайте свойства магического предмета или действующие на цель заклинания. Касание выбранного предмета или существа в течение накладывания."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Жемчужина",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 10000
+      },
+      {
+        "kind": "item",
+        "name": "Перо совы",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": [
+    "rules: v0.1 storage/spell-catalog.sqlite (исходная проверенная запись)",
+    "targets: v0.1 storage/spell-catalog.sqlite",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

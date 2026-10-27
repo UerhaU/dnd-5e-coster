@@ -1,0 +1,40 @@
+{
+  "id": "spell:imprisonment",
+  "dndsuId": 97,
+  "nameRu": "Заточение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Рисунок цели",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Статуэтка цели",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "name": "Особый компонент заточения",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "minimumValueCp": 50000,
+        "priceBasis": "target_hit_die",
+        "special": "Вид зависит от выбранной версии заклинания."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

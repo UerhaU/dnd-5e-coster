@@ -15,6 +15,10 @@ files:
   - '!**/node_modules/better-sqlite3/{deps,src}/**'
   - '!**/node_modules/better-sqlite3/binding.gyp'
   - '!**/node_modules/better-sqlite3/prebuilds/!(win32-x64.node)'
+# catalog.db собирает `npm run catalog:build` (раздел 6); в программе он только читается (Р21).
+extraResources:
+  - from: resources/catalog.db
+    to: catalog.db
 extraFiles:
   - from: resources/README.txt
     to: README.txt

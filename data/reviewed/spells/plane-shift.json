@@ -1,0 +1,15 @@
+{
+  "id": "spell:plane-shift",
+  "dndsuId": 95,
+  "nameRu": "Уход в иной мир",
+  "materials": {
+    "kind": "item",
+    "name": "Раздвоенный металлический прут",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 25000,
+    "special": "Настроен на конкретный план существования."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

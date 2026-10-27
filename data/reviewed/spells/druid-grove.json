@@ -1,0 +1,14 @@
+{
+  "id": "spell:druid-grove",
+  "dndsuId": 498,
+  "nameRu": "Роща друида",
+  "materials": {
+    "kind": "item",
+    "name": "Омела",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "special": "Собрана золотым серпом под светом полной луны."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

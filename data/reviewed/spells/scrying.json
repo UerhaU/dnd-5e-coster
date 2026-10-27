@@ -1,0 +1,33 @@
+{
+  "id": "spell:scrying",
+  "dndsuId": 176,
+  "nameRu": "Наблюдение",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Хрустальный шар",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Серебряное зеркало",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Чаша со святой водой",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ],
+    "minimumGroupValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

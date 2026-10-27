@@ -1,0 +1,25 @@
+{
+  "id": "spell:control-water",
+  "dndsuId": 21,
+  "nameRu": "Власть над водами",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Вода",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Пыль",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

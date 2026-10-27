@@ -1,0 +1,14 @@
+{
+  "id": "spell:dawn",
+  "dndsuId": 489,
+  "nameRu": "Рассвет",
+  "materials": {
+    "kind": "item",
+    "name": "Кулон солнечных лучей",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 10000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

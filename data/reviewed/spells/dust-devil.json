@@ -1,0 +1,13 @@
+{
+  "id": "spell:dust-devil",
+  "dndsuId": 406,
+  "nameRu": "Пылевой вихрь",
+  "materials": {
+    "kind": "item",
+    "name": "Пыль",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

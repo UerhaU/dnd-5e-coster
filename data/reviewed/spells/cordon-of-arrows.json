@@ -1,0 +1,25 @@
+{
+  "id": "spell:cordon-of-arrows",
+  "dndsuId": 81,
+  "nameRu": "Завеса стрел",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Стрелы",
+        "quantity": 4,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Арбалетные болты",
+        "quantity": 4,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

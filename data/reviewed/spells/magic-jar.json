@@ -1,0 +1,40 @@
+{
+  "id": "spell:magic-jar",
+  "dndsuId": 30,
+  "nameRu": "Волшебный сосуд",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Драгоценный камень",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Кристалл",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Реликварий",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Украшенный контейнер",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ],
+    "minimumGroupValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

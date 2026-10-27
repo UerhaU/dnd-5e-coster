@@ -1,0 +1,13 @@
+{
+  "id": "spell:detect-poison-and-disease",
+  "dndsuId": 193,
+  "nameRu": "Обнаружение болезней и яда",
+  "materials": {
+    "kind": "item",
+    "name": "Лист тиса",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

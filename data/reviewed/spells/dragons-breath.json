@@ -1,0 +1,13 @@
+{
+  "id": "spell:dragons-breath",
+  "dndsuId": 467,
+  "nameRu": "Дыхание дракона",
+  "materials": {
+    "kind": "item",
+    "name": "Острый перец",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

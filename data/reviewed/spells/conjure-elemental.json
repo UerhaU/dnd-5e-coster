@@ -1,0 +1,65 @@
+{
+  "id": "spell:conjure-elemental",
+  "dndsuId": 275,
+  "nameRu": "Призыв элементаля",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Вода",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Песок",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Горящие; для воздушного элементаля."
+      },
+      {
+        "kind": "item",
+        "name": "Мягкая глина",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Для земляного элементаля."
+      },
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Сера",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Фосфор",
+            "quantity": null,
+            "unit": null,
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

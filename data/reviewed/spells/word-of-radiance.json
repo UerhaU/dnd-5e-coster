@@ -1,0 +1,13 @@
+{
+  "id": "spell:word-of-radiance",
+  "dndsuId": 455,
+  "nameRu": "Слово сияния",
+  "materials": {
+    "kind": "item",
+    "name": "Священный символ",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

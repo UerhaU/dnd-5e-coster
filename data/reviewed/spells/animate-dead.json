@@ -1,0 +1,32 @@
+{
+  "id": "spell:animate-dead",
+  "dndsuId": 35,
+  "nameRu": "Восставший труп",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Кровь",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Плоть",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Костная пыль",
+        "quantity": 1,
+        "unit": "pinch",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

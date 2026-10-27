@@ -1,0 +1,13 @@
+{
+  "id": "spell:hunger-of-hadar",
+  "dndsuId": 47,
+  "nameRu": "Голод Хадара",
+  "materials": {
+    "kind": "item",
+    "name": "Маринованное щупальце осьминога",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "spell:hex",
+  "dndsuId": 312,
+  "nameRu": "Сглаз",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d6",
+        "damageType": "necrotic",
+        "trigger": "on_hit",
+        "conditionText": "Попадание атакой по проклятой цели."
+      },
+      {
+        "type": "modifier",
+        "stat": "ability_checks",
+        "op": "disadvantage",
+        "value": null,
+        "conditionText": "Проверки выбранной при накладывании характеристики."
+      }
+    ]
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Окаменевший глаз тритона",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

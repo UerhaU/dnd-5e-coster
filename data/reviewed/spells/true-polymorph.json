@@ -1,0 +1,32 @@
+{
+  "id": "spell:true-polymorph",
+  "dndsuId": 127,
+  "nameRu": "Истинное превращение",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Ртуть",
+        "quantity": 1,
+        "unit": "drop",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Гуммиарабик",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Дым",
+        "quantity": 1,
+        "unit": "portion",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

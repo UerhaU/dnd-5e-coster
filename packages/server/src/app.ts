@@ -1,5 +1,8 @@
+import type { CatalogConnection } from '@koster/db';
 import Fastify, { type FastifyInstance } from 'fastify';
 import { registerCors } from './cors';
+import { registerErrorHandling } from './errors';
+import { registerCatalogRoutes } from './routes/catalog';
 import { registerHealthRoute } from './routes/health';
 
 export interface ServerOptions {
@@ -7,6 +10,8 @@ export interface ServerOptions {
   sqliteVersion: string;
   /** Адреса окна программы, которым разрешено обращаться к серверу. */
   allowedOrigins: readonly string[];
+  /** catalog.db только для чтения; `null` — каталога нет (бывает только в разработке). */
+  catalog: CatalogConnection | null;
 }
 
 /** Собирает сервер со всеми маршрутами, но не запускает его. */
@@ -14,10 +19,13 @@ export function createServer(options: ServerOptions): FastifyInstance {
   const server = Fastify({ logger: false });
 
   registerCors(server, options.allowedOrigins);
+  registerErrorHandling(server);
   registerHealthRoute(server, {
     appVersion: options.appVersion,
     sqliteVersion: options.sqliteVersion,
+    catalog: options.catalog,
   });
+  registerCatalogRoutes(server, options.catalog);
 
   return server;
 }

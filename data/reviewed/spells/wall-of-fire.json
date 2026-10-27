@@ -1,0 +1,13 @@
+{
+  "id": "spell:wall-of-fire",
+  "dndsuId": 202,
+  "nameRu": "Огненная стена",
+  "materials": {
+    "kind": "item",
+    "name": "Фосфор",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

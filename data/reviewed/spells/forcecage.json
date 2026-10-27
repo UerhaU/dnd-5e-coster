@@ -1,0 +1,14 @@
+{
+  "id": "spell:forcecage",
+  "dndsuId": 107,
+  "nameRu": "Узилище",
+  "materials": {
+    "kind": "item",
+    "name": "Рубиновая пыль",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed",
+    "minimumValueCp": 150000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

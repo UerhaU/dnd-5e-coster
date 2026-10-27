@@ -1,0 +1,13 @@
+{
+  "id": "spell:otilukes-freezing-sphere",
+  "dndsuId": 215,
+  "nameRu": "Отилюков ледяной шар",
+  "materials": {
+    "kind": "item",
+    "name": "Хрустальный шар",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

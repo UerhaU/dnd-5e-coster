@@ -1,0 +1,13 @@
+{
+  "id": "spell:snare",
+  "dndsuId": 463,
+  "nameRu": "Силок",
+  "materials": {
+    "kind": "item",
+    "name": "Верёвка",
+    "quantity": 25,
+    "unit": "foot",
+    "consumption": "consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

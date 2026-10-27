@@ -1,0 +1,15 @@
+{
+  "id": "spell:contingency",
+  "dndsuId": 265,
+  "nameRu": "Предосторожность",
+  "materials": {
+    "kind": "item",
+    "name": "Статуэтка заклинателя",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 150000,
+    "special": "Из слоновой кости, украшена драгоценными камнями."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:creation",
+  "dndsuId": 366,
+  "nameRu": "Сотворение",
+  "materials": {
+    "kind": "item",
+    "name": "Материал создаваемого предмета",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

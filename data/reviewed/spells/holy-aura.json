@@ -1,0 +1,15 @@
+{
+  "id": "spell:holy-aura",
+  "dndsuId": 6,
+  "nameRu": "Аура святости",
+  "materials": {
+    "kind": "item",
+    "name": "Контейнер для реликвии",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 100000,
+    "special": "Содержит священную реликвию."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

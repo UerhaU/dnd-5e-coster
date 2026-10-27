@@ -1,0 +1,840 @@
+{
+  "checkedOn": "2026-10-16",
+  "edition": "5e_2014",
+  "cards": [
+    {
+      "siteId": 1,
+      "url": "https://5e14.dnd.su/spells/1-hellish-rebuke/",
+      "title": "Адское возмездие",
+      "title_en": "Hellish rebuke",
+      "level": "1",
+      "filter_class": [20],
+      "filter_class_tce": [],
+      "filter_archetype": [186],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [13]
+    },
+    {
+      "siteId": 2,
+      "url": "https://5e14.dnd.su/spells/2-antipathysympathy/",
+      "title": "Антипатия/симпатия",
+      "title_en": "Antipathy/sympathy",
+      "level": "8",
+      "filter_class": [21, 22],
+      "filter_class_tce": [12],
+      "filter_archetype": [],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 12,
+      "url": "https://5e14.dnd.su/spells/12-divine-word/",
+      "title": "Божественное слово",
+      "title_en": "Divine word",
+      "level": "7",
+      "filter_class": [13],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 22,
+      "url": "https://5e14.dnd.su/spells/22-control-weather/",
+      "title": "Власть над погодой",
+      "title_en": "Control weather",
+      "level": "8",
+      "filter_class": [21, 22, 13],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [102],
+      "filter_concentration": ["2"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 114,
+      "url": "https://5e14.dnd.su/spells/114-symbol/",
+      "title": "Знак",
+      "title_en": "Symbol",
+      "level": "7",
+      "filter_class": [21, 12, 13],
+      "filter_class_tce": [22],
+      "filter_archetype": [],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [21]
+    },
+    {
+      "siteId": 137,
+      "url": "https://5e14.dnd.su/spells/137-teleportation-circle/",
+      "title": "Круг телепортации",
+      "title_en": "Teleportation circle",
+      "level": "5",
+      "filter_class": [21, 12, 19],
+      "filter_class_tce": [20],
+      "filter_archetype": [154, 203],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 143,
+      "url": "https://5e14.dnd.su/spells/143-leomunds-tiny-hut/",
+      "title": "Леомундова хижина",
+      "title_en": "Leomund's tiny hut",
+      "level": "3",
+      "filter_class": [21, 12],
+      "filter_class_tce": [],
+      "filter_archetype": [159],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["2"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 176,
+      "url": "https://5e14.dnd.su/spells/176-scrying/",
+      "title": "Наблюдение",
+      "title_en": "Scrying",
+      "level": "5",
+      "filter_class": [21, 12, 22, 13, 20],
+      "filter_class_tce": [],
+      "filter_archetype": [139, 149, 152, 185, 191],
+      "filter_source": [102],
+      "filter_concentration": ["2"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 195,
+      "url": "https://5e14.dnd.su/spells/195-detect-magic/",
+      "title": "Обнаружение магии",
+      "title_en": "Detect magic",
+      "level": "1",
+      "filter_class": [21, 12, 22, 13, 23, 16, 17, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [154, 191],
+      "filter_source": [102],
+      "filter_concentration": ["2"],
+      "filter_ritual": ["2"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 203,
+      "url": "https://5e14.dnd.su/spells/203-burning-hands/",
+      "title": "Огненные ладони",
+      "title_en": "Burning hands",
+      "level": "1",
+      "filter_class": [21, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [143, 152, 165, 171, 175, 179],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [13]
+    },
+    {
+      "siteId": 205,
+      "url": "https://5e14.dnd.su/spells/205-fireball/",
+      "title": "Огненный шар",
+      "title_en": "Fireball",
+      "level": "3",
+      "filter_class": [21, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [152, 161, 165, 171, 175],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [13]
+    },
+    {
+      "siteId": 223,
+      "url": "https://5e14.dnd.su/spells/223-feather-fall/",
+      "title": "Падение пёрышком",
+      "title_en": "Feather fall",
+      "level": "1",
+      "filter_class": [21, 12, 23, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 304,
+      "url": "https://5e14.dnd.su/spells/304-plant-growth/",
+      "title": "Рост растений",
+      "title_en": "Plant growth",
+      "level": "3",
+      "filter_class": [12, 22, 17],
+      "filter_class_tce": [],
+      "filter_archetype": [139, 143, 151, 164, 184],
+      "filter_source": [102],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 374,
+      "url": "https://5e14.dnd.su/spells/374-control-flames/",
+      "title": "Власть над огнём",
+      "title_en": "Control flames",
+      "level": "Заговор",
+      "filter_class": [21, 22, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [107, 109],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 401,
+      "url": "https://5e14.dnd.su/spells/401-absorb-elements/",
+      "title": "Поглощение стихий",
+      "title_en": "Absorb elements",
+      "level": "1",
+      "filter_class": [21, 22, 23, 17, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [107, 109],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 474,
+      "url": "https://5e14.dnd.su/spells/474-tiny-servant/",
+      "title": "Крошечный слуга",
+      "title_en": "Tiny servant",
+      "level": "3",
+      "filter_class": [21, 23],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [109],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 741,
+      "url": "https://5e14.dnd.su/spells/741-encode-thoughts/",
+      "title": "Кодировка мыслей",
+      "title_en": "Encode thoughts",
+      "level": "Заговор",
+      "filter_class": [],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [112],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 1922,
+      "url": "https://5e14.dnd.su/spells/1922-gift-of-gab/",
+      "title": "Подарок болтуна",
+      "title_en": "Gift of gab",
+      "level": "2",
+      "filter_class": [21, 12],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [115],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 2340,
+      "url": "https://5e14.dnd.su/spells/2340-jims-glowing-coin/",
+      "title": "Сверкающая монета Джима",
+      "title_en": "Jims Glowing Coin",
+      "level": "2",
+      "filter_class": [21],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [115],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": []
+    },
+    {
+      "siteId": 2341,
+      "url": "https://5e14.dnd.su/spells/2341-jims-magic-missile/",
+      "title": "Волшебная стрела Джима",
+      "title_en": "Jims Magic Missile",
+      "level": "1",
+      "filter_class": [21],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [115],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [20]
+    },
+    {
+      "siteId": 2441,
+      "url": "https://5e14.dnd.su/spells/2441-sapping-sting/",
+      "title": "Иссушающий укол",
+      "title_en": "Sapping sting",
+      "level": "Заговор",
+      "filter_class": [],
+      "filter_class_tce": [],
+      "filter_archetype": [135, 136],
+      "filter_source": [116],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [21]
+    },
+    {
+      "siteId": 4664,
+      "url": "https://5e14.dnd.su/spells/4664-spray-of-cards/",
+      "title": "Разбрасывание карт",
+      "title_en": "Spray of Cards",
+      "level": "2",
+      "filter_class": [21, 12, 20, 19],
+      "filter_class_tce": [],
+      "filter_archetype": [],
+      "filter_source": [207],
+      "filter_concentration": ["1"],
+      "filter_ritual": ["1"],
+      "filter_damtype": [20]
+    }
+  ],
+  "maps": {
+    "class": [
+      {
+        "title": "",
+        "list": [
+          {
+            "title": "Волшебник",
+            "value": 21
+          },
+          {
+            "title": "Бард",
+            "value": 12
+          },
+          {
+            "title": "Друид",
+            "value": 22
+          },
+          {
+            "title": "Жрец",
+            "value": 13
+          },
+          {
+            "title": "Изобретатель",
+            "value": 23
+          },
+          {
+            "title": "Колдун",
+            "value": 20
+          },
+          {
+            "title": "Паладин",
+            "value": 16
+          },
+          {
+            "title": "Следопыт",
+            "value": 17
+          },
+          {
+            "title": "Чародей",
+            "value": 19
+          }
+        ]
+      }
+    ],
+    "archetype": {
+      "11": {
+        "title": "Варвар",
+        "list": {
+          "291": {
+            "title": "Путь великана",
+            "value": 291
+          }
+        }
+      },
+      "12": {
+        "title": "Бард",
+        "list": {
+          "107": {
+            "title": "Коллегия духов",
+            "value": 107
+          }
+        }
+      },
+      "13": {
+        "title": "Жрец",
+        "list": {
+          "146": {
+            "title": "Домен бури",
+            "value": 146
+          },
+          "147": {
+            "title": "Домен войны",
+            "value": 147
+          },
+          "148": {
+            "title": "Домен жизни",
+            "value": 148
+          },
+          "149": {
+            "title": "Домен знаний",
+            "value": 149
+          },
+          "150": {
+            "title": "Домен обмана",
+            "value": 150
+          },
+          "151": {
+            "title": "Домен природы",
+            "value": 151
+          },
+          "152": {
+            "title": "Домен света",
+            "value": 152
+          },
+          "153": {
+            "title": "Домен смерти",
+            "value": 153
+          },
+          "154": {
+            "title": "Домен магии",
+            "value": 154
+          },
+          "155": {
+            "title": "Домен кузни",
+            "value": 155
+          },
+          "156": {
+            "title": "Домен упокоения",
+            "value": 156
+          },
+          "157": {
+            "title": "Домен мира",
+            "value": 157
+          },
+          "158": {
+            "title": "Домен порядка",
+            "value": 158
+          },
+          "159": {
+            "title": "Домен сумерек",
+            "value": 159
+          }
+        }
+      },
+      "14": {
+        "title": "Воин",
+        "list": {
+          "121": {
+            "title": "Мистический лучник",
+            "value": 121
+          },
+          "124": {
+            "title": "Пси-воин",
+            "value": 124
+          }
+        }
+      },
+      "15": {
+        "title": "Монах",
+        "list": {
+          "174": {
+            "title": "Путь тени",
+            "value": 174
+          },
+          "175": {
+            "title": "Путь четырёх стихий",
+            "value": 175
+          },
+          "179": {
+            "title": "Путь солнечной души",
+            "value": 179
+          }
+        }
+      },
+      "16": {
+        "title": "Паладин",
+        "list": {
+          "183": {
+            "title": "Клятва преданности",
+            "value": 183
+          },
+          "184": {
+            "title": "Клятва древних",
+            "value": 184
+          },
+          "185": {
+            "title": "Клятва мести",
+            "value": 185
+          },
+          "186": {
+            "title": "Клятвопреступник",
+            "value": 186
+          },
+          "187": {
+            "title": "Клятва короны",
+            "value": 187
+          },
+          "188": {
+            "title": "Клятва искупления",
+            "value": 188
+          },
+          "189": {
+            "title": "Клятва покорения",
+            "value": 189
+          },
+          "190": {
+            "title": "Клятва славы",
+            "value": 190
+          },
+          "191": {
+            "title": "Клятва смотрителей",
+            "value": 191
+          }
+        }
+      },
+      "17": {
+        "title": "Следопыт",
+        "list": {
+          "203": {
+            "title": "Странник горизонта",
+            "value": 203
+          },
+          "204": {
+            "title": "Сумрачный охотник",
+            "value": 204
+          },
+          "205": {
+            "title": "Убийца монстров",
+            "value": 205
+          },
+          "206": {
+            "title": "Странник фей",
+            "value": 206
+          },
+          "207": {
+            "title": "Хранитель роя",
+            "value": 207
+          },
+          "208": {
+            "title": "Наездник на дрейке",
+            "value": 208
+          }
+        }
+      },
+      "18": {
+        "title": "Плут",
+        "list": {
+          "194": {
+            "title": "Мистический ловкач",
+            "value": 194
+          }
+        }
+      },
+      "19": {
+        "title": "Чародей",
+        "list": {
+          "211": {
+            "title": "Божественная душа",
+            "value": 211
+          },
+          "212": {
+            "title": "Теневая магия",
+            "value": 212
+          },
+          "214": {
+            "title": "Аберрантный разум",
+            "value": 214
+          },
+          "215": {
+            "title": "Заводная душа",
+            "value": 215
+          },
+          "286": {
+            "title": "Лунное чародейство",
+            "value": 286
+          }
+        }
+      },
+      "20": {
+        "title": "Колдун",
+        "list": {
+          "164": {
+            "title": "Архифея",
+            "value": 164
+          },
+          "165": {
+            "title": "Исчадие",
+            "value": 165
+          },
+          "166": {
+            "title": "Великий Древний",
+            "value": 166
+          },
+          "167": {
+            "title": "Бессмертный",
+            "value": 167
+          },
+          "168": {
+            "title": "Ведьмовской клинок",
+            "value": 168
+          },
+          "169": {
+            "title": "Небожитель",
+            "value": 169
+          },
+          "170": {
+            "title": "Бездонный",
+            "value": 170
+          },
+          "171": {
+            "title": "Гений",
+            "value": 171
+          },
+          "172": {
+            "title": "Нежить",
+            "value": 172
+          }
+        }
+      },
+      "21": {
+        "title": "Волшебник",
+        "list": {
+          "135": {
+            "title": "Магия хронургии",
+            "value": 135
+          },
+          "136": {
+            "title": "Магия гравитургии",
+            "value": 136
+          },
+          "137": {
+            "title": "Орден писцов",
+            "value": 137
+          }
+        }
+      },
+      "22": {
+        "title": "Друид",
+        "list": {
+          "139": {
+            "title": "Круг земли",
+            "value": 139
+          },
+          "143": {
+            "title": "Круг дикого огня",
+            "value": 143
+          },
+          "144": {
+            "title": "Круг звёзд",
+            "value": 144
+          },
+          "145": {
+            "title": "Круг спор",
+            "value": 145
+          }
+        }
+      },
+      "23": {
+        "title": "Изобретатель",
+        "list": {
+          "160": {
+            "title": "Алхимик",
+            "value": 160
+          },
+          "161": {
+            "title": "Артиллерист",
+            "value": 161
+          },
+          "162": {
+            "title": "Боевой кузнец",
+            "value": 162
+          },
+          "163": {
+            "title": "Бронник",
+            "value": 163
+          }
+        }
+      }
+    },
+    "source": {
+      "10": {
+        "title": "Core",
+        "list": [
+          {
+            "title": "Player's Handbook",
+            "value": 102
+          }
+        ]
+      },
+      "20": {
+        "title": "Sourcebooks",
+        "list": {
+          "6": {
+            "title": "Acquisition Incorporated",
+            "value": 115
+          },
+          "8": {
+            "title": "The Book of Many Things",
+            "value": 207
+          },
+          "11": {
+            "title": "Explorer's Guide to Wildemount",
+            "value": 116
+          },
+          "12": {
+            "title": "Fizban's Treasury of Dragons",
+            "value": 152
+          },
+          "15": {
+            "title": "Guildmasters' guide to Ravnica",
+            "value": 112
+          },
+          "20": {
+            "title": "Spelljammer: Adventures in Space",
+            "value": 160
+          },
+          "21": {
+            "title": "Planescape: Adventures in the Multiverse",
+            "value": 205
+          },
+          "22": {
+            "title": "Sword Coast Adventurer's Guide",
+            "value": 108
+          },
+          "23": {
+            "title": "Tasha's Cauldron of Everything",
+            "value": 117
+          },
+          "27": {
+            "title": "Xanathar's Guide to Everything",
+            "value": 109
+          }
+        }
+      },
+      "30": {
+        "title": "Adventures, hardcovers",
+        "list": {
+          "36": {
+            "title": "Icewind Dale: Rime of the Frostmaiden",
+            "value": 120
+          },
+          "40": {
+            "title": "Princes of the Apocalypse",
+            "value": 107
+          },
+          "43": {
+            "title": "Strixhaven: A Curriculum of Chaos",
+            "value": 155
+          }
+        }
+      },
+      "60": {
+        "title": "Adventurers League",
+        "list": {
+          "75": {
+            "title": "Lost Laboratory of Kwalish",
+            "value": 153
+          }
+        }
+      },
+      "999": {
+        "title": "Homebrew",
+        "list": {
+          "106": {
+            "title": "laserllama",
+            "value": 179
+          },
+          "108": {
+            "title": "Midgard Heroes Handbook",
+            "value": 156
+          },
+          "116": {
+            "title": "Ryoko's guide to the yokai realms",
+            "value": 210
+          },
+          "118": {
+            "title": "Spark of Alastas",
+            "value": 310
+          },
+          "125": {
+            "title": "Valda's Spire of Secrets",
+            "value": 190
+          }
+        }
+      }
+    },
+    "damtype": [
+      {
+        "title": "",
+        "list": [
+          {
+            "title": "Дробящий",
+            "value": 10
+          },
+          {
+            "title": "Колющий",
+            "value": 12
+          },
+          {
+            "title": "Рубящий",
+            "value": 11
+          },
+          {
+            "title": "Звук",
+            "value": 18
+          },
+          {
+            "title": "Излучение",
+            "value": 19
+          },
+          {
+            "title": "Кислота",
+            "value": 17
+          },
+          {
+            "title": "Некротическая энергия",
+            "value": 21
+          },
+          {
+            "title": "Огонь",
+            "value": 13
+          },
+          {
+            "title": "Психическая энергия",
+            "value": 22
+          },
+          {
+            "title": "Силовое поле",
+            "value": 20
+          },
+          {
+            "title": "Холод",
+            "value": 14
+          },
+          {
+            "title": "Электричество",
+            "value": 15
+          },
+          {
+            "title": "Яд",
+            "value": 16
+          }
+        ]
+      }
+    ]
+  }
+}

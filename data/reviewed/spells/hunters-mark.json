@@ -1,0 +1,19 @@
+{
+  "id": "spell:hunters-mark",
+  "dndsuId": 164,
+  "nameRu": "Метка охотника",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d6",
+        "damageType": null,
+        "trigger": "on_hit",
+        "scope": "weapon",
+        "conditionText": "Попадание атакой оружием по помеченной цели; тип совпадает с уроном оружия."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

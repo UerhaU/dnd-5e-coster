@@ -1,0 +1,19 @@
+{
+  "id": "spell:scorching-ray",
+  "dndsuId": 225,
+  "nameRu": "Палящий луч",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "2d6",
+        "damageType": "fire",
+        "resolution": "ranged_spell_attack",
+        "repeatCount": 3,
+        "repeatPerSlot": 1
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

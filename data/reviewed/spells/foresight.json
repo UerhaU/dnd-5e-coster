@@ -1,0 +1,13 @@
+{
+  "id": "spell:foresight",
+  "dndsuId": 264,
+  "nameRu": "Предвидение",
+  "materials": {
+    "kind": "item",
+    "name": "Перо колибри",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

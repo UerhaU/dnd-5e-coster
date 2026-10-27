@@ -1,0 +1,13 @@
+{
+  "id": "spell:rimes-binding-ice",
+  "dndsuId": 3818,
+  "nameRu": "Сковывающий лёд Раймы",
+  "materials": {
+    "kind": "item",
+    "name": "Флакон с талой водой",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

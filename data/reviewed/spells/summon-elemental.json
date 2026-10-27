@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-elemental",
+  "dndsuId": 3068,
+  "nameRu": "Призыв духа стихии",
+  "materials": {
+    "kind": "item",
+    "name": "Флакон с золотой инкрустацией",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 40000,
+    "special": "Содержит воздух, гальку, пепел и воду."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

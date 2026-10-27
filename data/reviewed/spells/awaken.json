@@ -1,0 +1,14 @@
+{
+  "id": "spell:awaken",
+  "dndsuId": 282,
+  "nameRu": "Пробуждение разума",
+  "materials": {
+    "kind": "item",
+    "name": "Агат",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

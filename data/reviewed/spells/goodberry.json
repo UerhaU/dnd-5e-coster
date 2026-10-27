@@ -1,0 +1,32 @@
+{
+  "id": "spell:goodberry",
+  "dndsuId": 78,
+  "nameRu": "Чудо-ягоды",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "creation",
+        "stat": "berries_created",
+        "op": "set",
+        "value": 10
+      },
+      {
+        "type": "healing",
+        "value": 1,
+        "trigger": "eat_berry"
+      }
+    ]
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Ветка омелы",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "spell:summon-aberration",
+  "dndsuId": 3062,
+  "nameRu": "Призыв духа аберрации",
+  "materials": {
+    "kind": "item",
+    "name": "Сосуд с платиновой инкрустацией",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 40000,
+    "special": "Содержит заспиртованные щупальце и глазное яблоко."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

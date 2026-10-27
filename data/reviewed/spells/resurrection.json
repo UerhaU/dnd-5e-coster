@@ -1,0 +1,14 @@
+{
+  "id": "spell:resurrection",
+  "dndsuId": 33,
+  "nameRu": "Воскрешение",
+  "materials": {
+    "kind": "item",
+    "name": "Алмаз",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

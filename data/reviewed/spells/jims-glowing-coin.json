@@ -1,0 +1,13 @@
+{
+  "id": "spell:jims-glowing-coin",
+  "dndsuId": 2340,
+  "nameRu": "Сверкающая монета Джима",
+  "materials": {
+    "kind": "item",
+    "name": "Монета",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

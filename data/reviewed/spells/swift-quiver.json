@@ -1,0 +1,13 @@
+{
+  "id": "spell:swift-quiver",
+  "dndsuId": 14,
+  "nameRu": "Быстрый колчан",
+  "materials": {
+    "kind": "item",
+    "name": "Колчан с боеприпасом",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:message",
+  "dndsuId": 331,
+  "nameRu": "Сообщение",
+  "materials": {
+    "kind": "item",
+    "name": "Медная проволока",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

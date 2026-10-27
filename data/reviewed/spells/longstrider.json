@@ -1,0 +1,32 @@
+{
+  "id": "spell:longstrider",
+  "dndsuId": 316,
+  "nameRu": "Скороход",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "speed",
+        "op": "add",
+        "value": 10
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 1
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Земля",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

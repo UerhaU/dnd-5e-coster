@@ -1,0 +1,14 @@
+{
+  "id": "spell:drawmijs-instant-summons",
+  "dndsuId": 68,
+  "nameRu": "Дромиджево появление",
+  "materials": {
+    "kind": "item",
+    "name": "Сапфир",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "spell:temple-of-the-gods",
+  "dndsuId": 503,
+  "nameRu": "Храм богов",
+  "materials": {
+    "kind": "item",
+    "name": "Священный символ",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

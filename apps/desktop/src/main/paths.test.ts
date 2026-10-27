@@ -2,7 +2,12 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { DataFolderError, prepareDataFolders, resolvePortablePaths } from './paths';
+import {
+  DataFolderError,
+  prepareDataFolders,
+  resolveCatalogFile,
+  resolvePortablePaths,
+} from './paths';
 
 describe('resolvePortablePaths', () => {
   it('в собранной программе кладёт data/ рядом с exe', () => {
@@ -36,6 +41,28 @@ describe('resolvePortablePaths', () => {
     for (const folder of [paths.logs, paths.electron, paths.crashDumps]) {
       expect(path.relative(paths.data, folder).startsWith('..')).toBe(false);
     }
+  });
+});
+
+describe('resolveCatalogFile', () => {
+  it('в собранной программе берёт catalog.db из resources/', () => {
+    const file = resolveCatalogFile({
+      isPackaged: true,
+      exePath: 'D:\\тест Костёр\\Koster\\Koster.exe',
+      appPath: 'D:\\тест Костёр\\Koster\\resources\\app.asar',
+    });
+
+    expect(file).toBe(path.join('D:\\тест Костёр\\Koster', 'resources', 'catalog.db'));
+  });
+
+  it('в разработке берёт catalog.db из apps/desktop/resources/', () => {
+    const file = resolveCatalogFile({
+      isPackaged: false,
+      exePath: 'D:\\repo\\node_modules\\electron\\dist\\electron.exe',
+      appPath: 'D:\\repo\\apps\\desktop',
+    });
+
+    expect(file).toBe(path.join('D:\\repo\\apps\\desktop', 'resources', 'catalog.db'));
   });
 });
 

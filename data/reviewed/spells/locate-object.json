@@ -1,0 +1,13 @@
+{
+  "id": "spell:locate-object",
+  "dndsuId": 244,
+  "nameRu": "Поиск предмета",
+  "materials": {
+    "kind": "item",
+    "name": "Раздвоенная веточка",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

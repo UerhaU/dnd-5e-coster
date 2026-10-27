@@ -1,0 +1,13 @@
+{
+  "id": "spell:wither-and-bloom",
+  "dndsuId": 3948,
+  "nameRu": "Увядание и цветение",
+  "materials": {
+    "kind": "item",
+    "name": "Увядшая виноградная лоза",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

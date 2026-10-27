@@ -1,0 +1,13 @@
+{
+  "id": "spell:gate-seal",
+  "dndsuId": 6578,
+  "nameRu": "Запечатывание врат",
+  "materials": {
+    "kind": "item",
+    "name": "Сломанный ключ портала",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

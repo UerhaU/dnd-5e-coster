@@ -1,0 +1,27 @@
+{
+  "id": "spell:divination",
+  "dndsuId": 266,
+  "nameRu": "Предсказание",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Жертвенное подношение",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "special": "Соответствует религии заклинателя."
+      }
+    ],
+    "minimumGroupValueCp": 2500
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:water-walk",
+  "dndsuId": 88,
+  "nameRu": "Хождение по воде",
+  "materials": {
+    "kind": "item",
+    "name": "Пробка",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

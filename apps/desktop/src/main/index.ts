@@ -1,13 +1,16 @@
 import path from 'node:path';
 import { createServer, listenLocal } from '@koster/server';
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { IPC_GET_SERVER_URL } from '../shared/ipc';
+import { openProgramCatalog } from './catalog';
 import { createLogger } from './log';
 import { originOf } from './origin';
 import {
   DataFolderError,
   prepareDataFolders,
+  resolveCatalogFile,
   resolvePortablePaths,
+  type PathsInput,
   type PortablePaths,
 } from './paths';
 import { APP_ORIGIN, registerAppScheme, serveRenderer } from './renderer-protocol';
@@ -23,12 +26,16 @@ function fail(message: string): void {
  * Пути — самым первым делом, до готовности приложения:
  * иначе Electron создаст свои папки в AppData (раздел 4.2).
  */
-function setUpPortablePaths(): PortablePaths | null {
-  const paths = resolvePortablePaths({
+function pathsInput(): PathsInput {
+  return {
     isPackaged: app.isPackaged,
     exePath: app.getPath('exe'),
     appPath: app.getAppPath(),
-  });
+  };
+}
+
+function setUpPortablePaths(): PortablePaths | null {
+  const paths = resolvePortablePaths(pathsInput());
 
   try {
     prepareDataFolders(paths);
@@ -50,16 +57,20 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
 
   log(`Запуск ${app.getVersion()}, данные: ${paths.data}`);
 
+  const catalog = openProgramCatalog(resolveCatalogFile(pathsInput()), app.isPackaged, log);
+
   const server = createServer({
     appVersion: app.getVersion(),
     sqliteVersion: readSqliteVersion(),
     allowedOrigins: [rendererOrigin],
+    catalog,
   });
   const serverUrl = await listenLocal(server);
   log(`Сервер слушает ${serverUrl}`);
 
   app.on('before-quit', () => {
     void server.close();
+    catalog?.close();
   });
 
   ipcMain.handle(IPC_GET_SERVER_URL, (event) => {
@@ -73,7 +84,9 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
   const window = new BrowserWindow(
     createWindowOptions(path.join(__dirname, '../preload/index.js')),
   );
-  lockDownWebContents(window.webContents, rendererOrigin);
+  lockDownWebContents(window.webContents, rendererOrigin, (url) => {
+    void shell.openExternal(url);
+  });
   window.once('ready-to-show', () => window.show());
 
   if (devRendererUrl) {

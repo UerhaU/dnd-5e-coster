@@ -1,0 +1,13 @@
+{
+  "id": "spell:rarys-telepathic-bond",
+  "dndsuId": 160,
+  "nameRu": "Ментальная связь Рэри",
+  "materials": {
+    "kind": "item",
+    "name": "Яичная скорлупа двух разных видов существ",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:maximilians-earthen-grasp",
+  "dndsuId": 383,
+  "nameRu": "Земляная хватка Максимилиана",
+  "materials": {
+    "kind": "item",
+    "name": "Глиняная миниатюра руки",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

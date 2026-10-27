@@ -1,0 +1,15 @@
+{
+  "id": "spell:true-seeing",
+  "dndsuId": 126,
+  "nameRu": "Истинное зрение",
+  "materials": {
+    "kind": "item",
+    "name": "Мазь для глаз",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 2500,
+    "special": "Из грибного порошка, шафрана и жира."
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

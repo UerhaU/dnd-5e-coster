@@ -1,0 +1,35 @@
+{
+  "id": "spell:forbiddance",
+  "dndsuId": 89,
+  "nameRu": "Запрет",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Святая вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Благовония",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed",
+        "special": "Редкие."
+      },
+      {
+        "kind": "item",
+        "name": "Рубиновая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "conditional",
+        "consumptionCondition": "Расходуется при накладывании на одном месте в течение 30 дней.",
+        "minimumValueCp": 100000
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

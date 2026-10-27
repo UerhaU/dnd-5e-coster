@@ -1,0 +1,30 @@
+{
+  "id": "spell:astral-projection",
+  "dndsuId": 284,
+  "nameRu": "Проекция в астрал",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Гиацинт",
+        "quantity": 1,
+        "unit": "piece",
+        "quantityBasis": "per_target",
+        "consumption": "consumed",
+        "minimumValueCp": 100000
+      },
+      {
+        "kind": "item",
+        "name": "Серебряный брусок",
+        "quantity": 1,
+        "unit": "piece",
+        "quantityBasis": "per_target",
+        "consumption": "consumed",
+        "minimumValueCp": 10000,
+        "special": "С орнаментом."
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "spell:otilukes-resilient-sphere",
+  "dndsuId": 216,
+  "nameRu": "Отилюков упругий шар",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Хрустальная полусфера",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Полусфера из гуммиарабика",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

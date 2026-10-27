@@ -1,0 +1,20 @@
+{
+  "id": "spell:fly",
+  "dndsuId": 249,
+  "nameRu": "Полёт",
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 1
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Перо птицы",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

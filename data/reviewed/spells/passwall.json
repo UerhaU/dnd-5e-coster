@@ -1,0 +1,13 @@
+{
+  "id": "spell:passwall",
+  "dndsuId": 327,
+  "nameRu": "Создание прохода",
+  "materials": {
+    "kind": "item",
+    "name": "Кунжутное семя",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

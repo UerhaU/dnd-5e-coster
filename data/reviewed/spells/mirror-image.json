@@ -1,0 +1,17 @@
+{
+  "id": "spell:mirror-image",
+  "dndsuId": 218,
+  "nameRu": "Отражения",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "illusory_duplicates",
+        "op": "set",
+        "value": 3
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

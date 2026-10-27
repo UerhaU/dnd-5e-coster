@@ -1,0 +1,13 @@
+{
+  "id": "spell:mending",
+  "dndsuId": 258,
+  "nameRu": "Починка",
+  "materials": {
+    "kind": "item",
+    "name": "Магнетит",
+    "quantity": 2,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

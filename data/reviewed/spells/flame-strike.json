@@ -1,0 +1,13 @@
+{
+  "id": "spell:flame-strike",
+  "dndsuId": 181,
+  "nameRu": "Небесный огонь",
+  "materials": {
+    "kind": "item",
+    "name": "Сера",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "spell:tether-essence",
+  "dndsuId": 2452,
+  "nameRu": "Единство сущностей",
+  "materials": {
+    "kind": "item",
+    "name": "Катушка платинового шнура",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 25000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

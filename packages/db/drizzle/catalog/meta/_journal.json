@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1793046216926,
+      "tag": "0000_catalog_init",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1793046219370,
+      "tag": "0001_content_search",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793088048013,
+      "tag": "0002_spell_class_subclass",
+      "breakpoints": true
+    }
+  ]
+}

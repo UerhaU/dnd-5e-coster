@@ -1,0 +1,24 @@
+{
+  "id": "spell:protection-from-energy",
+  "dndsuId": 106,
+  "nameRu": "Защита от энергии",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "damage_taken",
+        "op": "resistance",
+        "choices": ["acid", "cold", "fire", "lightning", "thunder"]
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs"
+  ]
+}

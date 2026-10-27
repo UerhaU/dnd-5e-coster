@@ -1,0 +1,13 @@
+{
+  "id": "spell:abi-dalzims-horrid-wilting",
+  "dndsuId": 412,
+  "nameRu": "Ужасное увядание Аби-Далзима",
+  "materials": {
+    "kind": "item",
+    "name": "Губка",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

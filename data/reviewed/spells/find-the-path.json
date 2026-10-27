@@ -1,0 +1,26 @@
+{
+  "id": "spell:find-the-path",
+  "dndsuId": 245,
+  "nameRu": "Поиск пути",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Набор инструментов для ворожбы",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed",
+        "minimumValueCp": 10000
+      },
+      {
+        "kind": "item",
+        "name": "Предмет из искомого места",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

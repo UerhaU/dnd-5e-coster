@@ -1,0 +1,13 @@
+{
+  "id": "spell:confusion",
+  "dndsuId": 325,
+  "nameRu": "Смятение",
+  "materials": {
+    "kind": "item",
+    "name": "Ореховая скорлупа",
+    "quantity": 3,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

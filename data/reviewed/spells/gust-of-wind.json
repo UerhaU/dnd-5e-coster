@@ -1,0 +1,13 @@
+{
+  "id": "spell:gust-of-wind",
+  "dndsuId": 255,
+  "nameRu": "Порыв ветра",
+  "materials": {
+    "kind": "item",
+    "name": "Семя гороха",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

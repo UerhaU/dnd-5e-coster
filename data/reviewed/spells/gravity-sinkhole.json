@@ -1,0 +1,13 @@
+{
+  "id": "spell:gravity-sinkhole",
+  "dndsuId": 2449,
+  "nameRu": "Центр притяжения",
+  "materials": {
+    "kind": "item",
+    "name": "Чёрный мрамор",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

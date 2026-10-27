@@ -1,0 +1,13 @@
+{
+  "id": "spell:ravenous-void",
+  "dndsuId": 2455,
+  "nameRu": "Ревущая бездна",
+  "materials": {
+    "kind": "item",
+    "name": "Железная девятиконечная звезда",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

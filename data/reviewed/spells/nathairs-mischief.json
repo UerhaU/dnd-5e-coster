@@ -1,0 +1,13 @@
+{
+  "id": "spell:nathairs-mischief",
+  "dndsuId": 3816,
+  "nameRu": "Натайрово озорство",
+  "materials": {
+    "kind": "item",
+    "name": "Корочка яблочного пирога",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

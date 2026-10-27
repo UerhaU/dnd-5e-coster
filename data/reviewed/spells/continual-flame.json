@@ -1,0 +1,14 @@
+{
+  "id": "spell:continual-flame",
+  "dndsuId": 18,
+  "nameRu": "Вечный огонь",
+  "materials": {
+    "kind": "item",
+    "name": "Рубиновая пыль",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumValueCp": 5000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

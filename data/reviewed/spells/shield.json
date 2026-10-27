@@ -1,0 +1,25 @@
+{
+  "id": "spell:shield",
+  "dndsuId": 70,
+  "nameRu": "Щит",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "armor_class",
+        "op": "add",
+        "value": 5,
+        "trigger": "reaction",
+        "conditionText": "До начала следующего хода, включая вызвавшую реакцию атаку."
+      },
+      {
+        "type": "modifier",
+        "stat": "magic_missile_damage",
+        "op": "set",
+        "value": 0
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

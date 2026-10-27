@@ -1,0 +1,27 @@
+{
+  "id": "spell:teleportation-circle",
+  "dndsuId": 137,
+  "nameRu": "Круг телепортации",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Мелки",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed",
+        "special": "Редкие."
+      },
+      {
+        "kind": "item",
+        "name": "Чернила с драгоценными камнями",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      }
+    ],
+    "minimumGroupValueCp": 5000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

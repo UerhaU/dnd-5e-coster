@@ -1,0 +1,36 @@
+{
+  "id": "spell:armor-of-agathys",
+  "dndsuId": 59,
+  "nameRu": "Доспех Агатиса",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "temporary_hp",
+        "op": "set",
+        "value": 5,
+        "scalarPerSlot": 5
+      },
+      {
+        "type": "damage",
+        "dice": "5",
+        "damageType": "cold",
+        "trigger": "hit_by_melee_attack",
+        "conditionText": "Пока сохраняются временные хиты от этого заклинания.",
+        "scalarPerSlot": 5
+      }
+    ]
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Вода",
+    "quantity": 1,
+    "unit": "cup",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

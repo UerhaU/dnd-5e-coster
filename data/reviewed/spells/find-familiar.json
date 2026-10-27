@@ -1,0 +1,45 @@
+{
+  "id": "spell:find-familiar",
+  "dndsuId": 248,
+  "nameRu": "Поиск фамильяра",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Уголь",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Благовония",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Травы",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          }
+        ],
+        "minimumGroupValueCp": 1000
+      },
+      {
+        "kind": "item",
+        "name": "Латунная жаровня",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

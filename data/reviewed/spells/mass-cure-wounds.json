@@ -1,0 +1,10 @@
+{
+  "id": "spell:mass-cure-wounds",
+  "dndsuId": 171,
+  "nameRu": "Множественное лечение ран",
+  "targets": {
+    "maxCount": 6,
+    "extraPerSlot": 0
+  },
+  "provenance": ["targets: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

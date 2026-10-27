@@ -1,0 +1,76 @@
+{
+  "id": "spell:shillelagh",
+  "dndsuId": 73,
+  "nameRu": "Дубинка",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "weapon_damage_die",
+        "op": "set",
+        "value": null,
+        "dice": "1d8",
+        "scope": "weapon"
+      },
+      {
+        "type": "modifier",
+        "stat": "weapon_attack_ability",
+        "op": "set",
+        "value": null,
+        "spellcasting": true,
+        "scope": "weapon"
+      },
+      {
+        "type": "modifier",
+        "stat": "weapon_damage_ability",
+        "op": "set",
+        "value": null,
+        "spellcasting": true,
+        "scope": "weapon"
+      }
+    ]
+  },
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Омела",
+        "quantity": null,
+        "unit": null,
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Лист клевера",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Дубинка",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Боевой посох",
+            "quantity": 1,
+            "unit": "piece",
+            "consumption": "not_consumed"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": [
+    "rules: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

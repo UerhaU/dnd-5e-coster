@@ -1,0 +1,13 @@
+{
+  "id": "spell:arcane-eye",
+  "dndsuId": 151,
+  "nameRu": "Магический глаз",
+  "materials": {
+    "kind": "item",
+    "name": "Мех летучей мыши",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

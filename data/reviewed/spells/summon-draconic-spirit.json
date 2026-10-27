@@ -1,0 +1,14 @@
+{
+  "id": "spell:summon-draconic-spirit",
+  "dndsuId": 3819,
+  "nameRu": "Призыв духа дракона",
+  "materials": {
+    "kind": "item",
+    "name": "Предмет с изображением дракона",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "spell:frostbite",
+  "dndsuId": 396,
+  "nameRu": "Обморожение",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d6",
+        "damageType": "cold",
+        "save": {
+          "ability": "con",
+          "onSuccess": "none"
+        }
+      },
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "disadvantage",
+        "value": null,
+        "save": {
+          "ability": "con",
+          "onSuccess": null
+        },
+        "scope": "weapon",
+        "conditionText": "При провале спасброска, на следующую атаку оружием до конца следующего хода цели."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

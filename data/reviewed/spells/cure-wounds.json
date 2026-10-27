@@ -1,0 +1,25 @@
+{
+  "id": "spell:cure-wounds",
+  "dndsuId": 145,
+  "nameRu": "Лечение ран",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "healing",
+        "dice": "1d8+SC",
+        "resolution": "auto",
+        "scalingDice": "1d8",
+        "conditionText": "Касание существа, не являющегося Нежитью или Конструктом."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 0
+  },
+  "provenance": [
+    "rules: v0.1 storage/spell-catalog.sqlite (исходная проверенная запись)",
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs"
+  ]
+}

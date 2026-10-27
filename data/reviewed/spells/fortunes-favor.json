@@ -1,0 +1,14 @@
+{
+  "id": "spell:fortunes-favor",
+  "dndsuId": 2445,
+  "nameRu": "Благословение удачи",
+  "materials": {
+    "kind": "item",
+    "name": "Жемчужина",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "consumed",
+    "minimumValueCp": 10000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

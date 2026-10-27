@@ -1,0 +1,40 @@
+{
+  "id": "spell:symbol",
+  "dndsuId": 114,
+  "nameRu": "Знак",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Ртуть",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Фосфор",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Алмазная пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Опаловая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      }
+    ],
+    "minimumGroupValueCp": 100000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

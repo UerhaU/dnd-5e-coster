@@ -1,0 +1,14 @@
+{
+  "id": "spell:summon-fey",
+  "dndsuId": 3070,
+  "nameRu": "Призыв духа феи",
+  "materials": {
+    "kind": "item",
+    "name": "Позолоченный цветок",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 30000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

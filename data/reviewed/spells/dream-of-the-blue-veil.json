@@ -1,0 +1,23 @@
+{
+  "id": "spell:dream-of-the-blue-veil",
+  "dndsuId": 3054,
+  "nameRu": "Сон синей вуали",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Магический предмет из мира назначения",
+        "quantity": 1,
+        "unit": "piece",
+        "consumption": "not_consumed"
+      },
+      {
+        "kind": "prerequisite",
+        "code": "willing_creature_from_destination_world",
+        "name": "Согласное существо из мира назначения"
+      }
+    ]
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

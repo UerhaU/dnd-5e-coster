@@ -1,0 +1,14 @@
+{
+  "id": "spell:conjure-woodland-beings",
+  "dndsuId": 270,
+  "nameRu": "Призыв лесных обитателей",
+  "materials": {
+    "kind": "item",
+    "name": "Ягода падуба",
+    "quantity": 1,
+    "unit": "piece",
+    "quantityBasis": "per_target",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

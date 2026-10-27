@@ -1,0 +1,26 @@
+{
+  "id": "spell:jims-magic-missile",
+  "dndsuId": 2341,
+  "nameRu": "Волшебная стрела Джима",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "2d4",
+        "damageType": "force",
+        "resolution": "ranged_spell_attack",
+        "repeatCount": 3,
+        "repeatPerSlot": 1
+      },
+      {
+        "type": "damage",
+        "dice": "5d4",
+        "damageType": "force",
+        "resolution": "ranged_spell_attack",
+        "conditionText": "Критическое попадание; заменяет обычное удвоение кубиков."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

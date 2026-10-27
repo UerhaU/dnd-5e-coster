@@ -1,0 +1,13 @@
+{
+  "id": "spell:feign-death",
+  "dndsuId": 280,
+  "nameRu": "Притворная смерть",
+  "materials": {
+    "kind": "item",
+    "name": "Кладбищенская земля",
+    "quantity": 1,
+    "unit": "pinch",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

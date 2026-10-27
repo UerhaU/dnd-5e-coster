@@ -1,0 +1,13 @@
+{
+  "id": "spell:aganazzars-scorcher",
+  "dndsuId": 397,
+  "nameRu": "Пекло Аганаззара",
+  "materials": {
+    "kind": "item",
+    "name": "Чешуя красного дракона",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -2,8 +2,9 @@
  * Content-Security-Policy окна. Окно грузит только свои скрипты
  * и обращается только к встроенному серверу на 127.0.0.1.
  *
- * В режиме разработки Vite нужны встроенный скрипт горячей перезагрузки
- * и WebSocket к dev-серверу; в собранной программе этого нет.
+ * В режиме разработки Vite нужны встроенный скрипт горячей перезагрузки,
+ * встроенные стили (Vite вставляет CSS тегами <style>) и WebSocket к dev-серверу;
+ * в собранной программе этого нет: CSS лежит отдельным файлом.
  */
 export function buildCsp(mode: 'production' | 'development'): string {
   const dev = mode === 'development';
@@ -11,7 +12,7 @@ export function buildCsp(mode: 'production' | 'development'): string {
   const directives = [
     "default-src 'self'",
     dev ? "script-src 'self' 'unsafe-inline'" : "script-src 'self'",
-    "style-src 'self'",
+    dev ? "style-src 'self' 'unsafe-inline'" : "style-src 'self'",
     "img-src 'self' data:",
     "font-src 'self'",
     dev

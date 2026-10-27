@@ -1,0 +1,14 @@
+{
+  "id": "spell:tashas-otherworldly-guise",
+  "dndsuId": 3052,
+  "nameRu": "Потусторонний облик Таши",
+  "materials": {
+    "kind": "item",
+    "name": "Предмет с символом Внешних планов",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "spell:wall-of-stone",
+  "dndsuId": 130,
+  "nameRu": "Каменная стена",
+  "materials": {
+    "kind": "item",
+    "name": "Гранит",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "spell:magic-circle",
+  "dndsuId": 152,
+  "nameRu": "Магический круг",
+  "materials": {
+    "kind": "any",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Святая вода",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "item",
+            "name": "Порошок серебра",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          },
+          {
+            "kind": "item",
+            "name": "Порошок железа",
+            "quantity": null,
+            "unit": null,
+            "consumption": "consumed"
+          }
+        ]
+      }
+    ],
+    "minimumGroupValueCp": 10000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "spell:bless",
+  "dndsuId": 9,
+  "nameRu": "Благословение",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "attack_roll",
+        "op": "add",
+        "dice": "1d4",
+        "resolution": "auto",
+        "conditionText": "Когда цель совершает бросок атаки или спасбросок."
+      },
+      {
+        "type": "modifier",
+        "stat": "saving_throws",
+        "op": "add",
+        "dice": "1d4",
+        "resolution": "auto",
+        "conditionText": "Когда цель совершает бросок атаки или спасбросок."
+      }
+    ]
+  },
+  "targets": {
+    "maxCount": 3,
+    "extraPerSlot": 1
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Святая вода",
+    "quantity": 1,
+    "unit": "drop",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "rules: v0.1 storage/spell-catalog.sqlite (исходная проверенная запись)",
+    "targets: v0.1 storage/spell-catalog.sqlite",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

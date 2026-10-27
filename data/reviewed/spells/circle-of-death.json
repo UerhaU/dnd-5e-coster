@@ -1,0 +1,14 @@
+{
+  "id": "spell:circle-of-death",
+  "dndsuId": 136,
+  "nameRu": "Круг смерти",
+  "materials": {
+    "kind": "item",
+    "name": "Порошок чёрной жемчужины",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed",
+    "minimumValueCp": 50000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

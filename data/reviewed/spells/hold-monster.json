@@ -1,0 +1,20 @@
+{
+  "id": "spell:hold-monster",
+  "dndsuId": 110,
+  "nameRu": "Удержание чудовища",
+  "targets": {
+    "maxCount": 1,
+    "extraPerSlot": 1
+  },
+  "materials": {
+    "kind": "item",
+    "name": "Прямой кусочек железа",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": [
+    "targets: v0.1 scripts/spell-reviewed-rules.mjs",
+    "materials: v0.1 scripts/spell-materials.mjs"
+  ]
+}

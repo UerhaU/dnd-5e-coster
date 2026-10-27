@@ -1,0 +1,13 @@
+{
+  "id": "spell:phantasmal-force",
+  "dndsuId": 31,
+  "nameRu": "Воображаемая сила",
+  "materials": {
+    "kind": "item",
+    "name": "Овечья шерсть",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

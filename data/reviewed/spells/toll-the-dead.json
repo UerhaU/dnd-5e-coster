@@ -1,0 +1,33 @@
+{
+  "id": "spell:toll-the-dead",
+  "dndsuId": 457,
+  "nameRu": "Погребальный звон",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "damage",
+        "dice": "1d8",
+        "damageType": "necrotic",
+        "choice": "Цель с полными хитами",
+        "save": {
+          "ability": "wis",
+          "onSuccess": "none"
+        },
+        "cantripDice": "1d8"
+      },
+      {
+        "type": "damage",
+        "dice": "1d12",
+        "damageType": "necrotic",
+        "choice": "У цели недостаёт хитов",
+        "save": {
+          "ability": "wis",
+          "onSuccess": "none"
+        },
+        "cantripDice": "1d12"
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

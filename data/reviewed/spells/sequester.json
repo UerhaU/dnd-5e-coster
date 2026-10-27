@@ -1,0 +1,40 @@
+{
+  "id": "spell:sequester",
+  "dndsuId": 122,
+  "nameRu": "Изоляция",
+  "materials": {
+    "kind": "all",
+    "children": [
+      {
+        "kind": "item",
+        "name": "Алмазная пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Изумрудная пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Рубиновая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      },
+      {
+        "kind": "item",
+        "name": "Сапфировая пыль",
+        "quantity": null,
+        "unit": null,
+        "consumption": "consumed"
+      }
+    ],
+    "minimumGroupValueCp": 500000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "spell:revivify",
+  "dndsuId": 24,
+  "nameRu": "Возрождение",
+  "materials": {
+    "kind": "item",
+    "name": "Алмаз",
+    "quantity": null,
+    "unit": null,
+    "consumption": "consumed",
+    "minimumGroupValueCp": 30000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "spell:absorb-elements",
+  "dndsuId": 401,
+  "nameRu": "Поглощение стихий",
+  "rules": {
+    "schemaVersion": "spell-rules/v1",
+    "effects": [
+      {
+        "type": "modifier",
+        "stat": "damage_taken",
+        "op": "resistance",
+        "choices": ["acid", "cold", "fire", "lightning", "thunder"],
+        "conditionText": "Тип вызвавшего реакцию урона; до начала следующего хода."
+      },
+      {
+        "type": "damage",
+        "dice": "1d6",
+        "damageType": null,
+        "trigger": "next_melee_hit",
+        "conditionText": "Тип вызвавшего реакцию урона; первая рукопашная атака в следующем ходу."
+      }
+    ]
+  },
+  "provenance": ["rules: v0.1 scripts/spell-reviewed-rules.mjs"]
+}

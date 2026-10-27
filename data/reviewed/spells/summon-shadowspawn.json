@@ -1,0 +1,14 @@
+{
+  "id": "spell:summon-shadowspawn",
+  "dndsuId": 3069,
+  "nameRu": "Призыв духа тени",
+  "materials": {
+    "kind": "item",
+    "name": "Драгоценный камень со слезами",
+    "quantity": 1,
+    "unit": "piece",
+    "consumption": "not_consumed",
+    "minimumValueCp": 30000
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}

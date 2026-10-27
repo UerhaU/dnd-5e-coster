@@ -1,0 +1,13 @@
+{
+  "id": "spell:tashas-caustic-brew",
+  "dndsuId": 3047,
+  "nameRu": "Едкое варево Таши",
+  "materials": {
+    "kind": "item",
+    "name": "Тухлая пища",
+    "quantity": null,
+    "unit": null,
+    "consumption": "not_consumed"
+  },
+  "provenance": ["materials: v0.1 scripts/spell-materials.mjs"]
+}
