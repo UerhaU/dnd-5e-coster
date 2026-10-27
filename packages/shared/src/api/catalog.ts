@@ -94,6 +94,16 @@ export const raceListQuerySchema = z.strictObject({
 export type RaceListQuery = z.infer<typeof raceListQuerySchema>;
 export type RaceListParams = Partial<RaceListQuery>;
 
+/** `GET /api/catalog/search?…` — поиск по всему каталогу (Р54). */
+export const catalogSearchQuerySchema = z.strictObject({
+  q: z.string().trim().min(1).max(CATALOG_QUERY_MAX),
+  page: listPaging.page,
+  pageSize: listPaging.pageSize,
+});
+
+export type CatalogSearchQuery = z.infer<typeof catalogSearchQuerySchema>;
+export type CatalogSearchParams = Partial<CatalogSearchQuery>;
+
 export const entitySourceSchema = z.object({
   id: z.string(),
   code: z.string(),
@@ -214,6 +224,36 @@ export const raceFacetsResponseSchema = z.object({
 });
 
 /** `GET /api/catalog/categories` */
+/** Найденный объект любой категории: общие поля и короткое описание своей категории. */
+export const searchResultItemSchema = z.object({
+  id: entityIdSchema,
+  category: categorySchema,
+  nameRu: z.string(),
+  nameEn: z.string(),
+  sources: z.array(z.string()),
+  spell: z
+    .object({ level: z.number().int().min(0).max(9), school: z.enum(idsOf(MAGIC_SCHOOLS)) })
+    .nullable(),
+  item: z
+    .object({
+      kind: z.enum(idsOf(ITEM_KINDS)),
+      category: z.enum(idsOf(ITEM_CATEGORIES)).nullable(),
+    })
+    .nullable(),
+  race: z
+    .object({ kind: z.enum(['race', 'variant']), variantOfName: z.string().nullable() })
+    .nullable(),
+});
+
+export const catalogSearchResponseSchema = z.object({
+  items: z.array(searchResultItemSchema),
+  total: z.number().int().min(0),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+  /** Сколько найдено в каждой категории (порядок — как в CATEGORIES). */
+  byCategory: z.array(z.object({ id: categorySchema, count: z.number().int().min(1) })),
+});
+
 export const categoriesResponseSchema = z.object({
   categories: z.array(
     z.object({ id: categorySchema, nameRu: z.string(), count: z.number().int().min(0) }),
@@ -312,4 +352,6 @@ export type ItemFacetsResponse = z.infer<typeof itemFacetsResponseSchema>;
 export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
 export type RaceListItem = z.infer<typeof raceListItemSchema>;
 export type RaceListResponse = z.infer<typeof raceListResponseSchema>;
+export type SearchResultItem = z.infer<typeof searchResultItemSchema>;
+export type CatalogSearchResponse = z.infer<typeof catalogSearchResponseSchema>;
 export type RaceFacetsResponse = z.infer<typeof raceFacetsResponseSchema>;

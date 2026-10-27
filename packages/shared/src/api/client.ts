@@ -1,6 +1,7 @@
 import type { z } from 'zod';
 import { healthResponseSchema, type HealthResponse } from '../health.ts';
 import {
+  catalogSearchResponseSchema,
   categoriesResponseSchema,
   entityResponseSchema,
   itemFacetsResponseSchema,
@@ -9,6 +10,8 @@ import {
   raceListResponseSchema,
   spellFacetsResponseSchema,
   spellListResponseSchema,
+  type CatalogSearchParams,
+  type CatalogSearchResponse,
   type CategoriesResponse,
   type EntityResponse,
   type ItemFacetsResponse,
@@ -48,6 +51,8 @@ export interface ApiClient {
   itemFacets(): Promise<ItemFacetsResponse>;
   races(params: RaceListParams): Promise<RaceListResponse>;
   raceFacets(): Promise<RaceFacetsResponse>;
+  /** Поиск по всему каталогу (Р54). */
+  search(params: CatalogSearchParams): Promise<CatalogSearchResponse>;
   /** Карточка объекта любой категории. */
   entity(id: string, revision?: number): Promise<EntityResponse>;
 }
@@ -95,6 +100,8 @@ export function createApiClient(
     itemFacets: () => get('/api/catalog/item/facets', itemFacetsResponseSchema),
     races: (params) => get(`/api/catalog/race${toQueryString(params)}`, raceListResponseSchema),
     raceFacets: () => get('/api/catalog/race/facets', raceFacetsResponseSchema),
+    search: (params) =>
+      get(`/api/catalog/search${toQueryString(params)}`, catalogSearchResponseSchema),
     entity: (id, revision) =>
       get(
         revision === undefined

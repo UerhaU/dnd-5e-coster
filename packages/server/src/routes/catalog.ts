@@ -5,11 +5,13 @@ import {
   listRaces,
   raceFacets,
   listSpells,
+  searchCatalog,
   readEntity,
   spellFacets,
   type CatalogConnection,
 } from '@koster/db';
 import {
+  catalogSearchQuerySchema,
   categoryParamsSchema,
   entityParamsSchema,
   entityResponseSchema,
@@ -17,6 +19,7 @@ import {
   raceListQuerySchema,
   revisionParamsSchema,
   spellListQuerySchema,
+  type CatalogSearchResponse,
   type CategoriesResponse,
   type EntityResponse,
   type ItemFacetsResponse,
@@ -79,6 +82,12 @@ export function registerCatalogRoutes(
   server.get('/api/catalog/entity/:id/revisions/:rev', async (request): Promise<EntityResponse> => {
     const { id, rev } = parseOr400(revisionParamsSchema, request.params);
     return entityCard(requireCatalog(catalog), id, rev);
+  });
+
+  // Поиск по всему каталогу (Р54). Постоянный адрес важнее `/:category`.
+  server.get('/api/catalog/search', async (request): Promise<CatalogSearchResponse> => {
+    const query = parseOr400(catalogSearchQuerySchema, request.query);
+    return searchCatalog(requireCatalog(catalog), query);
   });
 
   server.get(

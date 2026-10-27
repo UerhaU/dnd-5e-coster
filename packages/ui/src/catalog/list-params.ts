@@ -1,7 +1,9 @@
 import {
+  catalogSearchQuerySchema,
   itemListQuerySchema,
   raceListQuerySchema,
   spellListQuerySchema,
+  type CatalogSearchParams,
   type ItemListParams,
   type RaceListParams,
   type SpellListParams,
@@ -85,6 +87,11 @@ export function itemParamsFromSearch(search: URLSearchParams): ItemListParams {
 
 export function raceParamsFromSearch(search: URLSearchParams): RaceListParams {
   return parseParams(search, raceListQuerySchema, RACE_FILTER_KEYS) as RaceListParams;
+}
+
+/** Поиск по всему каталогу: `?q=…&page=…` экрана «Справочник». */
+export function searchParamsFromSearch(search: URLSearchParams): CatalogSearchParams {
+  return parseParams(search, catalogSearchQuerySchema, ['q']) as CatalogSearchParams;
 }
 
 /** Новый адрес после изменения одного фильтра: страница — снова первая. */
