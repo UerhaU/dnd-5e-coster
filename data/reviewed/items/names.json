@@ -1,5 +1,5 @@
 {
-  "$comment": "Английские названия обычного снаряжения для ID (Р11): в таблицах DnD.su их нет. Ключ match — название из таблицы без количества «(20)» и метки книги. category — вид оружия, если таблица его не указывает (у дополнительного оружия DnD.su вид не пишет; значения из v0.1 ждут проверки автором, Р65), или вид транспорта. kind — вид предмета, если таблица смешанная. skipRows — строки таблиц, которые не предметы. ammunition — ID боеприпаса, который расходует оружие. descriptionTerms — заголовки описаний на странице, если они не совпадают с названием.",
+  "$comment": "Английские названия обычного снаряжения для ID (Р11): в таблицах DnD.su их нет. Ключ match — название из таблицы без количества «(20)» и метки книги. category — вид оружия, если таблица его не указывает (у дополнительного оружия DnD.su вид не пишет; вид задан автором, Р65), или вид транспорта. kind — вид предмета, если таблица смешанная. skipRows — строки таблиц, которые не предметы. ammunition — ID боеприпаса, который расходует оружие. descriptionTerms — заголовки описаний на странице, если они не совпадают с названием.",
   "items": [
     { "match": "Стёганый", "nameEn": "Padded armor" },
     { "match": "Кожаный", "nameEn": "Leather armor" },
@@ -60,7 +60,7 @@
     {
       "match": "Двухклинковый скимитар",
       "nameEn": "Double-bladed scimitar",
-      "category": "martial_melee"
+      "category": "simple_melee"
     },
     { "match": "Иклва", "nameEn": "Yklwa", "category": "martial_melee" },
     {
@@ -71,14 +71,14 @@
     {
       "match": "Лёгкий многозарядный арбалет",
       "nameEn": "Light repeating crossbow",
-      "category": "martial_ranged",
+      "category": "simple_ranged",
       "ammunition": "item:crossbow-bolts"
     },
     { "match": "Большой длинный лук", "nameEn": "Oversized longbow", "category": "martial_ranged" },
     {
       "match": "Хупак",
       "nameEn": "Hoopak",
-      "category": "martial_melee",
+      "category": "simple_melee",
       "ammunition": "item:sling-bullets"
     },
 
