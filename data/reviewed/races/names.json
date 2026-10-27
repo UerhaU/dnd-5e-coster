@@ -1,0 +1,137 @@
+{
+  "$comment": "Блоки особенностей на страницах рас DnD.su, кроме первого (он — сама раса, английское название из заголовка «Эльф [Elf]»). Английские названия — по книгам (Р11, Р62), на сайте их нет. Ключ: page — номер страницы, match — заголовок раздела или подпись вкладки без метки книги, book — код книги, если на странице два раздела с одним заголовком. nameRu — русское название, если заголовок не подходит (у вкладок по умолчанию «Горный» → «Горный дварф»). kind: variant — разновидность (связь variant_of с расой страницы), race — полный набор особенностей той же расы из другой книги (отдельный объект, Р67). skip — блок не берётся, с причиной. Страницы со вкладками (дварф, гном): все вкладки — разновидности, общее для расы вычисляется.",
+  "blocks": [
+    { "page": 161, "match": "Аасимар-защитник", "nameEn": "Protector Aasimar" },
+    { "page": 161, "match": "Аасимар-каратель", "nameEn": "Scourge Aasimar" },
+    { "page": 161, "match": "Падший аасимар", "nameEn": "Fallen Aasimar" },
+    { "page": 167, "match": "ОСОБЕННОСТИ багбира", "nameEn": "Bugbear", "kind": "race" },
+    { "page": 165, "match": "Гитцераи", "nameEn": "Githzerai" },
+    { "page": 165, "match": "Гитъянки", "nameEn": "Githyanki" },
+    { "page": 83, "match": "Лесной", "nameEn": "Forest Gnome" },
+    { "page": 83, "match": "Скальный", "nameEn": "Rock Gnome" },
+    { "page": 83, "match": "Глубинный", "nameEn": "Deep Gnome" },
+    {
+      "page": 83,
+      "match": "Метка письма",
+      "nameRu": "Гном с меткой письма",
+      "nameEn": "Mark of Scribing Gnome"
+    },
+    { "page": 166, "match": "ОСОБЕННОСТИ ГОБЛИНОВ", "nameEn": "Goblin", "kind": "race" },
+    {
+      "page": 166,
+      "match": "Особенности гоблинов",
+      "book": "GGR",
+      "nameEn": "Goblin",
+      "kind": "race"
+    },
+    {
+      "page": 166,
+      "match": "Особенности гоблинов Данквуда",
+      "nameEn": "Dankwood Goblin",
+      "kind": "race"
+    },
+    { "page": 78, "match": "Горный", "nameEn": "Mountain Dwarf" },
+    { "page": 78, "match": "Холмовой", "nameEn": "Hill Dwarf" },
+    { "page": 78, "match": "Дуэргар", "book": "MTF", "nameRu": "Дуэргар", "nameEn": "Duergar" },
+    {
+      "page": 78,
+      "match": "Дуэргар",
+      "book": "MPMM",
+      "skip": "дуэргар MPMM — своя страница 287"
+    },
+    {
+      "page": 78,
+      "match": "Метка опеки",
+      "nameRu": "Дварф с меткой опеки",
+      "nameEn": "Mark of Warding Dwarf"
+    },
+    { "page": 102, "match": "Дженази воздуха", "nameEn": "Air Genasi" },
+    { "page": 102, "match": "Дженази земли", "nameEn": "Earth Genasi" },
+    { "page": 102, "match": "Дженази огня", "nameEn": "Fire Genasi" },
+    { "page": 102, "match": "Дженази воды", "nameEn": "Water Genasi" },
+    { "page": 291, "match": "Дженази воздуха", "nameEn": "Air Genasi" },
+    { "page": 291, "match": "Дженази земли", "nameEn": "Earth Genasi" },
+    { "page": 291, "match": "Дженази огня", "nameEn": "Fire Genasi" },
+    { "page": 291, "match": "Дженази воды", "nameEn": "Water Genasi" },
+    { "page": 82, "match": "Драконокровный", "nameEn": "Draconblood Dragonborn" },
+    { "page": 82, "match": "Равенит", "nameEn": "Ravenite Dragonborn" },
+    {
+      "page": 82,
+      "match": "Особенности металлических драконорождённых",
+      "nameEn": "Metallic Dragonborn",
+      "kind": "race"
+    },
+    {
+      "page": 82,
+      "match": "Особенности самоцветных драконорождённых",
+      "nameEn": "Gem Dragonborn",
+      "kind": "race"
+    },
+    {
+      "page": 82,
+      "match": "Особенности цветных драконорождённых",
+      "nameEn": "Chromatic Dragonborn",
+      "kind": "race"
+    },
+    { "page": 173, "match": "Особенности кентавра", "nameEn": "Centaur", "kind": "race" },
+    {
+      "page": 174,
+      "match": "Живой конструкт",
+      "skip": "Chronicles of Eberron — не книга Wizards of the Coast (Р12)"
+    },
+    { "page": 181, "match": "Особенности Минотавра", "nameEn": "Minotaur", "kind": "race" },
+    { "page": 187, "match": "Особенности орка", "book": "RLW", "nameEn": "Orc", "kind": "race" },
+    { "page": 187, "match": "Особенности орка", "book": "EGW", "nameEn": "Orc", "kind": "race" },
+    { "page": 85, "match": "Дом Тарашк", "nameEn": "Mark of Finding Half-Orc" },
+    { "page": 80, "match": "Коренастый", "nameEn": "Stout Halfling" },
+    { "page": 80, "match": "Легконогий", "nameEn": "Lightfoot Halfling" },
+    { "page": 80, "match": "Призрачный полурослик", "nameEn": "Ghostwise Halfling" },
+    { "page": 80, "match": "Лотосденский полурослик", "nameEn": "Lotusden Halfling" },
+    { "page": 80, "match": "Дом Джораско", "nameEn": "Mark of Healing Halfling" },
+    { "page": 80, "match": "Дом Галланда", "nameEn": "Mark of Hospitality Halfling" },
+    { "page": 84, "match": "Дом Медани", "nameEn": "Mark of Detection Half-Elf" },
+    { "page": 84, "match": "Дом Лирандар", "nameEn": "Mark of Storm Half-Elf" },
+    { "page": 86, "match": "Асмодей", "nameEn": "Asmodeus Tiefling" },
+    { "page": 86, "match": "Вельзевул", "nameEn": "Baalzebul Tiefling" },
+    { "page": 86, "match": "Гласия", "nameEn": "Glasya Tiefling" },
+    { "page": 86, "match": "Диспатер", "nameEn": "Dispater Tiefling" },
+    { "page": 86, "match": "Зариэль", "nameEn": "Zariel Tiefling" },
+    { "page": 86, "match": "Левистус", "nameEn": "Levistus Tiefling" },
+    { "page": 86, "match": "Маммон", "nameEn": "Mammon Tiefling" },
+    { "page": 86, "match": "Мефистофель", "nameEn": "Mephistopheles Tiefling" },
+    { "page": 86, "match": "Фьёрна", "nameEn": "Fierna Tiefling" },
+    {
+      "page": 86,
+      "match": "Тифлинг Бездны",
+      "skip": "Unearthed Arcana (Р67): нет метки книги, в книгах 5e 2014 такой разновидности нет"
+    },
+    {
+      "page": 188,
+      "match": "Особенности тритонов",
+      "book": "MOT",
+      "nameEn": "Triton",
+      "kind": "race"
+    },
+    { "page": 168, "match": "ОСОБЕННОСТИ Хобгоблина", "nameEn": "Hobgoblin", "kind": "race" },
+    { "page": 81, "match": "Альтернативные особенности людей", "nameEn": "Variant Human" },
+    { "page": 81, "match": "Дом Тарашк", "nameEn": "Mark of Finding Human" },
+    { "page": 81, "match": "Дом Вадалис", "nameEn": "Mark of Handling Human" },
+    { "page": 81, "match": "Дом Каннит", "nameEn": "Mark of Making Human" },
+    { "page": 81, "match": "Дом Ориен", "nameEn": "Mark of Passage Human" },
+    { "page": 81, "match": "Дом Денейт", "nameEn": "Mark of Sentinel Human" },
+    { "page": 186, "match": "Зверошкуры", "nameEn": "Beasthide Shifter" },
+    { "page": 186, "match": "Длиннозубы", "nameEn": "Longtooth Shifter" },
+    { "page": 186, "match": "Быстроноги", "nameEn": "Swiftstride Shifter" },
+    { "page": 186, "match": "Дикие охотники", "nameEn": "Wildhunt Shifter" },
+    { "page": 79, "match": "Высший эльф", "nameEn": "High Elf" },
+    { "page": 79, "match": "Лесной эльф", "nameEn": "Wood Elf" },
+    { "page": 79, "match": "Тёмный эльф (дроу)", "nameEn": "Drow" },
+    { "page": 79, "match": "Морской эльф", "nameEn": "Sea Elf" },
+    { "page": 79, "match": "Шадар-кай", "nameEn": "Shadar-kai" },
+    { "page": 79, "match": "Эладрин", "nameEn": "Eladrin" },
+    { "page": 79, "match": "Дома Теней", "nameEn": "Mark of Shadow Elf" },
+    { "page": 79, "match": "Бледный эльф", "nameEn": "Pallid Elf" },
+    { "page": 79, "match": "Авариэль", "skip": "Unearthed Arcana (Р67)" },
+    { "page": 79, "match": "Гругач", "skip": "Unearthed Arcana (Р67)" }
+  ]
+}

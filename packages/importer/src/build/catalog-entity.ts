@@ -3,6 +3,8 @@ import type {
   Edition,
   ItemData,
   ItemRules,
+  RaceData,
+  RaceRules,
   ReviewStatus,
   SpellData,
   SpellRules,
@@ -31,4 +33,5 @@ interface CatalogEntityBase {
 
 export type CatalogEntity =
   | (CatalogEntityBase & { category: 'spell'; data: SpellData; rules: SpellRules | null })
-  | (CatalogEntityBase & { category: 'item'; data: ItemData; rules: ItemRules | null });
+  | (CatalogEntityBase & { category: 'item'; data: ItemData; rules: ItemRules | null })
+  | (CatalogEntityBase & { category: 'race'; data: RaceData; rules: RaceRules });

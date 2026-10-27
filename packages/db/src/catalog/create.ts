@@ -6,6 +6,7 @@ import {
   ITEM_CATEGORIES,
   ITEM_KINDS,
   MAGIC_SCHOOLS,
+  SIZES,
   WEAPON_PROPERTIES,
 } from '@koster/shared';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
@@ -17,6 +18,7 @@ import {
   itemCategories,
   itemKinds,
   magicSchools,
+  sizes,
   weaponProperties,
 } from './schema.ts';
 
@@ -51,6 +53,9 @@ export function createCatalog(file: string): CatalogConnection {
       .run();
     tx.insert(itemCategories)
       .values([...ITEM_CATEGORIES])
+      .run();
+    tx.insert(sizes)
+      .values([...SIZES])
       .run();
     tx.insert(weaponProperties)
       .values([...WEAPON_PROPERTIES])

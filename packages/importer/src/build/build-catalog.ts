@@ -2,8 +2,10 @@ import { openArticleCache } from '../dndsu/article-cache.ts';
 import { openSpellCache } from '../dndsu/spell-cache.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { loadReviewedItems } from '../reviewed/reviewed-items.ts';
+import { loadReviewedRaces } from '../reviewed/reviewed-races.ts';
 import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
+import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
 import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
@@ -18,6 +20,9 @@ export interface BuildOptions {
   /** Кэш статей «Инвентарь» (снаряжение); `null` — каталог без снаряжения. */
   itemCacheDir: string | null;
   reviewedItemsDir: string;
+  /** Кэш страниц рас; `null` — каталог без рас. */
+  raceCacheDir: string | null;
+  reviewedRacesDir: string;
   outFile: string;
   /** Прошлая сборка; `null` — с нуля, без переноса ревизий. */
   previousFile: string | null;
@@ -34,11 +39,12 @@ export interface BuildOptions {
 export interface BuildResult {
   collect: CollectStats;
   items: ItemCollectStats | null;
+  races: RaceCollectStats | null;
   write: WriteStats;
   issues: ImportIssue[];
 }
 
-/** Полная цепочка раздела 6: кэш → … → catalog.db. Заклинания, затем снаряжение. */
+/** Полная цепочка раздела 6: кэш → … → catalog.db. Заклинания, снаряжение, расы. */
 export function buildCatalog(options: BuildOptions): BuildResult {
   const issues: ImportIssue[] = [];
   const cache = openSpellCache(options.cacheDir);
@@ -57,7 +63,21 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         },
       )
     : null;
-  const entities = [...spells.entities, ...(items?.entities ?? [])];
+  const knownSources = [...spells.entities, ...(items?.entities ?? [])].flatMap((entity) =>
+    entity.sources.map(({ source }) => source),
+  );
+  const races = options.raceCacheDir
+    ? collectRaces(
+        openArticleCache(options.raceCacheDir),
+        loadReviewedRaces(options.reviewedRacesDir),
+        issues,
+        {
+          knownSources,
+          reportUnusedReviewed: options.sourceKind === 'full',
+        },
+      )
+    : null;
+  const entities = [...spells.entities, ...(items?.entities ?? []), ...(races?.entities ?? [])];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
   const written = writeCatalog(
@@ -79,5 +99,11 @@ export function buildCatalog(options: BuildOptions): BuildResult {
   if (options.ledgerDir) {
     writeLedger(options.ledgerDir, written.ledger);
   }
-  return { collect: spells.stats, items: items?.stats ?? null, write: written.stats, issues };
+  return {
+    collect: spells.stats,
+    items: items?.stats ?? null,
+    races: races?.stats ?? null,
+    write: written.stats,
+    issues,
+  };
 }

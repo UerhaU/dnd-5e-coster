@@ -10,6 +10,9 @@ import {
 import { ITEM_CATEGORIES, ITEM_KINDS, WEAPON_PROPERTIES } from '../catalog/item-codes.ts';
 import { armorRulesSchema, itemRulesSchema, weaponRulesSchema } from '../catalog/item-rules.ts';
 import { itemDataSchema } from '../catalog/item.ts';
+import { SIZES } from '../catalog/race-codes.ts';
+import { raceRulesSchema } from '../catalog/race-rules.ts';
+import { raceDataSchema } from '../catalog/race.ts';
 import { spellRulesSchema } from '../catalog/spell-rules.ts';
 import { spellDataSchema } from '../catalog/spell.ts';
 
@@ -72,6 +75,24 @@ export const itemListQuerySchema = z.strictObject({
 
 export type ItemListQuery = z.infer<typeof itemListQuerySchema>;
 export type ItemListParams = Partial<ItemListQuery>;
+
+/** `GET /api/catalog/race?…` */
+export const raceListQuerySchema = z.strictObject({
+  ...listPaging,
+  /** `race` — только расы, `variant` — только разновидности. */
+  kind: z.enum(['race', 'variant']).optional(),
+  /** Разновидности этой расы. */
+  variantOf: entityIdSchema.optional(),
+  size: z.enum(idsOf(SIZES)).optional(),
+  /** Есть скорость полёта. */
+  flying: flag.optional(),
+  /** Есть тёмное зрение. */
+  darkvision: flag.optional(),
+  sort: z.enum(['relevance', 'name']).default('relevance'),
+});
+
+export type RaceListQuery = z.infer<typeof raceListQuerySchema>;
+export type RaceListParams = Partial<RaceListQuery>;
 
 export const entitySourceSchema = z.object({
   id: z.string(),
@@ -137,6 +158,29 @@ export const itemListResponseSchema = z.object({
   pageSize: z.number().int().min(1),
 });
 
+export const raceListItemSchema = z.object({
+  id: entityIdSchema,
+  nameRu: z.string(),
+  nameEn: z.string(),
+  kind: z.enum(['race', 'variant']),
+  variantOf: entityIdSchema.nullable(),
+  /** Название расы разновидности. */
+  variantOfName: z.string().nullable(),
+  size: z.enum(idsOf(SIZES)).nullable(),
+  speedWalkFt: z.number().int().nullable(),
+  flying: z.boolean(),
+  darkvisionFt: z.number().int().nullable(),
+  sources: z.array(z.string()),
+  reviewStatus: reviewStatusSchema,
+});
+
+export const raceListResponseSchema = z.object({
+  items: z.array(raceListItemSchema),
+  total: z.number().int().min(0),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+});
+
 const facetValue = <T extends z.ZodType>(value: T) =>
   z.object({ value, label: z.string(), count: z.number().int().min(0) });
 
@@ -158,6 +202,15 @@ export const itemFacetsResponseSchema = z.object({
   damageType: z.array(facetValue(z.string())),
   source: z.array(facetValue(z.string())),
   optionalRule: z.number().int().min(0),
+});
+
+/** `GET /api/catalog/race/facets` */
+export const raceFacetsResponseSchema = z.object({
+  kind: z.array(facetValue(z.string())),
+  size: z.array(facetValue(z.string())),
+  source: z.array(facetValue(z.string())),
+  flying: z.number().int().min(0),
+  darkvision: z.number().int().min(0),
 });
 
 /** `GET /api/catalog/categories` */
@@ -221,10 +274,19 @@ export const itemEntityResponseSchema = z.object({
   rules: itemRulesSchema.nullable(),
 });
 
+/** Карточка расы или разновидности. */
+export const raceEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('race'),
+  data: raceDataSchema,
+  rules: raceRulesSchema,
+});
+
 /** `GET /api/catalog/entity/:id` и `…/revisions/:rev` — карточка объекта любой категории. */
 export const entityResponseSchema = z.discriminatedUnion('category', [
   spellEntityResponseSchema,
   itemEntityResponseSchema,
+  raceEntityResponseSchema,
 ]);
 
 export const entityParamsSchema = z.strictObject({ id: entityIdSchema });
@@ -247,3 +309,7 @@ export type EntityLink = z.infer<typeof entityLinkSchema>;
 export type ItemListItem = z.infer<typeof itemListItemSchema>;
 export type ItemListResponse = z.infer<typeof itemListResponseSchema>;
 export type ItemFacetsResponse = z.infer<typeof itemFacetsResponseSchema>;
+export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
+export type RaceListItem = z.infer<typeof raceListItemSchema>;
+export type RaceListResponse = z.infer<typeof raceListResponseSchema>;
+export type RaceFacetsResponse = z.infer<typeof raceFacetsResponseSchema>;

@@ -3,11 +3,12 @@ import type { CatalogEntity } from './catalog-entity.ts';
 
 // Поля для фильтров списка (раздел 5.2): у каждой категории своя таблица.
 
-const { itemIndex, itemIndexProperties, spellIndex, spellIndexClasses } = catalogSchema;
+const { itemIndex, itemIndexProperties, raceIndex, spellIndex, spellIndexClasses } = catalogSchema;
 
 type Transaction = Parameters<Parameters<CatalogConnection['db']['transaction']>[0]>[0];
 type SpellEntity = Extract<CatalogEntity, { category: 'spell' }>;
 type ItemEntity = Extract<CatalogEntity, { category: 'item' }>;
+type RaceEntity = Extract<CatalogEntity, { category: 'race' }>;
 
 export function writeSpellIndex(tx: Transaction, entity: SpellEntity): void {
   tx.insert(spellIndex)
@@ -49,4 +50,19 @@ export function writeItemIndex(tx: Transaction, entity: ItemEntity): void {
   for (const propertyId of new Set(weapon?.properties.map((property) => property.id) ?? [])) {
     tx.insert(itemIndexProperties).values({ entityId: entity.id, propertyId }).run();
   }
+}
+
+export function writeRaceIndex(tx: Transaction, entity: RaceEntity): void {
+  const { speed } = entity.rules;
+  tx.insert(raceIndex)
+    .values({
+      entityId: entity.id,
+      kind: entity.data.kind,
+      variantOf: entity.data.variantOf,
+      sizeId: entity.rules.size?.[0] ?? null,
+      speedWalkFt: speed.walk,
+      flying: speed.fly !== null,
+      darkvisionFt: entity.rules.darkvisionFt,
+    })
+    .run();
 }

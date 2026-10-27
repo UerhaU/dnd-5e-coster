@@ -2,6 +2,8 @@ import {
   itemFacets,
   listCategories,
   listItems,
+  listRaces,
+  raceFacets,
   listSpells,
   readEntity,
   spellFacets,
@@ -12,12 +14,15 @@ import {
   entityParamsSchema,
   entityResponseSchema,
   itemListQuerySchema,
+  raceListQuerySchema,
   revisionParamsSchema,
   spellListQuerySchema,
   type CategoriesResponse,
   type EntityResponse,
   type ItemFacetsResponse,
   type ItemListResponse,
+  type RaceFacetsResponse,
+  type RaceListResponse,
   type SpellFacetsResponse,
   type SpellListResponse,
 } from '@koster/shared';
@@ -25,7 +30,7 @@ import type { FastifyInstance } from 'fastify';
 import { HttpError, parseOr400 } from '../errors';
 
 // Маршруты каталога (раздел 7). Каталог открыт только для чтения (Р21).
-// Категории со списком: заклинания и снаряжение; остальные отвечают 404.
+// Категории со списком: заклинания, снаряжение и расы; остальные отвечают 404.
 
 function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
   if (!catalog) {
@@ -38,9 +43,9 @@ function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
 }
 
 /** Категория из адреса; неизвестная — 404. */
-function listCategory(params: unknown): 'spell' | 'item' {
+function listCategory(params: unknown): 'spell' | 'item' | 'race' {
   const { category } = parseOr400(categoryParamsSchema, params);
-  if (category !== 'spell' && category !== 'item') {
+  if (category !== 'spell' && category !== 'item' && category !== 'race') {
     throw new HttpError('not_found', `Нет категории «${category}»`);
   }
   return category;
@@ -78,17 +83,22 @@ export function registerCatalogRoutes(
 
   server.get(
     '/api/catalog/:category/facets',
-    async (request): Promise<SpellFacetsResponse | ItemFacetsResponse> => {
+    async (request): Promise<SpellFacetsResponse | ItemFacetsResponse | RaceFacetsResponse> => {
       const category = listCategory(request.params);
       const connection = requireCatalog(catalog);
+      if (category === 'race') return raceFacets(connection);
       return category === 'spell' ? spellFacets(connection) : itemFacets(connection);
     },
   );
 
   server.get(
     '/api/catalog/:category',
-    async (request): Promise<SpellListResponse | ItemListResponse> => {
+    async (request): Promise<SpellListResponse | ItemListResponse | RaceListResponse> => {
       const category = listCategory(request.params);
+      if (category === 'race') {
+        const query = parseOr400(raceListQuerySchema, request.query);
+        return listRaces(requireCatalog(catalog), query);
+      }
       if (category === 'spell') {
         const query = parseOr400(spellListQuerySchema, request.query);
         return listSpells(requireCatalog(catalog), query);

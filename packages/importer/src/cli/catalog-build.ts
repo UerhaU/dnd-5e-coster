@@ -4,6 +4,7 @@
 //   npm run catalog:build -- --fixtures         тестовый каталог из data/fixtures (CI, Р47)
 //   npm run catalog:build -- --cache <папка> --out <файл>
 //   --items-cache <папка>  кэш статей со снаряжением; --no-items — без снаряжения
+//   --races-cache <папка>  кэш страниц рас; --no-races — без рас
 //   --fresh    не брать прошлый catalog.db: ревизии восстанавливаются по журналу
 //   --no-ledger не читать и не писать журнал ревизий (для опытов с --out)
 //   --strict   выйти с кодом 1, если есть ошибки (для CI)
@@ -26,6 +27,8 @@ const { values } = parseArgs({
     cache: { type: 'string' },
     'items-cache': { type: 'string' },
     'no-items': { type: 'boolean', default: false },
+    'races-cache': { type: 'string' },
+    'no-races': { type: 'boolean', default: false },
     out: { type: 'string' },
     fixtures: { type: 'boolean', default: false },
     fresh: { type: 'boolean', default: false },
@@ -43,6 +46,12 @@ const itemCacheDir = values['no-items']
   : path.resolve(
       values['items-cache'] ??
         (values.fixtures ? DEFAULT_PATHS.itemFixtures : DEFAULT_PATHS.itemCache),
+    );
+const raceCacheDir = values['no-races']
+  ? null
+  : path.resolve(
+      values['races-cache'] ??
+        (values.fixtures ? DEFAULT_PATHS.raceFixtures : DEFAULT_PATHS.raceCache),
     );
 const outFile = path.resolve(values.out ?? DEFAULT_PATHS.catalog);
 // Тестовый каталог всегда собирается с нуля: его ревизии не должны смешиваться с полным.
@@ -88,6 +97,7 @@ if (previousInfo) {
 const now = new Date();
 console.log(`Кэш: ${cacheDir}`);
 console.log(`Кэш снаряжения: ${itemCacheDir ?? 'не используется'}`);
+console.log(`Кэш рас: ${raceCacheDir ?? 'не используется'}`);
 console.log(`Каталог: ${outFile}${fresh ? ' (без прошлого файла)' : ''}`);
 console.log(`Журнал ревизий: ${ledgerDir ?? 'не используется'}`);
 
@@ -96,6 +106,8 @@ const result = buildCatalog({
   reviewedDir: DEFAULT_PATHS.reviewedSpells,
   itemCacheDir,
   reviewedItemsDir: DEFAULT_PATHS.reviewedItems,
+  raceCacheDir,
+  reviewedRacesDir: DEFAULT_PATHS.reviewedRaces,
   outFile,
   previousFile: fresh ? null : outFile,
   ledgerDir,

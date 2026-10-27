@@ -29,6 +29,13 @@
       "when": 1793091207643,
       "tag": "0003_item_index",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1793127409225,
+      "tag": "0004_race_index",
+      "breakpoints": true
     }
   ]
 }

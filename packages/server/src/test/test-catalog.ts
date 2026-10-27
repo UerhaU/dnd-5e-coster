@@ -16,6 +16,8 @@ export function openTestCatalog(): { catalog: CatalogConnection; dispose: () => 
     reviewedDir: DEFAULT_PATHS.reviewedSpells,
     itemCacheDir: DEFAULT_PATHS.itemFixtures,
     reviewedItemsDir: DEFAULT_PATHS.reviewedItems,
+    raceCacheDir: DEFAULT_PATHS.raceFixtures,
+    reviewedRacesDir: DEFAULT_PATHS.reviewedRaces,
     outFile: file,
     previousFile: null,
     ledgerDir: null,

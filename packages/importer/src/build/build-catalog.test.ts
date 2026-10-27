@@ -30,6 +30,8 @@ function build(overrides: Partial<BuildOptions> = {}) {
     reviewedDir: DEFAULT_PATHS.reviewedSpells,
     itemCacheDir: null,
     reviewedItemsDir: DEFAULT_PATHS.reviewedItems,
+    raceCacheDir: null,
+    reviewedRacesDir: DEFAULT_PATHS.reviewedRaces,
     outFile,
     previousFile: outFile,
     ledgerDir: null,

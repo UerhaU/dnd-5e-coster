@@ -31,6 +31,7 @@ export const conditions = referenceTable('conditions');
 export const itemKinds = referenceTable('item_kinds');
 export const itemCategories = referenceTable('item_categories');
 export const weaponProperties = referenceTable('weapon_properties');
+export const sizes = referenceTable('sizes');
 
 /** Источник в том виде, как его указывает DnD.su (Р12). Одна книга — одна строка. */
 export const sources = sqliteTable('sources', {
@@ -186,6 +187,27 @@ export const itemIndex = sqliteTable(
     index('item_index_kind').on(table.kindId),
     index('item_index_category').on(table.categoryId),
   ],
+);
+
+/** Поля для фильтров списка рас. */
+export const raceIndex = sqliteTable(
+  'race_index',
+  {
+    entityId: text('entity_id')
+      .primaryKey()
+      .references(() => contentEntities.id),
+    /** `race` или `variant` (разновидность). */
+    kind: text('kind', { enum: ['race', 'variant'] }).notNull(),
+    /** Раса разновидности; у расы `null`. */
+    variantOf: text('variant_of').references(() => contentEntities.id),
+    /** Размер; если на выбор («Средний или Маленький») — первый, `null` — не указан. */
+    sizeId: text('size_id').references(() => sizes.id),
+    speedWalkFt: integer('speed_walk_ft'),
+    /** Есть скорость полёта (любая, в том числе «равна скорости ходьбы»). */
+    flying: integer('flying', { mode: 'boolean' }).notNull(),
+    darkvisionFt: integer('darkvision_ft'),
+  },
+  (table) => [index('race_index_variant_of').on(table.variantOf)],
 );
 
 /** Свойства оружия: для фильтра «фехтовальное», «метательное»… */

@@ -10,7 +10,7 @@ import type { ImportIssue } from '../report/issues.ts';
 import { canonicalJson, sha256 } from './canonical-json.ts';
 import type { CatalogEntity } from './catalog-entity.ts';
 import type { Ledger, LedgerRevision } from './ledger.ts';
-import { writeItemIndex, writeSpellIndex } from './write-index.ts';
+import { writeItemIndex, writeRaceIndex, writeSpellIndex } from './write-index.ts';
 
 // Шаг build (раздел 6): новый catalog.db из собранных объектов.
 // Ревизии прошлой сборки переносятся без изменений (Р21); новая ревизия
@@ -338,8 +338,10 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
         }
         if (entity.category === 'spell') {
           writeSpellIndex(tx, entity);
-        } else {
+        } else if (entity.category === 'item') {
           writeItemIndex(tx, entity);
+        } else {
+          writeRaceIndex(tx, entity);
         }
         for (const link of entity.links) {
           if (!currentIds.has(link.toId)) {
