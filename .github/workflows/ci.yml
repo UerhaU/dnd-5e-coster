@@ -32,6 +32,18 @@ jobs:
       - name: Сборка портативного zip
         run: npm run dist
 
+      # Сценарии Playwright в собранной программе с тестовым каталогом (решение автора, этап 1).
+      - name: Сценарии Playwright
+        run: npm run e2e
+
+      - name: Сохранить результаты Playwright при ошибке
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: apps/desktop/release/e2e-results
+          if-no-files-found: ignore
+
       - name: Сохранить zip
         uses: actions/upload-artifact@v4
         with:
