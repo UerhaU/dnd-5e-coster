@@ -22,6 +22,10 @@ const TAG_NAMES: Record<string, string> = {
 export function SpellCardBody({ card }: { card: SpellEntityResponse }) {
   const { data } = card;
   const targets = targetsText(data);
+  // Предметы материального компонента (Р60): снаряжение или «компонент заклинания».
+  const materials = card.links.filter(
+    (link) => link.kind === 'material_component' && link.direction === 'to',
+  );
 
   return (
     <article aria-labelledby="spell-name">
@@ -52,6 +56,18 @@ export function SpellCardBody({ card }: { card: SpellEntityResponse }) {
         <Fact label="Компоненты">
           <span data-testid="spell-components">{componentsText(data.components)}</span>
         </Fact>
+        {materials.length > 0 && (
+          <Fact label="Предметы компонента">
+            <span data-testid="spell-material-items">
+              {materials.map((link, index) => (
+                <span key={link.id}>
+                  {index > 0 && ', '}
+                  <Link to={`/reference/entity/${link.id}`}>{link.nameRu}</Link>
+                </span>
+              ))}
+            </span>
+          </Fact>
+        )}
         <Fact label="Длительность">{data.duration.text}</Fact>
         <Fact label="Концентрация">{data.concentration ? 'Да' : 'Нет'}</Fact>
         <Fact label="Ритуал">{data.ritual ? 'Да' : 'Нет'}</Fact>

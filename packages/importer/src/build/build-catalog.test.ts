@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { catalogSchema, openCatalogReadOnly, readCatalogInfo } from '@koster/db';
+import { catalogSchema, openCatalogReadOnly, readCatalogInfo, readEntity } from '@koster/db';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_PATHS } from '../paths.ts';
 import { buildCatalog, type BuildOptions } from './build-catalog.ts';
@@ -299,7 +299,8 @@ describe('снаряжение в сборке (этап 2)', () => {
     expect(result.issues.filter((issue) => issue.severity === 'error')).toEqual([]);
     expect(result.items).toMatchObject({ collected: 42, failed: 0 });
     read((catalog) => {
-      expect(catalog.db.select().from(itemIndex).all()).toHaveLength(42);
+      // 42 строки статей и 19 «компонентов заклинания» (Р60).
+      expect(catalog.db.select().from(itemIndex).all()).toHaveLength(61);
       expect(catalog.db.select().from(itemIndexProperties).all().length).toBeGreaterThan(10);
       const links = catalog.db.select().from(contentLinks).all();
       expect(links).toContainEqual({
@@ -327,13 +328,50 @@ describe('снаряжение в сборке (этап 2)', () => {
     );
   });
 
+  it('материальные компоненты: связи, itemId у листьев, «компонент заклинания» (Р60)', () => {
+    const result = withItems();
+    expect(result.materials).toMatchObject({ components: 19, linkedSpells: 8 });
+    read((catalog) => {
+      const links = catalog.db.select().from(contentLinks).all();
+      expect(links).toContainEqual({
+        fromId: 'spell:fireball',
+        toId: 'item:bat-guano',
+        kind: 'material_component',
+      });
+      const fireball = readEntity(catalog, 'spell:fireball');
+      expect(fireball?.data).toMatchObject({
+        components: {
+          material: {
+            recipe: {
+              children: [
+                { name: 'Гуано летучей мыши', itemId: 'item:bat-guano' },
+                { name: 'Сера', itemId: 'item:sulfur' },
+              ],
+            },
+          },
+        },
+      });
+      const guano = readEntity(catalog, 'item:bat-guano');
+      expect(guano).toMatchObject({ nameRu: 'Гуано летучей мыши', nameEn: 'Bat guano' });
+      expect(guano?.data).toMatchObject({ kind: 'spell_component', cost: { cp: null } });
+      // Книга — как у заклинания; страницы DnD.su нет.
+      expect(guano?.sources).toEqual([
+        expect.objectContaining({ code: 'PH14', dndsuId: null, url: null }),
+      ]);
+    });
+    // Предмета снаряжения нет в тестовых статьях — предупреждение, а не ошибка.
+    expect(result.issues).toContainEqual(
+      expect.objectContaining({ severity: 'warning', field: 'materials' }),
+    );
+  });
+
   it('повторная сборка: 0 новых ревизий; журнал предметов — свой файл', () => {
     const ledgerDir = path.join(folder, 'ledger');
     withItems({ ledgerDir });
     const again = withItems({ ledgerDir, now: new Date('2026-10-28T10:00:00Z') });
     expect(again.write).toMatchObject({ newRevisions: 0, catalogVersion: 1 });
     const lines = fs.readFileSync(path.join(ledgerDir, 'item.jsonl'), 'utf8').trim().split('\n');
-    expect(lines).toHaveLength(42);
+    expect(lines).toHaveLength(61);
     expect(lines.join('\n')).not.toContain('Стёганый');
   });
 });

@@ -7,6 +7,7 @@ import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
+import { linkSpellMaterials, type MaterialLinkStats } from './link-spell-materials.ts';
 import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
 
@@ -40,6 +41,8 @@ export interface BuildResult {
   collect: CollectStats;
   items: ItemCollectStats | null;
   races: RaceCollectStats | null;
+  /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
+  materials: MaterialLinkStats | null;
   write: WriteStats;
   issues: ImportIssue[];
 }
@@ -50,17 +53,28 @@ export function buildCatalog(options: BuildOptions): BuildResult {
   const cache = openSpellCache(options.cacheDir);
   const reviewed = loadReviewedSpells(options.reviewedDir);
   const spells = collectSpells(cache, reviewed, issues);
+  const reviewedItems = loadReviewedItems(options.reviewedItemsDir);
   const items = options.itemCacheDir
-    ? collectItems(
-        openArticleCache(options.itemCacheDir),
-        loadReviewedItems(options.reviewedItemsDir),
+    ? collectItems(openArticleCache(options.itemCacheDir), reviewedItems, issues, {
+        knownSources: spells.entities.flatMap((entity) =>
+          entity.sources.map(({ source }) => source),
+        ),
+        reportUnusedReviewed: options.sourceKind === 'full',
+      })
+    : null;
+  const materials = items
+    ? linkSpellMaterials(
+        spells.entities.filter(
+          (entity): entity is Extract<typeof entity, { category: 'spell' }> =>
+            entity.category === 'spell',
+        ),
+        items.entities.filter(
+          (entity): entity is Extract<typeof entity, { category: 'item' }> =>
+            entity.category === 'item',
+        ),
+        reviewedItems,
         issues,
-        {
-          knownSources: spells.entities.flatMap((entity) =>
-            entity.sources.map(({ source }) => source),
-          ),
-          reportUnusedReviewed: options.sourceKind === 'full',
-        },
+        { full: options.sourceKind === 'full' },
       )
     : null;
   const knownSources = [...spells.entities, ...(items?.entities ?? [])].flatMap((entity) =>
@@ -77,7 +91,12 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         },
       )
     : null;
-  const entities = [...spells.entities, ...(items?.entities ?? []), ...(races?.entities ?? [])];
+  const entities = [
+    ...spells.entities,
+    ...(items?.entities ?? []),
+    ...(materials?.components ?? []),
+    ...(races?.entities ?? []),
+  ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
   const written = writeCatalog(
@@ -103,6 +122,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     collect: spells.stats,
     items: items?.stats ?? null,
     races: races?.stats ?? null,
+    materials: materials?.stats ?? null,
     write: written.stats,
     issues,
   };

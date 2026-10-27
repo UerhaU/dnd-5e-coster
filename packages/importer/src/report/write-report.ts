@@ -11,7 +11,7 @@ const SEVERITY_TITLES = {
 } as const;
 
 export function summaryLines(result: BuildResult): string[] {
-  const { collect, items, races, write, issues } = result;
+  const { collect, items, races, materials, write, issues } = result;
   const count = (severity: keyof typeof SEVERITY_TITLES) =>
     issues.filter((issue) => issue.severity === severity).length;
   return [
@@ -27,6 +27,11 @@ export function summaryLines(result: BuildResult): string[] {
           `Снаряжение по видам: ${Object.entries(items.byKind)
             .map(([kind, count]) => `${kind} ${count}`)
             .join(', ')}`,
+        ]
+      : []),
+    ...(materials
+      ? [
+          `Материальные компоненты: листьев ${materials.leaves}; со снаряжением ${materials.toEquipment}, с «компонентом заклинания» ${materials.toComponents}, не предмет ${materials.notItems}; новых компонентов ${materials.components}; заклинаний со связью ${materials.linkedSpells}`,
         ]
       : []),
     ...(races

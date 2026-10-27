@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 // Состав материального компонента — дерево «всё вместе» / «один из».
-// Данные перенесены из v0.1 (scripts/spell-materials.mjs). Ссылок на предметы
-// каталога пока нет: предметы появятся на этапе 2, тогда к листьям добавятся itemId.
+// Данные перенесены из v0.1 (scripts/spell-materials.mjs). Лист ссылается на предмет
+// каталога (`itemId`, этап 2): снаряжение или «компонент заклинания» (Р60).
 
 export const MATERIAL_UNITS = [
   'piece',
@@ -21,6 +21,11 @@ export const materialItemSchema = z.strictObject({
   kind: z.literal('item'),
   /** Название по-русски, как в составе на DnD.su. */
   name: z.string().min(1),
+  /** Предмет каталога; нет — компонент не предмет («любое рукопашное оружие», монеты). */
+  itemId: z
+    .string()
+    .regex(/^item:[a-z0-9-]+$/)
+    .optional(),
   /** `null` — количество не указано. */
   quantity: z.number().positive().nullable(),
   unit: z.enum(MATERIAL_UNITS).nullable(),

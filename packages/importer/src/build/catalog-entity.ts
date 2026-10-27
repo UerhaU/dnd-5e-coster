@@ -32,7 +32,8 @@ interface CatalogEntityBase {
   reviewStatus: ReviewStatus;
   automation: Automation;
   schemaVersion: string;
-  sources: { source: NormalizedSource; dndsuId: number; url: string }[];
+  /** У «компонента заклинания» (Р60) страницы нет: `dndsuId` и `url` — `null`. */
+  sources: { source: NormalizedSource; dndsuId: number | null; url: string | null }[];
   /** Связи с другими объектами; цели без объекта сборка отбрасывает с предупреждением. */
   links: { toId: string; kind: LinkKind }[];
   /** Плоский текст для полнотекстового поиска. */

@@ -16,6 +16,8 @@ export const ITEM_KINDS = [
   { id: 'mount', nameRu: 'Скакун или животное', nameEn: 'Mount or other animal' },
   { id: 'tack', nameRu: 'Сёдла и упряжь', nameEn: 'Tack and harness' },
   { id: 'vehicle', nameRu: 'Транспорт', nameEn: 'Vehicle' },
+  /** Материальный компонент заклинания, которого нет в таблицах снаряжения DnD.su (Р60). */
+  { id: 'spell_component', nameRu: 'Компонент заклинания', nameEn: 'Spell component' },
 ] as const satisfies readonly ReferenceEntry[];
 
 /** Вид внутри категории: оружие, доспехи и группы из таблиц DnD.su. */

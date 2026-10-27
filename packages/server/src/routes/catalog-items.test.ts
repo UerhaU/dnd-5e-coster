@@ -54,13 +54,14 @@ async function card(id: string): Promise<ItemEntityResponse> {
 describe('GET /api/catalog/item — список', () => {
   it('страницы и алфавитный порядок без запроса', async () => {
     const page = await list('pageSize=5');
-    expect(page).toMatchObject({ total: 42, page: 1, pageSize: 5 });
+    expect(page).toMatchObject({ total: 61, page: 1, pageSize: 5 });
     expect(page.items.map((item) => item.nameRu)).toEqual([
       'Абак',
+      // «Компонент заклинания» (Р60) — тоже предмет каталога.
+      'Алмазная пыль',
       'Арбалет, лёгкий',
       'Астральный бриг',
       'Батарея',
-      'Боевой воздушный шар',
     ]);
   });
 

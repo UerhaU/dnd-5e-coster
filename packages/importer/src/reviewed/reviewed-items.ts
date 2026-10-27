@@ -52,6 +52,18 @@ const namesFileSchema = z.strictObject({
   tradeGoods: z.array(reviewedTradeGoodSchema),
   skipRows: z.array(reviewedSkipRowSchema).default([]),
 });
+/** Материальный компонент заклинания → предмет каталога (Р60): новый, существующий или не предмет. */
+export const reviewedComponentSchema = z.union([
+  z.strictObject({ match: text, nameEn: text }),
+  z.strictObject({ match: text, itemId: entityIdSchema }),
+  z.strictObject({ match: text, skip: text }),
+]);
+
+const componentsFileSchema = z.strictObject({
+  $comment: z.string().optional(),
+  components: z.array(reviewedComponentSchema),
+});
+
 const packsFileSchema = z.strictObject({
   $comment: z.string().optional(),
   packs: z.array(reviewedPackSchema),
@@ -60,12 +72,15 @@ const packsFileSchema = z.strictObject({
 export type ReviewedItemName = z.infer<typeof reviewedItemNameSchema>;
 export type ReviewedTradeGood = z.infer<typeof reviewedTradeGoodSchema>;
 export type ReviewedPack = z.infer<typeof reviewedPackSchema>;
+export type ReviewedComponent = z.infer<typeof reviewedComponentSchema>;
 
 export interface ReviewedItems {
   names: Map<string, ReviewedItemName>;
   tradeGoods: Map<string, ReviewedTradeGood>;
   packs: Map<string, ReviewedPack>;
   skipRows: Map<string, z.infer<typeof reviewedSkipRowSchema>>;
+  /** spell-components.json: ключ — название листа состава заклинания. */
+  components: Map<string, ReviewedComponent>;
   /** Ошибки файлов: файл не прочитан или повтор ключа. */
   invalid: { file: string; message: string }[];
 }
@@ -114,11 +129,13 @@ export function loadReviewedItems(folder: string): ReviewedItems {
   const invalid: ReviewedItems['invalid'] = [];
   const names = readJson(folder, 'names.json', namesFileSchema, invalid);
   const packs = readJson(folder, 'packs.json', packsFileSchema, invalid);
+  const components = readJson(folder, 'spell-components.json', componentsFileSchema, invalid);
   return {
     names: byKey('names.json', names?.items ?? [], invalid),
     tradeGoods: byKey('names.json', names?.tradeGoods ?? [], invalid),
     packs: byKey('packs.json', packs?.packs ?? [], invalid),
     skipRows: byKey('names.json', names?.skipRows ?? [], invalid),
+    components: byKey('spell-components.json', components?.components ?? [], invalid),
     invalid,
   };
 }
