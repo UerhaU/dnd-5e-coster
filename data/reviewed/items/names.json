@@ -60,9 +60,9 @@
     {
       "match": "Двухклинковый скимитар",
       "nameEn": "Double-bladed scimitar",
-      "category": "simple_melee"
+      "category": "martial_melee"
     },
-    { "match": "Иклва", "nameEn": "Yklwa", "category": "martial_melee" },
+    { "match": "Иклва", "nameEn": "Yklwa", "category": "simple_melee" },
     {
       "match": "Короткое копьё с крюком",
       "nameEn": "Hooked shortspear",

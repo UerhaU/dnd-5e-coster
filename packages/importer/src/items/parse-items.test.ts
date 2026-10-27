@@ -182,6 +182,8 @@ describe('нормализация снаряжения', () => {
     const { byId } = collect();
     const yklwa = byId.get('item:yklwa');
     expect(yklwa?.data.optionalRule).toBe(true);
+    // Вид — из names.json (Р65): на DnD.su не указан.
+    expect(yklwa?.rules?.weapon).toMatchObject({ category: 'simple', range: 'melee' });
     expect(yklwa?.sources[0]?.source).toMatchObject({
       code: 'TOA',
       nameEn: 'Tomb of Annihilation',
