@@ -5,6 +5,7 @@ import { catalogSchema, openCatalogReadOnly, readCatalogInfo } from '@koster/db'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_PATHS } from '../paths.ts';
 import { buildCatalog, type BuildOptions } from './build-catalog.ts';
+import { readLedger } from './ledger.ts';
 
 // Сборка на копии тестового кэша во временной папке (раздел 9: только временные базы).
 
@@ -29,6 +30,7 @@ function build(overrides: Partial<BuildOptions> = {}) {
     reviewedDir: DEFAULT_PATHS.reviewedSpells,
     outFile,
     previousFile: outFile,
+    ledgerDir: null,
     sourceKind: 'fixtures',
     now: new Date('2026-10-27T10:00:00Z'),
     ...overrides,
@@ -181,5 +183,94 @@ describe('npm run catalog:build', () => {
       // Исправление Огненного шара осталось без страницы — тоже ошибка, а не тишина.
       [205, 'reviewed'],
     ]);
+  });
+});
+
+describe('журнал ревизий (Р51)', () => {
+  const ledgerDir = () => path.join(folder, 'ledger');
+  const revisionsOf = () =>
+    read((catalog) =>
+      catalog.db
+        .select({
+          id: contentRevisions.id,
+          entityId: contentRevisions.entityId,
+          revision: contentRevisions.revision,
+          createdAt: contentRevisions.createdAt,
+        })
+        .from(contentRevisions)
+        .all(),
+    );
+  const currentOf = () =>
+    read((catalog) =>
+      catalog.db
+        .select({ id: contentEntities.id, current: contentEntities.currentRevisionId })
+        .from(contentEntities)
+        .all(),
+    );
+
+  it('пишется без текстов: ID, номер ревизии, хеш, дата', () => {
+    build({ ledgerDir: ledgerDir() });
+
+    const ledger = readLedger(ledgerDir());
+    expect(ledger.revisions).toHaveLength(pageCount());
+    expect(ledger.info).toMatchObject({ catalogVersion: 1 });
+    const text = fs.readFileSync(path.join(ledgerDir(), 'spell.jsonl'), 'utf8');
+    expect(text).not.toMatch(/футов|Огненный/);
+    expect(Object.keys(ledger.revisions[0] ?? {}).sort()).toEqual([
+      'contentHash',
+      'createdAt',
+      'entityId',
+      'importerVersion',
+      'revision',
+      'revisionId',
+      'schemaVersion',
+    ]);
+  });
+
+  it('удалить catalog.db → пересобрать: номера ревизий, версия и дата те же', () => {
+    build({ ledgerDir: ledgerDir() });
+    const page = path.join(cacheDir, 'pages', 'spell-205.html');
+    fs.writeFileSync(page, fs.readFileSync(page, 'utf8').replace('150 футов', '160 футов'));
+    build({ ledgerDir: ledgerDir(), now: new Date('2026-10-28T10:00:00Z') });
+    const revisionsBefore = revisionsOf();
+    const currentBefore = currentOf();
+    const infoBefore = read((catalog) => readCatalogInfo(catalog));
+
+    fs.rmSync(outFile);
+    const result = build({ ledgerDir: ledgerDir(), now: new Date('2026-11-01T10:00:00Z') });
+
+    expect(result.write).toMatchObject({
+      newRevisions: 0,
+      restoredFromLedger: pageCount(),
+      catalogVersion: 2,
+    });
+    expect(currentOf()).toEqual(currentBefore);
+    // Прошлая ревизия Огненного шара без текста не восстановить, но её номер занят.
+    const restored = revisionsOf();
+    expect(restored).toHaveLength(revisionsBefore.length - 1);
+    for (const row of restored) {
+      expect(revisionsBefore).toContainEqual(row);
+    }
+    expect(read((catalog) => readCatalogInfo(catalog))).toEqual(infoBefore);
+    expect(readLedger(ledgerDir()).revisions).toHaveLength(revisionsBefore.length);
+  });
+
+  it('после потери файла изменённый объект продолжает нумерацию журнала', () => {
+    build({ ledgerDir: ledgerDir() });
+    const maxId = Math.max(...revisionsOf().map((row) => row.id));
+    fs.rmSync(outFile);
+    const page = path.join(cacheDir, 'pages', 'spell-205.html');
+    fs.writeFileSync(page, fs.readFileSync(page, 'utf8').replace('150 футов', '160 футов'));
+
+    const result = build({ ledgerDir: ledgerDir(), now: new Date('2026-10-28T10:00:00Z') });
+
+    expect(result.write).toMatchObject({ newRevisions: 1, catalogVersion: 2 });
+    const fireball = revisionsOf().find((row) => row.entityId === 'spell:fireball');
+    expect(fireball).toMatchObject({ revision: 2, id: maxId + 1 });
+  });
+
+  it('без ledgerDir журнал не создаётся (тестовый каталог)', () => {
+    build();
+    expect(fs.existsSync(ledgerDir())).toBe(false);
   });
 });

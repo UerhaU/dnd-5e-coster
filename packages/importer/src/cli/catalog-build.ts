@@ -3,12 +3,14 @@
 //   npm run catalog:build                       полный каталог из storage/spell-fill
 //   npm run catalog:build -- --fixtures         тестовый каталог из data/fixtures (CI, Р47)
 //   npm run catalog:build -- --cache <папка> --out <файл>
-//   --fresh    не переносить ревизии прошлой сборки
+//   --fresh    не брать прошлый catalog.db: ревизии восстанавливаются по журналу
+//   --no-ledger не читать и не писать журнал ревизий (для опытов с --out)
 //   --strict   выйти с кодом 1, если есть ошибки (для CI)
 //   --force    разрешить тестовому каталогу заменить полный
 //
-// История ревизий есть только в самом catalog.db (Р21, Р47), поэтому перед заменой
-// прошлая сборка копируется в storage/backups/catalog/.
+// Тексты есть только в catalog.db (Р47), поэтому перед заменой прошлая сборка
+// копируется в storage/backups/catalog/. Номера ревизий без текстов хранит журнал
+// data/catalog-ledger/ (Р51): полная сборка его читает и обновляет, тестовая — нет.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,6 +28,7 @@ const { values } = parseArgs({
     fresh: { type: 'boolean', default: false },
     strict: { type: 'boolean', default: false },
     force: { type: 'boolean', default: false },
+    'no-ledger': { type: 'boolean', default: false },
   },
 });
 
@@ -36,6 +39,7 @@ const outFile = path.resolve(values.out ?? DEFAULT_PATHS.catalog);
 // Тестовый каталог всегда собирается с нуля: его ревизии не должны смешиваться с полным.
 const fresh = values.fresh || values.fixtures;
 const sourceKind = values.fixtures ? 'fixtures' : 'full';
+const ledgerDir = values.fixtures || values['no-ledger'] ? null : DEFAULT_PATHS.catalogLedger;
 
 function readInfo(file: string): Record<string, string> | null {
   if (!fs.existsSync(file)) {
@@ -74,13 +78,15 @@ if (previousInfo) {
 
 const now = new Date();
 console.log(`Кэш: ${cacheDir}`);
-console.log(`Каталог: ${outFile}${fresh ? ' (с нуля)' : ''}`);
+console.log(`Каталог: ${outFile}${fresh ? ' (без прошлого файла)' : ''}`);
+console.log(`Журнал ревизий: ${ledgerDir ?? 'не используется'}`);
 
 const result = buildCatalog({
   cacheDir,
   reviewedDir: DEFAULT_PATHS.reviewedSpells,
   outFile,
   previousFile: fresh ? null : outFile,
+  ledgerDir,
   sourceKind,
   now,
 });

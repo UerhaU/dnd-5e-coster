@@ -9,10 +9,13 @@ import {
 import type { ImportIssue } from '../report/issues.ts';
 import { canonicalJson, sha256 } from './canonical-json.ts';
 import type { CatalogEntity } from './collect-spells.ts';
+import type { Ledger, LedgerRevision } from './ledger.ts';
 
 // Шаг build (раздел 6): новый catalog.db из собранных объектов.
 // Ревизии прошлой сборки переносятся без изменений (Р21); новая ревизия
 // появляется, только если данные или правила объекта изменились.
+// Нумерация берётся и из прошлого catalog.db, и из журнала ревизий в git (Р51):
+// без прошлого файла неизменившийся объект получает ту же ревизию из журнала.
 
 const {
   catalogInfo,
@@ -66,6 +69,8 @@ export interface WriteOptions {
   outFile: string;
   /** Прошлая сборка, из которой переносятся ревизии; `null` — собрать с нуля. */
   previousFile: string | null;
+  /** Журнал ревизий (Р51); `null` — не использовать (тестовый каталог). */
+  ledger: Ledger | null;
   importerVersion: string;
   /** Дата сборки (ISO). */
   builtAt: string;
@@ -83,15 +88,63 @@ export interface WriteStats {
   revisionsTotal: number;
   catalogVersion: number;
   previousFound: boolean;
+  /** Ревизий, восстановленных по журналу: прошлого файла не было, данные те же. */
+  restoredFromLedger: number;
 }
 
-export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): WriteStats {
+export interface WriteResult {
+  stats: WriteStats;
+  /** Журнал после сборки: все известные ревизии, включая прошлые. */
+  ledger: Ledger;
+}
+
+function ledgerEntry(row: RevisionRow): LedgerRevision {
+  return {
+    revisionId: row.id,
+    entityId: row.entityId,
+    revision: row.revision,
+    contentHash: row.contentHash,
+    schemaVersion: row.schemaVersion,
+    importerVersion: row.importerVersion,
+    createdAt: row.createdAt,
+  };
+}
+
+/** Все известные ревизии: из прошлого файла (с данными) и из журнала (без данных). */
+function knownRevisions(
+  previous: PreviousCatalog | null,
+  ledger: Ledger | null,
+  issues: ImportIssue[],
+): Map<number, LedgerRevision> {
+  const known = new Map<number, LedgerRevision>();
+  for (const row of previous?.revisions ?? []) {
+    known.set(row.id, ledgerEntry(row));
+  }
+  for (const entry of ledger?.revisions ?? []) {
+    const fromFile = known.get(entry.revisionId);
+    if (!fromFile) {
+      known.set(entry.revisionId, entry);
+    } else if (canonicalJson(fromFile) !== canonicalJson(entry)) {
+      issues.push({
+        severity: 'error',
+        entityId: entry.entityId,
+        dndsuId: null,
+        field: 'ledger',
+        message: `Ревизия ${entry.revisionId} в журнале не совпадает с прошлым catalog.db: берётся catalog.db`,
+      });
+    }
+  }
+  return known;
+}
+
+export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): WriteResult {
   const previous = readPrevious(options.previousFile);
-  const latest = new Map<string, RevisionRow>();
-  for (const revision of previous?.revisions ?? []) {
-    const known = latest.get(revision.entityId);
-    if (!known || known.revision < revision.revision) {
-      latest.set(revision.entityId, revision);
+  const known = knownRevisions(previous, options.ledger, issues);
+  const latest = new Map<string, LedgerRevision>();
+  for (const entry of known.values()) {
+    const last = latest.get(entry.entityId);
+    if (!last || last.revision < entry.revision) {
+      latest.set(entry.entityId, entry);
     }
   }
 
@@ -105,11 +158,13 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
     revisionsTotal: 0,
     catalogVersion: 1,
     previousFound: previous !== null,
+    restoredFromLedger: 0,
   };
 
   // Ревизии: сначала все прошлые как есть, потом новые с продолжением нумерации.
   const revisions: RevisionRow[] = [...(previous?.revisions ?? [])];
-  let nextRevisionId = Math.max(0, ...revisions.map((row) => row.id)) + 1;
+  const withData = new Set(revisions.map((row) => row.id));
+  let nextRevisionId = Math.max(0, ...known.keys()) + 1;
   const currentRevision = new Map<string, number>();
 
   const entities = [...options.entities].sort((a, b) => (a.id < b.id ? -1 : 1));
@@ -121,7 +176,23 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
 
     if (last?.contentHash === contentHash) {
       stats.unchanged += 1;
-      currentRevision.set(entity.id, last.id);
+      currentRevision.set(entity.id, last.revisionId);
+      if (!withData.has(last.revisionId)) {
+        // Хеш тот же — значит, и данные те же: ревизия восстанавливается целиком.
+        revisions.push({
+          id: last.revisionId,
+          entityId: last.entityId,
+          revision: last.revision,
+          schemaVersion: last.schemaVersion,
+          dataJson,
+          rulesJson,
+          contentHash,
+          importerVersion: last.importerVersion,
+          createdAt: last.createdAt,
+        });
+        withData.add(last.revisionId);
+        stats.restoredFromLedger += 1;
+      }
       continue;
     }
     if (last) {
@@ -162,14 +233,42 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
       });
     }
   }
+  const present = new Set([...currentIds, ...withdrawn.map((row) => row.id)]);
+  for (const entityId of latest.keys()) {
+    if (!present.has(entityId)) {
+      issues.push({
+        severity: 'warning',
+        entityId,
+        dndsuId: null,
+        field: 'ledger',
+        message: 'Объект есть только в журнале ревизий: данных нет, в каталог не попал',
+      });
+    }
+  }
+  const withoutData = [...known.keys()].filter((id) => !withData.has(id)).length;
+  if (withoutData > 0) {
+    issues.push({
+      severity: 'warning',
+      entityId: null,
+      dndsuId: null,
+      field: 'ledger',
+      message: `Прошлых ревизий без данных (есть только в журнале): ${withoutData}. Номера сохранены`,
+    });
+  }
   stats.revisionsTotal = revisions.length;
 
-  const changedSomething = stats.newRevisions > 0 || stats.withdrawn > 0 || previous === null;
-  const previousVersion = Number(previous?.info['catalog_version'] ?? 0);
+  // Без прошлого файла версия и дата берутся из журнала: если ничего не изменилось,
+  // восстановленный каталог совпадает с потерянным.
+  const previousInfo = previous
+    ? { version: Number(previous.info['catalog_version'] ?? 0), builtAt: previous.info['built_at'] }
+    : options.ledger?.info
+      ? { version: options.ledger.info.catalogVersion, builtAt: options.ledger.info.builtAt }
+      : null;
+  const changedSomething = stats.newRevisions > 0 || stats.withdrawn > 0 || previousInfo === null;
+  const previousVersion = previousInfo?.version ?? 0;
   stats.catalogVersion = changedSomething ? previousVersion + 1 : previousVersion;
-  const builtAt = changedSomething
-    ? options.builtAt
-    : (previous?.info['built_at'] ?? options.builtAt);
+  const builtAt = changedSomething ? options.builtAt : (previousInfo?.builtAt ?? options.builtAt);
+  let catalogHash = '';
 
   const temp = `${options.outFile}.building`;
   fs.rmSync(temp, { force: true });
@@ -284,7 +383,7 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
         );
       }
 
-      const contentHash = sha256(
+      catalogHash = sha256(
         [...currentRevision.entries()]
           .sort(([a], [b]) => (a < b ? -1 : 1))
           .map(([id, revisionId]) => `${id}@${revisionId}`)
@@ -294,7 +393,7 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
       const info: Record<string, string> = {
         ...options.sourceInfo,
         catalog_version: String(stats.catalogVersion),
-        content_hash: contentHash,
+        content_hash: catalogHash,
         built_at: builtAt,
         importer_version: options.importerVersion,
       };
@@ -313,5 +412,16 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
 
   fs.rmSync(options.outFile, { force: true });
   fs.renameSync(temp, options.outFile);
-  return stats;
+
+  const ledgerRevisions = new Map(known);
+  for (const row of revisions) {
+    ledgerRevisions.set(row.id, ledgerEntry(row));
+  }
+  return {
+    stats,
+    ledger: {
+      info: { catalogVersion: stats.catalogVersion, contentHash: catalogHash, builtAt },
+      revisions: [...ledgerRevisions.values()],
+    },
+  };
 }

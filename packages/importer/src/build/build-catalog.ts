@@ -2,6 +2,7 @@ import { openSpellCache } from '../dndsu/spell-cache.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
+import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
 
 /** Версия импортёра: пишется в каждую новую ревизию. На ревизии не влияет. */
@@ -14,6 +15,11 @@ export interface BuildOptions {
   outFile: string;
   /** Прошлая сборка; `null` — с нуля, без переноса ревизий. */
   previousFile: string | null;
+  /**
+   * Папка журнала ревизий в git (Р51): читается перед сборкой и перезаписывается
+   * после. `null` — журнал не трогать (тестовый каталог).
+   */
+  ledgerDir: string | null;
   /** `full` — кэш сайта; `fixtures` — тестовые страницы. Пишется в catalog_info. */
   sourceKind: 'full' | 'fixtures';
   now: Date;
@@ -31,12 +37,14 @@ export function buildCatalog(options: BuildOptions): BuildResult {
   const cache = openSpellCache(options.cacheDir);
   const reviewed = loadReviewedSpells(options.reviewedDir);
   const { entities, stats } = collectSpells(cache, reviewed, issues);
+  const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
-  const write = writeCatalog(
+  const written = writeCatalog(
     {
       entities,
       outFile: options.outFile,
       previousFile: options.previousFile,
+      ledger,
       importerVersion: IMPORTER_VERSION,
       builtAt: options.now.toISOString(),
       sourceInfo: {
@@ -47,5 +55,8 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     },
     issues,
   );
-  return { collect: stats, write, issues };
+  if (options.ledgerDir) {
+    writeLedger(options.ledgerDir, written.ledger);
+  }
+  return { collect: stats, write: written.stats, issues };
 }

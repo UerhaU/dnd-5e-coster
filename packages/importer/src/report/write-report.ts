@@ -18,10 +18,10 @@ export function summaryLines(result: BuildResult): string[] {
     `Заклинаний в списке DnD.su: ${collect.listed}`,
     `В каталоге: ${write.entities} (новых ${write.added}, изменённых ${write.changed}, без изменений ${write.unchanged})`,
     `Снято (пропали из источника): ${write.withdrawn}`,
-    `Новых ревизий: ${write.newRevisions}, всего ревизий: ${write.revisionsTotal}`,
+    `Новых ревизий: ${write.newRevisions}, всего ревизий: ${write.revisionsTotal}, восстановлено по журналу: ${write.restoredFromLedger}`,
     `Нет страницы в кэше: ${collect.missingPages}; ошибок разбора: ${collect.failed}; пропущено: ${collect.skipped}`,
     `Ручных исправлений применено: ${collect.reviewedApplied}; проверенных правил: ${collect.rulesVerified}`,
-    `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : ' (собран с нуля)'}`,
+    `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : write.restoredFromLedger > 0 ? ' (без прошлого файла, номера из журнала)' : ' (собран с нуля)'}`,
     `Ошибок: ${count('error')}, пропусков: ${count('skip')}, предупреждений: ${count('warning')}`,
   ];
 }
