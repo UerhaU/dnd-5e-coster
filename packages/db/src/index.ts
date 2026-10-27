@@ -14,3 +14,12 @@ export {
   type CatalogDb,
 } from './catalog/open.ts';
 export { normalizeSearchText } from './catalog/search-text.ts';
+export { toFtsQuery } from './catalog/search-query.ts';
+export {
+  levelLabel,
+  listCategories,
+  listSpells,
+  readEntity,
+  spellFacets,
+  type EntityRecord,
+} from './catalog/spell-queries.ts';

@@ -5,7 +5,12 @@ describe('describeHealth', () => {
   it('показывает версии, когда сервер работает', () => {
     const text = describeHealth({
       kind: 'ok',
-      health: { status: 'ok', appVersion: '2.0.0-alpha.0', sqliteVersion: '3.50.0' },
+      health: {
+        status: 'ok',
+        appVersion: '2.0.0-alpha.0',
+        sqliteVersion: '3.50.0',
+        catalog: null,
+      },
     });
 
     expect(text).toBe('Сервер работает. Версия программы 2.0.0-alpha.0, SQLite 3.50.0.');

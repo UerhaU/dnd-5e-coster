@@ -8,3 +8,4 @@ export {
   type BuildResult,
 } from './build/build-catalog.ts';
 export { parseSpellPage, type RawSpellPage } from './spells/parse-page.ts';
+export { DEFAULT_PATHS } from './paths.ts';

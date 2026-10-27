@@ -7,6 +7,7 @@ const options: ServerOptions = {
   appVersion: '2.0.0-alpha.0',
   sqliteVersion: '3.50.0',
   allowedOrigins: ['app://koster'],
+  catalog: null,
 };
 
 describe('GET /api/health', () => {
@@ -18,7 +19,7 @@ describe('GET /api/health', () => {
     await server.close();
   });
 
-  it('возвращает статус, версию программы и версию SQLite', async () => {
+  it('возвращает статус, версии программы и SQLite; без каталога — catalog: null', async () => {
     const response = await server.inject({ method: 'GET', url: '/api/health' });
 
     expect(response.statusCode).toBe(200);
@@ -26,6 +27,7 @@ describe('GET /api/health', () => {
       status: 'ok',
       appVersion: '2.0.0-alpha.0',
       sqliteVersion: '3.50.0',
+      catalog: null,
     });
   });
 

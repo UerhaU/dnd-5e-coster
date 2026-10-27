@@ -1,4 +1,5 @@
 import {
+  CLASS_NAMES_RU,
   MAGIC_SCHOOLS,
   type ClassId,
   type MagicSchoolId,
@@ -263,21 +264,9 @@ export function parseComponents(text: string): SpellComponents | null {
 }
 
 /** Названия классов на DnD.su → коды. */
-export const CLASS_BY_NAME: Record<string, ClassId> = {
-  бард: 'class:bard',
-  варвар: 'class:barbarian',
-  воин: 'class:fighter',
-  волшебник: 'class:wizard',
-  друид: 'class:druid',
-  жрец: 'class:cleric',
-  изобретатель: 'class:artificer',
-  колдун: 'class:warlock',
-  монах: 'class:monk',
-  паладин: 'class:paladin',
-  плут: 'class:rogue',
-  следопыт: 'class:ranger',
-  чародей: 'class:sorcerer',
-};
+export const CLASS_BY_NAME: Record<string, ClassId> = Object.fromEntries(
+  Object.entries(CLASS_NAMES_RU).map(([id, name]) => [name.toLowerCase(), id as ClassId]),
+);
 
 export function classIdByName(name: string): ClassId | null {
   return CLASS_BY_NAME[name.trim().toLowerCase()] ?? null;

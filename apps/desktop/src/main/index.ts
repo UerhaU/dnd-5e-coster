@@ -57,13 +57,13 @@ async function start(paths: PortablePaths, log: (message: string) => void): Prom
 
   log(`Запуск ${app.getVersion()}, данные: ${paths.data}`);
 
-  // Каталог пока только открывается; API каталога подключит этап 1, часть Б.
   const catalog = openProgramCatalog(resolveCatalogFile(pathsInput()), app.isPackaged, log);
 
   const server = createServer({
     appVersion: app.getVersion(),
     sqliteVersion: readSqliteVersion(),
     allowedOrigins: [rendererOrigin],
+    catalog,
   });
   const serverUrl = await listenLocal(server);
   log(`Сервер слушает ${serverUrl}`);

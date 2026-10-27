@@ -81,6 +81,23 @@ export const CLASS_IDS = [
   'class:wizard',
 ] as const;
 
+/** Русские названия классов — для фильтров и карточки, пока нет таблицы классов. */
+export const CLASS_NAMES_RU = {
+  'class:artificer': 'Изобретатель',
+  'class:barbarian': 'Варвар',
+  'class:bard': 'Бард',
+  'class:cleric': 'Жрец',
+  'class:druid': 'Друид',
+  'class:fighter': 'Воин',
+  'class:monk': 'Монах',
+  'class:paladin': 'Паладин',
+  'class:ranger': 'Следопыт',
+  'class:rogue': 'Плут',
+  'class:sorcerer': 'Чародей',
+  'class:warlock': 'Колдун',
+  'class:wizard': 'Волшебник',
+} as const satisfies Record<(typeof CLASS_IDS)[number], string>;
+
 type Ids<T extends readonly ReferenceEntry[]> = T[number]['id'];
 
 export type MagicSchoolId = Ids<typeof MAGIC_SCHOOLS>;
