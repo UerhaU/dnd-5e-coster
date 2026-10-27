@@ -1,10 +1,12 @@
 import {
   ABILITIES,
   CREATURE_TYPES,
+  ITEM_CATEGORIES,
   LANGUAGES,
   SIZES,
   SKILLS,
   type AbilityOption,
+  type RaceBody,
   type RaceListItem,
   type RaceRules,
 } from '@koster/shared';
@@ -90,6 +92,92 @@ export function resistancesText(resistances: RaceRules['resistances']): string |
   return resistances.length > 0
     ? resistances.map((id) => damageTypeName(id).toLowerCase()).join(', ')
     : null;
+}
+
+const years = (count: number) => `${count} ${plural(count, 'год', 'года', 'лет')}`;
+
+/** «зрелость — 20 лет, жизнь — 100 лет». */
+export function ageText(body: RaceBody): string | null {
+  const parts = [
+    body.adultAge !== null ? `зрелость — ${years(body.adultAge)}` : null,
+    body.lifespan !== null ? `жизнь — ${years(body.lifespan)}` : null,
+  ].filter((part) => part !== null);
+  return parts.length > 0 ? parts.join(', ') : null;
+}
+
+/** 66 → «5 фт. 6 дюйм.». */
+export function feetText(inches: number): string {
+  const feet = Math.floor(inches / 12);
+  const rest = inches % 12;
+  return [feet > 0 ? `${feet} фт.` : null, rest > 0 ? `${rest} дюйм.` : null]
+    .filter((part) => part !== null)
+    .join(' ');
+}
+
+function rangeText(
+  range: RaceBody['heightIn'],
+  format: (value: number) => string,
+  metric: (value: number) => number,
+  metricUnit: string,
+): string | null {
+  if (!range) return null;
+  const { min, max } = range;
+  const both = (value: (part: number) => string | number) =>
+    min !== null && max !== null
+      ? min === max
+        ? `около ${value(min)}`
+        : `${value(min)} – ${value(max)}`
+      : min !== null
+        ? `от ${value(min)}`
+        : `до ${value(max ?? 0)}`;
+  return `${both(format)} (${both((value) => Math.round(metric(value)))} ${metricUnit})`;
+}
+
+/** «4 фт. – 5 фт. (122 – 152 см)». */
+export function heightText(body: RaceBody): string | null {
+  return rangeText(body.heightIn, feetText, (inches) => inches * 2.54, 'см');
+}
+
+/** «40 – 80 фнт. (18 – 36 кг)». */
+export function weightText(body: RaceBody): string | null {
+  return rangeText(
+    body.weightLb,
+    (pounds) => `${pounds} фнт.`,
+    (pounds) => pounds * 0.4536,
+    'кг',
+  );
+}
+
+/** «рост 4 фт. 8 дюйм. + 2к8 дюйм., вес 100 фнт. + (2к8 × 2к4) фнт.». */
+export function randomBodyText(body: RaceBody): string | null {
+  const random = body.random;
+  if (!random) return null;
+  const heightDice = `${random.heightDice.count}к${random.heightDice.sides}`;
+  const weightDice = random.weightDice
+    ? ` × ${random.weightDice.count}к${random.weightDice.sides}`
+    : '';
+  return (
+    `рост ${feetText(random.baseHeightIn)} + ${heightDice} дюйм., ` +
+    `вес ${random.baseWeightLb} фнт. + (${heightDice}${weightDice}) фнт.; ` +
+    `${heightDice} — один бросок для роста и веса`
+  );
+}
+
+/** «Инструменты ремонтника; 1 на выбор из: …». `names` — названия предметов из связей. */
+export function toolsText(tools: RaceRules['tools'], names: Map<string, string>): string | null {
+  const name = (id: string) => names.get(id) ?? id;
+  const parts = [
+    ...tools.fixed.map(name),
+    ...tools.choices.map((choice) => {
+      if (choice.from) return `${choice.count} на выбор из: ${choice.from.map(name).join(', ')}`;
+      if (choice.group) {
+        const group = nameOf(ITEM_CATEGORIES, choice.group).toLowerCase();
+        return `${choice.count} на выбор (${group})`;
+      }
+      return `${choice.count} на выбор (любые)`;
+    }),
+  ];
+  return parts.length > 0 ? parts.join('; ') : null;
 }
 
 export function creatureTypeName(type: string): string {

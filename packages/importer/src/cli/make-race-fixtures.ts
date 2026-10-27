@@ -4,7 +4,8 @@
 //
 // Тексты DnD.su не кладутся в git целиком (Р47): от страницы остаются карточка,
 // заголовки перечисленных блоков и абзацы особенностей в них; описание расы, таблицы
-// и прочие разделы убираются. Список — по странице на трудный случай.
+// (кроме «Случайные рост и вес») и прочие разделы убираются. Список — по странице
+// на трудный случай.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -29,6 +30,11 @@ const FIXTURE_PAGES: Record<number, { why: string; keep: string[] }> = {
     keep: ['ОСОБЕННОСТИ ГОБЛИНОВ', 'Гоблин'],
   },
   223: { why: 'своё происхождение: особенности без заголовка, размер на выбор', keep: [] },
+  165: {
+    why: 'гит: таблица «Случайные рост и вес» по разновидностям, «навыком или инструментом»',
+    keep: ['Гитцераи', 'Гитъянки'],
+  },
+  173: { why: 'кентавр: формула роста и веса абзацами после «Размера» (MOT)', keep: [] },
 };
 
 const cache = openArticleCache(DEFAULT_PATHS.raceCache);
@@ -62,6 +68,8 @@ for (const page of pages) {
     }
     if (element.parents('table, ul, ol').length > 0 || element.closest('.params').length > 0)
       return;
+    // Таблица роста и веса нужна разбору (Р69): цифры, а не текст правил.
+    if (node.tagName === 'table' && cleanText(element.text()).includes('Базовый рост')) return;
     if (node.tagName === 'h2' || node.tagName === 'h3') {
       const heading = splitSourceMark(cleanText(element.text())).name;
       // Первый блок «Особенности …» страницы — раса: остаётся вместе с заголовком.

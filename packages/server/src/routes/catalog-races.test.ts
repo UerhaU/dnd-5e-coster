@@ -53,7 +53,7 @@ async function card(id: string): Promise<RaceEntityResponse> {
 describe('GET /api/catalog/race — список', () => {
   it('раса, за ней её разновидности', async () => {
     const page = await list('pageSize=100');
-    expect(page.total).toBe(15);
+    expect(page.total).toBe(19);
     const names = page.items.map((item) => item.id);
     const dwarf = names.indexOf('race:dwarf');
     expect(names.slice(dwarf, dwarf + 5)).toEqual([
@@ -105,8 +105,8 @@ describe('GET /api/catalog/race/facets', () => {
     expect(status).toBe(200);
     const facets = raceFacetsResponseSchema.parse(body);
     expect(facets.kind).toEqual([
-      { value: 'race', label: 'Расы', count: 8 },
-      { value: 'variant', label: 'Разновидности', count: 7 },
+      { value: 'race', label: 'Расы', count: 10 },
+      { value: 'variant', label: 'Разновидности', count: 9 },
     ]);
     expect(facets.flying).toBe(2);
     expect(facets.source.map((source) => source.value)).toContain('mpmm');

@@ -11,6 +11,7 @@ import { ItemSources } from '../items/sources.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { raceBlockKey, type ReviewedRaces } from '../reviewed/reviewed-races.ts';
 import type { NormalizedSource } from '../spells/normalize-spell.ts';
+import { randomFromRow } from './parse-race-body.ts';
 import type { RawFeature, RawRaceBlock, RawRacePage } from './parse-race-page.ts';
 import { parseRaceRules } from './parse-race-rules.ts';
 
@@ -112,7 +113,28 @@ export class RaceNormalizer {
       this.issue('error', 'features', 'На странице не найдены особенности расы');
       return [];
     }
-    return page.blocks[0]?.layout === 'tab' ? this.fromTabs() : this.fromSections();
+    const races = page.blocks[0]?.layout === 'tab' ? this.fromTabs() : this.fromSections();
+    this.applyBodyRows(races);
+    return races;
+  }
+
+  /** Таблица «Случайные рост и вес»: строка — по названию расы («Гитцерай» → «Гитцераи»). */
+  private applyBodyRows(races: NormalizedRace[]) {
+    const stem = (name: string) => name.toLowerCase().replace(/ё/g, 'е');
+    for (const row of this.page.bodyRows) {
+      const rowName = stem(row.name);
+      const race = races.find((candidate) => {
+        const name = stem(candidate.nameRu);
+        const length = Math.max(5, Math.min(name.length, rowName.length) - 1);
+        return name.slice(0, length) === rowName.slice(0, length);
+      });
+      const random = randomFromRow(row);
+      if (!race || !random) {
+        this.issue('warning', 'body', `Строка «${row.name}» таблицы роста и веса не разобрана`);
+        continue;
+      }
+      race.rules.body.random = random;
+    }
   }
 
   private baseId(): string {
@@ -154,6 +176,14 @@ export class RaceNormalizer {
         id,
       );
     }
+    for (const language of rules.unknownLanguages) {
+      this.issue(
+        'warning',
+        'languages',
+        `«${nameRu}»: язык «${language}» не в справочнике LANGUAGES — в механику не попал`,
+        id,
+      );
+    }
     return {
       id,
       nameRu,
@@ -170,6 +200,12 @@ export class RaceNormalizer {
       links: [
         ...(variantOf ? [{ toId: variantOf, kind: 'variant_of' as const }] : []),
         ...rules.rules.weapons.map((toId) => ({ toId, kind: 'weapon_proficiency' as const })),
+        ...[
+          ...new Set([
+            ...rules.rules.tools.fixed,
+            ...rules.rules.tools.choices.flatMap((choice) => choice.from ?? []),
+          ]),
+        ].map((toId) => ({ toId, kind: 'tool_proficiency' as const })),
       ],
       reviewedKey,
     };
@@ -273,6 +309,7 @@ export class RaceNormalizer {
       rules.skills.fixed = without(rules.skills.fixed, baseRules.rules.skills.fixed);
       rules.weapons = without(rules.weapons, baseRules.rules.weapons);
       rules.armor = without(rules.armor, baseRules.rules.armor);
+      rules.tools.fixed = without(rules.tools.fixed, baseRules.rules.tools.fixed);
       rules.resistances = without(rules.resistances, baseRules.rules.resistances);
       out.push(
         this.race(

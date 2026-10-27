@@ -28,6 +28,7 @@ const LINK_TITLES: Record<string, { to: string; from: string }> = {
   contains: { to: 'Состав', from: 'Входит в наборы' },
   material_component: { to: 'Материальный компонент', from: 'Компонент заклинаний' },
   weapon_proficiency: { to: 'Владение оружием', from: 'Владеют расы' },
+  tool_proficiency: { to: 'Владение инструментом', from: 'Владеют расы (или выбирают)' },
 };
 
 /** Карточка предмета: поля item/v1, разобранная механика, связи, источник. */

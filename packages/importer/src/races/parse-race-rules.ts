@@ -4,6 +4,7 @@ import {
   type AbilityOption,
   type RaceRules,
 } from '@koster/shared';
+import { emptyRaceBody, parseRaceBody } from './parse-race-body.ts';
 import type { RawFeature } from './parse-race-page.ts';
 
 // Механика расы из текста особенностей DnD.su (race-rules/v1). Разбираются только
@@ -73,7 +74,7 @@ const LANGUAGE_STEMS: [RegExp, Language][] = [
   [/Общ(ем|ий|его)(?![а-яё])/, 'common'],
   [/Дварфийск/, 'dwarvish'],
   [/Эльфийск/, 'elvish'],
-  [/Великань/, 'giant'],
+  [/Великан(ь|ов|ск)/, 'giant'],
   [/Гном(ье|ьи|ск)/, 'gnomish'],
   [/Гоблинск/, 'goblin'],
   [/[Пп]олурослик/, 'halfling'],
@@ -91,9 +92,9 @@ const LANGUAGE_STEMS: [RegExp, Language][] = [
   [/Игнан/, 'ignan'],
   [/Терран/, 'terran'],
   [/Гитск/, 'gith'],
-  [/Квори/, 'quori'],
-  [/Леонинск/, 'leonin'],
-  [/Локсодонск/, 'loxodon'],
+  [/Квори|Куори/, 'quori'],
+  [/Леонин(ск|ов)/, 'leonin'],
+  [/Локсодон(ск|ов)/, 'loxodon'],
   [/Минотавр/, 'minotaur'],
   [/Ведалкенск/, 'vedalken'],
   [/Грунг/, 'grung'],
@@ -136,9 +137,48 @@ const WEAPON_STEMS: [RegExp, string[]][] = [
   [/скимитар/, ['item:scimitar']],
 ];
 
+/** Инструменты из текста владений → ID предметов каталога: «инструменты кузнеца, пивовара или каменщика». */
+const TOOL_STEMS: [RegExp, string][] = [
+  [/алхимик/, 'item:alchemists-supplies'],
+  [/пивовар/, 'item:brewers-supplies'],
+  [/каллиграф/, 'item:calligraphers-supplies'],
+  [/плотник/, 'item:carpenters-tools'],
+  [/картограф/, 'item:cartographers-tools'],
+  [/сапожник/, 'item:cobblers-tools'],
+  [/повар/, 'item:cooks-utensils'],
+  [/стеклодув/, 'item:glassblowers-tools'],
+  [/ювелир/, 'item:jewelers-tools'],
+  [/кожевник/, 'item:leatherworkers-tools'],
+  [/каменщик/, 'item:masons-tools'],
+  [/художник/, 'item:painters-supplies'],
+  [/гончар/, 'item:potters-tools'],
+  [/кузнец/, 'item:smiths-tools'],
+  [/ремонтник/, 'item:tinkers-tools'],
+  [/ткач/, 'item:weavers-tools'],
+  [/резчик[а-яё]* по дереву/, 'item:woodcarvers-tools'],
+  [/воровск[а-яё]* инструмент/, 'item:thieves-tools'],
+  [/навигатор/, 'item:navigators-tools'],
+  [/отравител/, 'item:poisoners-kit'],
+  [/травник/, 'item:herbalism-kit'],
+  [/грим/, 'item:disguise-kit'],
+  [/фальсификац/, 'item:forgery-kit'],
+];
+
+const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']][] = [
+  [/ремесленн/, 'artisans_tools'],
+  [/музыкальн/, 'musical_instrument'],
+  [/игров[а-яё]* набор/, 'gaming_set'],
+];
+
+/**
+ * Владение «навыком или инструментом», «оружием или инструментом» — один выбор из
+ * разных видов: механикой не записывается, особенность остаётся текстом.
+ */
+const MIXED_PROFICIENCY = /(навык[а-яё]*|оружи[а-яё]*) или (одним )?инструмент/;
+
 /** Особенности, которые полностью описываются полями механики (или не нужны ей). */
 const STANDARD_FEATURES =
-  /^(Увеличение характеристики?|Возраст|Мировоззрение|Размер|Скорость|Языки?|Дополнительный язык|(Превосходное )?[Тт]ёмное зрение|Вид существа|Разновидност[а-яё]*|Подраса)$/;
+  /^(Увеличение характеристики?|Возраст|Мировоззрение|Размер|Скорость|Языки?|Дополнительный язык|(Превосходное )?[Тт]ёмное зрение|Вид существа|Разновидност[а-яё]*|Подрас[а-яё]*|(Мужские |Женские |Детские )?[Ии]мена.*)$/;
 
 const sentences = (text: string) => text.split(/(?<=[.!?])\s+/);
 
@@ -217,6 +257,8 @@ export interface ParsedRaceRules {
   rules: RaceRules;
   /** Особенности, текст которых узнан, но не разобран: в отчёт. */
   failed: string[];
+  /** Языки из текста, которых нет в справочнике LANGUAGES: в механику не попали. */
+  unknownLanguages: string[];
 }
 
 export function emptyRaceRules(): RaceRules {
@@ -230,8 +272,10 @@ export function emptyRaceRules(): RaceRules {
     skills: { fixed: [], choices: [] },
     weapons: [],
     armor: [],
+    tools: { fixed: [], choices: [] },
     languages: { fixed: [], choose: 0 },
     resistances: [],
+    body: emptyRaceBody(),
     textOnly: [],
   };
 }
@@ -239,10 +283,14 @@ export function emptyRaceRules(): RaceRules {
 export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
   const rules = emptyRaceRules();
   const failed: string[] = [];
+  const unknownLanguages: string[] = [];
   const texts = features.map((feature) => ({
     name: feature.name,
     text: textBlocksToPlain(feature.blocks).replace(/\s+/g, ' '),
   }));
+
+  const textOf = (name: string) => texts.find((feature) => feature.name === name)?.text ?? null;
+  rules.body = parseRaceBody(textOf('Возраст'), textOf('Размер'));
 
   for (const { name, text } of texts) {
     const before = JSON.stringify(rules);
@@ -282,6 +330,19 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     if (/^(Языки?|Дополнительный язык)$/.test(name)) {
       const first = sentences(text)[0] ?? '';
       rules.languages.fixed.push(...found(first, LANGUAGE_STEMS));
+      // «…писать на Общем и Гитском»: язык, которого нет в LANGUAGES, — в отчёт.
+      const named =
+        /(?:писать|пишете|читать|читаете|говорить|говорите) на (.+?)(?:[.;]|$)/.exec(first)?.[1] ??
+        '';
+      for (const part of named.split(/,\s*|\s+и\s+|\s+или\s+/)) {
+        const word = part
+          .replace(/^(на\s+)?(языке|языках)\s+/, '')
+          .replace(/\s+язык[а-яё]*$/, '')
+          .trim();
+        if (/^[А-ЯЁ][а-яё-]+$/.test(word) && found(word, LANGUAGE_STEMS).length === 0) {
+          unknownLanguages.push(word);
+        }
+      }
       const extra = sentences(text).find(
         (part) => /(выбор|дополнительн|ещё|еще|подходит|другом)/.test(part) && /язык/.test(part),
       );
@@ -299,11 +360,16 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     rules.speed.burrow ??= parseSpeed(text, /скорост[а-яё]* (копания|рытья)/);
 
     for (const sentence of sentences(text)) {
+      if (MIXED_PROFICIENCY.test(sentence)) continue;
       if (/навык/.test(sentence) && /владе/.test(sentence)) {
-        const skills = found(sentence, SKILL_STEMS);
-        if (/выбор|из следующ|одним из|двумя из/.test(sentence)) {
+        // «…навыками Выступление и Убеждение, а также одним инструментом по вашему выбору»:
+        // выбор относится к инструменту, а не к навыкам.
+        const skillPart =
+          sentence.split(/,?\s+(?:а также|и)\s+(?:одним\s+)?[а-яё]*\s*инструмент/)[0] ?? '';
+        const skills = found(skillPart, SKILL_STEMS);
+        if (/выбор|из следующ|одним из|двумя из/.test(skillPart)) {
           rules.skills.choices.push({
-            count: countIn(sentence) ?? 1,
+            count: countIn(skillPart) ?? 1,
             from: skills.length > 1 ? skills : null,
           });
         } else {
@@ -320,6 +386,22 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
         }
         if (/л[её]гк[а-яё]*( и средн[а-яё]*)? доспех/.test(lower)) rules.armor.push('light');
         if (/средн[а-яё]* доспех/.test(lower)) rules.armor.push('medium');
+      }
+      if (/владе/.test(sentence) && /инструмент/.test(sentence)) {
+        // После навыков: «одним из навыков … и одним инструментом» — счёт у инструмента.
+        const skillsEnd = sentence.lastIndexOf('навык');
+        const part = skillsEnd >= 0 ? sentence.slice(skillsEnd) : sentence;
+        const tools = found(sentence, TOOL_STEMS);
+        const group = TOOL_GROUP_WORDS.find(([pattern]) => pattern.test(part))?.[1] ?? null;
+        if (/выбор/.test(sentence)) {
+          rules.tools.choices.push({
+            count: countIn(part) ?? 1,
+            from: tools.length > 0 ? tools : null,
+            group: tools.length > 0 ? null : group,
+          });
+        } else if (tools.length > 0) {
+          rules.tools.fixed.push(...tools.filter((id) => !rules.tools.fixed.includes(id)));
+        }
       }
       if (
         /сопротивлени/.test(sentence) &&
@@ -338,5 +420,5 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
   rules.armor = [...new Set(rules.armor)];
   rules.languages.fixed = [...new Set(rules.languages.fixed)];
   rules.resistances = [...new Set(rules.resistances)];
-  return { rules, failed };
+  return { rules, failed, unknownLanguages: [...new Set(unknownLanguages)] };
 }

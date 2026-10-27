@@ -5,7 +5,8 @@ import { openArticleCache } from '../dndsu/article-cache.ts';
 import { DEFAULT_PATHS } from '../paths.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { loadReviewedRaces } from '../reviewed/reviewed-races.ts';
-import { parseAbilityScores } from './parse-race-rules.ts';
+import { parseRaceBody } from './parse-race-body.ts';
+import { parseAbilityScores, parseRaceRules } from './parse-race-rules.ts';
 
 // Тесты разбора рас на урезанных страницах data/fixtures/dndsu/races (Р47).
 
@@ -77,7 +78,7 @@ describe('расы и разновидности', () => {
   it('число объектов, без ошибок; UA и дубль MPMM на странице дварфа — пропуски', () => {
     const { stats, issues } = collect();
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(stats).toMatchObject({ pages: 6, races: 8, variants: 7, failed: 0 });
+    expect(stats).toMatchObject({ pages: 8, races: 10, variants: 9, failed: 0 });
     const skipped = issues
       .filter((issue) => issue.severity === 'skip')
       .map((issue) => issue.message);
@@ -179,5 +180,117 @@ describe('расы и разновидности', () => {
       creatureType: 'humanoid',
       abilityScores: [{ fixed: [], choices: [{ count: 1, amount: 2, from: null, except: [] }] }],
     });
+  });
+});
+
+describe('рост, вес, возраст (Р69)', () => {
+  it('числа из «Возраста» и «Размера»; метры в скобках и «в холке» не мешают', () => {
+    expect(
+      parseRaceBody(
+        'Гоблины достигают зрелости к 8 годам, и живут до 60 лет.',
+        'Рост гоблинов между 3 и 4 футами (90 сантиметров и 1,2 метра), а вес от 40 до 80 фунтов (от 18 до 36 килограмм). Ваш размер — Маленький.',
+      ),
+    ).toEqual({
+      adultAge: 8,
+      lifespan: 60,
+      heightIn: { min: 36, max: 48 },
+      weightLb: { min: 40, max: 80 },
+      random: null,
+    });
+    // «за один год» — зрелость, «до 50 лет» — жизнь; «2½» и «около».
+    expect(
+      parseRaceBody(
+        'Грунги достигают зрелости за один год, но известно, что живут они до 50 лет.',
+        'Грунги от 2½ до 3½ футов (от 76 сантиметров до 1 метра) в высоту и весят в среднем около 30 фунтов.',
+      ),
+    ).toMatchObject({
+      adultAge: 1,
+      lifespan: 50,
+      heightIn: { min: 30, max: 42 },
+      weightLb: { min: 30, max: 30 },
+    });
+    // Слова вместо чисел; «достигают 5 … превосходящий 6» — диапазон.
+    expect(
+      parseRaceBody(
+        'Люди становятся взрослыми в районе 20 лет, и живут менее столетия.',
+        'Некоторые с трудом достигают 5 футов (152 сантиметров) ростом, тогда как другие имеют рост, превосходящий 6 футов (183 сантиметра).',
+      ),
+    ).toMatchObject({ adultAge: 20, lifespan: 100, heightIn: { min: 60, max: 72 } });
+    // «как у людей» — чисел нет.
+    expect(
+      parseRaceBody(
+        'Аасимары взрослеют как и люди, но они могут прожить до 160 лет.',
+        'У аасимаров такие же рост и вес, как и у людей.',
+      ),
+    ).toEqual({ adultAge: null, lifespan: 160, heightIn: null, weightLb: null, random: null });
+  });
+
+  it('формула MOT абзацами после «Размера» и таблица гитов по разновидностям', () => {
+    const { get } = collect();
+    const centaur = get('race:centaur');
+    expect(centaur.rules.body).toMatchObject({
+      heightIn: { min: 72, max: 84 },
+      random: {
+        baseHeightIn: 72,
+        heightDice: { count: 1, sides: 10 },
+        baseWeightLb: 600,
+        weightDice: { count: 2, sides: 12 },
+      },
+    });
+    expect(centaur.data.features.map((feature) => feature.name)).not.toContain('Высота');
+    expect(get('race:githzerai').rules.body.random).toEqual({
+      baseHeightIn: 59,
+      heightDice: { count: 2, sides: 12 },
+      baseWeightLb: 90,
+      weightDice: { count: 1, sides: 4 },
+    });
+    expect(get('race:githyanki').rules.body.random?.baseHeightIn).toBe(60);
+    expect(get('race:gith').rules.textOnly).toEqual([]);
+    expect(get('race:dwarf').rules.body).toMatchObject({ adultAge: 50, lifespan: 350 });
+  });
+});
+
+describe('владение инструментами (Р69)', () => {
+  const rulesOf = (name: string, text: string) =>
+    parseRaceRules([{ name, blocks: [{ type: 'paragraph', text }] }]).rules;
+
+  it('дварф: выбор из трёх — ссылками; связь tool_proficiency', () => {
+    const dwarf = collect().get('race:dwarf');
+    expect(dwarf.rules.tools).toEqual({
+      fixed: [],
+      choices: [
+        {
+          count: 1,
+          from: ['item:brewers-supplies', 'item:masons-tools', 'item:smiths-tools'],
+          group: null,
+        },
+      ],
+    });
+    expect(dwarf.links).toContainEqual({ toId: 'item:smiths-tools', kind: 'tool_proficiency' });
+    expect(dwarf.rules.textOnly).not.toContain('Владение инструментами');
+  });
+
+  it('фиксированное, из группы, из любых; «навыком или инструментом» — текстом', () => {
+    expect(
+      rulesOf('Жестянщик', 'Вы владеете ремесленными инструментами (инструменты ремонтника).')
+        .tools,
+    ).toEqual({ fixed: ['item:tinkers-tools'], choices: [] });
+    const satyr = rulesOf(
+      'Гуляка',
+      'Вы получаете владение навыками Выступление и Убеждение, а также одним музыкальным инструментом по вашему выбору.',
+    );
+    expect(satyr.skills).toEqual({ fixed: ['performance', 'persuasion'], choices: [] });
+    expect(satyr.tools.choices).toEqual([{ count: 1, from: null, group: 'musical_instrument' }]);
+    expect(
+      rulesOf('Особая сборка', 'Вы получаете два владения инструментами по вашему выбору.').tools
+        .choices,
+    ).toEqual([{ count: 2, from: null, group: null }]);
+    const mixed = rulesOf(
+      'Декадентское мастерство',
+      'Вы изучаете один язык по вашему выбору и получаете владение одним навыком или инструментом по вашему выбору.',
+    );
+    expect(mixed.skills.choices).toEqual([]);
+    expect(mixed.tools.choices).toEqual([]);
+    expect(mixed.textOnly).toEqual(['Декадентское мастерство']);
   });
 });

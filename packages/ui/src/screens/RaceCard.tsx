@@ -2,12 +2,17 @@ import type { RaceEntityResponse } from '@koster/shared';
 import { Link } from 'react-router';
 import {
   abilityScoresText,
+  ageText,
   creatureTypeName,
+  heightText,
   languagesText,
   resistancesText,
   sizeName,
   skillsText,
   speedText,
+  randomBodyText,
+  toolsText,
+  weightText,
 } from '../catalog/race-format';
 import { CommonFacts, Fact } from '../components/CardParts';
 import { CategoryIcon } from '../components/CategoryIcon';
@@ -25,6 +30,11 @@ export function RaceCardBody({ card }: { card: RaceEntityResponse }) {
   const weapons = card.links.filter(
     (link) => link.kind === 'weapon_proficiency' && link.direction === 'to',
   );
+  const toolNames = new Map(
+    card.links
+      .filter((link) => link.kind === 'tool_proficiency' && link.direction === 'to')
+      .map((link) => [link.id, link.nameRu]),
+  );
   const rows: [string, string | null, string?][] = [
     ['Увеличение характеристик', abilityScoresText(rules.abilityScores), 'race-abilities'],
     ['Размер', rules.size ? rules.size.map(sizeName).join(' или ') : null, 'race-size'],
@@ -40,8 +50,13 @@ export function RaceCardBody({ card }: { card: RaceEntityResponse }) {
       'Доспехи',
       rules.armor.length > 0 ? rules.armor.map((id) => ARMOR_NAMES[id]).join(', ') : null,
     ],
+    ['Инструменты', toolsText(rules.tools, toolNames), 'race-tools'],
     ['Языки', languagesText(rules.languages), 'race-languages'],
     ['Сопротивление', resistancesText(rules.resistances)],
+    ['Возраст', ageText(rules.body), 'race-age'],
+    ['Рост', heightText(rules.body), 'race-height'],
+    ['Вес', weightText(rules.body)],
+    ['Случайные рост и вес', randomBodyText(rules.body), 'race-random-body'],
   ];
 
   return (

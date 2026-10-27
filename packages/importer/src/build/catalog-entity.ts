@@ -19,7 +19,9 @@ export type LinkKind =
   | 'material_component'
   | 'variant_of'
   /** Раса владеет оружием: «Дварфийская боевая тренировка» → боевой топор. */
-  | 'weapon_proficiency';
+  | 'weapon_proficiency'
+  /** Раса владеет инструментом или выбирает из них: «инструменты кузнеца, пивовара или каменщика». */
+  | 'tool_proficiency';
 
 interface CatalogEntityBase {
   id: string;

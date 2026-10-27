@@ -70,6 +70,8 @@ export function collectRaces(
       pageIssue(`Страницы нет в кэше (${page.url}); скачать: npm run catalog:fetch -- --races`);
       continue;
     }
+    // Строки отчёта этой страницы: при суффиксе ID в них меняется ID.
+    const pageIssuesFrom = issues.length;
     let races;
     try {
       races = new RaceNormalizer(
@@ -111,6 +113,9 @@ export function collectRaces(
           continue;
         }
         renamed.set(race.id, suffixed);
+        for (const issue of issues.slice(pageIssuesFrom)) {
+          if (issue.entityId === race.id) issue.entityId = suffixed;
+        }
         race.id = suffixed;
       }
       const fail = (message: string) => {

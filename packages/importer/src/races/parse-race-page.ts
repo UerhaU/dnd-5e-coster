@@ -40,6 +40,17 @@ export interface RawRaceBlock {
   features: RawFeature[];
 }
 
+/** Строка таблицы «Случайные рост и вес» (гиты MTF): ячейки как на странице. */
+export interface RawBodyRow {
+  /** «Гитъянки». */
+  name: string;
+  /** «5’0’’», «100 фнт.», «+2к12», «× (2к4) фнт.». */
+  baseHeight: string;
+  baseWeight: string;
+  heightModifier: string;
+  weightModifier: string;
+}
+
 export interface RawRacePage {
   url: string | null;
   nameRu: string;
@@ -51,7 +62,12 @@ export interface RawRacePage {
   intro: TextBlock[];
   /** Только блоки с особенностями расы (характеристики, размер, скорость, языки). */
   blocks: RawRaceBlock[];
+  /** Таблицы «Случайные рост и вес» на странице, если есть. */
+  bodyRows: RawBodyRow[];
 }
+
+/** Абзацы формулы случайного роста и веса (MOT) — продолжение «Размера», а не особенности. */
+const SIZE_FORMULA = /^(Модификатор размера|Высота|Вес в фунтах)$/;
 
 /** Особенности, по которым блок узнаётся как набор особенностей расы. */
 const CORE_FEATURES = /^(Увеличение характеристик?|Размер|Скорость|Языки|Вид существа)/;
@@ -103,6 +119,10 @@ function readBlockContent(
     // «Лидер: …», «Штаб-квартира: …» у домов драконьих меток — не особенности.
     if (name && !/:\s*$/.test(cleanText(element.find('strong, b').first().text()))) {
       const rest = restAfter($, element, name);
+      if (current?.name === 'Размер' && SIZE_FORMULA.test(name)) {
+        current.blocks.push({ type: 'paragraph', text: `${name} ${rest}` });
+        continue;
+      }
       current = { name, blocks: rest ? [{ type: 'paragraph', text: rest }] : [] };
       features.push(current);
       continue;
@@ -200,6 +220,30 @@ export function parseRacePage(html: string): RawRacePage {
   }
   close();
 
+  const bodyRows: RawBodyRow[] = [];
+  body.find('table').each((_, table) => {
+    const header = $(table)
+      .find('tr')
+      .first()
+      .find('th, td')
+      .toArray()
+      .map((cell) => cleanText($(cell).text()));
+    if (!header.includes('Базовый рост')) return;
+    $(table)
+      .find('tr')
+      .slice(1)
+      .each((_, row) => {
+        const cells = $(row)
+          .find('td, th')
+          .toArray()
+          .map((cell) => cleanText($(cell).text()));
+        const [name, baseHeight, baseWeight, heightModifier, weightModifier] = cells;
+        if (name && baseHeight && baseWeight && heightModifier && weightModifier) {
+          bodyRows.push({ name, baseHeight, baseWeight, heightModifier, weightModifier });
+        }
+      });
+  });
+
   return {
     url,
     nameRu,
@@ -207,5 +251,6 @@ export function parseRacePage(html: string): RawRacePage {
     sourceTitle,
     intro,
     blocks,
+    bodyRows,
   };
 }

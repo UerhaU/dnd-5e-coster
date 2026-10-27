@@ -57,7 +57,7 @@ describe('GET /api/catalog/categories', () => {
     expect(body.categories).toEqual([
       { id: 'spell', nameRu: 'Заклинания', count: 22 },
       { id: 'item', nameRu: 'Снаряжение', count: 42 },
-      { id: 'race', nameRu: 'Расы', count: 15 },
+      { id: 'race', nameRu: 'Расы', count: 19 },
     ]);
   });
 });
