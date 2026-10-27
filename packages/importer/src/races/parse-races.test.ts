@@ -105,7 +105,8 @@ describe('расы и разновидности', () => {
 
     const high = get('race:high-elf');
     expect(high.data).toMatchObject({ kind: 'variant', variantOf: 'race:elf' });
-    expect(high.links).toEqual([{ toId: 'race:elf', kind: 'variant_of' }]);
+    expect(high.links).toContainEqual({ toId: 'race:elf', kind: 'variant_of' });
+    expect(high.links).toContainEqual({ toId: 'item:longsword', kind: 'weapon_proficiency' });
     expect(high.rules.weapons).toEqual(
       expect.arrayContaining([
         'item:longsword',

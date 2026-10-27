@@ -176,6 +176,10 @@ a.main-menu__item:hover {
   background: var(--color-surface);
 }
 
+.result--nested {
+  padding-left: var(--space-6);
+}
+
 .result__name {
   font-size: var(--font-size-l);
 }
@@ -245,6 +249,16 @@ a.main-menu__item:hover {
 }
 
 .facts dd {
+  margin: 0;
+}
+
+/* Особенности расы: название и текст */
+.features dt {
+  margin-top: var(--space-3);
+  font-weight: 600;
+}
+
+.features dd {
   margin: 0;
 }
 

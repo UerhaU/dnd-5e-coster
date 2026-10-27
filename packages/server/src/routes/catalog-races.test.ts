@@ -124,8 +124,16 @@ describe('GET /api/catalog/entity/:id — карточка расы', () => {
     );
     const high = await card('race:high-elf');
     expect(high.data.variantOf).toBe('race:elf');
-    expect(high.links).toEqual([
-      expect.objectContaining({ kind: 'variant_of', direction: 'to', id: 'race:elf' }),
-    ]);
+    expect(high.links).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: 'variant_of', direction: 'to', id: 'race:elf' }),
+        expect.objectContaining({
+          kind: 'weapon_proficiency',
+          direction: 'to',
+          id: 'item:longsword',
+          nameRu: 'Длинный меч',
+        }),
+      ]),
+    );
   });
 });

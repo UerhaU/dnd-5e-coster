@@ -5,6 +5,8 @@ import {
   entityResponseSchema,
   itemFacetsResponseSchema,
   itemListResponseSchema,
+  raceFacetsResponseSchema,
+  raceListResponseSchema,
   spellFacetsResponseSchema,
   spellListResponseSchema,
   type CategoriesResponse,
@@ -12,6 +14,9 @@ import {
   type ItemFacetsResponse,
   type ItemListParams,
   type ItemListResponse,
+  type RaceFacetsResponse,
+  type RaceListParams,
+  type RaceListResponse,
   type SpellFacetsResponse,
   type SpellListParams,
   type SpellListResponse,
@@ -41,6 +46,8 @@ export interface ApiClient {
   spellFacets(): Promise<SpellFacetsResponse>;
   items(params: ItemListParams): Promise<ItemListResponse>;
   itemFacets(): Promise<ItemFacetsResponse>;
+  races(params: RaceListParams): Promise<RaceListResponse>;
+  raceFacets(): Promise<RaceFacetsResponse>;
   /** Карточка объекта любой категории. */
   entity(id: string, revision?: number): Promise<EntityResponse>;
 }
@@ -86,6 +93,8 @@ export function createApiClient(
     spellFacets: () => get('/api/catalog/spell/facets', spellFacetsResponseSchema),
     items: (params) => get(`/api/catalog/item${toQueryString(params)}`, itemListResponseSchema),
     itemFacets: () => get('/api/catalog/item/facets', itemFacetsResponseSchema),
+    races: (params) => get(`/api/catalog/race${toQueryString(params)}`, raceListResponseSchema),
+    raceFacets: () => get('/api/catalog/race/facets', raceFacetsResponseSchema),
     entity: (id, revision) =>
       get(
         revision === undefined

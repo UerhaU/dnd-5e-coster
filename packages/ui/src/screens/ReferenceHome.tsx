@@ -4,7 +4,7 @@ import { useApi } from '../api/api-context';
 import { CategoryIcon } from '../components/CategoryIcon';
 import { QueryError } from '../components/QueryError';
 
-/** Справочник: категории каталога — заклинания и снаряжение. */
+/** Справочник: категории каталога — заклинания, снаряжение и расы. */
 export function ReferenceHome() {
   const api = useApi();
   const categories = useQuery({ queryKey: ['categories'], queryFn: () => api.categories() });

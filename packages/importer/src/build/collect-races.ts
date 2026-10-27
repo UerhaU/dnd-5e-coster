@@ -92,7 +92,9 @@ export function collectRaces(
       if (race.data.variantOf) {
         const target = renamed.get(race.data.variantOf) ?? race.data.variantOf;
         race.data.variantOf = target;
-        race.links = race.links.map((link) => ({ ...link, toId: target }));
+        race.links = race.links.map((link) =>
+          link.kind === 'variant_of' ? { ...link, toId: target } : link,
+        );
       }
       if (entities.has(race.id)) {
         // Р11, Р67: при совпадении английских названий добавляется суффикс книги.

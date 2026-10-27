@@ -145,7 +145,15 @@ describe('GET /api/catalog/entity/:id — карточка предмета', ()
       // Болтов в тестовых статьях нет: ID есть в механике, а связь не записана.
       ammunitionItemId: 'item:crossbow-bolts',
     });
-    expect(crossbow.links).toEqual([]);
+    expect(crossbow.links.filter((link) => link.kind === 'uses_ammunition')).toEqual([]);
+    // Владение — со стороны расы: морской эльф.
+    expect(crossbow.links).toContainEqual(
+      expect.objectContaining({
+        kind: 'weapon_proficiency',
+        direction: 'from',
+        id: 'race:sea-elf',
+      }),
+    );
   });
 
   it('доспех: формула КД, Сила, Скрытность, надевание и снятие', async () => {

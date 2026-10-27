@@ -5,6 +5,7 @@ import { createHashRouter, RouterProvider } from 'react-router';
 import { ApiProvider } from './api/api-context';
 import { EntityCard } from './screens/EntityCard';
 import { ItemList } from './screens/ItemList';
+import { RaceList } from './screens/RaceList';
 import { MainMenu } from './screens/MainMenu';
 import { ReferenceHome } from './screens/ReferenceHome';
 import { SpellList } from './screens/SpellList';
@@ -23,6 +24,7 @@ const router = createHashRouter([
   { path: '/reference', element: <ReferenceHome /> },
   { path: '/reference/spell', element: <SpellList /> },
   { path: '/reference/item', element: <ItemList /> },
+  { path: '/reference/race', element: <RaceList /> },
   { path: '/reference/entity/:id', element: <EntityCard /> },
 ]);
 

@@ -1,7 +1,9 @@
 import {
   itemListQuerySchema,
+  raceListQuerySchema,
   spellListQuerySchema,
   type ItemListParams,
+  type RaceListParams,
   type SpellListParams,
 } from '@koster/shared';
 
@@ -32,8 +34,20 @@ export const ITEM_FILTER_KEYS = [
   'sort',
 ] as const;
 
+/** Фильтры списка рас. */
+export const RACE_FILTER_KEYS = [
+  'q',
+  'kind',
+  'size',
+  'flying',
+  'darkvision',
+  'source',
+  'sort',
+] as const;
+
 export type FilterKey = (typeof FILTER_KEYS)[number];
 export type ItemFilterKey = (typeof ITEM_FILTER_KEYS)[number];
+export type RaceFilterKey = (typeof RACE_FILTER_KEYS)[number];
 
 /** Поля схемы списка: каждое умеет проверить одно значение из адреса. */
 interface ListSchema {
@@ -67,6 +81,10 @@ export function paramsFromSearch(search: URLSearchParams): SpellListParams {
 
 export function itemParamsFromSearch(search: URLSearchParams): ItemListParams {
   return parseParams(search, itemListQuerySchema, ITEM_FILTER_KEYS) as ItemListParams;
+}
+
+export function raceParamsFromSearch(search: URLSearchParams): RaceListParams {
+  return parseParams(search, raceListQuerySchema, RACE_FILTER_KEYS) as RaceListParams;
 }
 
 /** Новый адрес после изменения одного фильтра: страница — снова первая. */

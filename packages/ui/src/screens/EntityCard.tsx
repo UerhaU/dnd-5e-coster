@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import { useApi } from '../api/api-context';
 import { QueryError } from '../components/QueryError';
 import { ItemCardBody } from './ItemCard';
+import { RaceCardBody } from './RaceCard';
 import { SpellCardBody } from './SpellCard';
 
 /** Карточка объекта любой категории: общий экран, тело — по категории. */
@@ -26,6 +27,7 @@ export function EntityCard() {
       {card.isError && <QueryError error={card.error} />}
       {card.data?.category === 'spell' && <SpellCardBody card={card.data} />}
       {card.data?.category === 'item' && <ItemCardBody card={card.data} />}
+      {card.data?.category === 'race' && <RaceCardBody card={card.data} />}
     </main>
   );
 }

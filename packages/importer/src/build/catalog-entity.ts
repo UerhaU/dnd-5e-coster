@@ -13,7 +13,13 @@ import type { NormalizedSource } from '../spells/normalize-spell.ts';
 
 // Объект, готовый к записи в catalog.db: общий для всех категорий.
 
-export type LinkKind = 'contains' | 'uses_ammunition' | 'material_component' | 'variant_of';
+export type LinkKind =
+  | 'contains'
+  | 'uses_ammunition'
+  | 'material_component'
+  | 'variant_of'
+  /** Раса владеет оружием: «Дварфийская боевая тренировка» → боевой топор. */
+  | 'weapon_proficiency';
 
 interface CatalogEntityBase {
   id: string;

@@ -96,6 +96,34 @@ test('справочник: зелье лечения и боевой конь �
   await expect(window.getByText('Грузоподъёмность', { exact: true })).toBeVisible();
 });
 
+// Сценарий части Б: «Расы» → фильтр «Разновидности» → поиск «дроу» → карточка
+// разновидности со ссылкой на расу → карточка «Эльфа». Есть в обоих каталогах.
+test('справочник: найти разновидность «дроу» и перейти к расе', async () => {
+  const { window } = running;
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  await window.getByRole('link', { name: /Расы/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Расы' })).toBeVisible();
+
+  await window.getByLabel('Расы и разновидности').selectOption('variant');
+  await window.getByRole('searchbox', { name: 'Поиск рас' }).fill('дроу');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  const drow = results.getByRole('link', { name: /Тёмный эльф \(дроу\)/ });
+  await expect(drow).toContainText('разновидность: Эльф');
+
+  await drow.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Тёмный эльф (дроу)' })).toBeVisible();
+  await expect(window.getByTestId('race-darkvision')).toHaveText('120 фт.');
+  await expect(window.getByTestId('race-abilities')).toHaveText('Хар +1');
+
+  await window.getByTestId('race-kind').getByRole('link', { name: 'Эльф' }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Эльф' })).toBeVisible();
+  await expect(window.getByTestId('race-speed')).toHaveText('30 фт.');
+  await expect(window.getByTestId('race-languages')).toHaveText('Общий, Эльфийский');
+  await expect(window.getByRole('link', { name: 'Высший эльф' })).toBeVisible();
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);

@@ -167,7 +167,10 @@ export class RaceNormalizer {
         features: features.map((feature) => ({ name: feature.name, blocks: feature.blocks })),
       },
       rules: rules.rules,
-      links: variantOf ? [{ toId: variantOf, kind: 'variant_of' }] : [],
+      links: [
+        ...(variantOf ? [{ toId: variantOf, kind: 'variant_of' as const }] : []),
+        ...rules.rules.weapons.map((toId) => ({ toId, kind: 'weapon_proficiency' as const })),
+      ],
       reviewedKey,
     };
   }
