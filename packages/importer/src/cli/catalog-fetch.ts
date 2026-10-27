@@ -3,6 +3,7 @@
 //
 //   npm run catalog:fetch                    заклинания (storage/spell-fill)
 //   npm run catalog:fetch -- --items         статьи со снаряжением (storage/dndsu-articles)
+//   npm run catalog:fetch -- --races         страницы рас (storage/dndsu-races)
 //   npm run catalog:fetch -- --cache <папка>
 
 import path from 'node:path';
@@ -13,11 +14,18 @@ import { openSpellCache } from '../dndsu/spell-cache.ts';
 import { DEFAULT_PATHS } from '../paths.ts';
 
 const { values } = parseArgs({
-  options: { cache: { type: 'string' }, items: { type: 'boolean', default: false } },
+  options: {
+    cache: { type: 'string' },
+    items: { type: 'boolean', default: false },
+    races: { type: 'boolean', default: false },
+  },
 });
+// Страницы рас — тот же формат кэша, что у статей: index.json и pages/article-N.html.
 const cache = values.items
   ? openArticleCache(path.resolve(values.cache ?? DEFAULT_PATHS.itemCache))
-  : openSpellCache(path.resolve(values.cache ?? DEFAULT_PATHS.spellCache));
+  : values.races
+    ? openArticleCache(path.resolve(values.cache ?? DEFAULT_PATHS.raceCache))
+    : openSpellCache(path.resolve(values.cache ?? DEFAULT_PATHS.spellCache));
 
 const result = await fetchMissingPages(cache, { log: (message) => console.log(message) });
 console.log(
