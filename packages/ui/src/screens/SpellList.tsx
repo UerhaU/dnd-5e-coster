@@ -1,14 +1,11 @@
 import type { SpellFacetsResponse } from '@koster/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useApi } from '../api/api-context';
 import { paramsFromSearch, withFilter, type FilterKey } from '../catalog/list-params';
 import { levelAndSchool } from '../catalog/spell-format';
 import { CategoryIcon } from '../components/CategoryIcon';
 import { QueryError } from '../components/QueryError';
-
-const SEARCH_DELAY_MS = 250;
 
 /** Экран списка заклинаний: поиск, фильтры, сортировка, страницы. */
 export function SpellList() {
@@ -90,36 +87,19 @@ export function SpellList() {
   );
 }
 
-/** Поле поиска: запрос уходит, когда пользователь перестал печатать. */
+/**
+ * Поле поиска. Запрос сразу пишется в адрес экрана, без задержки: каталог
+ * локальный, а «Назад» из карточки всегда возвращает к набранному запросу.
+ */
 function SearchInput({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  const [text, setText] = useState(value);
-  const [shown, setShown] = useState(value);
-
-  // Запрос сменился снаружи (кнопка «Назад»): поле показывает его. Свой ввод
-  // не перезаписывается — иначе пропадал бы пробел, набранный между словами.
-  if (value !== shown) {
-    setShown(value);
-    if (value !== text.trim()) {
-      setText(value);
-    }
-  }
-
-  useEffect(() => {
-    if (text.trim() === value) {
-      return;
-    }
-    const timer = setTimeout(() => onChange(text.trim()), SEARCH_DELAY_MS);
-    return () => clearTimeout(timer);
-  }, [text, value, onChange]);
-
   return (
     <input
       className="search"
       type="search"
       placeholder="Поиск по названию и тексту: «огнен», «fireball»"
       aria-label="Поиск заклинаний"
-      value={text}
-      onChange={(event) => setText(event.target.value)}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
     />
   );
 }

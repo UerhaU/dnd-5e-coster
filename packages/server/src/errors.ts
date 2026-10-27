@@ -11,13 +11,14 @@ const STATUS: Record<ApiErrorCode, number> = {
 
 /** Ошибка, которую маршрут бросает, чтобы ответить в едином формате. */
 export class HttpError extends Error {
-  constructor(
-    readonly code: ApiErrorCode,
-    message: string,
-    readonly details?: unknown,
-  ) {
+  readonly code: ApiErrorCode;
+  readonly details: unknown;
+
+  constructor(code: ApiErrorCode, message: string, details?: unknown) {
     super(message);
     this.name = 'HttpError';
+    this.code = code;
+    this.details = details;
   }
 }
 

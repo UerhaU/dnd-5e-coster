@@ -16,14 +16,16 @@ import { apiErrorSchema, type ApiErrorCode } from './errors.ts';
 // Общий клиент API (раздел 8.4): интерфейс обращается к серверу только через него.
 // Каждый ответ проверяется той же схемой, что и на сервере.
 
+// Без свойств в параметрах конструктора: Node запускает .ts без tsx (Р48).
 export class ApiError extends Error {
-  constructor(
-    readonly status: number,
-    readonly code: ApiErrorCode | 'network',
-    message: string,
-  ) {
+  readonly status: number;
+  readonly code: ApiErrorCode | 'network';
+
+  constructor(status: number, code: ApiErrorCode | 'network', message: string) {
     super(message);
     this.name = 'ApiError';
+    this.status = status;
+    this.code = code;
   }
 }
 

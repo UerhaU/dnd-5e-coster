@@ -47,16 +47,18 @@ export function resolveCatalogFile(input: PathsInput): string {
 }
 
 export class DataFolderError extends Error {
-  constructor(
-    readonly folder: string,
-    readonly reason: unknown,
-  ) {
+  readonly folder: string;
+  readonly reason: unknown;
+
+  constructor(folder: string, reason: unknown) {
     super(
       `Костёр не может сохранять данные в папке:\n${folder}\n\n` +
         'Переместите папку программы туда, где разрешена запись ' +
         '(например, в «Документы» или на флешку), и запустите её снова.',
     );
     this.name = 'DataFolderError';
+    this.folder = folder;
+    this.reason = reason;
   }
 }
 
