@@ -28,6 +28,8 @@ function build(overrides: Partial<BuildOptions> = {}) {
   return buildCatalog({
     cacheDir,
     reviewedDir: DEFAULT_PATHS.reviewedSpells,
+    itemCacheDir: null,
+    reviewedItemsDir: DEFAULT_PATHS.reviewedItems,
     outFile,
     previousFile: outFile,
     ledgerDir: null,
@@ -282,5 +284,54 @@ describe('журнал ревизий (Р51)', () => {
   it('без ledgerDir журнал не создаётся (тестовый каталог)', () => {
     build();
     expect(fs.existsSync(ledgerDir())).toBe(false);
+  });
+});
+
+describe('снаряжение в сборке (этап 2)', () => {
+  const withItems = (overrides: Partial<BuildOptions> = {}) =>
+    build({ itemCacheDir: DEFAULT_PATHS.itemFixtures, ...overrides });
+  const { contentLinks, itemIndex, itemIndexProperties } = catalogSchema;
+
+  it('заклинания и предметы в одном каталоге: индекс, свойства, связи', () => {
+    const result = withItems();
+    expect(result.issues.filter((issue) => issue.severity === 'error')).toEqual([]);
+    expect(result.items).toMatchObject({ collected: 35, failed: 0 });
+    read((catalog) => {
+      expect(catalog.db.select().from(itemIndex).all()).toHaveLength(35);
+      expect(catalog.db.select().from(itemIndexProperties).all().length).toBeGreaterThan(10);
+      const links = catalog.db.select().from(contentLinks).all();
+      expect(links).toContainEqual({
+        fromId: 'item:explorers-pack',
+        toId: 'item:backpack',
+        kind: 'contains',
+      });
+      expect(links).toContainEqual({
+        fromId: 'item:pistol',
+        toId: 'item:bullets',
+        kind: 'uses_ammunition',
+      });
+      // PH14 — одна строка на заклинания и снаряжение (Р12).
+      expect(
+        catalog.db
+          .select()
+          .from(sources)
+          .all()
+          .filter((row) => row.code === 'PH14'),
+      ).toEqual([expect.objectContaining({ dndsuSourceId: 102 })]);
+    });
+    // Связь к предмету, которого нет в тестовых статьях, не записывается, а попадает в отчёт.
+    expect(result.issues).toContainEqual(
+      expect.objectContaining({ field: 'links', entityId: 'item:light-crossbow' }),
+    );
+  });
+
+  it('повторная сборка: 0 новых ревизий; журнал предметов — свой файл', () => {
+    const ledgerDir = path.join(folder, 'ledger');
+    withItems({ ledgerDir });
+    const again = withItems({ ledgerDir, now: new Date('2026-10-28T10:00:00Z') });
+    expect(again.write).toMatchObject({ newRevisions: 0, catalogVersion: 1 });
+    const lines = fs.readFileSync(path.join(ledgerDir, 'item.jsonl'), 'utf8').trim().split('\n');
+    expect(lines).toHaveLength(35);
+    expect(lines.join('\n')).not.toContain('Стёганый');
   });
 });

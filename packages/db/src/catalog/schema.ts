@@ -4,12 +4,13 @@ import {
   index,
   integer,
   primaryKey,
+  real,
   sqliteTable,
   text,
   unique,
 } from 'drizzle-orm/sqlite-core';
 
-// Схема catalog.db (раздел 5.2). Пока только то, что нужно заклинаниям:
+// Схема catalog.db (раздел 5.2): заклинания (этап 1) и снаряжение (этап 2);
 // таблицы других категорий добавят их этапы.
 // Индекс FTS5 `content_search` Drizzle описать не умеет — он создаётся
 // отдельной миграцией (drizzle/catalog/*_content_search.sql).
@@ -27,6 +28,9 @@ export const magicSchools = referenceTable('magic_schools');
 export const damageTypes = referenceTable('damage_types');
 export const abilities = referenceTable('abilities');
 export const conditions = referenceTable('conditions');
+export const itemKinds = referenceTable('item_kinds');
+export const itemCategories = referenceTable('item_categories');
+export const weaponProperties = referenceTable('weapon_properties');
 
 /** Источник в том виде, как его указывает DnD.su (Р12). Одна книга — одна строка. */
 export const sources = sqliteTable('sources', {
@@ -158,7 +162,53 @@ export const spellIndexClasses = sqliteTable(
   ],
 );
 
-/** Связи между объектами. Связи с предметами и классами добавят этапы 2–3. */
+/** Поля для фильтров списка снаряжения. */
+export const itemIndex = sqliteTable(
+  'item_index',
+  {
+    entityId: text('entity_id')
+      .primaryKey()
+      .references(() => contentEntities.id),
+    kindId: text('kind_id')
+      .notNull()
+      .references(() => itemKinds.id),
+    categoryId: text('category_id').references(() => itemCategories.id),
+    /** Цена в медных монетах; `null` — не указана. */
+    costCp: integer('cost_cp'),
+    /** Вес в фунтах; `null` — не указан. */
+    weightLb: real('weight_lb'),
+    /** Вариант правил: нужно разрешение мастера. */
+    optionalRule: integer('optional_rule', { mode: 'boolean' }).notNull(),
+    /** Тип урона оружия; у остального — `null`. */
+    damageTypeId: text('damage_type_id').references(() => damageTypes.id),
+  },
+  (table) => [
+    index('item_index_kind').on(table.kindId),
+    index('item_index_category').on(table.categoryId),
+  ],
+);
+
+/** Свойства оружия: для фильтра «фехтовальное», «метательное»… */
+export const itemIndexProperties = sqliteTable(
+  'item_index_properties',
+  {
+    entityId: text('entity_id')
+      .notNull()
+      .references(() => itemIndex.entityId),
+    propertyId: text('property_id')
+      .notNull()
+      .references(() => weaponProperties.id),
+  },
+  (table) => [
+    primaryKey({ columns: [table.entityId, table.propertyId] }),
+    index('item_index_properties_property').on(table.propertyId),
+  ],
+);
+
+/**
+ * Связи между объектами. `contains` — предмет входит в набор, `uses_ammunition` —
+ * оружие расходует боеприпас. `to_id` без внешнего ключа: классы появятся на этапе 3.
+ */
 export const contentLinks = sqliteTable(
   'content_links',
   {

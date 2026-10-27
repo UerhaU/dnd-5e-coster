@@ -10,6 +10,11 @@ export const DEFAULT_PATHS = {
   /** Тестовый кэш в git: несколько страниц для тестов и для CI (Р47). */
   spellFixtures: path.join(REPO_ROOT, 'data', 'fixtures', 'dndsu', 'spells'),
   reviewedSpells: path.join(REPO_ROOT, 'data', 'reviewed', 'spells'),
+  /** Статьи DnD.su «Инвентарь» с таблицами снаряжения (выбран на этапе 2). */
+  itemCache: path.join(REPO_ROOT, 'storage', 'dndsu-articles'),
+  /** Тестовые статьи в git: таблицы урезаны до нескольких строк (Р47). */
+  itemFixtures: path.join(REPO_ROOT, 'data', 'fixtures', 'dndsu', 'articles'),
+  reviewedItems: path.join(REPO_ROOT, 'data', 'reviewed', 'items'),
   /** Журнал ревизий без текстов (Р51): в git, пишется сборкой полного каталога. */
   catalogLedger: path.join(REPO_ROOT, 'data', 'catalog-ledger'),
   /** Каталог, который попадает в собранную программу (resources/). */

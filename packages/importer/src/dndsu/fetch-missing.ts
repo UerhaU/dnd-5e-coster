@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { SpellCache } from './spell-cache.ts';
+import type { PageList } from './spell-cache.ts';
 
 // Шаг fetch (раздел 6): скачать только страницы, которых нет в кэше.
 // Бережно к сайту: не чаще одного запроса в секунду, повтор с паузой.
@@ -35,7 +35,7 @@ async function defaultDownload(url: string): Promise<string> {
 const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export async function fetchMissingPages(
-  cache: SpellCache,
+  cache: PageList,
   options: FetchOptions = {},
 ): Promise<FetchResult> {
   const download = options.download ?? defaultDownload;
@@ -44,22 +44,22 @@ export async function fetchMissingPages(
   const sleep = options.sleep ?? defaultSleep;
   const log = options.log ?? (() => undefined);
 
-  const missing = cache.list.cards.filter((card) => !fs.existsSync(cache.pagePath(card.siteId)));
+  const missing = cache.listPages().filter((page) => !fs.existsSync(page.file));
   const result: FetchResult = { missing: missing.length, fetched: 0, failed: [] };
 
-  for (const [index, card] of missing.entries()) {
+  for (const [index, page] of missing.entries()) {
     if (index > 0) {
       await sleep(delayMs);
     }
     let lastError: unknown = null;
     for (let attempt = 1; attempt <= retries; attempt += 1) {
       try {
-        const html = await download(card.url);
-        const file = cache.pagePath(card.siteId);
+        const html = await download(page.url);
+        const file = page.file;
         fs.mkdirSync(path.dirname(file), { recursive: true });
         fs.writeFileSync(file, html);
         result.fetched += 1;
-        log(`Скачано: ${card.url}`);
+        log(`Скачано: ${page.url}`);
         lastError = null;
         break;
       } catch (error) {
@@ -68,8 +68,8 @@ export async function fetchMissingPages(
       }
     }
     if (lastError !== null) {
-      result.failed.push({ url: card.url, message: String(lastError) });
-      log(`Не скачано: ${card.url}: ${String(lastError)}`);
+      result.failed.push({ url: page.url, message: String(lastError) });
+      log(`Не скачано: ${page.url}: ${String(lastError)}`);
     }
   }
   return result;

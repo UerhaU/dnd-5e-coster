@@ -1,17 +1,23 @@
+import { openArticleCache } from '../dndsu/article-cache.ts';
 import { openSpellCache } from '../dndsu/spell-cache.ts';
 import type { ImportIssue } from '../report/issues.ts';
+import { loadReviewedItems } from '../reviewed/reviewed-items.ts';
 import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
+import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
 import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
 
 /** Версия импортёра: пишется в каждую новую ревизию. На ревизии не влияет. */
-export const IMPORTER_VERSION = 'spell-importer/1';
+export const IMPORTER_VERSION = 'catalog-importer/2';
 
 export interface BuildOptions {
   /** Кэш заклинаний DnD.su: index.json и pages/. */
   cacheDir: string;
   reviewedDir: string;
+  /** Кэш статей «Инвентарь» (снаряжение); `null` — каталог без снаряжения. */
+  itemCacheDir: string | null;
+  reviewedItemsDir: string;
   outFile: string;
   /** Прошлая сборка; `null` — с нуля, без переноса ревизий. */
   previousFile: string | null;
@@ -27,16 +33,31 @@ export interface BuildOptions {
 
 export interface BuildResult {
   collect: CollectStats;
+  items: ItemCollectStats | null;
   write: WriteStats;
   issues: ImportIssue[];
 }
 
-/** Полная цепочка раздела 6 для заклинаний: кэш → … → catalog.db. */
+/** Полная цепочка раздела 6: кэш → … → catalog.db. Заклинания, затем снаряжение. */
 export function buildCatalog(options: BuildOptions): BuildResult {
   const issues: ImportIssue[] = [];
   const cache = openSpellCache(options.cacheDir);
   const reviewed = loadReviewedSpells(options.reviewedDir);
-  const { entities, stats } = collectSpells(cache, reviewed, issues);
+  const spells = collectSpells(cache, reviewed, issues);
+  const items = options.itemCacheDir
+    ? collectItems(
+        openArticleCache(options.itemCacheDir),
+        loadReviewedItems(options.reviewedItemsDir),
+        issues,
+        {
+          knownSources: spells.entities.flatMap((entity) =>
+            entity.sources.map(({ source }) => source),
+          ),
+          reportUnusedReviewed: options.sourceKind === 'full',
+        },
+      )
+    : null;
+  const entities = [...spells.entities, ...(items?.entities ?? [])];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
   const written = writeCatalog(
@@ -58,5 +79,5 @@ export function buildCatalog(options: BuildOptions): BuildResult {
   if (options.ledgerDir) {
     writeLedger(options.ledgerDir, written.ledger);
   }
-  return { collect: stats, write: written.stats, issues };
+  return { collect: spells.stats, items: items?.stats ?? null, write: written.stats, issues };
 }

@@ -1,20 +1,15 @@
 import type { SpellEntityResponse } from '@koster/shared';
-import { useQuery } from '@tanstack/react-query';
-import type { ReactNode } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router';
-import { useApi } from '../api/api-context';
+import { Link } from 'react-router';
 import {
-  AUTOMATION_TEXT,
   classesText,
   componentsText,
   damageTypeName,
   levelAndSchool,
-  REVIEW_STATUS_TEXT,
   subclassesText,
   targetsText,
 } from '../catalog/spell-format';
+import { CommonFacts, Fact } from '../components/CardParts';
 import { CategoryIcon } from '../components/CategoryIcon';
-import { QueryError } from '../components/QueryError';
 import { TextBlocks } from '../components/TextBlocks';
 
 const TAG_NAMES: Record<string, string> = {
@@ -24,41 +19,9 @@ const TAG_NAMES: Record<string, string> = {
 };
 
 /** Карточка заклинания: все поля spell/v1, источники, ссылка на DnD.su, статус проверки. */
-export function SpellCard() {
-  const api = useApi();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { id = '' } = useParams();
-  // Карточку открыли без истории (первый экран окна): «назад» некуда — ведём к списку.
-  const back = () =>
-    location.key === 'default' ? void navigate('/reference/spell') : void navigate(-1);
-  const card = useQuery({ queryKey: ['entity', id], queryFn: () => api.spell(id) });
-
-  return (
-    <main className="page">
-      <button type="button" className="back-link" onClick={back}>
-        ← К списку
-      </button>
-      {card.isPending && <p className="muted">Загрузка…</p>}
-      {card.isError && <QueryError error={card.error} />}
-      {card.data && <SpellCardBody card={card.data} />}
-    </main>
-  );
-}
-
-function Fact({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <>
-      <dt>{label}</dt>
-      <dd>{children}</dd>
-    </>
-  );
-}
-
-function SpellCardBody({ card }: { card: SpellEntityResponse }) {
+export function SpellCardBody({ card }: { card: SpellEntityResponse }) {
   const { data } = card;
   const targets = targetsText(data);
-  const verified = card.reviewStatus === 'rules_verified';
 
   return (
     <article aria-labelledby="spell-name">
@@ -101,36 +64,7 @@ function SpellCardBody({ card }: { card: SpellEntityResponse }) {
         {data.tags.length > 0 && (
           <Fact label="Метки">{data.tags.map((tag) => TAG_NAMES[tag] ?? tag).join(', ')}</Fact>
         )}
-        <Fact label="Источники">
-          {card.sources.map((source, index) => (
-            <span key={source.id}>
-              {index > 0 && ', '}
-              <abbr title={source.nameRu ?? source.nameEn}>{source.code}</abbr>
-              {source.url && (
-                <>
-                  {' '}
-                  (
-                  <a href={source.url} target="_blank" rel="noreferrer">
-                    DnD.su
-                  </a>
-                  )
-                </>
-              )}
-            </span>
-          ))}
-        </Fact>
-        <Fact label="Проверка">
-          <span className={verified ? 'badge badge--ok' : 'badge'}>
-            {REVIEW_STATUS_TEXT[card.reviewStatus]}
-          </span>{' '}
-          <span className="muted">{AUTOMATION_TEXT[card.automation]}</span>
-        </Fact>
-        <Fact label="Ревизия">
-          {card.revision.revision} от {card.revision.createdAt.slice(0, 10)}
-          {card.revisions.length > 1 && (
-            <span className="muted"> (всего ревизий: {card.revisions.length})</span>
-          )}
-        </Fact>
+        <CommonFacts card={card} />
       </dl>
 
       <h2>Описание</h2>

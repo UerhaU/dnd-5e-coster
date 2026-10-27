@@ -1,7 +1,5 @@
 import {
   CLASS_NAMES_RU,
-  type CategoriesResponse,
-  type EntitySource,
   type SpellFacetsResponse,
   type SpellListItem,
   type SpellListQuery,
@@ -11,33 +9,12 @@ import type { CatalogConnection } from './open.ts';
 import { toFtsQuery } from './search-query.ts';
 import { normalizeSearchText } from './search-text.ts';
 
-// Чтение каталога для API (раздел 7, «Каталог»). Запросы — на SQL: фильтры
+// Список и фильтры заклинаний (раздел 7, «Каталог»). Запросы — на SQL: фильтры
 // собираются из частей, а поиск FTS5 Drizzle не описывает.
-// Снятые объекты (`withdrawn`) в списке и фильтрах не показываются, но карточка
-// и ревизии у них открываются: на них могут ссылаться персонажи (Р21).
-
-const CATEGORY_NAMES_RU: Record<string, string> = { spell: 'Заклинания' };
+// Снятые объекты (`withdrawn`) в списке и фильтрах не показываются.
 
 export function levelLabel(level: number): string {
   return level === 0 ? 'Заговор' : `${level} уровень`;
-}
-
-export function listCategories(catalog: CatalogConnection): CategoriesResponse {
-  const rows = catalog.sqlite
-    .prepare(
-      `SELECT category, COUNT(*) AS count FROM content_entities
-       WHERE withdrawn = 0 GROUP BY category ORDER BY category`,
-    )
-    .all() as { category: string; count: number }[];
-  return {
-    categories: rows
-      .filter((row) => row.category === 'spell')
-      .map((row) => ({
-        id: 'spell' as const,
-        nameRu: CATEGORY_NAMES_RU[row.category] ?? row.category,
-        count: row.count,
-      })),
-  };
 }
 
 interface SpellRow {
@@ -205,116 +182,5 @@ export function spellFacets(catalog: CatalogConnection): SpellFacetsResponse {
     })),
     ritual: flags.ritual ?? 0,
     concentration: flags.concentration ?? 0,
-  };
-}
-
-export interface EntityRecord {
-  id: string;
-  category: string;
-  nameRu: string;
-  nameEn: string;
-  aliases: string[];
-  edition: string;
-  reviewStatus: string;
-  automation: string;
-  withdrawn: boolean;
-  revision: {
-    id: number;
-    revision: number;
-    schemaVersion: string;
-    createdAt: string;
-    current: boolean;
-  };
-  revisions: number[];
-  sources: EntitySource[];
-  /** `data_json` и `rules_json` как есть; схему проверяет сервер. */
-  data: unknown;
-  rules: unknown;
-}
-
-/**
- * Карточка объекта: текущая ревизия или ревизия с номером `revision`.
- * `null` — нет такого объекта или ревизии.
- */
-export function readEntity(
-  catalog: CatalogConnection,
-  id: string,
-  revision?: number,
-): EntityRecord | null {
-  const entity = catalog.sqlite
-    .prepare(
-      `SELECT id, category, name_ru AS nameRu, name_en AS nameEn, aliases, edition,
-        review_status AS reviewStatus, automation, withdrawn, current_revision_id AS currentRevisionId
-       FROM content_entities WHERE id = ?`,
-    )
-    .get(id) as
-    | (Omit<
-        EntityRecord,
-        'aliases' | 'withdrawn' | 'revision' | 'revisions' | 'sources' | 'data' | 'rules'
-      > & {
-        aliases: string;
-        withdrawn: number;
-        currentRevisionId: number;
-      })
-    | undefined;
-  if (!entity) {
-    return null;
-  }
-
-  const row = catalog.sqlite
-    .prepare(
-      `SELECT id, revision, schema_version AS schemaVersion, created_at AS createdAt,
-        data_json AS dataJson, rules_json AS rulesJson
-       FROM content_revisions
-       WHERE entity_id = @id AND ${revision === undefined ? 'id = @current' : 'revision = @revision'}`,
-    )
-    .get({ id, current: entity.currentRevisionId, revision: revision ?? 0 }) as
-    | {
-        id: number;
-        revision: number;
-        schemaVersion: string;
-        createdAt: string;
-        dataJson: string;
-        rulesJson: string | null;
-      }
-    | undefined;
-  if (!row) {
-    return null;
-  }
-
-  const revisions = (
-    catalog.sqlite
-      .prepare('SELECT revision FROM content_revisions WHERE entity_id = ? ORDER BY revision')
-      .all(id) as { revision: number }[]
-  ).map((item) => item.revision);
-  const sources = catalog.sqlite
-    .prepare(
-      `SELECT s.id, s.code, s.name_ru AS nameRu, s.name_en AS nameEn, es.dndsu_id AS dndsuId, es.url
-       FROM entity_sources es JOIN sources s ON s.id = es.source_id
-       WHERE es.entity_id = ? ORDER BY s.code`,
-    )
-    .all(id) as EntitySource[];
-
-  return {
-    id: entity.id,
-    category: entity.category,
-    nameRu: entity.nameRu,
-    nameEn: entity.nameEn,
-    aliases: JSON.parse(entity.aliases) as string[],
-    edition: entity.edition,
-    reviewStatus: entity.reviewStatus,
-    automation: entity.automation,
-    withdrawn: entity.withdrawn === 1,
-    revision: {
-      id: row.id,
-      revision: row.revision,
-      schemaVersion: row.schemaVersion,
-      createdAt: row.createdAt,
-      current: row.id === entity.currentRevisionId,
-    },
-    revisions,
-    sources,
-    data: JSON.parse(row.dataJson),
-    rules: row.rulesJson ? JSON.parse(row.rulesJson) : null,
   };
 }

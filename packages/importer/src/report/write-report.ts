@@ -11,7 +11,7 @@ const SEVERITY_TITLES = {
 } as const;
 
 export function summaryLines(result: BuildResult): string[] {
-  const { collect, write, issues } = result;
+  const { collect, items, write, issues } = result;
   const count = (severity: keyof typeof SEVERITY_TITLES) =>
     issues.filter((issue) => issue.severity === severity).length;
   return [
@@ -21,6 +21,14 @@ export function summaryLines(result: BuildResult): string[] {
     `Новых ревизий: ${write.newRevisions}, всего ревизий: ${write.revisionsTotal}, восстановлено по журналу: ${write.restoredFromLedger}`,
     `Нет страницы в кэше: ${collect.missingPages}; ошибок разбора: ${collect.failed}; пропущено: ${collect.skipped}`,
     `Ручных исправлений применено: ${collect.reviewedApplied}; проверенных правил: ${collect.rulesVerified}`,
+    ...(items
+      ? [
+          `Снаряжение: статей ${items.pages} (нет в кэше ${items.missingPages}, не разобрано ${items.failedPages}); предметов ${items.collected}, с механикой ${items.withRules}, не попало ${items.failed}`,
+          `Снаряжение по видам: ${Object.entries(items.byKind)
+            .map(([kind, count]) => `${kind} ${count}`)
+            .join(', ')}`,
+        ]
+      : []),
     `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : write.restoredFromLedger > 0 ? ' (без прошлого файла, номера из журнала)' : ' (собран с нуля)'}`,
     `Ошибок: ${count('error')}, пропусков: ${count('skip')}, предупреждений: ${count('warning')}`,
   ];

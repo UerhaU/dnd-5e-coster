@@ -8,8 +8,9 @@ import {
 } from '@koster/db';
 import type { ImportIssue } from '../report/issues.ts';
 import { canonicalJson, sha256 } from './canonical-json.ts';
-import type { CatalogEntity } from './collect-spells.ts';
+import type { CatalogEntity } from './catalog-entity.ts';
 import type { Ledger, LedgerRevision } from './ledger.ts';
+import { writeItemIndex, writeSpellIndex } from './write-index.ts';
 
 // Шаг build (раздел 6): новый catalog.db из собранных объектов.
 // Ревизии прошлой сборки переносятся без изменений (Р21); новая ревизия
@@ -17,15 +18,8 @@ import type { Ledger, LedgerRevision } from './ledger.ts';
 // Нумерация берётся и из прошлого catalog.db, и из журнала ревизий в git (Р51):
 // без прошлого файла неизменившийся объект получает ту же ревизию из журнала.
 
-const {
-  catalogInfo,
-  contentEntities,
-  contentRevisions,
-  entitySources,
-  sources,
-  spellIndex,
-  spellIndexClasses,
-} = catalogSchema;
+const { catalogInfo, contentEntities, contentLinks, contentRevisions, entitySources, sources } =
+  catalogSchema;
 
 type EntityRow = typeof contentEntities.$inferSelect;
 type RevisionRow = typeof contentRevisions.$inferSelect;
@@ -342,26 +336,26 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
             .values({ entityId: entity.id, sourceId: source.id, dndsuId, url })
             .run();
         }
-        tx.insert(spellIndex)
-          .values({
-            entityId: entity.id,
-            level: entity.data.level,
-            schoolId: entity.data.school,
-            ritual: entity.data.ritual,
-            concentration: entity.data.concentration,
-          })
-          .run();
-        // Один класс — одна строка: обычный список важнее TCE, TCE важнее подкласса.
-        const access = new Map<string, 'standard' | 'optional' | 'subclass'>();
-        for (const classId of entity.data.classes) access.set(classId, 'standard');
-        for (const classId of entity.data.optionalClasses) {
-          if (!access.has(classId)) access.set(classId, 'optional');
+        if (entity.category === 'spell') {
+          writeSpellIndex(tx, entity);
+        } else {
+          writeItemIndex(tx, entity);
         }
-        for (const { classId } of entity.data.subclasses) {
-          if (!access.has(classId)) access.set(classId, 'subclass');
-        }
-        for (const [classId, kind] of access) {
-          tx.insert(spellIndexClasses).values({ entityId: entity.id, classId, access: kind }).run();
+        for (const link of entity.links) {
+          if (!currentIds.has(link.toId)) {
+            issues.push({
+              severity: 'warning',
+              entityId: entity.id,
+              dndsuId: null,
+              field: 'links',
+              message: `Связь ${link.kind} ведёт к ${link.toId}, которого нет в каталоге: не записана`,
+            });
+            continue;
+          }
+          tx.insert(contentLinks)
+            .values({ fromId: entity.id, toId: link.toId, kind: link.kind })
+            .onConflictDoNothing()
+            .run();
         }
       }
       for (const row of previous?.entitySources ?? []) {

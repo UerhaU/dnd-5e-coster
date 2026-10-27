@@ -2,11 +2,16 @@ import type { z } from 'zod';
 import { healthResponseSchema, type HealthResponse } from '../health.ts';
 import {
   categoriesResponseSchema,
-  spellEntityResponseSchema,
+  entityResponseSchema,
+  itemFacetsResponseSchema,
+  itemListResponseSchema,
   spellFacetsResponseSchema,
   spellListResponseSchema,
   type CategoriesResponse,
-  type SpellEntityResponse,
+  type EntityResponse,
+  type ItemFacetsResponse,
+  type ItemListParams,
+  type ItemListResponse,
   type SpellFacetsResponse,
   type SpellListParams,
   type SpellListResponse,
@@ -34,7 +39,10 @@ export interface ApiClient {
   categories(): Promise<CategoriesResponse>;
   spells(params: SpellListParams): Promise<SpellListResponse>;
   spellFacets(): Promise<SpellFacetsResponse>;
-  spell(id: string, revision?: number): Promise<SpellEntityResponse>;
+  items(params: ItemListParams): Promise<ItemListResponse>;
+  itemFacets(): Promise<ItemFacetsResponse>;
+  /** Карточка объекта любой категории. */
+  entity(id: string, revision?: number): Promise<EntityResponse>;
 }
 
 /** Строка запроса без пустых значений: `{ q: '', level: 3 }` → `?level=3`. */
@@ -76,12 +84,14 @@ export function createApiClient(
     categories: () => get('/api/catalog/categories', categoriesResponseSchema),
     spells: (params) => get(`/api/catalog/spell${toQueryString(params)}`, spellListResponseSchema),
     spellFacets: () => get('/api/catalog/spell/facets', spellFacetsResponseSchema),
-    spell: (id, revision) =>
+    items: (params) => get(`/api/catalog/item${toQueryString(params)}`, itemListResponseSchema),
+    itemFacets: () => get('/api/catalog/item/facets', itemFacetsResponseSchema),
+    entity: (id, revision) =>
       get(
         revision === undefined
           ? `/api/catalog/entity/${encodeURIComponent(id)}`
           : `/api/catalog/entity/${encodeURIComponent(id)}/revisions/${revision}`,
-        spellEntityResponseSchema,
+        entityResponseSchema,
       ),
   };
 }

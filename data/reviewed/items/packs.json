@@ -1,0 +1,153 @@
+{
+  "$comment": "Наборы снаряжения: английское название для ID (Р11) и состав по описанию на DnD.su. item — ID предмета каталога; null — такого предмета в таблицах нет (только название). note — уточнение из описания.",
+  "packs": [
+    {
+      "match": "Набор артиста",
+      "nameEn": "Entertainer's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        { "item": "item:bedroll", "name": "спальник", "quantity": 1 },
+        { "item": "item:costume-clothes", "name": "костюм", "quantity": 2 },
+        { "item": "item:candle", "name": "свечка", "quantity": 5 },
+        { "item": "item:rations", "name": "рационы", "quantity": 5, "note": "на 5 дней" },
+        { "item": "item:waterskin", "name": "бурдюк", "quantity": 1 },
+        { "item": "item:disguise-kit", "name": "набор для грима", "quantity": 1 }
+      ]
+    },
+    {
+      "match": "Набор взломщика",
+      "nameEn": "Burglar's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        {
+          "item": "item:ball-bearings",
+          "name": "сумка с 1 000 металлических шариков",
+          "quantity": 1
+        },
+        { "item": null, "name": "леска", "quantity": 1, "note": "10 футов" },
+        { "item": "item:bell", "name": "колокольчик", "quantity": 1 },
+        { "item": "item:candle", "name": "свечка", "quantity": 5 },
+        { "item": "item:crowbar", "name": "ломик", "quantity": 1 },
+        { "item": "item:hammer", "name": "молоток", "quantity": 1 },
+        { "item": "item:piton", "name": "шлямбур", "quantity": 10 },
+        { "item": "item:hooded-lantern", "name": "закрытый фонарь", "quantity": 1 },
+        { "item": "item:oil", "name": "фляга масла", "quantity": 2 },
+        { "item": "item:rations", "name": "рационы", "quantity": 5, "note": "на 5 дней" },
+        { "item": "item:tinderbox", "name": "трутница", "quantity": 1 },
+        { "item": "item:waterskin", "name": "бурдюк", "quantity": 1 },
+        {
+          "item": "item:hempen-rope",
+          "name": "пеньковая верёвка",
+          "quantity": 1,
+          "note": "50 футов, закреплена сбоку"
+        }
+      ]
+    },
+    {
+      "match": "Набор дипломата",
+      "nameEn": "Diplomat's pack",
+      "contents": [
+        { "item": "item:chest", "name": "сундук", "quantity": 1 },
+        {
+          "item": "item:map-or-scroll-case",
+          "name": "контейнер для карт и свитков",
+          "quantity": 2
+        },
+        { "item": "item:fine-clothes", "name": "комплект отличной одежды", "quantity": 1 },
+        { "item": "item:ink", "name": "бутылочка чернил", "quantity": 1 },
+        { "item": "item:ink-pen", "name": "писчее перо", "quantity": 1 },
+        { "item": "item:lamp", "name": "лампа", "quantity": 1 },
+        { "item": "item:oil", "name": "фляга масла", "quantity": 2 },
+        { "item": "item:paper", "name": "лист бумаги", "quantity": 5 },
+        { "item": "item:perfume", "name": "флакон духов", "quantity": 1 },
+        { "item": "item:sealing-wax", "name": "воск", "quantity": 1 },
+        { "item": "item:soap", "name": "мыло", "quantity": 1 }
+      ]
+    },
+    {
+      "match": "Набор исследователя подземелий",
+      "nameEn": "Dungeoneer's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        { "item": "item:crowbar", "name": "ломик", "quantity": 1 },
+        { "item": "item:hammer", "name": "молоток", "quantity": 1 },
+        { "item": "item:piton", "name": "шлямбур", "quantity": 10 },
+        { "item": "item:torch", "name": "факел", "quantity": 10 },
+        { "item": "item:tinderbox", "name": "трутница", "quantity": 1 },
+        { "item": "item:rations", "name": "рационы", "quantity": 10, "note": "на 10 дней" },
+        { "item": "item:waterskin", "name": "бурдюк", "quantity": 1 },
+        {
+          "item": "item:hempen-rope",
+          "name": "пеньковая верёвка",
+          "quantity": 1,
+          "note": "50 футов, закреплена сбоку"
+        }
+      ]
+    },
+    {
+      "match": "Набор путешественника",
+      "nameEn": "Explorer's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        { "item": "item:bedroll", "name": "спальник", "quantity": 1 },
+        { "item": "item:mess-kit", "name": "столовый набор", "quantity": 1 },
+        { "item": "item:tinderbox", "name": "трутница", "quantity": 1 },
+        { "item": "item:torch", "name": "факел", "quantity": 10 },
+        { "item": "item:rations", "name": "рационы", "quantity": 10, "note": "на 10 дней" },
+        { "item": "item:waterskin", "name": "бурдюк", "quantity": 1 },
+        {
+          "item": "item:hempen-rope",
+          "name": "пеньковая верёвка",
+          "quantity": 1,
+          "note": "50 футов, закреплена сбоку"
+        }
+      ]
+    },
+    {
+      "match": "Набор священника",
+      "nameEn": "Priest's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        { "item": "item:blanket", "name": "одеяло", "quantity": 1 },
+        { "item": "item:candle", "name": "свечка", "quantity": 10 },
+        { "item": "item:tinderbox", "name": "трутница", "quantity": 1 },
+        { "item": null, "name": "коробка для пожертвований", "quantity": 1 },
+        { "item": null, "name": "упаковка благовоний", "quantity": 2 },
+        { "item": null, "name": "кадило", "quantity": 1 },
+        { "item": null, "name": "облачение", "quantity": 1 },
+        { "item": "item:rations", "name": "рационы", "quantity": 2, "note": "на 2 дня" },
+        { "item": "item:waterskin", "name": "бурдюк", "quantity": 1 }
+      ]
+    },
+    {
+      "match": "Набор учёного",
+      "nameEn": "Scholar's pack",
+      "contents": [
+        { "item": "item:backpack", "name": "рюкзак", "quantity": 1 },
+        { "item": "item:book", "name": "научная книга", "quantity": 1 },
+        { "item": "item:ink", "name": "бутылочка чернил", "quantity": 1 },
+        { "item": "item:ink-pen", "name": "писчее перо", "quantity": 1 },
+        { "item": "item:parchment", "name": "лист пергамента", "quantity": 10 },
+        { "item": null, "name": "сумочка с песком", "quantity": 1 },
+        { "item": null, "name": "небольшой нож", "quantity": 1 }
+      ]
+    },
+    {
+      "match": "Набор охотника на монстров",
+      "nameEn": "Monster hunter's pack",
+      "contents": [
+        { "item": "item:chest", "name": "сундук", "quantity": 1 },
+        { "item": "item:crowbar", "name": "фомка", "quantity": 1 },
+        { "item": "item:hammer", "name": "молоток", "quantity": 1 },
+        { "item": null, "name": "деревянный кол", "quantity": 3 },
+        { "item": null, "name": "святой символ", "quantity": 1 },
+        { "item": "item:holy-water", "name": "святая вода (фляга)", "quantity": 1 },
+        { "item": "item:manacles", "name": "кандалы", "quantity": 1 },
+        { "item": "item:steel-mirror", "name": "стальное зеркало", "quantity": 1 },
+        { "item": "item:oil", "name": "масло (фляга)", "quantity": 1 },
+        { "item": "item:tinderbox", "name": "трутница", "quantity": 1 },
+        { "item": "item:torch", "name": "факел", "quantity": 3 }
+      ]
+    }
+  ]
+}
