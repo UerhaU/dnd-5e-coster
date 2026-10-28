@@ -9,6 +9,7 @@ import {
   loadEquipmentPhrases,
 } from './collect-backgrounds.ts';
 import { collectReference, loadReferenceNames } from './collect-reference.ts';
+import { parseTools } from './normalize-background.ts';
 
 const folder = DEFAULT_PATHS.characterFixtures;
 const names = loadReferenceNames(DEFAULT_PATHS.reviewedCharacter);
@@ -85,5 +86,20 @@ describe('предыстории', () => {
         ],
       },
     ]);
+  });
+});
+
+describe('владение инструментами', () => {
+  it('число — вне скобок: «один игровой набор (… ставка трёх драконов)» — один (Награждённый)', () => {
+    const rules = { tools: { fixed: [], choices: [] }, mixed: [], vehicles: [] };
+    parseTools(
+      {
+        label: 'Владение инструментами',
+        text: 'один игровой набор на ваш выбор (например, игральные карты или ставка трёх драконов)',
+        tooltips: [],
+      },
+      rules as unknown as Parameters<typeof parseTools>[1],
+    );
+    expect(rules.tools.choices).toEqual([{ count: 1, from: null, group: 'gaming_set' }]);
   });
 });

@@ -70,7 +70,8 @@ function parseSkills(line: RawLabeled, rules: BackgroundRules): void {
   if (options.length < 2) rules.textOnly.push(`${line.label}: ${line.text}`);
 }
 
-function parseTools(line: RawLabeled, rules: BackgroundRules): void {
+/** Строка «Владение инструментами»; экспорт — для теста. */
+export function parseTools(line: RawLabeled, rules: BackgroundRules): void {
   const text = line.text.replace(/\.$/, '');
   // «транспорт (водный, наземный)»: запятая в скобках не делит строку.
   for (const part of splitOutsideParens(text)) {
@@ -82,10 +83,12 @@ function parseTools(line: RawLabeled, rules: BackgroundRules): void {
     }
     const tools = found(lower, TOOL_STEMS);
     const groups = TOOL_GROUP_WORDS.filter(([pattern]) => pattern.test(lower));
+    // Число — вне скобок: «один игровой набор (например, … ставка трёх драконов)» — один.
+    const count = countIn(lower.replace(/\([^)]*\)/g, '')) ?? 1;
     if (groups.length > 1 || (groups.length > 0 && tools.length > 0)) {
       // «музыкальный инструмент или ремесленные инструменты» — смешанный выбор.
       rules.mixed.push({
-        count: countIn(lower) ?? 1,
+        count,
         from: [
           ...tools.map((id) => ({ kind: 'tool' as const, id })),
           ...groups.flatMap(([, group]) => (group ? [{ kind: 'tool_group' as const, group }] : [])),
@@ -94,7 +97,7 @@ function parseTools(line: RawLabeled, rules: BackgroundRules): void {
       continue;
     }
     if (groups[0]) {
-      rules.tools.choices.push({ count: countIn(lower) ?? 1, from: null, group: groups[0][1] });
+      rules.tools.choices.push({ count, from: null, group: groups[0][1] });
     } else if (tools.length > 1 && /или|выбор/.test(lower)) {
       rules.tools.choices.push({ count: 1, from: tools, group: null });
     } else if (tools.length > 0) {
