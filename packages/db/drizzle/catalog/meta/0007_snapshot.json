@@ -66,12 +66,8 @@
           "name": "background_index_entity_id_content_entities_id_fk",
           "tableFrom": "background_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -149,12 +145,8 @@
           "name": "class_index_entity_id_content_entities_id_fk",
           "tableFrom": "class_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -273,9 +265,7 @@
       "indexes": {
         "content_entities_category": {
           "name": "content_entities_category",
-          "columns": [
-            "category"
-          ],
+          "columns": ["category"],
           "isUnique": false
         }
       },
@@ -321,9 +311,7 @@
       "indexes": {
         "content_links_to": {
           "name": "content_links_to",
-          "columns": [
-            "to_id"
-          ],
+          "columns": ["to_id"],
           "isUnique": false
         }
       },
@@ -332,23 +320,15 @@
           "name": "content_links_from_id_content_entities_id_fk",
           "tableFrom": "content_links",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "from_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["from_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "content_links_from_id_to_id_kind_pk": {
-          "columns": [
-            "from_id",
-            "to_id",
-            "kind"
-          ],
+          "columns": ["from_id", "to_id", "kind"],
           "name": "content_links_from_id_to_id_kind_pk"
         }
       },
@@ -425,10 +405,7 @@
       "indexes": {
         "content_revisions_entity_revision": {
           "name": "content_revisions_entity_revision",
-          "columns": [
-            "entity_id",
-            "revision"
-          ],
+          "columns": ["entity_id", "revision"],
           "isUnique": true
         }
       },
@@ -437,12 +414,8 @@
           "name": "content_revisions_entity_id_content_entities_id_fk",
           "tableFrom": "content_revisions",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -520,12 +493,8 @@
           "name": "entity_sources_entity_id_content_entities_id_fk",
           "tableFrom": "entity_sources",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -533,22 +502,15 @@
           "name": "entity_sources_source_id_sources_id_fk",
           "tableFrom": "entity_sources",
           "tableTo": "sources",
-          "columnsFrom": [
-            "source_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "entity_sources_entity_id_source_id_pk": {
-          "columns": [
-            "entity_id",
-            "source_id"
-          ],
+          "columns": ["entity_id", "source_id"],
           "name": "entity_sources_entity_id_source_id_pk"
         }
       },
@@ -593,12 +555,8 @@
           "name": "feat_index_entity_id_content_entities_id_fk",
           "tableFrom": "feat_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -694,16 +652,12 @@
       "indexes": {
         "item_index_kind": {
           "name": "item_index_kind",
-          "columns": [
-            "kind_id"
-          ],
+          "columns": ["kind_id"],
           "isUnique": false
         },
         "item_index_category": {
           "name": "item_index_category",
-          "columns": [
-            "category_id"
-          ],
+          "columns": ["category_id"],
           "isUnique": false
         }
       },
@@ -712,12 +666,8 @@
           "name": "item_index_entity_id_content_entities_id_fk",
           "tableFrom": "item_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -725,12 +675,8 @@
           "name": "item_index_kind_id_item_kinds_id_fk",
           "tableFrom": "item_index",
           "tableTo": "item_kinds",
-          "columnsFrom": [
-            "kind_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["kind_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -738,12 +684,8 @@
           "name": "item_index_category_id_item_categories_id_fk",
           "tableFrom": "item_index",
           "tableTo": "item_categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -751,12 +693,8 @@
           "name": "item_index_damage_type_id_damage_types_id_fk",
           "tableFrom": "item_index",
           "tableTo": "damage_types",
-          "columnsFrom": [
-            "damage_type_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["damage_type_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -786,9 +724,7 @@
       "indexes": {
         "item_index_properties_property": {
           "name": "item_index_properties_property",
-          "columns": [
-            "property_id"
-          ],
+          "columns": ["property_id"],
           "isUnique": false
         }
       },
@@ -797,12 +733,8 @@
           "name": "item_index_properties_entity_id_item_index_entity_id_fk",
           "tableFrom": "item_index_properties",
           "tableTo": "item_index",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "entity_id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["entity_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -810,22 +742,15 @@
           "name": "item_index_properties_property_id_weapon_properties_id_fk",
           "tableFrom": "item_index_properties",
           "tableTo": "weapon_properties",
-          "columnsFrom": [
-            "property_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["property_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "item_index_properties_entity_id_property_id_pk": {
-          "columns": [
-            "entity_id",
-            "property_id"
-          ],
+          "columns": ["entity_id", "property_id"],
           "name": "item_index_properties_entity_id_property_id_pk"
         }
       },
@@ -891,9 +816,7 @@
       "indexes": {
         "language_index_kind": {
           "name": "language_index_kind",
-          "columns": [
-            "kind"
-          ],
+          "columns": ["kind"],
           "isUnique": false
         }
       },
@@ -902,12 +825,8 @@
           "name": "language_index_entity_id_content_entities_id_fk",
           "tableFrom": "language_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -915,12 +834,8 @@
           "name": "language_index_dialect_of_content_entities_id_fk",
           "tableFrom": "language_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "dialect_of"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["dialect_of"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1016,9 +931,7 @@
       "indexes": {
         "race_index_variant_of": {
           "name": "race_index_variant_of",
-          "columns": [
-            "variant_of"
-          ],
+          "columns": ["variant_of"],
           "isUnique": false
         }
       },
@@ -1027,12 +940,8 @@
           "name": "race_index_entity_id_content_entities_id_fk",
           "tableFrom": "race_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1040,12 +949,8 @@
           "name": "race_index_variant_of_content_entities_id_fk",
           "tableFrom": "race_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "variant_of"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["variant_of"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1053,12 +958,8 @@
           "name": "race_index_size_id_sizes_id_fk",
           "tableFrom": "race_index",
           "tableTo": "sizes",
-          "columnsFrom": [
-            "size_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["size_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1122,12 +1023,8 @@
           "name": "skill_index_entity_id_content_entities_id_fk",
           "tableFrom": "skill_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1135,12 +1032,8 @@
           "name": "skill_index_ability_id_abilities_id_fk",
           "tableFrom": "skill_index",
           "tableTo": "abilities",
-          "columnsFrom": [
-            "ability_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["ability_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1198,16 +1091,12 @@
       "indexes": {
         "sources_code_unique": {
           "name": "sources_code_unique",
-          "columns": [
-            "code"
-          ],
+          "columns": ["code"],
           "isUnique": true
         },
         "sources_dndsu_source_id_unique": {
           "name": "sources_dndsu_source_id_unique",
-          "columns": [
-            "dndsu_source_id"
-          ],
+          "columns": ["dndsu_source_id"],
           "isUnique": true
         }
       },
@@ -1258,16 +1147,12 @@
       "indexes": {
         "spell_index_level": {
           "name": "spell_index_level",
-          "columns": [
-            "level"
-          ],
+          "columns": ["level"],
           "isUnique": false
         },
         "spell_index_school": {
           "name": "spell_index_school",
-          "columns": [
-            "school_id"
-          ],
+          "columns": ["school_id"],
           "isUnique": false
         }
       },
@@ -1276,12 +1161,8 @@
           "name": "spell_index_entity_id_content_entities_id_fk",
           "tableFrom": "spell_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1289,12 +1170,8 @@
           "name": "spell_index_school_id_magic_schools_id_fk",
           "tableFrom": "spell_index",
           "tableTo": "magic_schools",
-          "columnsFrom": [
-            "school_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["school_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1331,9 +1208,7 @@
       "indexes": {
         "spell_index_classes_class": {
           "name": "spell_index_classes_class",
-          "columns": [
-            "class_id"
-          ],
+          "columns": ["class_id"],
           "isUnique": false
         }
       },
@@ -1342,22 +1217,15 @@
           "name": "spell_index_classes_entity_id_spell_index_entity_id_fk",
           "tableFrom": "spell_index_classes",
           "tableTo": "spell_index",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "entity_id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["entity_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "spell_index_classes_entity_id_class_id_pk": {
-          "columns": [
-            "entity_id",
-            "class_id"
-          ],
+          "columns": ["entity_id", "class_id"],
           "name": "spell_index_classes_entity_id_class_id_pk"
         }
       },
@@ -1407,12 +1275,8 @@
           "name": "subclass_index_entity_id_content_entities_id_fk",
           "tableFrom": "subclass_index",
           "tableTo": "content_entities",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

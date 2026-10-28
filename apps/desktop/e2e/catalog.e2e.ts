@@ -288,7 +288,7 @@ test('справочник: класс «Монах» — таблица 1–20,
 
 test('справочник: подклассы воина → «Мистический рыцарь», переход к классу', async () => {
   const window = await openList('subclass', 'Подклассы');
-  await window.getByLabel('Класс').selectOption('class:fighter');
+  await window.getByRole('combobox', { name: /^Класс/ }).selectOption('class:fighter');
   const results = window.getByRole('list', { name: 'Результаты поиска' });
   await results.getByRole('link', { name: /Мистический рыцарь/ }).click();
   await expect(window.getByRole('heading', { level: 1, name: 'Мистический рыцарь' })).toBeVisible();

@@ -442,12 +442,15 @@ function spellcastingAbility(feature: {
   // «Базовая характеристика заклинаний» — подраздел или абзац; первая характеристика после него.
   const at = text.search(/Базовая характеристика заклинаний/i);
   if (at < 0) return null;
-  const nearby = text
-    .slice(at, at + 300)
-    .split(/(?<=[.!?])s/)
-    .slice(0, 2)
-    .join(' ');
-  return found(nearby, ABILITY_STEMS)[0] ?? null;
+  // Первая по тексту, а не по списку: «…использует Мудрость. Сила ваших заклинаний…».
+  const nearby = text.slice(at, at + 300);
+  const first = ABILITY_STEMS.map(([pattern, ability]) => ({
+    ability,
+    index: nearby.search(pattern),
+  }))
+    .filter((entry) => entry.index >= 0)
+    .sort((a, b) => a.index - b.index)[0];
+  return first?.ability ?? null;
 }
 
 export interface NormalizedClass {

@@ -62,7 +62,10 @@
     "monk/tradition.sun-soul": { "nameEn": "Way of the Sun Soul" },
     "monk/tradition.astral-body": { "nameEn": "Way of the Astral Self", "slug": "astral-self" },
     "monk/tradition.mercy": { "nameEn": "Way of Mercy" },
-    "monk/tradition.ascending-dragon": { "nameEn": "Way of the Ascendant Dragon", "slug": "ascendant-dragon" },
+    "monk/tradition.ascending-dragon": {
+      "nameEn": "Way of the Ascendant Dragon",
+      "slug": "ascendant-dragon"
+    },
     "paladin/oath.devotion": { "nameEn": "Oath of Devotion" },
     "paladin/oath.ancients": { "nameEn": "Oath of the Ancients" },
     "paladin/oath.vengeance": { "nameEn": "Oath of Vengeance" },
