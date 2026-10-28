@@ -2,7 +2,6 @@ import {
   ABILITIES,
   CREATURE_TYPES,
   ITEM_CATEGORIES,
-  LANGUAGES,
   SIZES,
   SKILLS,
   type AbilityOption,
@@ -81,9 +80,15 @@ export function skillsText(skills: RaceRules['skills']): string | null {
   return parts.length > 0 ? parts.join('; ') : null;
 }
 
-/** «Общий, Эльфийский; ещё 1 на выбор». */
-export function languagesText(languages: RaceRules['languages']): string | null {
-  const parts = languages.fixed.map((id) => nameOf(LANGUAGES, id));
+/**
+ * «Общий, Эльфийский; ещё 1 на выбор». Названия — объектов-языков из связей карточки
+ * (`language:elvish` → «Эльфийский»); без связи — код.
+ */
+export function languagesText(
+  languages: RaceRules['languages'],
+  names: Map<string, string>,
+): string | null {
+  const parts = languages.fixed.map((id) => names.get(`language:${id.replace(/_/g, '-')}`) ?? id);
   if (languages.choose > 0) parts.push(`ещё ${languages.choose} на выбор`);
   return parts.length > 0 ? parts.join(', ') : null;
 }

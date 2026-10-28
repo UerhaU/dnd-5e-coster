@@ -274,7 +274,7 @@ export interface ParsedRaceRules {
   rules: RaceRules;
   /** Особенности, текст которых узнан, но не разобран: в отчёт. */
   failed: string[];
-  /** Языки из текста, которых нет в справочнике LANGUAGES: в механику не попали. */
+  /** Языки из текста, которых нет в справочнике LANGUAGE_CODES: в механику не попали. */
   unknownLanguages: string[];
 }
 
@@ -347,7 +347,7 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     if (/^(Языки?|Дополнительный язык)$/.test(name)) {
       const first = sentences(text)[0] ?? '';
       rules.languages.fixed.push(...found(first, LANGUAGE_STEMS));
-      // «…писать на Общем и Гитском»: язык, которого нет в LANGUAGES, — в отчёт.
+      // «…писать на Общем и Гитском»: язык, которого нет в LANGUAGE_CODES, — в отчёт.
       const named =
         /(?:писать|пишете|читать|читаете|говорить|говорите) на (.+?)(?:[.;]|$)/.exec(first)?.[1] ??
         '';

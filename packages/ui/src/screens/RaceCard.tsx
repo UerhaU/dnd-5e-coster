@@ -35,6 +35,11 @@ export function RaceCardBody({ card }: { card: RaceEntityResponse }) {
       .filter((link) => link.kind === 'tool_proficiency' && link.direction === 'to')
       .map((link) => [link.id, link.nameRu]),
   );
+  const languageNames = new Map(
+    card.links
+      .filter((link) => link.kind === 'language' && link.direction === 'to')
+      .map((link) => [link.id, link.nameRu]),
+  );
   const rows: [string, string | null, string?][] = [
     ['Увеличение характеристик', abilityScoresText(rules.abilityScores), 'race-abilities'],
     ['Размер', rules.size ? rules.size.map(sizeName).join(' или ') : null, 'race-size'],
@@ -51,7 +56,7 @@ export function RaceCardBody({ card }: { card: RaceEntityResponse }) {
       rules.armor.length > 0 ? rules.armor.map((id) => ARMOR_NAMES[id]).join(', ') : null,
     ],
     ['Инструменты', toolsText(rules.tools, toolNames), 'race-tools'],
-    ['Языки', languagesText(rules.languages), 'race-languages'],
+    ['Языки', languagesText(rules.languages, languageNames), 'race-languages'],
     ['Сопротивление', resistancesText(rules.resistances)],
     ['Возраст', ageText(rules.body), 'race-age'],
     ['Рост', heightText(rules.body), 'race-height'],

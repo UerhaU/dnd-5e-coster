@@ -180,7 +180,7 @@ export class RaceNormalizer {
       this.issue(
         'warning',
         'languages',
-        `«${nameRu}»: язык «${language}» не в справочнике LANGUAGES — в механику не попал`,
+        `«${nameRu}»: язык «${language}» не в справочнике LANGUAGE_CODES — в механику не попал`,
         id,
       );
     }

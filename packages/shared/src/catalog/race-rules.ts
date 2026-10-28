@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ABILITIES, DAMAGE_TYPES, idsOf } from './codes.ts';
 import { proficiencyChoiceSchema, TOOL_GROUPS } from './choices.ts';
 import { entityIdSchema } from './entity.ts';
-import { CREATURE_TYPES, LANGUAGES, SIZES, SKILLS } from './race-codes.ts';
+import { CREATURE_TYPES, LANGUAGE_CODES, SIZES, SKILLS } from './race-codes.ts';
 
 // Механика расы или разновидности (`content_revisions.rules_json`, схема race-rules/v1):
 // то, что нужно конструктору персонажа (этап 4). Разбирается из текста особенностей
@@ -125,7 +125,7 @@ export const raceRulesSchema = z.strictObject({
    */
   proficiencyChoices: z.array(proficiencyChoiceSchema).min(1).optional(),
   languages: z.strictObject({
-    fixed: z.array(z.enum(idsOf(LANGUAGES))),
+    fixed: z.array(z.enum(LANGUAGE_CODES)),
     /** Сколько языков игрок выбирает сам. */
     choose: z.number().int().min(0),
   }),
