@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { entityIdSchema } from './entity.ts';
-import { TOOL_GROUPS } from './race-rules.ts';
+import { proficiencyChoiceSchema, TOOL_GROUPS } from './choices.ts';
 import { textBlockSchema } from './text-blocks.ts';
 
 // Предыстория (`data_json`, схема background/v1) и её механика (`rules_json`,
@@ -72,6 +72,8 @@ export const backgroundRulesSchema = z.strictObject({
       }),
     ),
   }),
+  /** Смешанный выбор: «музыкальный инструмент или игровой набор», «навык или инструмент». */
+  mixed: z.array(proficiencyChoiceSchema),
   /** Владение транспортом: «транспорт (водный)» — вид, а не предмет. */
   vehicles: z.array(z.enum(['land', 'water'])),
   /** ID языков; выбор — из списка или из любых. */

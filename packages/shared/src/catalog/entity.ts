@@ -10,6 +10,7 @@ export const CATEGORIES = [
   'language',
   'condition',
   'background',
+  'feat',
 ] as const;
 export const categorySchema = z.enum(CATEGORIES);
 
@@ -22,6 +23,7 @@ export const CATEGORY_NAMES_RU = {
   language: 'Языки',
   condition: 'Состояния',
   background: 'Предыстории',
+  feat: 'Черты',
 } as const satisfies Record<(typeof CATEGORIES)[number], string>;
 
 /** Статусы проверки: raw → parsed → reviewed → rules_verified. */

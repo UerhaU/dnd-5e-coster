@@ -9,6 +9,7 @@ const LETTERS: Record<Category, string> = {
   language: 'Я',
   condition: 'С',
   background: 'Б',
+  feat: 'Ч',
 };
 const TITLES: Record<Category, string> = {
   spell: 'Заклинание',
@@ -18,6 +19,7 @@ const TITLES: Record<Category, string> = {
   language: 'Язык',
   condition: 'Состояние',
   background: 'Предыстория',
+  feat: 'Черта',
 };
 
 export function CategoryIcon({ category, large = false }: { category: Category; large?: boolean }) {

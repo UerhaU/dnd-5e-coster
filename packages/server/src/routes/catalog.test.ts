@@ -62,6 +62,7 @@ describe('GET /api/catalog/categories', () => {
       { id: 'language', nameRu: 'Языки', count: 65 },
       { id: 'condition', nameRu: 'Состояния', count: 15 },
       { id: 'background', nameRu: 'Предыстории', count: 5 },
+      { id: 'feat', nameRu: 'Черты', count: 8 },
     ]);
   });
 });

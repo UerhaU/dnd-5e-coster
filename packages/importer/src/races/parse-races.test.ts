@@ -271,7 +271,7 @@ describe('владение инструментами (Р69)', () => {
     expect(dwarf.rules.textOnly).not.toContain('Владение инструментами');
   });
 
-  it('фиксированное, из группы, из любых; «навыком или инструментом» — текстом', () => {
+  it('фиксированное, из группы, из любых; «навыком или инструментом» — смешанный выбор', () => {
     expect(
       rulesOf('Жестянщик', 'Вы владеете ремесленными инструментами (инструменты ремонтника).')
         .tools,
@@ -292,7 +292,23 @@ describe('владение инструментами (Р69)', () => {
     );
     expect(mixed.skills.choices).toEqual([]);
     expect(mixed.tools.choices).toEqual([]);
-    expect(mixed.textOnly).toEqual(['Декадентское мастерство']);
+    expect(mixed.proficiencyChoices).toEqual([
+      {
+        count: 1,
+        from: [
+          { kind: 'skill', id: null },
+          { kind: 'tool', id: null },
+        ],
+      },
+    ]);
+    expect(mixed.textOnly).toEqual([]);
+    // Выбор до следующего отдыха — не постоянное владение: только текстом.
+    const astral = rulesOf(
+      'Астральный транс',
+      'Всякий раз, когда вы заканчиваете продолжительный отдых, вы получаете владение одним навыком по вашему выбору и одним оружием или инструментом по вашему выбору.',
+    );
+    expect(astral.proficiencyChoices).toBeUndefined();
+    expect(astral.textOnly).toEqual(['Астральный транс']);
   });
 });
 

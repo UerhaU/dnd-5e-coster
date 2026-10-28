@@ -44,6 +44,8 @@ export interface RawSection {
   blocks: TextBlock[];
   labeled: RawLabeled[];
   tables: RawTable[];
+  /** Ссылки раздела: `/feats/179-strixhaven_initiate/`. */
+  links: string[];
 }
 
 export interface RawCardPage {
@@ -54,6 +56,8 @@ export interface RawCardPage {
   /** Строки над описанием карточки: «Требование: Сила 13 или выше». */
   params: RawLabeled[];
   intro: TextBlock[];
+  /** Все блоки до первого раздела, вместе с абзацами «Метка: текст» и таблицами. */
+  preface: TextBlock[];
   /** Абзацы «Метка: текст» до первого раздела. */
   labeled: RawLabeled[];
   tables: RawTable[];
@@ -80,6 +84,18 @@ function labeledOf($: CheerioAPI, element: Cheerio<Element>): RawLabeled | null 
       .find('a[href]')
       .toArray()
       .map((node) => $(node).attr('href') ?? ''),
+  };
+}
+
+/** Строка без <strong>: «Требование: Ловкость 13 или выше» (у черт). */
+function plainLabeled(text: string): RawLabeled | null {
+  const colon = text.indexOf(':');
+  if (colon <= 0) return null;
+  return {
+    label: text.slice(0, colon).trim(),
+    text: text.slice(colon + 1).trim(),
+    tooltips: [],
+    links: [],
   };
 }
 
@@ -116,7 +132,7 @@ export function parseCardPage(html: string): RawCardPage {
   const params = $('ul.params > li')
     .not('.desc')
     .toArray()
-    .map((li) => labeledOf($, $(li)))
+    .map((li) => labeledOf($, $(li)) ?? plainLabeled(cleanText($(li).text())))
     .filter((entry): entry is RawLabeled => entry !== null);
 
   const description = $('div[itemprop=description]').first();
@@ -130,6 +146,7 @@ export function parseCardPage(html: string): RawCardPage {
     plaques,
     params,
     intro: [],
+    preface: [],
     labeled: [],
     tables: [],
     sections: [],
@@ -148,6 +165,7 @@ export function parseCardPage(html: string): RawCardPage {
         blocks: [],
         labeled: [],
         tables: [],
+        links: [],
       };
       page.sections.push(section);
       continue;
@@ -160,8 +178,19 @@ export function parseCardPage(html: string): RawCardPage {
     if (labeled) (section?.labeled ?? page.labeled).push(labeled);
     const wrapper = $('<div></div>') as Cheerio<Element>;
     const blocks = blocksFrom($, wrapper.append(element.clone()));
-    if (section) section.blocks.push(...blocks);
-    else if (!labeled && tag !== 'table') page.intro.push(...blocks);
+    if (section) {
+      section.blocks.push(...blocks);
+      section.links.push(
+        ...element
+          .find('a[href]')
+          .addBack('a[href]')
+          .toArray()
+          .map((link) => $(link).attr('href') ?? ''),
+      );
+      continue;
+    }
+    page.preface.push(...blocks);
+    if (!labeled && tag !== 'table') page.intro.push(...blocks);
   }
   return page;
 }

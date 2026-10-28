@@ -16,6 +16,12 @@ import {
   type BackgroundCollectStats,
 } from '../character/collect-backgrounds.ts';
 import { openCharacterCache } from '../character/character-cache.ts';
+import {
+  collectFeats,
+  featLookup,
+  linkBackgroundFeats,
+  type FeatCollectStats,
+} from '../character/collect-feats.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
@@ -58,6 +64,7 @@ export interface BuildResult {
   races: RaceCollectStats | null;
   reference: ReferenceCollectStats | null;
   backgrounds: BackgroundCollectStats | null;
+  feats: FeatCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
   write: WriteStats;
@@ -132,6 +139,18 @@ export function buildCatalog(options: BuildOptions): BuildResult {
           { knownSources },
         )
       : null;
+  const feats =
+    characterCache && backgrounds
+      ? collectFeats(
+          characterCache.feats,
+          featLookup([...spells.entities, ...(races?.entities ?? []), ...backgrounds.entities]),
+          issues,
+          { knownSources },
+        )
+      : null;
+  if (backgrounds && feats) {
+    linkBackgroundFeats(backgrounds.entities, backgrounds.featPages, feats.entities);
+  }
   const entities = [
     ...spells.entities,
     ...(items?.entities ?? []),
@@ -139,6 +158,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     ...(races?.entities ?? []),
     ...(reference?.entities ?? []),
     ...(backgrounds?.entities ?? []),
+    ...(feats?.entities ?? []),
   ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
@@ -167,6 +187,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     races: races?.stats ?? null,
     reference: reference?.stats ?? null,
     backgrounds: backgrounds?.stats ?? null,
+    feats: feats?.stats ?? null,
     materials: materials?.stats ?? null,
     write: written.stats,
     issues,

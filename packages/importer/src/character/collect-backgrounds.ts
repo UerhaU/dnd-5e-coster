@@ -13,6 +13,7 @@ import { ItemSources } from '../items/sources.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { nameKey } from '../reviewed/reviewed-items.ts';
 import type { NormalizedSource } from '../spells/normalize-spell.ts';
+import { mixedLinks } from './proficiency-choices.ts';
 import { normalizeBackground, type BackgroundLookup } from './normalize-background.ts';
 import { CardParseError, parseCardPage, type RawPlaque } from './parse-background-page.ts';
 
@@ -72,9 +73,15 @@ export function collectBackgrounds(
   names: Map<number, string>,
   issues: ImportIssue[],
   options: { knownSources: NormalizedSource[] },
-): { entities: BackgroundEntity[]; stats: BackgroundCollectStats } {
+): {
+  entities: BackgroundEntity[];
+  stats: BackgroundCollectStats;
+  /** Номера страниц черт из раздела «Умение …» — связи `grants_feat` после сборки черт. */
+  featPages: Map<string, number[]>;
+} {
   const sources = new ItemSources(options.knownSources);
   const entities = new Map<string, BackgroundEntity>();
+  const featPages = new Map<string, number[]>();
   const stats: BackgroundCollectStats = {
     pages: cache.list.pages.length,
     missingPages: 0,
@@ -151,6 +158,7 @@ export function collectBackgrounds(
       ...[...r.tools.fixed, ...r.tools.choices.flatMap((choice) => choice.from ?? [])].map(
         (toId) => ({ toId, kind: 'tool_proficiency' as const }),
       ),
+      ...mixedLinks(r.mixed),
       ...r.equipment.items.flatMap((item) =>
         item.itemId ? [{ toId: item.itemId, kind: 'starting_equipment' as const }] : [],
       ),
@@ -160,6 +168,15 @@ export function collectBackgrounds(
     if (data.data.kind === 'background') stats.backgrounds += 1;
     else stats.adaptations += 1;
     if (r.textOnly.length > 0) stats.withTextOnly += 1;
+
+    const granted = raw.sections
+      .filter((section) => /^Умение/i.test(section.name))
+      .flatMap((section) => section.links)
+      .flatMap((href) => {
+        const page = /\/feats\/(\d+)-/.exec(href)?.[1];
+        return page ? [Number(page)] : [];
+      });
+    if (granted.length > 0) featPages.set(id, [...new Set(granted)]);
 
     entities.set(id, {
       id,
@@ -187,5 +204,5 @@ export function collectBackgrounds(
         .join('\n'),
     });
   }
-  return { entities: [...entities.values()], stats };
+  return { entities: [...entities.values()], stats, featPages };
 }

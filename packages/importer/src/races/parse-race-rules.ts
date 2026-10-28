@@ -4,6 +4,7 @@ import {
   type AbilityOption,
   type RaceRules,
 } from '@koster/shared';
+import { skillOrToolChoice } from '../character/proficiency-choices.ts';
 import { emptyRaceBody, parseRaceBody } from './parse-race-body.ts';
 import type { RawFeature } from './parse-race-page.ts';
 
@@ -172,7 +173,8 @@ export const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['g
 
 /**
  * Владение «навыком или инструментом», «оружием или инструментом» — один выбор из
- * разных видов: механикой не записывается, особенность остаётся текстом.
+ * разных видов. Постоянный «навык или инструмент» — смешанный выбор (`proficiencyChoices`);
+ * «оружие или инструмент» и выбор до следующего отдыха — только текстом.
  */
 const MIXED_PROFICIENCY = /(навык[а-яё]*|оружи[а-яё]*) или (одним )?инструмент/;
 
@@ -386,7 +388,12 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     rules.speed.burrow ??= parseSpeed(text, /скорост[а-яё]* (копания|рытья)/);
 
     for (const sentence of sentences(text)) {
-      if (MIXED_PROFICIENCY.test(sentence) || CONDITIONAL_PROFICIENCY.test(sentence)) continue;
+      if (CONDITIONAL_PROFICIENCY.test(sentence)) continue;
+      if (MIXED_PROFICIENCY.test(sentence)) {
+        const mixed = skillOrToolChoice(sentence, null);
+        if (mixed) (rules.proficiencyChoices ??= []).push(mixed);
+        continue;
+      }
       if (/навык/.test(sentence) && /владе/.test(sentence)) {
         // «…навыками Выступление и Убеждение, а также (получаете владение) одним
         // инструментом по вашему выбору»: выбор относится к инструменту, а не к навыкам.

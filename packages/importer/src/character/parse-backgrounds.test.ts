@@ -75,5 +75,15 @@ describe('предыстории', () => {
     const uthgardt = collect().get('background:uthgardt-tribe-member');
     expect(uthgardt.rules.skills.fixed).toEqual(['skill:athletics', 'skill:survival']);
     expect(uthgardt.rules.languages.choices).toEqual([{ count: 1, from: null }]);
+    // «Музыкальные инструменты или инструменты ремесленника одного типа» — смешанный выбор.
+    expect(uthgardt.rules.mixed).toEqual([
+      {
+        count: 1,
+        from: [
+          { kind: 'tool_group', group: 'artisans_tools' },
+          { kind: 'tool_group', group: 'musical_instrument' },
+        ],
+      },
+    ]);
   });
 });

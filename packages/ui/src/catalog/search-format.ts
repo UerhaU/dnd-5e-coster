@@ -13,6 +13,7 @@ const CATEGORY_LABELS: Record<SearchResultItem['category'], string> = {
   language: 'Язык',
   condition: 'Состояние',
   background: 'Предыстория',
+  feat: 'Черта',
 };
 
 export function categoryLabel(category: SearchResultItem['category']): string {

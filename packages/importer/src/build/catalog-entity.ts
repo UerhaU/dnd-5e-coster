@@ -3,6 +3,8 @@ import type {
   BackgroundData,
   BackgroundRules,
   Edition,
+  FeatData,
+  FeatRules,
   ConditionData,
   ItemData,
   LanguageData,
@@ -34,7 +36,13 @@ export type LinkKind =
   /** Диалект языка: Акван → Первичный. */
   | 'dialect_of'
   /** Предмет стартового снаряжения предыстории. */
-  | 'starting_equipment';
+  | 'starting_equipment'
+  /** Умение предыстории даёт черту: «Студент Призмари» → «Поступивший в Стриксхейвен». */
+  | 'grants_feat'
+  /** Требование черты: другая черта, раса, предыстория. */
+  | 'prerequisite'
+  /** Заклинание, которое черта даёт по названию или упоминает (таблицы заклинаний). */
+  | 'feat_spell';
 
 interface CatalogEntityBase {
   id: string;
@@ -60,4 +68,5 @@ export type CatalogEntity =
   | (CatalogEntityBase & { category: 'skill'; data: SkillData; rules: null })
   | (CatalogEntityBase & { category: 'language'; data: LanguageData; rules: null })
   | (CatalogEntityBase & { category: 'condition'; data: ConditionData; rules: null })
-  | (CatalogEntityBase & { category: 'background'; data: BackgroundData; rules: BackgroundRules });
+  | (CatalogEntityBase & { category: 'background'; data: BackgroundData; rules: BackgroundRules })
+  | (CatalogEntityBase & { category: 'feat'; data: FeatData; rules: FeatRules });

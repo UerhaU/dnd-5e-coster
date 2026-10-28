@@ -83,8 +83,14 @@ function parseTools(line: RawLabeled, rules: BackgroundRules): void {
     const tools = found(lower, TOOL_STEMS);
     const groups = TOOL_GROUP_WORDS.filter(([pattern]) => pattern.test(lower));
     if (groups.length > 1 || (groups.length > 0 && tools.length > 0)) {
-      // «музыкальный инструмент или ремесленные инструменты» — выбор из разных групп.
-      rules.textOnly.push(`${line.label}: ${part}`);
+      // «музыкальный инструмент или ремесленные инструменты» — смешанный выбор.
+      rules.mixed.push({
+        count: countIn(lower) ?? 1,
+        from: [
+          ...tools.map((id) => ({ kind: 'tool' as const, id })),
+          ...groups.flatMap(([, group]) => (group ? [{ kind: 'tool_group' as const, group }] : [])),
+        ],
+      });
       continue;
     }
     if (groups[0]) {
@@ -206,6 +212,7 @@ export function normalizeBackground(
     schemaVersion: 'background-rules/v1',
     skills: { fixed: [], choices: [] },
     tools: { fixed: [], choices: [] },
+    mixed: [],
     vehicles: [],
     languages: { fixed: [], choices: [] },
     equipment: { items: [], coinsCp: null },
