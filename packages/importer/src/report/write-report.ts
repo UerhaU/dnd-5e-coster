@@ -20,6 +20,7 @@ export function summaryLines(result: BuildResult): string[] {
     feats,
     classes,
     materials,
+    spellClasses,
     write,
     issues,
   } = result;
@@ -68,6 +69,11 @@ export function summaryLines(result: BuildResult): string[] {
     ...(classes
       ? [
           `Классы: страниц ${classes.pages} (нет в кэше ${classes.missingPages}, не разобрано ${classes.failedPages}); классов ${classes.classes}, особенностей ${classes.features} (опциональных TCE ${classes.optionalFeatures}); подклассов ${classes.subclasses} (не собрано ${classes.failedSubclasses}), особенностей ${classes.subclassFeatures}, списков заклинаний ${classes.spellLists}; снаряжение: частей ${classes.equipmentParts}, с предметом или группой ${classes.equipmentLinked}`,
+        ]
+      : []),
+    ...(spellClasses
+      ? [
+          `Классы у заклинаний: связей с классами ${spellClasses.classLinks}, с подклассами ${spellClasses.subclassLinks}; целей без объекта ${spellClasses.missing}${spellClasses.notBuilt > 0 ? `, классов нет в сборке ${spellClasses.notBuilt}` : ''}`,
         ]
       : []),
     `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : write.restoredFromLedger > 0 ? ' (без прошлого файла, номера из журнала)' : ' (собран с нуля)'}`,

@@ -137,7 +137,9 @@ export const spellIndex = sqliteTable(
 
 /**
  * Классы, которым доступно заклинание: списком класса, по TCE или через подкласс.
- * `class_id` — код (`class:wizard`) без внешнего ключа: таблица классов появится на этапе 3.
+ * `class_id` — ID объекта класса (`class:wizard`). Внешнего ключа нет (индекс пишется
+ * вместе с заклинанием, раньше классов); у заклинания есть связи `spell_class` и
+ * `spell_subclass`, цель без объекта — ошибка полной сборки (этап 3, часть В).
  */
 export const spellIndexClasses = sqliteTable(
   'spell_index_classes',

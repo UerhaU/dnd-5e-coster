@@ -57,7 +57,7 @@ export const featRequirementSchema = z.discriminatedUnion('kind', [
   /** Другая черта; `option` — вариант в скобках: «Удар великанов (Штормовой удар)». */
   z.strictObject({ kind: z.literal('feat'), id: entityIdSchema, option: z.string().nullable() }),
   z.strictObject({ kind: z.literal('background'), id: entityIdSchema }),
-  /** Класс (`class:wizard`): объекты классов — часть Б этапа 3, до неё связь не проверяется. */
+  /** Класс (`class:wizard`): связь `prerequisite` на объект класса, без объекта — ошибка сборки. */
   z.strictObject({ kind: z.literal('class'), id: z.enum(CLASS_IDS) }),
   /** Кампания в сеттинге: «Planescape», «Сага о Копье». */
   z.strictObject({ kind: z.literal('campaign'), setting: z.enum(['planescape', 'dragonlance']) }),

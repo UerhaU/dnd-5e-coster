@@ -59,7 +59,7 @@ export function SpellList() {
                       {spell.concentration ? ' · концентрация' : ''} · {spell.sources.join(', ')}
                       {classAccessText(spell.classAccess) && (
                         <span className="badge result__access">
-                          {classAccessText(spell.classAccess)}
+                          {classAccessText(spell.classAccess, spell.classSubclasses)}
                         </span>
                       )}
                     </span>

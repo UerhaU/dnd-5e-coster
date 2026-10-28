@@ -1,5 +1,5 @@
 {
-  "$comment": "Подклассы: ключ — «класс/якорь страницы DnD.su» (span id заголовка подкласса), значение — английское название (книга 2014). ID — subclass:<класс>-<slug>, slug — хвост якоря или поле slug, если якорь с опечаткой. Подкласс без строки — ошибка сборки.",
+  "$comment": "Подклассы: ключ — «класс/якорь страницы DnD.su» (span id заголовка подкласса), значение — английское название (книга 2014). ID — subclass:<класс>-<slug>, slug — хвост якоря или поле slug, если якорь с опечаткой; spellListName — название в фильтре заклинаний DnD.su, если оно другое. Подкласс без строки — ошибка сборки.",
   "subclasses": {
     "artificer/specialist.alchemist": { "nameEn": "Alchemist" },
     "artificer/specialist.artillerist": { "nameEn": "Artillerist" },
@@ -79,7 +79,10 @@
     "ranger/archetype.beast-master": { "nameEn": "Beast Master" },
     "ranger/archetype.horizon-walker": { "nameEn": "Horizon Walker" },
     "ranger/archetype.gloom-stalker": { "nameEn": "Gloom Stalker" },
-    "ranger/archetype.monster-slayer": { "nameEn": "Monster Slayer" },
+    "ranger/archetype.monster-slayer": {
+      "nameEn": "Monster Slayer",
+      "spellListName": "убийца монстров"
+    },
     "ranger/archetype.fey-wanderer": { "nameEn": "Fey Wanderer" },
     "ranger/archetype.swarmkeeper": { "nameEn": "Swarmkeeper" },
     "ranger/archetype.drakewarden": { "nameEn": "Drakewarden" },

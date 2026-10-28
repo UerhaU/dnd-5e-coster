@@ -129,6 +129,20 @@ describe('GET /api/catalog/spell — список', () => {
     });
   });
 
+  it('через подкласс — с названиями подклассов этого класса (связи spell_subclass)', async () => {
+    const items = spellListResponseSchema.parse(
+      (await get('/api/catalog/spell?class=class:cleric&pageSize=100')).body,
+    ).items;
+    expect(items.find((item) => item.id === 'spell:fireball')?.classSubclasses).toEqual([
+      'Домен света',
+    ]);
+    // Обнаружение магии — в списке жреца и ещё у домена магии; пометку список не показывает.
+    expect(items.find((item) => item.id === 'spell:detect-magic')).toMatchObject({
+      classAccess: 'standard',
+      classSubclasses: ['Домен магии'],
+    });
+  });
+
   it('сортировка по уровню', async () => {
     const levels = spellListResponseSchema
       .parse((await get('/api/catalog/spell?sort=level&pageSize=100')).body)
@@ -150,6 +164,7 @@ describe('GET /api/catalog/spell — список', () => {
         sources: ['POA', 'XGE'],
         reviewStatus: 'rules_verified',
         classAccess: null,
+        classSubclasses: [],
       },
     ]);
   });
@@ -222,6 +237,28 @@ describe('GET /api/catalog/entity/:id — карточка', () => {
     expect(card.sources[0]).toMatchObject({ code: 'PH14', dndsuId: 205 });
     expect(card.sources[0]?.url).toMatch(/dnd\.su\/spells\/205/);
     expect(card.rules?.effects[0]).toMatchObject({ dice: '8d6' });
+  });
+
+  it('классы и подклассы — связями на объекты (этап 3, часть В)', async () => {
+    const card = spellEntityResponseSchema.parse(
+      (await get('/api/catalog/entity/spell:fireball')).body,
+    );
+    const to = (kind: string) =>
+      card.links.filter((link) => link.kind === kind && link.direction === 'to');
+    expect(to('spell_subclass').map((link) => link.id)).toEqual(
+      expect.arrayContaining(['subclass:cleric-light', 'subclass:warlock-fiend']),
+    );
+    // В тестовом каталоге 5 классов: волшебника и чародея нет — связей с ними тоже.
+    expect(to('spell_class')).toEqual([]);
+    const detect = spellEntityResponseSchema.parse(
+      (await get('/api/catalog/entity/spell:detect-magic')).body,
+    );
+    expect(
+      detect.links
+        .filter((link) => link.kind === 'spell_class')
+        .map((link) => link.id)
+        .sort(),
+    ).toEqual(expect.arrayContaining(['class:cleric']));
   });
 
   it('компонент А — отдельно от М, с ценой', async () => {

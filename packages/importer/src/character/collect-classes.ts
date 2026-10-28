@@ -61,6 +61,8 @@ const subclassFileSchema = z.strictObject({
         .string()
         .regex(/^[a-z0-9-]+$/)
         .optional(),
+      /** Название в фильтре заклинаний DnD.su, если оно не как заголовок подкласса. */
+      spellListName: z.string().min(1).optional(),
     }),
   ),
 });
@@ -70,6 +72,21 @@ export type SubclassNames = z.infer<typeof subclassFileSchema>['subclasses'];
 export function loadSubclassNames(folder: string): SubclassNames {
   const file = path.join(folder, 'subclasses.json');
   return subclassFileSchema.parse(JSON.parse(fs.readFileSync(file, 'utf8'))).subclasses;
+}
+
+/** ID подкласса по ключу «класс/якорь»: хвост якоря или `slug`, если якорь с опечаткой. */
+function subclassIdOf(key: string, name: SubclassNames[string]): string {
+  const [classSlug = '', anchor = ''] = key.split('/');
+  return `subclass:${classSlug}-${name.slug ?? anchor.slice(anchor.lastIndexOf('.') + 1)}`;
+}
+
+/** ID подкласса → название в фильтре заклинаний DnD.su (`spellListName`). */
+export function subclassSpellListNames(names: SubclassNames): Map<string, string> {
+  return new Map(
+    Object.entries(names).flatMap(([key, name]) =>
+      name.spellListName ? [[subclassIdOf(key, name), name.spellListName] as const] : [],
+    ),
+  );
 }
 
 /** Предметы и заклинания этой же сборки — для снаряжения и списков подклассов. */
@@ -242,7 +259,7 @@ export function collectClasses(
         continue;
       }
       usedNames.add(key);
-      const id = `subclass:${classSlug}-${name.slug ?? sub.anchor.slice(sub.anchor.lastIndexOf('.') + 1)}`;
+      const id = subclassIdOf(key, name);
       const source = sub.sourceTitle ? sources.fromTitle(sub.sourceTitle) : classSource;
       if (!source) {
         stats.failedSubclasses += 1;

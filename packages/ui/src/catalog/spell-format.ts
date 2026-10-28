@@ -77,13 +77,19 @@ export function targetsText(data: Pick<SpellData, 'targets'>): string | null {
     : `до ${maxCount}`;
 }
 
-/** Пометка в списке при фильтре по классу (Р53); обычный список класса — без пометки. */
-export function classAccessText(access: ClassAccess | null): string | null {
+/**
+ * Пометка в списке при фильтре по классу (Р53); обычный список класса — без пометки.
+ * Через подкласс — с названиями подклассов, если они известны (связи `spell_subclass`).
+ */
+export function classAccessText(
+  access: ClassAccess | null,
+  subclasses: readonly string[] = [],
+): string | null {
   switch (access) {
     case 'optional':
       return 'доп. список TCE';
     case 'subclass':
-      return 'через подкласс';
+      return subclasses.length > 0 ? `через подкласс: ${subclasses.join(', ')}` : 'через подкласс';
     default:
       return null;
   }

@@ -20,6 +20,7 @@ import {
   classLookup,
   collectClasses,
   loadSubclassNames,
+  subclassSpellListNames,
   type ClassCollectStats,
 } from '../character/collect-classes.ts';
 import {
@@ -31,6 +32,7 @@ import {
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
+import { linkSpellClasses, type SpellClassLinkStats } from './link-spell-classes.ts';
 import { linkSpellMaterials, type MaterialLinkStats } from './link-spell-materials.ts';
 import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
@@ -74,6 +76,8 @@ export interface BuildResult {
   classes: ClassCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
+  /** Связи заклинаний с классами и подклассами (без классов в сборке — `null`). */
+  spellClasses: SpellClassLinkStats | null;
   write: WriteStats;
   issues: ImportIssue[];
 }
@@ -155,15 +159,36 @@ export function buildCatalog(options: BuildOptions): BuildResult {
           { knownSources },
         )
       : null;
-  const classes = characterCache
-    ? collectClasses(
-        characterCache.classes,
-        classLookup([...spells.entities, ...(items?.entities ?? [])]),
-        loadSubclassNames(options.reviewedCharacterDir),
-        issues,
-        { knownSources, reportUnusedNames: options.sourceKind === 'full' },
-      )
-    : null;
+  const subclassNames = characterCache ? loadSubclassNames(options.reviewedCharacterDir) : null;
+  const classes =
+    characterCache && subclassNames
+      ? collectClasses(
+          characterCache.classes,
+          classLookup([...spells.entities, ...(items?.entities ?? [])]),
+          subclassNames,
+          issues,
+          { knownSources, reportUnusedNames: options.sourceKind === 'full' },
+        )
+      : null;
+  const spellClasses =
+    classes && subclassNames
+      ? linkSpellClasses(
+          spells.entities.filter(
+            (entity): entity is Extract<typeof entity, { category: 'spell' }> =>
+              entity.category === 'spell',
+          ),
+          new Set(
+            classes.entities.filter((entity) => entity.category === 'class').map(({ id }) => id),
+          ),
+          classes.entities.filter(
+            (entity): entity is Extract<typeof entity, { category: 'subclass' }> =>
+              entity.category === 'subclass',
+          ),
+          subclassSpellListNames(subclassNames),
+          issues,
+          { full: options.sourceKind === 'full' },
+        )
+      : null;
   if (backgrounds && feats) {
     linkBackgroundFeats(backgrounds.entities, backgrounds.featPages, feats.entities);
   }
@@ -207,6 +232,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     feats: feats?.stats ?? null,
     classes: classes?.stats ?? null,
     materials: materials?.stats ?? null,
+    spellClasses,
     write: written.stats,
     issues,
   };

@@ -34,6 +34,7 @@ const STRICT_LINK_KINDS: ReadonlySet<LinkKind> = new Set([
   'subclass_of',
   'subclass_spell',
 ]);
+const STRICT_PREREQUISITE_CATEGORIES: ReadonlySet<string> = new Set(['class']);
 
 const { catalogInfo, contentEntities, contentLinks, contentRevisions, entitySources, sources } =
   catalogSchema;
@@ -231,8 +232,16 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
   const currentIds = new Set(entities.map((entity) => entity.id));
   // Навык или язык без объекта — ошибка сборки (бриф этапа 3), если категория собиралась.
   const builtCategories = new Set<string>(entities.map((entity) => entity.category));
-  const strictLink = (link: CatalogEntity['links'][number]) =>
-    STRICT_LINK_KINDS.has(link.kind) && builtCategories.has(link.toId.split(':')[0] ?? '');
+  // Требование-класс у черты — тоже (часть В); черты, расы, предыстории в требованиях —
+  // предупреждение: в тестовом каталоге их может не быть.
+  const strictLink = (link: CatalogEntity['links'][number]) => {
+    const category = link.toId.split(':')[0] ?? '';
+    return (
+      (STRICT_LINK_KINDS.has(link.kind) ||
+        (link.kind === 'prerequisite' && STRICT_PREREQUISITE_CATEGORIES.has(category))) &&
+      builtCategories.has(category)
+    );
+  };
   const withdrawn = [...(previous?.entities.values() ?? [])].filter(
     (row) => !currentIds.has(row.id),
   );

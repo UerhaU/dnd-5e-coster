@@ -179,6 +179,11 @@ export const spellListItemSchema = z.object({
   reviewStatus: reviewStatusSchema,
   /** Доступ к классу из фильтра `class`; без фильтра по классу — `null`. */
   classAccess: classAccessSchema.nullable(),
+  /**
+   * Подклассы класса из фильтра, через которые доступно заклинание (связи
+   * `spell_subclass`, Р53), по алфавиту; без фильтра по классу — пусто.
+   */
+  classSubclasses: z.array(z.string()),
 });
 
 export const spellListResponseSchema = z.object({

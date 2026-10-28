@@ -76,7 +76,8 @@ function featLinks(rules: FeatRules, mentioned: string[]): CatalogEntity['links'
     .flatMap((requirement) =>
       requirement.kind === 'feat' ||
       requirement.kind === 'race' ||
-      requirement.kind === 'background'
+      requirement.kind === 'background' ||
+      requirement.kind === 'class'
         ? [{ toId: requirement.id, kind: 'prerequisite' as const }]
         : [],
     );
