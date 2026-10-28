@@ -97,6 +97,7 @@ describe('владение инструментами', () => {
         label: 'Владение инструментами',
         text: 'один игровой набор на ваш выбор (например, игральные карты или ставка трёх драконов)',
         tooltips: [],
+        links: [],
       },
       rules as unknown as Parameters<typeof parseTools>[1],
     );

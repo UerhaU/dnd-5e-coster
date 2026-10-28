@@ -149,7 +149,7 @@
 | Часть Б: Playwright, полный каталог | `electron-builder` в `D:\programm\koster-release` (обход `EBUSY`), `KOSTER_APP_DIR=… npx playwright test` | прошло: 13 сценариев (2 новых: «Монах» — таблица 20 строк, пометка TCE, переход к подклассу; подклассы воина → «Мистический рыцарь» → класс). На тестовом каталоге локально не запускалось |
 | Playwright, полный каталог | `npm run dist`, `npm run e2e` | прошло: 11 сценариев (5 новых — по одному на навыки, языки, состояния, предыстории, черты). Первый прогон упал на чертах: «Одарённый» на 2-й странице полного списка — в сценарий добавлен поиск. На тестовом каталоге (zip из CI) локально не запускалось |
 
-| Часть В: тесты | `npm run check` | прошло: 32 файла, 248 тестов (новые: `link-spell-classes.test.ts`; связи и `classSubclasses` — в `catalog.test.ts`; общий поиск по 7 категориям — `catalog-search.test.ts`; инструменты вне скобок — `parse-backgrounds.test.ts`) |
+| Часть В: тесты | `npm run check` | прошло: 32 файла, 249 тестов (новые: `link-spell-classes.test.ts`; связи и `classSubclasses` — в `catalog.test.ts`; общий поиск по 7 категориям — `catalog-search.test.ts`; инструменты вне скобок — `parse-backgrounds.test.ts`) |
 | Часть В: полная сборка с журналом | `npm run catalog:build` | 0 ошибок; связи заклинаний — 0 ревизий (v13); после исправления предысторий — 2 изменённых (`background:rewarded`, `background:ruined`, ревизия 2), v14; журнал закоммичен |
 | Часть В: повторная сборка | `npm run catalog:build` | 0 новых ревизий, v14 |
 | Часть В: связи | запрос к `catalog.db` | `spell_class` 1387, `spell_subclass` 573, `prerequisite` → класс 4; строк `spell_index_classes` без объекта класса — 0 |
