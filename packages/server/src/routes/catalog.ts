@@ -1,18 +1,31 @@
 import {
+  itemFacets,
   listCategories,
+  listItems,
+  listRaces,
+  raceFacets,
   listSpells,
+  searchCatalog,
   readEntity,
   spellFacets,
   type CatalogConnection,
 } from '@koster/db';
 import {
+  catalogSearchQuerySchema,
   categoryParamsSchema,
   entityParamsSchema,
+  entityResponseSchema,
+  itemListQuerySchema,
+  raceListQuerySchema,
   revisionParamsSchema,
-  spellEntityResponseSchema,
   spellListQuerySchema,
+  type CatalogSearchResponse,
   type CategoriesResponse,
-  type SpellEntityResponse,
+  type EntityResponse,
+  type ItemFacetsResponse,
+  type ItemListResponse,
+  type RaceFacetsResponse,
+  type RaceListResponse,
   type SpellFacetsResponse,
   type SpellListResponse,
 } from '@koster/shared';
@@ -20,7 +33,7 @@ import type { FastifyInstance } from 'fastify';
 import { HttpError, parseOr400 } from '../errors';
 
 // Маршруты каталога (раздел 7). Каталог открыт только для чтения (Р21).
-// Пока в каталоге одна категория — заклинания; остальные отвечают 404.
+// Категории со списком: заклинания, снаряжение и расы; остальные отвечают 404.
 
 function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
   if (!catalog) {
@@ -32,18 +45,16 @@ function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
   return catalog;
 }
 
-function requireSpellCategory(params: unknown): void {
+/** Категория из адреса; неизвестная — 404. */
+function listCategory(params: unknown): 'spell' | 'item' | 'race' {
   const { category } = parseOr400(categoryParamsSchema, params);
-  if (category !== 'spell') {
+  if (category !== 'spell' && category !== 'item' && category !== 'race') {
     throw new HttpError('not_found', `Нет категории «${category}»`);
   }
+  return category;
 }
 
-function entityCard(
-  catalog: CatalogConnection,
-  id: string,
-  revision?: number,
-): SpellEntityResponse {
+function entityCard(catalog: CatalogConnection, id: string, revision?: number): EntityResponse {
   const record = readEntity(catalog, id, revision);
   if (!record) {
     throw new HttpError(
@@ -51,8 +62,8 @@ function entityCard(
       revision === undefined ? `Нет объекта ${id}` : `Нет ревизии ${revision} объекта ${id}`,
     );
   }
-  // Проверка схемой: в окно не уходят данные, которых интерфейс не ждёт.
-  return spellEntityResponseSchema.parse(record);
+  // Проверка схемой своей категории: в окно не уходят данные, которых интерфейс не ждёт.
+  return entityResponseSchema.parse(record);
 }
 
 export function registerCatalogRoutes(
@@ -63,27 +74,46 @@ export function registerCatalogRoutes(
     return listCategories(requireCatalog(catalog));
   });
 
-  server.get('/api/catalog/entity/:id', async (request): Promise<SpellEntityResponse> => {
+  server.get('/api/catalog/entity/:id', async (request): Promise<EntityResponse> => {
     const { id } = parseOr400(entityParamsSchema, request.params);
     return entityCard(requireCatalog(catalog), id);
   });
 
+  server.get('/api/catalog/entity/:id/revisions/:rev', async (request): Promise<EntityResponse> => {
+    const { id, rev } = parseOr400(revisionParamsSchema, request.params);
+    return entityCard(requireCatalog(catalog), id, rev);
+  });
+
+  // Поиск по всему каталогу (Р54). Постоянный адрес важнее `/:category`.
+  server.get('/api/catalog/search', async (request): Promise<CatalogSearchResponse> => {
+    const query = parseOr400(catalogSearchQuerySchema, request.query);
+    return searchCatalog(requireCatalog(catalog), query);
+  });
+
   server.get(
-    '/api/catalog/entity/:id/revisions/:rev',
-    async (request): Promise<SpellEntityResponse> => {
-      const { id, rev } = parseOr400(revisionParamsSchema, request.params);
-      return entityCard(requireCatalog(catalog), id, rev);
+    '/api/catalog/:category/facets',
+    async (request): Promise<SpellFacetsResponse | ItemFacetsResponse | RaceFacetsResponse> => {
+      const category = listCategory(request.params);
+      const connection = requireCatalog(catalog);
+      if (category === 'race') return raceFacets(connection);
+      return category === 'spell' ? spellFacets(connection) : itemFacets(connection);
     },
   );
 
-  server.get('/api/catalog/:category/facets', async (request): Promise<SpellFacetsResponse> => {
-    requireSpellCategory(request.params);
-    return spellFacets(requireCatalog(catalog));
-  });
-
-  server.get('/api/catalog/:category', async (request): Promise<SpellListResponse> => {
-    requireSpellCategory(request.params);
-    const query = parseOr400(spellListQuerySchema, request.query);
-    return listSpells(requireCatalog(catalog), query);
-  });
+  server.get(
+    '/api/catalog/:category',
+    async (request): Promise<SpellListResponse | ItemListResponse | RaceListResponse> => {
+      const category = listCategory(request.params);
+      if (category === 'race') {
+        const query = parseOr400(raceListQuerySchema, request.query);
+        return listRaces(requireCatalog(catalog), query);
+      }
+      if (category === 'spell') {
+        const query = parseOr400(spellListQuerySchema, request.query);
+        return listSpells(requireCatalog(catalog), query);
+      }
+      const query = parseOr400(itemListQuerySchema, request.query);
+      return listItems(requireCatalog(catalog), query);
+    },
+  );
 }

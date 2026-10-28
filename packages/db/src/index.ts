@@ -15,11 +15,8 @@ export {
 } from './catalog/open.ts';
 export { normalizeSearchText } from './catalog/search-text.ts';
 export { toFtsQuery } from './catalog/search-query.ts';
-export {
-  levelLabel,
-  listCategories,
-  listSpells,
-  readEntity,
-  spellFacets,
-  type EntityRecord,
-} from './catalog/spell-queries.ts';
+export { listCategories, readEntity, type EntityRecord } from './catalog/entity-queries.ts';
+export { itemFacets, listItems } from './catalog/item-queries.ts';
+export { listRaces, raceFacets } from './catalog/race-queries.ts';
+export { searchCatalog } from './catalog/search-queries.ts';
+export { levelLabel, listSpells, spellFacets } from './catalog/spell-queries.ts';

@@ -1,37 +1,13 @@
-import {
-  spellDataSchema,
-  textBlocksToPlain,
-  type Automation,
-  type Edition,
-  type ReviewStatus,
-  type SpellData,
-  type SpellRules,
-} from '@koster/shared';
+import { spellDataSchema, textBlocksToPlain } from '@koster/shared';
 import { z } from 'zod';
 import type { SpellCache } from '../dndsu/spell-cache.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { applyReviewed, type ReviewedSpellSet } from '../reviewed/reviewed-spells.ts';
-import { SpellNormalizer, type NormalizedSource } from '../spells/normalize-spell.ts';
+import { SpellNormalizer } from '../spells/normalize-spell.ts';
 import { PageParseError, parseSpellPage } from '../spells/parse-page.ts';
+import type { CatalogEntity } from './catalog-entity.ts';
 
 // Шаги parse → normalize → review → validate для заклинаний.
-
-export interface CatalogEntity {
-  id: string;
-  category: 'spell';
-  nameRu: string;
-  nameEn: string;
-  aliases: string[];
-  edition: Edition;
-  reviewStatus: ReviewStatus;
-  automation: Automation;
-  schemaVersion: string;
-  data: SpellData;
-  rules: SpellRules | null;
-  sources: { source: NormalizedSource; dndsuId: number; url: string }[];
-  /** Плоский текст для полнотекстового поиска. */
-  searchBody: string;
-}
 
 export interface CollectStats {
   listed: number;
@@ -153,6 +129,7 @@ export function collectSpells(
         data: valid.data,
         rules,
         sources: spell.sources.map((source) => ({ source, dndsuId: card.siteId, url: card.url })),
+        links: [],
         searchBody: [
           textBlocksToPlain(valid.data.description),
           textBlocksToPlain(valid.data.higherLevels),

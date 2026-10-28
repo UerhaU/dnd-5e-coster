@@ -3,9 +3,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router';
 import { ApiProvider } from './api/api-context';
+import { EntityCard } from './screens/EntityCard';
+import { ItemList } from './screens/ItemList';
+import { RaceList } from './screens/RaceList';
 import { MainMenu } from './screens/MainMenu';
 import { ReferenceHome } from './screens/ReferenceHome';
-import { SpellCard } from './screens/SpellCard';
 import { SpellList } from './screens/SpellList';
 import './theme/tokens.css';
 import './theme/base.css';
@@ -21,7 +23,9 @@ const router = createHashRouter([
   { path: '/', element: <MainMenu /> },
   { path: '/reference', element: <ReferenceHome /> },
   { path: '/reference/spell', element: <SpellList /> },
-  { path: '/reference/entity/:id', element: <SpellCard /> },
+  { path: '/reference/item', element: <ItemList /> },
+  { path: '/reference/race', element: <RaceList /> },
+  { path: '/reference/entity/:id', element: <EntityCard /> },
 ]);
 
 /** Приложение: общий клиент API, TanStack Query и роутер. Временная тема (Р14). */

@@ -54,7 +54,11 @@ describe('GET /api/health', () => {
 describe('GET /api/catalog/categories', () => {
   it('категории и число объектов', async () => {
     const body = categoriesResponseSchema.parse((await get('/api/catalog/categories')).body);
-    expect(body.categories).toEqual([{ id: 'spell', nameRu: 'Заклинания', count: 22 }]);
+    expect(body.categories).toEqual([
+      { id: 'spell', nameRu: 'Заклинания', count: 22 },
+      { id: 'item', nameRu: 'Снаряжение', count: 61 },
+      { id: 'race', nameRu: 'Расы', count: 19 },
+    ]);
   });
 });
 

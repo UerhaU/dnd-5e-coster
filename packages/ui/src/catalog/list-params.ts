@@ -1,9 +1,18 @@
-import { spellListQuerySchema, type SpellListParams } from '@koster/shared';
+import {
+  catalogSearchQuerySchema,
+  itemListQuerySchema,
+  raceListQuerySchema,
+  spellListQuerySchema,
+  type CatalogSearchParams,
+  type ItemListParams,
+  type RaceListParams,
+  type SpellListParams,
+} from '@koster/shared';
 
 // Фильтры списка хранятся в адресе экрана (`?q=огнен&level=3`): после карточки
 // кнопка «Назад» возвращает к тому же списку.
 
-/** Фильтры, которые сбрасывают номер страницы при изменении. */
+/** Фильтры списка заклинаний, которые сбрасывают номер страницы при изменении. */
 export const FILTER_KEYS = [
   'q',
   'level',
@@ -15,26 +24,78 @@ export const FILTER_KEYS = [
   'sort',
 ] as const;
 
-export type FilterKey = (typeof FILTER_KEYS)[number];
+/** Фильтры списка снаряжения. */
+export const ITEM_FILTER_KEYS = [
+  'q',
+  'kind',
+  'category',
+  'property',
+  'damageType',
+  'source',
+  'optionalRule',
+  'sort',
+] as const;
 
-/** Адрес → параметры запроса к API. Неверные значения просто не применяются. */
-export function paramsFromSearch(search: URLSearchParams): SpellListParams {
-  const params: SpellListParams = {};
-  for (const key of [...FILTER_KEYS, 'page'] as const) {
+/** Фильтры списка рас. */
+export const RACE_FILTER_KEYS = [
+  'q',
+  'kind',
+  'size',
+  'flying',
+  'darkvision',
+  'source',
+  'sort',
+] as const;
+
+export type FilterKey = (typeof FILTER_KEYS)[number];
+export type ItemFilterKey = (typeof ITEM_FILTER_KEYS)[number];
+export type RaceFilterKey = (typeof RACE_FILTER_KEYS)[number];
+
+/** Поля схемы списка: каждое умеет проверить одно значение из адреса. */
+interface ListSchema {
+  shape: Record<string, { safeParse(value: unknown): { success: boolean; data?: unknown } }>;
+}
+
+/** Адрес → параметры запроса по схеме списка. Неверные значения просто не применяются. */
+function parseParams(
+  search: URLSearchParams,
+  schema: ListSchema,
+  keys: readonly string[],
+): Record<string, unknown> {
+  const params: Record<string, unknown> = {};
+  for (const key of [...keys, 'page']) {
     const value = search.get(key);
-    if (value === null || value === '') {
+    const field = schema.shape[key];
+    if (value === null || value === '' || !field) {
       continue;
     }
-    const parsed = spellListQuerySchema.shape[key].safeParse(value);
+    const parsed = field.safeParse(value);
     if (parsed.success && parsed.data !== undefined) {
-      Object.assign(params, { [key]: parsed.data });
+      params[key] = parsed.data;
     }
   }
   return params;
 }
 
+export function paramsFromSearch(search: URLSearchParams): SpellListParams {
+  return parseParams(search, spellListQuerySchema, FILTER_KEYS) as SpellListParams;
+}
+
+export function itemParamsFromSearch(search: URLSearchParams): ItemListParams {
+  return parseParams(search, itemListQuerySchema, ITEM_FILTER_KEYS) as ItemListParams;
+}
+
+export function raceParamsFromSearch(search: URLSearchParams): RaceListParams {
+  return parseParams(search, raceListQuerySchema, RACE_FILTER_KEYS) as RaceListParams;
+}
+
+/** Поиск по всему каталогу: `?q=…&page=…` экрана «Справочник». */
+export function searchParamsFromSearch(search: URLSearchParams): CatalogSearchParams {
+  return parseParams(search, catalogSearchQuerySchema, ['q']) as CatalogSearchParams;
+}
+
 /** Новый адрес после изменения одного фильтра: страница — снова первая. */
-export function withFilter(search: URLSearchParams, key: FilterKey | 'page', value: string) {
+export function withFilter(search: URLSearchParams, key: string, value: string) {
   const next = new URLSearchParams(search);
   if (value === '') {
     next.delete(key);

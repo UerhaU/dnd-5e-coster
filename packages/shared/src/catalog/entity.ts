@@ -2,8 +2,15 @@ import { z } from 'zod';
 
 // Общие поля объекта каталога (раздел 5.1, 5.4).
 
-export const CATEGORIES = ['spell'] as const;
+export const CATEGORIES = ['spell', 'item', 'race'] as const;
 export const categorySchema = z.enum(CATEGORIES);
+
+/** Названия категорий для списка «Справочника» и пометки в поиске. */
+export const CATEGORY_NAMES_RU = {
+  spell: 'Заклинания',
+  item: 'Снаряжение',
+  race: 'Расы',
+} as const satisfies Record<(typeof CATEGORIES)[number], string>;
 
 /** Статусы проверки: raw → parsed → reviewed → rules_verified. */
 export const reviewStatusSchema = z.enum(['raw', 'parsed', 'reviewed', 'rules_verified']);

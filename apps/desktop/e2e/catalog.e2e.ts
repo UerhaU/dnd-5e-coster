@@ -44,6 +44,119 @@ test('справочник: найти «Огненный шар» по «огн
   await expect(window.getByRole('searchbox', { name: 'Поиск заклинаний' })).toHaveValue('огнен');
 });
 
+// Сценарий этапа 2: «Снаряжение» → фильтр «Воинское рукопашное» → поиск «меч» →
+// карточка «Длинного меча» с уроном и свойствами. Есть в обоих каталогах.
+test('справочник: найти «Длинный меч» в снаряжении и открыть карточку', async () => {
+  const { window } = running;
+
+  // Прошлый сценарий закончился в списке заклинаний.
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  await window.getByRole('link', { name: /Снаряжение/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Снаряжение' })).toBeVisible();
+
+  await window.getByLabel('Группа').selectOption('martial_melee');
+  await window.getByRole('searchbox', { name: 'Поиск снаряжения' }).fill('меч');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  const longsword = results.getByRole('link', { name: /Длинный меч/ });
+  await expect(longsword).toBeVisible();
+  await expect(longsword).toContainText('1к8 рубящий');
+
+  await longsword.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Длинный меч' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Воинское рукопашное оружие');
+  await expect(window.getByTestId('item-damage')).toHaveText('1к8 рубящий');
+  await expect(window.getByText('Универсальное (1к10)')).toBeVisible();
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await expect(window.getByRole('searchbox', { name: 'Поиск снаряжения' })).toHaveValue('меч');
+  await expect(window.getByLabel('Группа')).toHaveValue('martial_melee');
+});
+
+// Доделки части Б: зелье лечения с эффектом (Р64) и скакун со столбцами таблицы (Р66).
+// Оба есть в обоих каталогах.
+test('справочник: зелье лечения и боевой конь в снаряжении', async () => {
+  const { window } = running;
+  const search = window.getByRole('searchbox', { name: 'Поиск снаряжения' });
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+
+  // Прошлый сценарий оставил фильтр «Воинское рукопашное».
+  await window.getByLabel('Группа').selectOption('');
+  await search.fill('зелье');
+  await results.getByRole('link', { name: /Зелье лечения/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Зелье лечения' })).toBeVisible();
+  await expect(window.getByTestId('item-use-effect')).toHaveText('Восстанавливает 2к4 + 2 хита');
+  await expect(window.getByText('Действие, предмет расходуется')).toBeVisible();
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await search.fill('боевой конь');
+  await results.getByRole('link', { name: /Боевой конь/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Боевой конь' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Скакун или животное');
+  await expect(window.getByText('Скорость', { exact: true })).toBeVisible();
+  await expect(window.getByText('Грузоподъёмность', { exact: true })).toBeVisible();
+});
+
+// Сценарий части Б: «Расы» → фильтр «Разновидности» → поиск «дроу» → карточка
+// разновидности со ссылкой на расу → карточка «Эльфа». Есть в обоих каталогах.
+test('справочник: найти разновидность «дроу» и перейти к расе', async () => {
+  const { window } = running;
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  await window.getByRole('link', { name: /Расы/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Расы' })).toBeVisible();
+
+  await window.getByLabel('Расы и разновидности').selectOption('variant');
+  await window.getByRole('searchbox', { name: 'Поиск рас' }).fill('дроу');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  const drow = results.getByRole('link', { name: /Тёмный эльф \(дроу\)/ });
+  await expect(drow).toContainText('разновидность: Эльф');
+
+  await drow.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Тёмный эльф (дроу)' })).toBeVisible();
+  await expect(window.getByTestId('race-darkvision')).toHaveText('120 фт.');
+  await expect(window.getByTestId('race-abilities')).toHaveText('Хар +1');
+
+  await window.getByTestId('race-kind').getByRole('link', { name: 'Эльф' }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Эльф' })).toBeVisible();
+  await expect(window.getByTestId('race-speed')).toHaveText('30 фт.');
+  await expect(window.getByTestId('race-languages')).toHaveText('Общий, Эльфийский');
+  await expect(window.getByRole('link', { name: 'Высший эльф' })).toBeVisible();
+  // Р69: возраст и рост числами из особенностей «Возраст» и «Размер».
+  await expect(window.getByTestId('race-age')).toHaveText('зрелость — 100 лет, жизнь — 750 лет');
+  await expect(window.getByTestId('race-height')).toHaveText('5 фт. – 6 фт. (152 – 183 см)');
+});
+
+// Этап 2, часть В: поиск по всему справочнику (Р54) и связь заклинания с компонентом
+// (Р60). «Щит», «Огненный шар» и «Гуано летучей мыши» есть в обоих каталогах.
+test('справочник: поиск везде, огненный шар → компонент «Гуано летучей мыши»', async () => {
+  const { window } = running;
+
+  await window.getByRole('link', { name: 'Все расы' }).click();
+  await window.getByRole('link', { name: '← Справочник' }).click();
+  const search = window.getByRole('searchbox', { name: 'Поиск по всему справочнику' });
+  await search.fill('щит');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await expect(results.getByTestId('result-category').first()).toHaveText(/^Снаряжение · Щит/);
+  await expect(
+    results.getByTestId('result-category').filter({ hasText: /^(Раса|Разновидность расы)/ }),
+  ).not.toHaveCount(0);
+
+  await search.fill('огненный шар');
+  await results
+    .getByRole('link', { name: /Огненный шар/ })
+    .first()
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Огненный шар' })).toBeVisible();
+  await window
+    .getByTestId('spell-material-items')
+    .getByRole('link', { name: 'Гуано летучей мыши' })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Гуано летучей мыши' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Компонент заклинания');
+  await expect(window.getByRole('link', { name: 'Огненный шар', exact: true })).toBeVisible();
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);

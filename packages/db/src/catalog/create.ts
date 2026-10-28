@@ -1,8 +1,26 @@
 import { fileURLToPath } from 'node:url';
-import { ABILITIES, CONDITIONS, DAMAGE_TYPES, MAGIC_SCHOOLS } from '@koster/shared';
+import {
+  ABILITIES,
+  CONDITIONS,
+  DAMAGE_TYPES,
+  ITEM_CATEGORIES,
+  ITEM_KINDS,
+  MAGIC_SCHOOLS,
+  SIZES,
+  WEAPON_PROPERTIES,
+} from '@koster/shared';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { openCatalogWritable, type CatalogConnection } from './open.ts';
-import { abilities, conditions, damageTypes, magicSchools } from './schema.ts';
+import {
+  abilities,
+  conditions,
+  damageTypes,
+  itemCategories,
+  itemKinds,
+  magicSchools,
+  sizes,
+  weaponProperties,
+} from './schema.ts';
 
 /** Папка миграций catalog.db (drizzle/catalog в пакете). */
 export function catalogMigrationsFolder(): string {
@@ -29,6 +47,18 @@ export function createCatalog(file: string): CatalogConnection {
       .run();
     tx.insert(conditions)
       .values([...CONDITIONS])
+      .run();
+    tx.insert(itemKinds)
+      .values([...ITEM_KINDS])
+      .run();
+    tx.insert(itemCategories)
+      .values([...ITEM_CATEGORIES])
+      .run();
+    tx.insert(sizes)
+      .values([...SIZES])
+      .run();
+    tx.insert(weaponProperties)
+      .values([...WEAPON_PROPERTIES])
       .run();
   });
 

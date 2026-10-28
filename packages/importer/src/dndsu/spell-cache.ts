@@ -75,7 +75,12 @@ export function flattenFilter(
   );
 }
 
-export interface SpellCache {
+/** Кэш страниц DnD.su: какие страницы должны лежать на диске и где. */
+export interface PageList {
+  listPages(): { url: string; file: string }[];
+}
+
+export interface SpellCache extends PageList {
   folder: string;
   list: SpellList;
   pagePath(siteId: number): string;
@@ -92,6 +97,7 @@ export function openSpellCache(folder: string): SpellCache {
     folder,
     list,
     pagePath,
+    listPages: () => list.cards.map((card) => ({ url: card.url, file: pagePath(card.siteId) })),
     readPage(siteId) {
       const file = pagePath(siteId);
       return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
