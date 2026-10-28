@@ -184,6 +184,86 @@ test('справочник: поиск везде, огненный шар → �
   await expect(window.getByRole('link', { name: 'Огненный шар', exact: true })).toBeVisible();
 });
 
+// Этап 3, часть А: справочные категории — по сценарию на категорию. Навыки, «Акван»,
+// «Сбитый с ног», «Артист» и черты «Одарённый», «Знаток средних доспехов» есть в обоих
+// каталогах. Каждый сценарий открывает свой список адресом: не зависит от прошлого.
+async function openList(category: string, title: string) {
+  const { window } = running;
+  // Строкой: в типах сценариев нет DOM (tsconfig.node.json).
+  await window.evaluate("location.hash = '#/reference'");
+  await window.getByRole('link', { name: new RegExp(title) }).click();
+  await expect(window.getByRole('heading', { level: 1, name: title })).toBeVisible();
+  expect(await window.evaluate('location.hash')).toBe(`#/reference/${category}`);
+  return window;
+}
+
+test('справочник: навыки Ловкости → «Акробатика»', async () => {
+  const window = await openList('skill', 'Навыки');
+  await window.getByLabel('Характеристика').selectOption('dex');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await expect(results.getByRole('link')).toHaveCount(3);
+  await results.getByRole('link', { name: /Акробатика/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Акробатика' })).toBeVisible();
+  await expect(window.getByTestId('skill-ability')).toHaveText('Ловкость');
+});
+
+test('справочник: язык «Акван» — диалект Первичного', async () => {
+  const window = await openList('language', 'Языки');
+  await window.getByRole('searchbox', { name: 'Поиск: языки' }).fill('Акван');
+  const aquan = window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Акван/ });
+  await expect(aquan).toContainText('Диалект: Первичный');
+  await aquan.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Акван' })).toBeVisible();
+  await window.getByRole('link', { name: 'Первичный' }).first().click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Первичный' })).toBeVisible();
+});
+
+test('справочник: состояние «Сбитый с ног» по синониму «ничком»', async () => {
+  const window = await openList('condition', 'Состояния');
+  await window.getByRole('searchbox', { name: 'Поиск: состояния' }).fill('ничком');
+  await window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Сбитый с ног/ })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Сбитый с ног' })).toBeVisible();
+  await expect(window.getByTestId('entity-kind')).toHaveText('Состояние');
+});
+
+test('справочник: предыстория «Артист» — навыки ссылками на объекты, характер', async () => {
+  const window = await openList('background', 'Предыстории');
+  await window.getByRole('searchbox', { name: 'Поиск: предыстории' }).fill('Артист');
+  await window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Артист Entertainer/ })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Артист' })).toBeVisible();
+  await expect(window.getByTestId('background-skills')).toHaveText('Акробатика; Выступление');
+  await expect(window.getByTestId('background-tools')).toContainText('музыкальн');
+  await expect(window.getByRole('heading', { name: 'Разновидность: Гладиатор' })).toBeVisible();
+  await expect(window.getByRole('heading', { name: /Черты характера/ })).toBeVisible();
+});
+
+test('справочник: черты — «Одарённый» и требование «Знатока средних доспехов»', async () => {
+  const window = await openList('feat', 'Черты');
+  await window.getByLabel('Требование').selectOption('false');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Одарённый/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Одарённый' })).toBeVisible();
+  await expect(window.getByTestId('feat-mixed')).toHaveText(
+    '3 на выбор в любой комбинации: любой навык, любой инструмент',
+  );
+  await expect(window.getByTestId('feat-prerequisite')).toHaveText('нет');
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await window.getByLabel('Требование').selectOption('true');
+  await window.getByRole('searchbox', { name: 'Поиск: черты' }).fill('средних доспехов');
+  await results.getByRole('link', { name: /Знаток средних доспехов/ }).click();
+  await expect(window.getByTestId('feat-prerequisite')).toHaveText('владение: лёгкие доспехи');
+  await expect(window.getByTestId('feat-abilities')).toContainText('из: Сил, Лов');
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);

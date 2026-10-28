@@ -1,4 +1,4 @@
-import { createApiClient } from '@koster/shared';
+import { createApiClient, REFERENCE_LIST_CATEGORIES } from '@koster/shared';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router';
@@ -8,6 +8,7 @@ import { ItemList } from './screens/ItemList';
 import { RaceList } from './screens/RaceList';
 import { MainMenu } from './screens/MainMenu';
 import { ReferenceHome } from './screens/ReferenceHome';
+import { ReferenceList } from './screens/ReferenceList';
 import { SpellList } from './screens/SpellList';
 import './theme/tokens.css';
 import './theme/base.css';
@@ -25,6 +26,11 @@ const router = createHashRouter([
   { path: '/reference/spell', element: <SpellList /> },
   { path: '/reference/item', element: <ItemList /> },
   { path: '/reference/race', element: <RaceList /> },
+  // Справочные категории этапа 3: один экран списка; `key` — новый экран на категорию.
+  ...REFERENCE_LIST_CATEGORIES.map((category) => ({
+    path: `/reference/${category}`,
+    element: <ReferenceList key={category} category={category} />,
+  })),
   { path: '/reference/entity/:id', element: <EntityCard /> },
 ]);
 

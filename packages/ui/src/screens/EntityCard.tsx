@@ -4,6 +4,13 @@ import { useApi } from '../api/api-context';
 import { QueryError } from '../components/QueryError';
 import { ItemCardBody } from './ItemCard';
 import { RaceCardBody } from './RaceCard';
+import {
+  BackgroundCardBody,
+  ConditionCardBody,
+  FeatCardBody,
+  LanguageCardBody,
+  SkillCardBody,
+} from './ReferenceCard';
 import { SpellCardBody } from './SpellCard';
 
 /** Карточка объекта любой категории: общий экран, тело — по категории. */
@@ -28,6 +35,11 @@ export function EntityCard() {
       {card.data?.category === 'spell' && <SpellCardBody card={card.data} />}
       {card.data?.category === 'item' && <ItemCardBody card={card.data} />}
       {card.data?.category === 'race' && <RaceCardBody card={card.data} />}
+      {card.data?.category === 'skill' && <SkillCardBody card={card.data} />}
+      {card.data?.category === 'language' && <LanguageCardBody card={card.data} />}
+      {card.data?.category === 'condition' && <ConditionCardBody card={card.data} />}
+      {card.data?.category === 'background' && <BackgroundCardBody card={card.data} />}
+      {card.data?.category === 'feat' && <FeatCardBody card={card.data} />}
     </main>
   );
 }

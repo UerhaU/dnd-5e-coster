@@ -27,7 +27,7 @@ const DETAIL: Record<ReferenceListCategory, string> = {
   skill: 'ab.name_ru',
   language: `CASE
       WHEN li.dialect_of IS NOT NULL THEN 'Диалект: ' || dialect.name_ru
-      WHEN li.kind = 'standard' THEN 'Стандартный'
+      WHEN li.kind = 'standard' THEN 'Обычный'
       WHEN li.kind = 'exotic' THEN 'Экзотический'
     END`,
   condition: 'NULL',
@@ -159,7 +159,7 @@ export function referenceFacets(
         ? 'background_index'
         : null;
   const kindLabels: Record<string, string> = {
-    standard: 'Стандартные',
+    standard: 'Обычные',
     exotic: 'Экзотические',
     background: 'Предыстории',
     adaptation: 'Адаптации',
