@@ -7,6 +7,7 @@ export * from './material.ts';
 export * from './race.ts';
 export * from './race-codes.ts';
 export * from './race-rules.ts';
+export * from './reference.ts';
 export * from './spell.ts';
 export * from './spell-rules.ts';
 export * from './text-blocks.ts';

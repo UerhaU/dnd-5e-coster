@@ -5,6 +5,7 @@
 //   npm run catalog:build -- --cache <папка> --out <файл>
 //   --items-cache <папка>  кэш статей со снаряжением; --no-items — без снаряжения
 //   --races-cache <папка>  кэш страниц рас; --no-races — без рас
+//   --character-cache <папка>  кэш этапа 3 (навыки, языки, состояния…); --no-character — без них
 //   --fresh    не брать прошлый catalog.db: ревизии восстанавливаются по журналу
 //   --no-ledger не читать и не писать журнал ревизий (для опытов с --out)
 //   --strict   выйти с кодом 1, если есть ошибки (для CI)
@@ -29,6 +30,8 @@ const { values } = parseArgs({
     'no-items': { type: 'boolean', default: false },
     'races-cache': { type: 'string' },
     'no-races': { type: 'boolean', default: false },
+    'character-cache': { type: 'string' },
+    'no-character': { type: 'boolean', default: false },
     out: { type: 'string' },
     fixtures: { type: 'boolean', default: false },
     fresh: { type: 'boolean', default: false },
@@ -52,6 +55,12 @@ const raceCacheDir = values['no-races']
   : path.resolve(
       values['races-cache'] ??
         (values.fixtures ? DEFAULT_PATHS.raceFixtures : DEFAULT_PATHS.raceCache),
+    );
+const characterCacheDir = values['no-character']
+  ? null
+  : path.resolve(
+      values['character-cache'] ??
+        (values.fixtures ? DEFAULT_PATHS.characterFixtures : DEFAULT_PATHS.characterCache),
     );
 const outFile = path.resolve(values.out ?? DEFAULT_PATHS.catalog);
 // Тестовый каталог всегда собирается с нуля: его ревизии не должны смешиваться с полным.
@@ -98,6 +107,7 @@ const now = new Date();
 console.log(`Кэш: ${cacheDir}`);
 console.log(`Кэш снаряжения: ${itemCacheDir ?? 'не используется'}`);
 console.log(`Кэш рас: ${raceCacheDir ?? 'не используется'}`);
+console.log(`Кэш этапа 3: ${characterCacheDir ?? 'не используется'}`);
 console.log(`Каталог: ${outFile}${fresh ? ' (без прошлого файла)' : ''}`);
 console.log(`Журнал ревизий: ${ledgerDir ?? 'не используется'}`);
 
@@ -108,6 +118,8 @@ const result = buildCatalog({
   reviewedItemsDir: DEFAULT_PATHS.reviewedItems,
   raceCacheDir,
   reviewedRacesDir: DEFAULT_PATHS.reviewedRaces,
+  characterCacheDir,
+  reviewedCharacterDir: DEFAULT_PATHS.reviewedCharacter,
   outFile,
   previousFile: fresh ? null : outFile,
   ledgerDir,

@@ -3,12 +3,22 @@ import type { CatalogEntity } from './catalog-entity.ts';
 
 // Поля для фильтров списка (раздел 5.2): у каждой категории своя таблица.
 
-const { itemIndex, itemIndexProperties, raceIndex, spellIndex, spellIndexClasses } = catalogSchema;
+const {
+  itemIndex,
+  itemIndexProperties,
+  languageIndex,
+  raceIndex,
+  skillIndex,
+  spellIndex,
+  spellIndexClasses,
+} = catalogSchema;
 
 type Transaction = Parameters<Parameters<CatalogConnection['db']['transaction']>[0]>[0];
 type SpellEntity = Extract<CatalogEntity, { category: 'spell' }>;
 type ItemEntity = Extract<CatalogEntity, { category: 'item' }>;
 type RaceEntity = Extract<CatalogEntity, { category: 'race' }>;
+type SkillEntity = Extract<CatalogEntity, { category: 'skill' }>;
+type LanguageEntity = Extract<CatalogEntity, { category: 'language' }>;
 
 export function writeSpellIndex(tx: Transaction, entity: SpellEntity): void {
   tx.insert(spellIndex)
@@ -64,5 +74,15 @@ export function writeRaceIndex(tx: Transaction, entity: RaceEntity): void {
       flying: speed.fly !== null,
       darkvisionFt: entity.rules.darkvisionFt,
     })
+    .run();
+}
+
+export function writeSkillIndex(tx: Transaction, entity: SkillEntity): void {
+  tx.insert(skillIndex).values({ entityId: entity.id, abilityId: entity.data.ability }).run();
+}
+
+export function writeLanguageIndex(tx: Transaction, entity: LanguageEntity): void {
+  tx.insert(languageIndex)
+    .values({ entityId: entity.id, kind: entity.data.kind, dialectOf: entity.data.dialectOf })
     .run();
 }

@@ -58,6 +58,9 @@ describe('GET /api/catalog/categories', () => {
       { id: 'spell', nameRu: 'Заклинания', count: 22 },
       { id: 'item', nameRu: 'Снаряжение', count: 61 },
       { id: 'race', nameRu: 'Расы', count: 19 },
+      { id: 'skill', nameRu: 'Навыки', count: 18 },
+      { id: 'language', nameRu: 'Языки', count: 65 },
+      { id: 'condition', nameRu: 'Состояния', count: 15 },
     ]);
   });
 });

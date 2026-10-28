@@ -8,15 +8,23 @@ import {
 } from '@koster/db';
 import type { ImportIssue } from '../report/issues.ts';
 import { canonicalJson, sha256 } from './canonical-json.ts';
-import type { CatalogEntity } from './catalog-entity.ts';
+import type { CatalogEntity, LinkKind } from './catalog-entity.ts';
 import type { Ledger, LedgerRevision } from './ledger.ts';
-import { writeItemIndex, writeRaceIndex, writeSpellIndex } from './write-index.ts';
+import {
+  writeItemIndex,
+  writeLanguageIndex,
+  writeRaceIndex,
+  writeSkillIndex,
+  writeSpellIndex,
+} from './write-index.ts';
 
 // Шаг build (раздел 6): новый catalog.db из собранных объектов.
 // Ревизии прошлой сборки переносятся без изменений (Р21); новая ревизия
 // появляется, только если данные или правила объекта изменились.
 // Нумерация берётся и из прошлого catalog.db, и из журнала ревизий в git (Р51):
 // без прошлого файла неизменившийся объект получает ту же ревизию из журнала.
+
+const STRICT_LINK_KINDS: ReadonlySet<LinkKind> = new Set(['skill_proficiency', 'language']);
 
 const { catalogInfo, contentEntities, contentLinks, contentRevisions, entitySources, sources } =
   catalogSchema;
@@ -212,6 +220,10 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
   }
 
   const currentIds = new Set(entities.map((entity) => entity.id));
+  // Навык или язык без объекта — ошибка сборки (бриф этапа 3), если категория собиралась.
+  const builtCategories = new Set<string>(entities.map((entity) => entity.category));
+  const strictLink = (link: CatalogEntity['links'][number]) =>
+    STRICT_LINK_KINDS.has(link.kind) && builtCategories.has(link.toId.split(':')[0] ?? '');
   const withdrawn = [...(previous?.entities.values() ?? [])].filter(
     (row) => !currentIds.has(row.id),
   );
@@ -340,13 +352,17 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
           writeSpellIndex(tx, entity);
         } else if (entity.category === 'item') {
           writeItemIndex(tx, entity);
-        } else {
+        } else if (entity.category === 'race') {
           writeRaceIndex(tx, entity);
+        } else if (entity.category === 'skill') {
+          writeSkillIndex(tx, entity);
+        } else if (entity.category === 'language') {
+          writeLanguageIndex(tx, entity);
         }
         for (const link of entity.links) {
           if (!currentIds.has(link.toId)) {
             issues.push({
-              severity: 'warning',
+              severity: strictLink(link) ? 'error' : 'warning',
               entityId: entity.id,
               dndsuId: null,
               field: 'links',

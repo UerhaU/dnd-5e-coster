@@ -210,6 +210,32 @@ export const raceIndex = sqliteTable(
   (table) => [index('race_index_variant_of').on(table.variantOf)],
 );
 
+/** Поля для фильтров списка навыков (этап 3). */
+export const skillIndex = sqliteTable('skill_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** Характеристика проверки: `str`, `dex`… */
+  abilityId: text('ability_id')
+    .notNull()
+    .references(() => abilities.id),
+});
+
+/** Поля для фильтров списка языков (этап 3). */
+export const languageIndex = sqliteTable(
+  'language_index',
+  {
+    entityId: text('entity_id')
+      .primaryKey()
+      .references(() => contentEntities.id),
+    /** `standard` или `exotic`; `null` — книга вид не указывает. */
+    kind: text('kind', { enum: ['standard', 'exotic'] }),
+    /** Язык, диалектом которого является этот. */
+    dialectOf: text('dialect_of').references(() => contentEntities.id),
+  },
+  (table) => [index('language_index_kind').on(table.kind)],
+);
+
 /** Свойства оружия: для фильтра «фехтовальное», «метательное»… */
 export const itemIndexProperties = sqliteTable(
   'item_index_properties',

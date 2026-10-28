@@ -1,12 +1,15 @@
 import type {
   Automation,
   Edition,
+  ConditionData,
   ItemData,
+  LanguageData,
   ItemRules,
   RaceData,
   RaceRules,
   ReviewStatus,
   SpellData,
+  SkillData,
   SpellRules,
 } from '@koster/shared';
 import type { NormalizedSource } from '../spells/normalize-spell.ts';
@@ -21,7 +24,13 @@ export type LinkKind =
   /** Раса владеет оружием: «Дварфийская боевая тренировка» → боевой топор. */
   | 'weapon_proficiency'
   /** Раса владеет инструментом или выбирает из них: «инструменты кузнеца, пивовара или каменщика». */
-  | 'tool_proficiency';
+  | 'tool_proficiency'
+  /** Раса или предыстория владеет навыком или выбирает его (этап 3). */
+  | 'skill_proficiency'
+  /** Раса или предыстория знает язык или выбирает его из списка. */
+  | 'language'
+  /** Диалект языка: Акван → Первичный. */
+  | 'dialect_of';
 
 interface CatalogEntityBase {
   id: string;
@@ -43,4 +52,7 @@ interface CatalogEntityBase {
 export type CatalogEntity =
   | (CatalogEntityBase & { category: 'spell'; data: SpellData; rules: SpellRules | null })
   | (CatalogEntityBase & { category: 'item'; data: ItemData; rules: ItemRules | null })
-  | (CatalogEntityBase & { category: 'race'; data: RaceData; rules: RaceRules });
+  | (CatalogEntityBase & { category: 'race'; data: RaceData; rules: RaceRules })
+  | (CatalogEntityBase & { category: 'skill'; data: SkillData; rules: null })
+  | (CatalogEntityBase & { category: 'language'; data: LanguageData; rules: null })
+  | (CatalogEntityBase & { category: 'condition'; data: ConditionData; rules: null });

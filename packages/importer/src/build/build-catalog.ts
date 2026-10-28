@@ -4,6 +4,12 @@ import type { ImportIssue } from '../report/issues.ts';
 import { loadReviewedItems } from '../reviewed/reviewed-items.ts';
 import { loadReviewedRaces } from '../reviewed/reviewed-races.ts';
 import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
+import {
+  collectReference,
+  loadReferenceNames,
+  type ReferenceCollectStats,
+} from '../character/collect-reference.ts';
+import { openCharacterCache } from '../character/character-cache.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
@@ -24,6 +30,9 @@ export interface BuildOptions {
   /** Кэш страниц рас; `null` — каталог без рас. */
   raceCacheDir: string | null;
   reviewedRacesDir: string;
+  /** Кэш страниц этапа 3 (reference/, backgrounds/, feats/); `null` — без них. */
+  characterCacheDir: string | null;
+  reviewedCharacterDir: string;
   outFile: string;
   /** Прошлая сборка; `null` — с нуля, без переноса ревизий. */
   previousFile: string | null;
@@ -41,6 +50,7 @@ export interface BuildResult {
   collect: CollectStats;
   items: ItemCollectStats | null;
   races: RaceCollectStats | null;
+  reference: ReferenceCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
   write: WriteStats;
@@ -91,11 +101,23 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         },
       )
     : null;
+  const characterCache = options.characterCacheDir
+    ? openCharacterCache(options.characterCacheDir)
+    : null;
+  const reference = characterCache
+    ? collectReference(
+        characterCache.reference,
+        loadReferenceNames(options.reviewedCharacterDir),
+        issues,
+        { knownSources },
+      )
+    : null;
   const entities = [
     ...spells.entities,
     ...(items?.entities ?? []),
     ...(materials?.components ?? []),
     ...(races?.entities ?? []),
+    ...(reference?.entities ?? []),
   ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
@@ -122,6 +144,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     collect: spells.stats,
     items: items?.stats ?? null,
     races: races?.stats ?? null,
+    reference: reference?.stats ?? null,
     materials: materials?.stats ?? null,
     write: written.stats,
     issues,

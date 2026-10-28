@@ -169,7 +169,8 @@ describe('расы и разновидности', () => {
     const rlw = get('race:goblin-rlw');
     expect(rlw.data.kind).toBe('race');
     expect(rlw.nameRu).toBe('Гоблин');
-    expect(rlw.links).toEqual([]);
+    expect(rlw.links.filter((link) => link.kind === 'variant_of')).toEqual([]);
+    expect(rlw.links).toContainEqual({ toId: 'language:goblin', kind: 'language' });
     expect(get('race:goblin-ggr').sources[0]?.source.code).toBe('GGR');
   });
 

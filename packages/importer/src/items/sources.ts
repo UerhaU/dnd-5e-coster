@@ -32,6 +32,14 @@ const BOOKS: [code: string, title: string][] = [
   ['VRGR', "Van Richten's Guide to Ravenloft"],
   ['TCE', "Tasha's Cauldron of Everything"],
   ['AWM', 'Adventure with Muk'],
+  // Таблицы статьи «Языки» (этап 3).
+  ['MM14', 'Monster Manual'],
+  ['OTA', 'Out of the Abyss'],
+  ['HDQ', 'Hoard of the Dragon Queen'],
+  ['ROT', 'Rise of Tiamat'],
+  ['IDRF', 'Icewind Dale: Rime of the Frostmaiden'],
+  ['SKT', "Storm King's Thunder"],
+  ['TYP', 'Tales from the Yawning Portal'],
 ];
 const BOOKS_BY_TITLE = new Map(BOOKS.map(([code, title]) => [titleKey(title), code]));
 /** Название книги для метки без подсказки: «(MOT)» → «Mythic Odysseys of Theros». */
