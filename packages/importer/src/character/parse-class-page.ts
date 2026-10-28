@@ -194,7 +194,8 @@ function headingText($: CheerioAPI, element: Cheerio<Element>): string {
 /** «Источник: «Xanathar’s Guide to Everything»» → название книги. */
 function sourceTitleOf(text: string): string | null {
   const match = /^Источник:\s*«?([^»]+?)»?\s*$/.exec(cleanText(text));
-  return match?.[1]?.trim() ?? null;
+  // Апостроф и невидимые метки направления: «Tasha’s» с меткой U+200E — как у плашек книг.
+  return match?.[1]?.replace(/[‎‏]/g, '').replace(/’/g, "'").trim() ?? null;
 }
 
 interface FeatureDraft extends RawFeature {

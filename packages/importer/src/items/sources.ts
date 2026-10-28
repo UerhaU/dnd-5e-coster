@@ -51,12 +51,15 @@ const TITLE_BY_CODE = new Map([...BOOKS].reverse().map(([code, title]) => [code,
 
 /** «Mordenkainen’s Tome of Foes» и «Mordenkainen's tome of foes» — одна книга. */
 export function titleKey(title: string): string {
-  return title
-    .replace(/[‎‏]/g, '')
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”«»"]/g, '')
-    .trim()
-    .toLowerCase();
+  return (
+    title
+      // Невидимые метки направления U+200E, U+200F: «Tasha’s» на страницах классов.
+      .replace(/[‎‏]/g, '')
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”«»"]/g, '')
+      .trim()
+      .toLowerCase()
+  );
 }
 
 /** В тексте страниц метки иногда отличаются от плашек сайта. */
