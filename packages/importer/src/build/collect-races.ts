@@ -49,6 +49,7 @@ export function collectRaces(
   const sources = new ItemSources(options.knownSources);
   const entities = new Map<string, CatalogEntity>();
   const usedKeys = new Set<string>();
+  const usedFills = new Set<string>();
 
   for (const invalid of reviewed.invalid) {
     issues.push({
@@ -128,6 +129,35 @@ export function collectRaces(
           message,
         });
       };
+      const fill = reviewed.fills.get(race.id);
+      if (fill) {
+        usedFills.add(race.id);
+        const filled = (field: string, empty: boolean) => {
+          if (empty) return true;
+          issues.push({
+            severity: 'warning',
+            entityId: race.id,
+            dndsuId: page.id,
+            field: 'reviewed',
+            message: `data/reviewed/races/rules.json: ${field} уже разобрано со страницы — дополнение не нужно`,
+          });
+          return false;
+        };
+        if (fill.size && filled('size', race.rules.size === null)) {
+          race.rules.size = fill.size;
+          // «Размер» не разобран со страницы — теперь он задан: предупреждение снимается.
+          const parsed = issues.findIndex(
+            (issue) =>
+              issue.entityId === race.id &&
+              issue.field === 'rules' &&
+              issue.message.includes('«Размер»'),
+          );
+          if (parsed >= 0) issues.splice(parsed, 1);
+        }
+        if (fill.walkFt && filled('walkFt', race.rules.speed.walk === null)) {
+          race.rules.speed.walk = fill.walkFt;
+        }
+      }
       const data = raceDataSchema.safeParse(race.data);
       if (!data.success) {
         fail(`данные не прошли схему race/v1: ${z.prettifyError(data.error)}`);
@@ -169,6 +199,16 @@ export function collectRaces(
   }
 
   if (options.reportUnusedReviewed) {
+    for (const id of reviewed.fills.keys()) {
+      if (usedFills.has(id)) continue;
+      issues.push({
+        severity: 'warning',
+        entityId: id,
+        dndsuId: null,
+        field: 'reviewed',
+        message: `data/reviewed/races/rules.json: расы ${id} нет в каталоге`,
+      });
+    }
     for (const entry of reviewed.blocks.values()) {
       if (entry.skip || usedKeys.has(raceBlockKey(entry.page, entry.match, entry.book))) continue;
       issues.push({

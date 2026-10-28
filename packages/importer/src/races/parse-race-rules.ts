@@ -58,7 +58,7 @@ const SKILL_STEMS: [RegExp, Skill][] = [
   [/Истори[яюи](?![а-яё])/, 'history'],
   [/Проницательност/, 'insight'],
   [/Запугивани/, 'intimidation'],
-  [/Анализ/, 'investigation'],
+  [/Расследовани|Анализ/, 'investigation'],
   [/Медицин/, 'medicine'],
   [/Природ[аыу](?![а-яё])/, 'nature'],
   [/Восприяти/, 'perception'],
@@ -92,7 +92,7 @@ const LANGUAGE_STEMS: [RegExp, Language][] = [
   [/Игнан/, 'ignan'],
   [/Терран/, 'terran'],
   [/Гитск/, 'gith'],
-  [/Квори|Куори/, 'quori'],
+  [/Куори|Квори/, 'quori'],
   [/Леонин(ск|ов)/, 'leonin'],
   [/Локсодон(ск|ов)/, 'loxodon'],
   [/Минотавр/, 'minotaur'],
@@ -175,6 +175,21 @@ const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']]
  * разных видов: механикой не записывается, особенность остаётся текстом.
  */
 const MIXED_PROFICIENCY = /(навык[а-яё]*|оружи[а-яё]*) или (одним )?инструмент/;
+
+/**
+ * Владение только в особых проверках: «Если вы совершаете проверку … связанную с работой
+ * по камню, вы считаетесь владеющим навыком История» — не постоянное владение.
+ */
+const CONDITIONAL_PROFICIENCY = /считает[а-яё]* владеющ/;
+
+/**
+ * Выбор одного из вариантов особенности («Выберите одно из наследий ниже»): что даёт
+ * каждый вариант, механикой не записывается до движка правил (Р73) — только текст.
+ */
+const OPTION_MENU = /Выберите одн[оуа] из [^.:]*ниже/;
+
+/** Особенность «Фея»: «Вы — Фея, а не Гуманоид» — вид существа. */
+const CREATURE_STATEMENT = /^Вы\s+(?:[—–-]\s+)?([А-ЯЁа-яё]+)(?=[,.]|\s+а не)/;
 
 /** Особенности, которые полностью описываются полями механики (или не нужны ей). */
 const STANDARD_FEATURES =
@@ -351,6 +366,17 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
       continue;
     }
 
+    const statement = CREATURE_STATEMENT.exec(text)?.[1];
+    const stated = statement ? found(statement, CREATURE_WORDS)[0] : undefined;
+    if (stated) {
+      rules.creatureType = stated;
+      continue;
+    }
+    if (OPTION_MENU.test(text)) {
+      if (!STANDARD_FEATURES.test(name)) rules.textOnly.push(name);
+      continue;
+    }
+
     // Остальные особенности: скорости, владения, сопротивления — где встретятся.
     const walk = /скорост[а-яё]* ходьбы[^.\d]*(\d+)\s*(фут|фт)/.exec(text);
     if (walk) rules.speed.walk = Number(walk[1]);
@@ -360,12 +386,12 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     rules.speed.burrow ??= parseSpeed(text, /скорост[а-яё]* (копания|рытья)/);
 
     for (const sentence of sentences(text)) {
-      if (MIXED_PROFICIENCY.test(sentence)) continue;
+      if (MIXED_PROFICIENCY.test(sentence) || CONDITIONAL_PROFICIENCY.test(sentence)) continue;
       if (/навык/.test(sentence) && /владе/.test(sentence)) {
-        // «…навыками Выступление и Убеждение, а также одним инструментом по вашему выбору»:
-        // выбор относится к инструменту, а не к навыкам.
+        // «…навыками Выступление и Убеждение, а также (получаете владение) одним
+        // инструментом по вашему выбору»: выбор относится к инструменту, а не к навыкам.
         const skillPart =
-          sentence.split(/,?\s+(?:а также|и)\s+(?:одним\s+)?[а-яё]*\s*инструмент/)[0] ?? '';
+          sentence.split(/,?\s+(?:а также|и)\s+(?:[а-яё]+\s+){0,4}инструмент/)[0] ?? '';
         const skills = found(skillPart, SKILL_STEMS);
         if (/выбор|из следующ|одним из|двумя из/.test(skillPart)) {
           rules.skills.choices.push({
