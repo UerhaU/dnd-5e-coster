@@ -44,9 +44,10 @@ test('справочник: найти «Огненный шар» по «огн
   await expect(window.getByRole('searchbox', { name: 'Поиск заклинаний' })).toHaveValue('огнен');
 });
 
-// Сценарий этапа 2: «Снаряжение» → фильтр «Воинское рукопашное» → поиск «меч» →
+// Сценарий этапа 2: скрытые по умолчанию компоненты (Р70), затем
+// «Снаряжение» → фильтр «Воинское рукопашное» → поиск «меч» →
 // карточка «Длинного меча» с уроном и свойствами. Есть в обоих каталогах.
-test('справочник: найти «Длинный меч» в снаряжении и открыть карточку', async () => {
+test('справочник: компоненты по фильтру вида, найти «Длинный меч» и открыть карточку', async () => {
   const { window } = running;
 
   // Прошлый сценарий закончился в списке заклинаний.
@@ -54,9 +55,29 @@ test('справочник: найти «Длинный меч» в снаряж
   await window.getByRole('link', { name: /Снаряжение/ }).click();
   await expect(window.getByRole('heading', { level: 1, name: 'Снаряжение' })).toBeVisible();
 
-  await window.getByLabel('Группа').selectOption('martial_melee');
-  await window.getByRole('searchbox', { name: 'Поиск снаряжения' }).fill('меч');
+  const search = window.getByRole('searchbox', { name: 'Поиск снаряжения' });
   const results = window.getByRole('list', { name: 'Результаты поиска' });
+  const kind = window.getByRole('combobox', { name: 'Вид', exact: true });
+  await expect(results).toBeVisible();
+  await expect(results.getByRole('link', { name: /Компонент заклинания/ })).toHaveCount(0);
+  await search.fill('Гуано летучей мыши');
+  await expect(window.getByTestId('result-count')).toHaveText('Найдено: 0');
+  await expect(results.getByRole('link')).toHaveCount(0);
+
+  await kind.selectOption('spell_component');
+  await expect(window.getByTestId('result-count')).toHaveText('Найдено: 1');
+  await results.getByRole('link', { name: /Гуано летучей мыши/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Гуано летучей мыши' })).toBeVisible();
+  await expect(window.getByTestId('item-kind')).toHaveText('Компонент заклинания');
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await expect(kind).toHaveValue('spell_component');
+  await kind.selectOption('');
+  await expect(window.getByTestId('result-count')).toHaveText('Найдено: 0');
+  await expect(results.getByRole('link')).toHaveCount(0);
+
+  await window.getByLabel('Группа').selectOption('martial_melee');
+  await search.fill('меч');
   const longsword = results.getByRole('link', { name: /Длинный меч/ });
   await expect(longsword).toBeVisible();
   await expect(longsword).toContainText('1к8 рубящий');
@@ -141,6 +162,12 @@ test('справочник: поиск везде, огненный шар → �
   await expect(
     results.getByTestId('result-category').filter({ hasText: /^(Раса|Разновидность расы)/ }),
   ).not.toHaveCount(0);
+
+  await search.fill('Гуано летучей мыши');
+  await expect(results.getByRole('link', { name: /Гуано летучей мыши/ })).toBeVisible();
+  await expect(results.getByTestId('result-category').first()).toHaveText(
+    /^Снаряжение · Компонент заклинания/,
+  );
 
   await search.fill('огненный шар');
   await results

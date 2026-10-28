@@ -1,6 +1,7 @@
 import type { CatalogConnection } from '@koster/db';
 import {
   apiErrorSchema,
+  catalogSearchResponseSchema,
   entityResponseSchema,
   itemFacetsResponseSchema,
   itemListResponseSchema,
@@ -54,15 +55,43 @@ async function card(id: string): Promise<ItemEntityResponse> {
 describe('GET /api/catalog/item — список', () => {
   it('страницы и алфавитный порядок без запроса', async () => {
     const page = await list('pageSize=5');
-    expect(page).toMatchObject({ total: 61, page: 1, pageSize: 5 });
+    expect(page).toMatchObject({ total: 42, page: 1, pageSize: 5 });
     expect(page.items.map((item) => item.nameRu)).toEqual([
       'Абак',
-      // «Компонент заклинания» (Р60) — тоже предмет каталога.
-      'Алмазная пыль',
       'Арбалет, лёгкий',
       'Астральный бриг',
       'Батарея',
+      'Боевой воздушный шар',
     ]);
+  });
+
+  it('Р70: компоненты скрыты без вида, доступны по виду, в общем поиске и карточке', async () => {
+    const equipment = await list('pageSize=100');
+    expect(equipment.items).toHaveLength(equipment.total);
+    expect(equipment.items.some((item) => item.kind === 'spell_component')).toBe(false);
+
+    const query = `q=${encodeURIComponent('Гуано летучей мыши')}`;
+    expect(await list(query)).toMatchObject({ items: [], total: 0 });
+
+    const components = await list('kind=spell_component&pageSize=100');
+    expect(components.total).toBe(19);
+    expect(components.items).toHaveLength(19);
+    expect(components.items.every((item) => item.kind === 'spell_component')).toBe(true);
+    const filtered = await list(`kind=spell_component&${query}`);
+    expect(filtered.total).toBe(1);
+    expect(filtered.items[0]?.id).toBe('item:bat-guano');
+
+    const { status, body } = await get(`/api/catalog/search?${query}`);
+    expect(status).toBe(200);
+    const search = catalogSearchResponseSchema.parse(body);
+    expect(search.items).toContainEqual(
+      expect.objectContaining({
+        id: 'item:bat-guano',
+        category: 'item',
+        item: expect.objectContaining({ kind: 'spell_component' }),
+      }),
+    );
+    expect((await card('item:bat-guano')).data.kind).toBe('spell_component');
   });
 
   it('фильтры: вид, группа, свойство, тип урона, вариант правил', async () => {
@@ -119,6 +148,11 @@ describe('GET /api/catalog/item/facets', () => {
     expect(status).toBe(200);
     const facets = itemFacetsResponseSchema.parse(body);
     expect(facets.kind).toContainEqual({ value: 'armor', label: 'Доспех', count: 3 });
+    expect(facets.kind).toContainEqual({
+      value: 'spell_component',
+      label: 'Компонент заклинания',
+      count: 19,
+    });
     expect(facets.property).toContainEqual({
       value: 'versatile',
       label: 'Универсальное',

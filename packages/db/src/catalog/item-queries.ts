@@ -42,6 +42,9 @@ export function listItems(catalog: CatalogConnection, query: ItemListQuery): Ite
   if (query.kind) {
     where.push('ii.kind_id = @kind');
     params['kind'] = query.kind;
+  } else {
+    // Р70: компоненты заклинаний видны в снаряжении только по фильтру «Вид».
+    where.push("ii.kind_id != 'spell_component'");
   }
   if (query.category) {
     where.push('ii.category_id = @category');
