@@ -248,6 +248,7 @@ test('справочник: предыстория «Артист» — навы
 test('справочник: черты — «Одарённый» и требование «Знатока средних доспехов»', async () => {
   const window = await openList('feat', 'Черты');
   await window.getByLabel('Требование').selectOption('false');
+  await window.getByRole('searchbox', { name: 'Поиск: черты' }).fill('Одарённый');
   const results = window.getByRole('list', { name: 'Результаты поиска' });
   await results.getByRole('link', { name: /Одарённый/ }).click();
   await expect(window.getByRole('heading', { level: 1, name: 'Одарённый' })).toBeVisible();
