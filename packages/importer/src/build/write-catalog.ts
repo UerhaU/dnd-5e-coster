@@ -13,6 +13,8 @@ import type { Ledger, LedgerRevision } from './ledger.ts';
 import {
   writeItemIndex,
   writeLanguageIndex,
+  writeBackgroundIndex,
+  writeFeatIndex,
   writeRaceIndex,
   writeSkillIndex,
   writeSpellIndex,
@@ -358,6 +360,10 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
           writeSkillIndex(tx, entity);
         } else if (entity.category === 'language') {
           writeLanguageIndex(tx, entity);
+        } else if (entity.category === 'background') {
+          writeBackgroundIndex(tx, entity);
+        } else if (entity.category === 'feat') {
+          writeFeatIndex(tx, entity);
         }
         for (const link of entity.links) {
           if (!currentIds.has(link.toId)) {

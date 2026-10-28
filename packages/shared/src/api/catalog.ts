@@ -97,6 +97,40 @@ export const raceListQuerySchema = z.strictObject({
 export type RaceListQuery = z.infer<typeof raceListQuerySchema>;
 export type RaceListParams = Partial<RaceListQuery>;
 
+/** Справочные категории этапа 3: один вид списка, фильтры — своей категории. */
+export const REFERENCE_LIST_CATEGORIES = [
+  'skill',
+  'language',
+  'condition',
+  'background',
+  'feat',
+] as const;
+export type ReferenceListCategory = (typeof REFERENCE_LIST_CATEGORIES)[number];
+
+/**
+ * `GET /api/catalog/{skill,language,condition,background,feat}?…`. Фильтр чужой
+ * категории не ошибка, а пустое условие: так у всех пяти списков одна схема.
+ */
+export const referenceListQuerySchema = z.strictObject({
+  ...listPaging,
+  /** Навыки: характеристика проверки. */
+  ability: z.enum(idsOf(ABILITIES)).optional(),
+  /** Языки: `standard` / `exotic`; предыстории: `background` / `adaptation`. */
+  kind: z.enum(['standard', 'exotic', 'background', 'adaptation']).optional(),
+  /** Предыстории: умение даёт черту. */
+  grantsFeat: flag.optional(),
+  /** Черты: есть требование. */
+  prerequisite: flag.optional(),
+  /** Черты: увеличивает характеристику. */
+  abilityIncrease: flag.optional(),
+  /** Черты: требует расу или размер. */
+  raceRequired: flag.optional(),
+  sort: z.enum(['relevance', 'name']).default('relevance'),
+});
+
+export type ReferenceListQuery = z.infer<typeof referenceListQuerySchema>;
+export type ReferenceListParams = Partial<ReferenceListQuery>;
+
 /** `GET /api/catalog/search?…` — поиск по всему каталогу (Р54). */
 export const catalogSearchQuerySchema = z.strictObject({
   q: z.string().trim().min(1).max(CATALOG_QUERY_MAX),
@@ -194,6 +228,27 @@ export const raceListResponseSchema = z.object({
   pageSize: z.number().int().min(1),
 });
 
+export const referenceListItemSchema = z.object({
+  id: entityIdSchema,
+  category: z.enum(REFERENCE_LIST_CATEGORIES),
+  nameRu: z.string(),
+  nameEn: z.string(),
+  /**
+   * Короткая строка списка: характеристика навыка, вид языка, требование черты,
+   * владения навыками предыстории; `null` — нечего показать.
+   */
+  detail: z.string().nullable(),
+  sources: z.array(z.string()),
+  reviewStatus: reviewStatusSchema,
+});
+
+export const referenceListResponseSchema = z.object({
+  items: z.array(referenceListItemSchema),
+  total: z.number().int().min(0),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+});
+
 const facetValue = <T extends z.ZodType>(value: T) =>
   z.object({ value, label: z.string(), count: z.number().int().min(0) });
 
@@ -224,6 +279,17 @@ export const raceFacetsResponseSchema = z.object({
   source: z.array(facetValue(z.string())),
   flying: z.number().int().min(0),
   darkvision: z.number().int().min(0),
+});
+
+/** `GET /api/catalog/{skill,language,…}/facets`: пустые списки и нули — фильтр не для этой категории. */
+export const referenceFacetsResponseSchema = z.object({
+  ability: z.array(facetValue(z.string())),
+  kind: z.array(facetValue(z.string())),
+  source: z.array(facetValue(z.string())),
+  grantsFeat: z.number().int().min(0),
+  prerequisite: z.number().int().min(0),
+  abilityIncrease: z.number().int().min(0),
+  raceRequired: z.number().int().min(0),
 });
 
 /** `GET /api/catalog/categories` */
@@ -406,6 +472,9 @@ export type BackgroundEntityResponse = z.infer<typeof backgroundEntityResponseSc
 export type FeatEntityResponse = z.infer<typeof featEntityResponseSchema>;
 export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
 export type RaceListItem = z.infer<typeof raceListItemSchema>;
+export type ReferenceListItem = z.infer<typeof referenceListItemSchema>;
+export type ReferenceListResponse = z.infer<typeof referenceListResponseSchema>;
+export type ReferenceFacetsResponse = z.infer<typeof referenceFacetsResponseSchema>;
 export type RaceListResponse = z.infer<typeof raceListResponseSchema>;
 export type SearchResultItem = z.infer<typeof searchResultItemSchema>;
 export type CatalogSearchResponse = z.infer<typeof catalogSearchResponseSchema>;

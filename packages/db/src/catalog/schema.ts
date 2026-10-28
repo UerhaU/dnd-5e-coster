@@ -236,6 +236,30 @@ export const languageIndex = sqliteTable(
   (table) => [index('language_index_kind').on(table.kind)],
 );
 
+/** Поля для фильтров списка предысторий (этап 3). */
+export const backgroundIndex = sqliteTable('background_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** `background` — предыстория, `adaptation` — статья «Адаптация предысторий». */
+  kind: text('kind', { enum: ['background', 'adaptation'] }).notNull(),
+  /** Есть умение, дающее черту (связь `grants_feat`). */
+  grantsFeat: integer('grants_feat', { mode: 'boolean' }).notNull(),
+});
+
+/** Поля для фильтров списка черт (этап 3). */
+export const featIndex = sqliteTable('feat_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** Есть требование. */
+  hasPrerequisite: integer('has_prerequisite', { mode: 'boolean' }).notNull(),
+  /** Даёт увеличение характеристики. */
+  abilityIncrease: integer('ability_increase', { mode: 'boolean' }).notNull(),
+  /** Требует расу или разновидность. */
+  raceRequired: integer('race_required', { mode: 'boolean' }).notNull(),
+});
+
 /** Свойства оружия: для фильтра «фехтовальное», «метательное»… */
 export const itemIndexProperties = sqliteTable(
   'item_index_properties',

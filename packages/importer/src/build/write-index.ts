@@ -4,6 +4,8 @@ import type { CatalogEntity } from './catalog-entity.ts';
 // Поля для фильтров списка (раздел 5.2): у каждой категории своя таблица.
 
 const {
+  backgroundIndex,
+  featIndex,
   itemIndex,
   itemIndexProperties,
   languageIndex,
@@ -19,6 +21,8 @@ type ItemEntity = Extract<CatalogEntity, { category: 'item' }>;
 type RaceEntity = Extract<CatalogEntity, { category: 'race' }>;
 type SkillEntity = Extract<CatalogEntity, { category: 'skill' }>;
 type LanguageEntity = Extract<CatalogEntity, { category: 'language' }>;
+type BackgroundEntity = Extract<CatalogEntity, { category: 'background' }>;
+type FeatEntity = Extract<CatalogEntity, { category: 'feat' }>;
 
 export function writeSpellIndex(tx: Transaction, entity: SpellEntity): void {
   tx.insert(spellIndex)
@@ -84,5 +88,29 @@ export function writeSkillIndex(tx: Transaction, entity: SkillEntity): void {
 export function writeLanguageIndex(tx: Transaction, entity: LanguageEntity): void {
   tx.insert(languageIndex)
     .values({ entityId: entity.id, kind: entity.data.kind, dialectOf: entity.data.dialectOf })
+    .run();
+}
+
+export function writeBackgroundIndex(tx: Transaction, entity: BackgroundEntity): void {
+  tx.insert(backgroundIndex)
+    .values({
+      entityId: entity.id,
+      kind: entity.data.kind,
+      grantsFeat: entity.links.some((link) => link.kind === 'grants_feat'),
+    })
+    .run();
+}
+
+export function writeFeatIndex(tx: Transaction, entity: FeatEntity): void {
+  const increase = entity.rules.abilityIncrease;
+  tx.insert(featIndex)
+    .values({
+      entityId: entity.id,
+      hasPrerequisite: entity.rules.prerequisites.length > 0,
+      abilityIncrease: increase.fixed.length + increase.choices.length > 0,
+      raceRequired: entity.rules.prerequisites.some((group) =>
+        group.some((requirement) => requirement.kind === 'race' || requirement.kind === 'size'),
+      ),
+    })
     .run();
 }

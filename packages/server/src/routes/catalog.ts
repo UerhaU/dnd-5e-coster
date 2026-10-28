@@ -3,6 +3,8 @@ import {
   listCategories,
   listItems,
   listRaces,
+  listReference,
+  referenceFacets,
   raceFacets,
   listSpells,
   searchCatalog,
@@ -17,6 +19,8 @@ import {
   entityResponseSchema,
   itemListQuerySchema,
   raceListQuerySchema,
+  REFERENCE_LIST_CATEGORIES,
+  referenceListQuerySchema,
   revisionParamsSchema,
   spellListQuerySchema,
   type CatalogSearchResponse,
@@ -26,6 +30,9 @@ import {
   type ItemListResponse,
   type RaceFacetsResponse,
   type RaceListResponse,
+  type ReferenceFacetsResponse,
+  type ReferenceListCategory,
+  type ReferenceListResponse,
   type SpellFacetsResponse,
   type SpellListResponse,
 } from '@koster/shared';
@@ -33,7 +40,8 @@ import type { FastifyInstance } from 'fastify';
 import { HttpError, parseOr400 } from '../errors';
 
 // Маршруты каталога (раздел 7). Каталог открыт только для чтения (Р21).
-// Категории со списком: заклинания, снаряжение и расы; остальные отвечают 404.
+// Категории со списком: заклинания, снаряжение, расы и справочные категории этапа 3
+// (навыки, языки, состояния, предыстории, черты); остальные отвечают 404.
 
 function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
   if (!catalog) {
@@ -45,13 +53,17 @@ function requireCatalog(catalog: CatalogConnection | null): CatalogConnection {
   return catalog;
 }
 
+type ListCategory = 'spell' | 'item' | 'race' | ReferenceListCategory;
+
+const LIST_CATEGORIES: readonly string[] = ['spell', 'item', 'race', ...REFERENCE_LIST_CATEGORIES];
+
 /** Категория из адреса; неизвестная — 404. */
-function listCategory(params: unknown): 'spell' | 'item' | 'race' {
+function listCategory(params: unknown): ListCategory {
   const { category } = parseOr400(categoryParamsSchema, params);
-  if (category !== 'spell' && category !== 'item' && category !== 'race') {
+  if (!LIST_CATEGORIES.includes(category)) {
     throw new HttpError('not_found', `Нет категории «${category}»`);
   }
-  return category;
+  return category as ListCategory;
 }
 
 function entityCard(catalog: CatalogConnection, id: string, revision?: number): EntityResponse {
@@ -92,17 +104,25 @@ export function registerCatalogRoutes(
 
   server.get(
     '/api/catalog/:category/facets',
-    async (request): Promise<SpellFacetsResponse | ItemFacetsResponse | RaceFacetsResponse> => {
+    async (
+      request,
+    ): Promise<
+      SpellFacetsResponse | ItemFacetsResponse | RaceFacetsResponse | ReferenceFacetsResponse
+    > => {
       const category = listCategory(request.params);
       const connection = requireCatalog(catalog);
       if (category === 'race') return raceFacets(connection);
-      return category === 'spell' ? spellFacets(connection) : itemFacets(connection);
+      if (category === 'spell') return spellFacets(connection);
+      if (category === 'item') return itemFacets(connection);
+      return referenceFacets(connection, category);
     },
   );
 
   server.get(
     '/api/catalog/:category',
-    async (request): Promise<SpellListResponse | ItemListResponse | RaceListResponse> => {
+    async (
+      request,
+    ): Promise<SpellListResponse | ItemListResponse | RaceListResponse | ReferenceListResponse> => {
       const category = listCategory(request.params);
       if (category === 'race') {
         const query = parseOr400(raceListQuerySchema, request.query);
@@ -112,8 +132,12 @@ export function registerCatalogRoutes(
         const query = parseOr400(spellListQuerySchema, request.query);
         return listSpells(requireCatalog(catalog), query);
       }
-      const query = parseOr400(itemListQuerySchema, request.query);
-      return listItems(requireCatalog(catalog), query);
+      if (category === 'item') {
+        const query = parseOr400(itemListQuerySchema, request.query);
+        return listItems(requireCatalog(catalog), query);
+      }
+      const query = parseOr400(referenceListQuerySchema, request.query);
+      return listReference(requireCatalog(catalog), category, query);
     },
   );
 }
