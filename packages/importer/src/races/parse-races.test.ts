@@ -294,3 +294,58 @@ describe('владение инструментами (Р69)', () => {
     expect(mixed.textOnly).toEqual(['Декадентское мастерство']);
   });
 });
+
+describe('ручная проверка этапа 2 (Р73)', () => {
+  const rulesOf = (name: string, text: string) =>
+    parseRaceRules([{ name, blocks: [{ type: 'paragraph', text }] }]).rules;
+
+  it('владение только в особых проверках — не постоянное, особенность текстом', () => {
+    const stone = rulesOf(
+      'Знание камня',
+      'Если вы совершаете проверку Интеллекта (История) о работе по камню, вы считаетесь владеющим навыком История и удваиваете бонус мастерства.',
+    );
+    expect(stone.skills.fixed).toEqual([]);
+    expect(stone.textOnly).toEqual(['Знание камня']);
+  });
+
+  it('«Расследование» и «Куори» распознаются', () => {
+    expect(
+      rulesOf(
+        'Любопытство',
+        'Вы владеете одним из следующих навыков на ваш выбор: Проницательность, Расследование или Скрытность.',
+      ).skills.choices,
+    ).toEqual([{ count: 1, from: ['insight', 'investigation', 'stealth'] }]);
+    expect(
+      rulesOf('Языки', 'Вы можете говорить, читать и писать на Общем и Куори.').languages,
+    ).toEqual({ fixed: ['common', 'quori'], choose: 0 });
+  });
+
+  it('навыки постоянные, когда выбор — у инструмента («а также получаете владение»)', () => {
+    const satyr = rulesOf(
+      'Гуляка',
+      'Вы получаете владение навыками Выступление и Убеждение, а также получаете владение одним музыкальным инструментом по вашему выбору.',
+    );
+    expect(satyr.skills).toEqual({ fixed: ['performance', 'persuasion'], choices: [] });
+    expect(satyr.tools.choices).toEqual([{ count: 1, from: null, group: 'musical_instrument' }]);
+  });
+
+  it('«Вы — Фея» — вид существа; выбор варианта особенности — текстом', () => {
+    const fey = rulesOf('Фея', 'Вы — Фея, а не Гуманоид.');
+    expect(fey.creatureType).toBe('fey');
+    expect(fey.textOnly).toEqual([]);
+    expect(rulesOf('Фея', 'Вы Фея, а не Гуманоид.').creatureType).toBe('fey');
+    const heritage = rulesOf(
+      'Наследие',
+      'Выберите одно из наследий ниже. Хитрость. Вы получаете владение одним из следующих навыков по вашему выбору: Магия или Медицина.',
+    );
+    expect(heritage.skills.choices).toEqual([]);
+    expect(heritage.textOnly).toEqual(['Наследие']);
+  });
+
+  it('data/reviewed/races/rules.json читается без ошибок', () => {
+    const reviewed = loadReviewedRaces(DEFAULT_PATHS.reviewedRaces);
+    expect(reviewed.invalid).toEqual([]);
+    expect(reviewed.fills.get('race:centaur-mot')?.walkFt).toBe(40);
+    expect(reviewed.fills.get('race:aasimar')?.size).toEqual(['medium']);
+  });
+});
