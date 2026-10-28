@@ -297,6 +297,44 @@ test('справочник: подклассы воина → «Мистичес
   await expect(window.getByRole('heading', { level: 1, name: 'Воин' })).toBeVisible();
 });
 
+// Этап 3, часть В: общий поиск (Р54) видит новые категории с подписью категории;
+// фильтр по классу (Р53) — по объектам, пометка с названием подкласса. Все объекты —
+// в обоих каталогах (огненный шар у жреца — через «Домен света»).
+test('справочник: поиск везде — навык, язык, состояние, предыстория, черта, класс, подкласс', async () => {
+  const { window } = running;
+  await window.evaluate("location.hash = '#/reference'");
+  const search = window.getByRole('searchbox', { name: 'Поиск по всему справочнику' });
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  for (const [query, label] of [
+    ['акробатика', /^Навык · Ловкость/],
+    ['акван', /^Язык · Диалект: Первичный/],
+    ['сбитый с ног', /^Состояние/],
+    ['артист', /^Предыстория/],
+    ['одарённый', /^Черта/],
+    ['монах', /^Класс/],
+    ['мистический рыцарь', /^Подкласс/],
+  ] as const) {
+    await search.fill(query);
+    await expect(results.getByTestId('result-category').first()).toHaveText(label);
+  }
+  await results
+    .getByRole('link', { name: /Мистический рыцарь/ })
+    .first()
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Мистический рыцарь' })).toBeVisible();
+});
+
+test('справочник: заклинания жреца — огненный шар «через подкласс: Домен света»', async () => {
+  const window = await openList('spell', 'Заклинания');
+  await window.getByRole('combobox', { name: /^Класс/ }).selectOption('class:cleric');
+  await window.getByRole('searchbox', { name: 'Поиск заклинаний' }).fill('огненный шар');
+  const fireball = window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Огненный шар/ })
+    .first();
+  await expect(fireball).toContainText('через подкласс: Домен света');
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);
