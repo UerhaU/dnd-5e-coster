@@ -34,11 +34,14 @@ const namesFileSchema = z.strictObject({
   $comment: z.string().optional(),
   languages: z.record(z.string().min(1), z.string().min(1)),
   conditions: z.record(z.string().min(1), z.string().min(1)),
+  /** Страницы без английского названия («Адаптация предысторий VRGR»): номер → название. */
+  backgrounds: z.record(z.string().regex(/^\d+$/), z.string().min(1)),
 });
 
 export interface ReferenceNames {
   languages: Map<string, string>;
   conditions: Map<string, string>;
+  backgrounds: Map<number, string>;
 }
 
 export function loadReferenceNames(folder: string): ReferenceNames {
@@ -46,7 +49,13 @@ export function loadReferenceNames(folder: string): ReferenceNames {
   const parsed = namesFileSchema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
   const toMap = (record: Record<string, string>) =>
     new Map(Object.entries(record).map(([ru, en]) => [nameKey(ru), en]));
-  return { languages: toMap(parsed.languages), conditions: toMap(parsed.conditions) };
+  return {
+    languages: toMap(parsed.languages),
+    conditions: toMap(parsed.conditions),
+    backgrounds: new Map(
+      Object.entries(parsed.backgrounds).map(([page, en]) => [Number(page), en]),
+    ),
+  };
 }
 
 export interface ReferenceCollectStats {

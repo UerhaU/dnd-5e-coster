@@ -1,5 +1,7 @@
 import type {
   Automation,
+  BackgroundData,
+  BackgroundRules,
   Edition,
   ConditionData,
   ItemData,
@@ -30,7 +32,9 @@ export type LinkKind =
   /** Раса или предыстория знает язык или выбирает его из списка. */
   | 'language'
   /** Диалект языка: Акван → Первичный. */
-  | 'dialect_of';
+  | 'dialect_of'
+  /** Предмет стартового снаряжения предыстории. */
+  | 'starting_equipment';
 
 interface CatalogEntityBase {
   id: string;
@@ -55,4 +59,5 @@ export type CatalogEntity =
   | (CatalogEntityBase & { category: 'race'; data: RaceData; rules: RaceRules })
   | (CatalogEntityBase & { category: 'skill'; data: SkillData; rules: null })
   | (CatalogEntityBase & { category: 'language'; data: LanguageData; rules: null })
-  | (CatalogEntityBase & { category: 'condition'; data: ConditionData; rules: null });
+  | (CatalogEntityBase & { category: 'condition'; data: ConditionData; rules: null })
+  | (CatalogEntityBase & { category: 'background'; data: BackgroundData; rules: BackgroundRules });

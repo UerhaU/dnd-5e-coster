@@ -1,3 +1,4 @@
+export * from './background.ts';
 export * from './codes.ts';
 export * from './entity.ts';
 export * from './item.ts';

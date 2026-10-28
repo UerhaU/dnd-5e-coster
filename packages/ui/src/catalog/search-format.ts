@@ -12,6 +12,7 @@ const CATEGORY_LABELS: Record<SearchResultItem['category'], string> = {
   skill: 'Навык',
   language: 'Язык',
   condition: 'Состояние',
+  background: 'Предыстория',
 };
 
 export function categoryLabel(category: SearchResultItem['category']): string {

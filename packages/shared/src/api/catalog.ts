@@ -13,6 +13,7 @@ import { itemDataSchema } from '../catalog/item.ts';
 import { SIZES } from '../catalog/race-codes.ts';
 import { raceRulesSchema } from '../catalog/race-rules.ts';
 import { raceDataSchema } from '../catalog/race.ts';
+import { backgroundDataSchema, backgroundRulesSchema } from '../catalog/background.ts';
 import { conditionDataSchema, languageDataSchema, skillDataSchema } from '../catalog/reference.ts';
 import { spellRulesSchema } from '../catalog/spell-rules.ts';
 import { spellDataSchema } from '../catalog/spell.ts';
@@ -349,6 +350,14 @@ export const conditionEntityResponseSchema = z.object({
   rules: z.null(),
 });
 
+/** Карточка предыстории. */
+export const backgroundEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('background'),
+  data: backgroundDataSchema,
+  rules: backgroundRulesSchema,
+});
+
 /** `GET /api/catalog/entity/:id` и `…/revisions/:rev` — карточка объекта любой категории. */
 export const entityResponseSchema = z.discriminatedUnion('category', [
   spellEntityResponseSchema,
@@ -357,6 +366,7 @@ export const entityResponseSchema = z.discriminatedUnion('category', [
   skillEntityResponseSchema,
   languageEntityResponseSchema,
   conditionEntityResponseSchema,
+  backgroundEntityResponseSchema,
 ]);
 
 export const entityParamsSchema = z.strictObject({ id: entityIdSchema });
@@ -382,6 +392,7 @@ export type ItemFacetsResponse = z.infer<typeof itemFacetsResponseSchema>;
 export type SkillEntityResponse = z.infer<typeof skillEntityResponseSchema>;
 export type LanguageEntityResponse = z.infer<typeof languageEntityResponseSchema>;
 export type ConditionEntityResponse = z.infer<typeof conditionEntityResponseSchema>;
+export type BackgroundEntityResponse = z.infer<typeof backgroundEntityResponseSchema>;
 export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
 export type RaceListItem = z.infer<typeof raceListItemSchema>;
 export type RaceListResponse = z.infer<typeof raceListResponseSchema>;

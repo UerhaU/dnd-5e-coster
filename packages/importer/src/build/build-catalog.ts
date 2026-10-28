@@ -9,6 +9,12 @@ import {
   loadReferenceNames,
   type ReferenceCollectStats,
 } from '../character/collect-reference.ts';
+import {
+  backgroundLookup,
+  loadEquipmentPhrases,
+  collectBackgrounds,
+  type BackgroundCollectStats,
+} from '../character/collect-backgrounds.ts';
 import { openCharacterCache } from '../character/character-cache.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
@@ -51,6 +57,7 @@ export interface BuildResult {
   items: ItemCollectStats | null;
   races: RaceCollectStats | null;
   reference: ReferenceCollectStats | null;
+  backgrounds: BackgroundCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
   write: WriteStats;
@@ -112,12 +119,26 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         { knownSources },
       )
     : null;
+  const backgrounds =
+    characterCache && reference
+      ? collectBackgrounds(
+          characterCache.backgrounds,
+          backgroundLookup(
+            [...(items?.entities ?? []), ...reference.entities],
+            loadEquipmentPhrases(options.reviewedCharacterDir),
+          ),
+          loadReferenceNames(options.reviewedCharacterDir).backgrounds,
+          issues,
+          { knownSources },
+        )
+      : null;
   const entities = [
     ...spells.entities,
     ...(items?.entities ?? []),
     ...(materials?.components ?? []),
     ...(races?.entities ?? []),
     ...(reference?.entities ?? []),
+    ...(backgrounds?.entities ?? []),
   ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
@@ -145,6 +166,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     items: items?.stats ?? null,
     races: races?.stats ?? null,
     reference: reference?.stats ?? null,
+    backgrounds: backgrounds?.stats ?? null,
     materials: materials?.stats ?? null,
     write: written.stats,
     issues,

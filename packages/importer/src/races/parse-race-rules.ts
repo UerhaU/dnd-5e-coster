@@ -49,7 +49,7 @@ const CREATURE_WORDS: [RegExp, NonNullable<RaceRules['creatureType']>][] = [
   [/нежит/i, 'undead'],
 ];
 
-const SKILL_STEMS: [RegExp, Skill][] = [
+export const SKILL_STEMS: [RegExp, Skill][] = [
   [/Акробатик/, 'acrobatics'],
   [/Уход[а-яё]* за животными/, 'animal_handling'],
   [/Маги[яюи](?![а-яё])/, 'arcana'],
@@ -138,7 +138,7 @@ const WEAPON_STEMS: [RegExp, string[]][] = [
 ];
 
 /** Инструменты из текста владений → ID предметов каталога: «инструменты кузнеца, пивовара или каменщика». */
-const TOOL_STEMS: [RegExp, string][] = [
+export const TOOL_STEMS: [RegExp, string][] = [
   [/алхимик/, 'item:alchemists-supplies'],
   [/пивовар/, 'item:brewers-supplies'],
   [/каллиграф/, 'item:calligraphers-supplies'],
@@ -164,7 +164,7 @@ const TOOL_STEMS: [RegExp, string][] = [
   [/фальсификац/, 'item:forgery-kit'],
 ];
 
-const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']][] = [
+export const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']][] = [
   [/ремесленн/, 'artisans_tools'],
   [/музыкальн/, 'musical_instrument'],
   [/игров[а-яё]* набор/, 'gaming_set'],
@@ -197,11 +197,11 @@ const STANDARD_FEATURES =
 
 const sentences = (text: string) => text.split(/(?<=[.!?])\s+/);
 
-function found<T>(text: string, table: [RegExp, T][]): T[] {
+export function found<T>(text: string, table: [RegExp, T][]): T[] {
   return table.filter(([pattern]) => pattern.test(text)).map(([, value]) => value);
 }
 
-function countIn(text: string): number | null {
+export function countIn(text: string): number | null {
   return COUNT_WORDS.find(([pattern]) => pattern.test(text))?.[1] ?? null;
 }
 

@@ -82,5 +82,12 @@
     "Парализованный": "Paralyzed",
     "Сбитый с ног / Лежащий ничком": "Prone",
     "Схваченный": "Grappled"
+  },
+  "backgrounds": {
+    "845": "Ravenloft Background Adaptations",
+    "846": "Out of the Abyss Background Adaptations",
+    "847": "Hoard of the Dragon Queen Background Adaptations",
+    "848": "Wildemount Background Adaptations",
+    "856": "Dragonlance Background Adaptations"
   }
 }
