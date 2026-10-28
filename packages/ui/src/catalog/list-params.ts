@@ -91,7 +91,7 @@ export function raceParamsFromSearch(search: URLSearchParams): RaceListParams {
   return parseParams(search, raceListQuerySchema, RACE_FILTER_KEYS) as RaceListParams;
 }
 
-/** Фильтры списков навыков, языков, состояний, предысторий и черт. */
+/** Фильтры списков навыков, языков, состояний, предысторий, черт, классов и подклассов. */
 export const REFERENCE_FILTER_KEYS = [
   'q',
   'ability',
@@ -100,6 +100,8 @@ export const REFERENCE_FILTER_KEYS = [
   'prerequisite',
   'abilityIncrease',
   'raceRequired',
+  'classId',
+  'spellcaster',
   'source',
   'sort',
 ] as const;

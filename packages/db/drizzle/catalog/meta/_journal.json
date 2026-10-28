@@ -50,6 +50,13 @@
       "when": 1793198558071,
       "tag": "0006_character_index",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1793219383562,
+      "tag": "0007_class_index",
+      "breakpoints": true
     }
   ]
 }

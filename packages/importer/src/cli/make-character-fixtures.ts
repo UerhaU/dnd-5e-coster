@@ -41,6 +41,13 @@ const FIXTURE_PAGES: Record<CharacterCachePart, Record<number, string>> = {
     222: 'агент Порядка: «4 уровень, черта «…» (вариант)» — две группы требований',
     233: 'наследник внешних планов: требование-кампания (Planescape)',
   },
+  classes: {
+    87: 'варвар: «Неограниченно» в таблице, опциональные умения TCE, подкласс без «Источник» (PHB) и с ним',
+    89: 'жрец: двухстрочный заголовок ячеек, домены — таблицы заклинаний по уровню жреца, умение без якоря',
+    91: 'воин: списки боевых стилей и приёмов (h2 внутри умений), мистический рыцарь — таблица заклинателя',
+    93: 'монах: кость в таблице («1к4»), футы, «Ловкости и Мудрости», смешанный выбор инструментов',
+    104: 'колдун: «Ячейки заклинаний» и «Уровень ячеек», воззвания, расширенные списки по уровню заклинаний',
+  },
 };
 
 const LIMIT = 100;
@@ -59,14 +66,32 @@ function trimParagraphs($: CheerioAPI): void {
     const term = first.is('strong, b, em, i') ? $.html(first) : '';
     const termText = term ? cleanText(first.text()) : '';
     const rest = cleanText(element.text()).slice(termText.length).trim();
-    // Предложение о диалектах нужно разбору языков целиком: из него берутся Акван и др.
-    const kept = /включает диалекты/.test(rest) ? rest : shorten(rest);
+    // Предложение о диалектах нужно разбору языков целиком: из него берутся Акван и др.;
+    // владения мультикласса и деньги вместо снаряжения — разбору классов.
+    const whole = /включает диалекты|вот владения|никаких владений|откажетесь от этого снаряжения/;
+    const kept = whole.test(rest) ? rest : shorten(rest);
     element.html(`${term}${term && rest ? ' ' : ''}${rest ? kept : ''}`);
   });
 }
 
-function fixturePage(html: string): string {
-  const $ = cheerio.load(html);
+/** Ячейки таблиц описаний (дикая магия, тотемы): начало текста; ячейки со ссылками — как есть. */
+function trimCells($: CheerioAPI): void {
+  $('.card__body td').each((_, node) => {
+    const cell = $(node);
+    if (cell.find('a, table').length > 0) return;
+    const text = cleanText(cell.text());
+    if (text.length > 40) cell.text(shorten(text));
+  });
+}
+
+function fixturePage(html: string, part: CharacterCachePart): string {
+  // Страница класса: Unearthed Arcana и хоумбрю после #unofficial не нужны (Р12).
+  const cut = part === 'classes' ? html.indexOf("id='unofficial'") : -1;
+  const $ = cheerio.load(cut > 0 ? html.slice(0, cut) : html);
+  if (part === 'classes') {
+    $('.spoiler_neck').remove();
+    trimCells($);
+  }
   $('script, style, noscript, iframe, img, svg').remove();
   trimParagraphs($);
   const url = $('meta[property="og:url"]').attr('content') ?? '';
@@ -88,7 +113,10 @@ for (const part of CHARACTER_CACHE_PARTS) {
   for (const page of pages) {
     const html = cache.readPage(page.id);
     if (html === null) throw new Error(`Нет в кэше: ${page.url}`);
-    fs.writeFileSync(path.join(folder, 'pages', `article-${page.id}.html`), fixturePage(html));
+    fs.writeFileSync(
+      path.join(folder, 'pages', `article-${page.id}.html`),
+      fixturePage(html, part),
+    );
   }
   fs.writeFileSync(
     path.join(folder, 'index.json'),

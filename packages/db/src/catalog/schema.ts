@@ -260,6 +260,31 @@ export const featIndex = sqliteTable('feat_index', {
   raceRequired: integer('race_required', { mode: 'boolean' }).notNull(),
 });
 
+/** Поля для фильтров списка классов (этап 3). */
+export const classIndex = sqliteTable('class_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  hitDie: integer('hit_die').notNull(),
+  /** Заклинательная характеристика: `int`; `null` — класс без заклинаний. */
+  spellcastingAbility: text('spellcasting_ability'),
+  /** `full`, `half`, `artificer`, `pact`; `null` — без заклинаний. */
+  casterProgression: text('caster_progression'),
+  subclassLevel: integer('subclass_level').notNull(),
+});
+
+/** Поля для фильтров списка подклассов (этап 3). */
+export const subclassIndex = sqliteTable('subclass_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  classId: text('class_id').notNull(),
+  /** Есть дополнительные заклинания (домен, клятва, расширенный список). */
+  hasSpellList: integer('has_spell_list', { mode: 'boolean' }).notNull(),
+  /** Подкласс-заклинатель (мистический рыцарь, мистический ловкач). */
+  spellcaster: integer('spellcaster', { mode: 'boolean' }).notNull(),
+});
+
 /** Свойства оружия: для фильтра «фехтовальное», «метательное»… */
 export const itemIndexProperties = sqliteTable(
   'item_index_properties',

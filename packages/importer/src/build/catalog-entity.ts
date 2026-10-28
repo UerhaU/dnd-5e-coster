@@ -2,6 +2,8 @@ import type {
   Automation,
   BackgroundData,
   BackgroundRules,
+  ClassData,
+  ClassRules,
   Edition,
   FeatData,
   FeatRules,
@@ -15,6 +17,8 @@ import type {
   SpellData,
   SkillData,
   SpellRules,
+  SubclassData,
+  SubclassRules,
 } from '@koster/shared';
 import type { NormalizedSource } from '../spells/normalize-spell.ts';
 
@@ -42,7 +46,13 @@ export type LinkKind =
   /** Требование черты: другая черта, раса, предыстория. */
   | 'prerequisite'
   /** Заклинание, которое черта даёт по названию или упоминает (таблицы заклинаний). */
-  | 'feat_spell';
+  | 'feat_spell'
+  /** Подкласс класса: «Путь берсерка» → «Варвар». */
+  | 'subclass_of'
+  /** Дополнительное заклинание подкласса: домен, клятва, расширенный список покровителя. */
+  | 'subclass_spell'
+  /** Класс владеет оружием (простое и воинское — категориями, остальное — предметами). */
+  | 'class_weapon';
 
 interface CatalogEntityBase {
   id: string;
@@ -69,4 +79,6 @@ export type CatalogEntity =
   | (CatalogEntityBase & { category: 'language'; data: LanguageData; rules: null })
   | (CatalogEntityBase & { category: 'condition'; data: ConditionData; rules: null })
   | (CatalogEntityBase & { category: 'background'; data: BackgroundData; rules: BackgroundRules })
-  | (CatalogEntityBase & { category: 'feat'; data: FeatData; rules: FeatRules });
+  | (CatalogEntityBase & { category: 'feat'; data: FeatData; rules: FeatRules })
+  | (CatalogEntityBase & { category: 'class'; data: ClassData; rules: ClassRules })
+  | (CatalogEntityBase & { category: 'subclass'; data: SubclassData; rules: SubclassRules });

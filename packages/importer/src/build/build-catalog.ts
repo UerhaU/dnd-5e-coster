@@ -17,6 +17,12 @@ import {
 } from '../character/collect-backgrounds.ts';
 import { openCharacterCache } from '../character/character-cache.ts';
 import {
+  classLookup,
+  collectClasses,
+  loadSubclassNames,
+  type ClassCollectStats,
+} from '../character/collect-classes.ts';
+import {
   collectFeats,
   featLookup,
   linkBackgroundFeats,
@@ -65,6 +71,7 @@ export interface BuildResult {
   reference: ReferenceCollectStats | null;
   backgrounds: BackgroundCollectStats | null;
   feats: FeatCollectStats | null;
+  classes: ClassCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
   write: WriteStats;
@@ -148,6 +155,15 @@ export function buildCatalog(options: BuildOptions): BuildResult {
           { knownSources },
         )
       : null;
+  const classes = characterCache
+    ? collectClasses(
+        characterCache.classes,
+        classLookup([...spells.entities, ...(items?.entities ?? [])]),
+        loadSubclassNames(options.reviewedCharacterDir),
+        issues,
+        { knownSources, reportUnusedNames: options.sourceKind === 'full' },
+      )
+    : null;
   if (backgrounds && feats) {
     linkBackgroundFeats(backgrounds.entities, backgrounds.featPages, feats.entities);
   }
@@ -159,6 +175,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     ...(reference?.entities ?? []),
     ...(backgrounds?.entities ?? []),
     ...(feats?.entities ?? []),
+    ...(classes?.entities ?? []),
   ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
@@ -188,6 +205,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     reference: reference?.stats ?? null,
     backgrounds: backgrounds?.stats ?? null,
     feats: feats?.stats ?? null,
+    classes: classes?.stats ?? null,
     materials: materials?.stats ?? null,
     write: written.stats,
     issues,

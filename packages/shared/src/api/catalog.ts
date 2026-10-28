@@ -15,6 +15,12 @@ import { raceRulesSchema } from '../catalog/race-rules.ts';
 import { raceDataSchema } from '../catalog/race.ts';
 import { backgroundDataSchema, backgroundRulesSchema } from '../catalog/background.ts';
 import { featDataSchema, featRulesSchema } from '../catalog/feat.ts';
+import {
+  classDataSchema,
+  classRulesSchema,
+  subclassDataSchema,
+  subclassRulesSchema,
+} from '../catalog/class.ts';
 import { conditionDataSchema, languageDataSchema, skillDataSchema } from '../catalog/reference.ts';
 import { spellRulesSchema } from '../catalog/spell-rules.ts';
 import { spellDataSchema } from '../catalog/spell.ts';
@@ -104,6 +110,8 @@ export const REFERENCE_LIST_CATEGORIES = [
   'condition',
   'background',
   'feat',
+  'class',
+  'subclass',
 ] as const;
 export type ReferenceListCategory = (typeof REFERENCE_LIST_CATEGORIES)[number];
 
@@ -125,6 +133,10 @@ export const referenceListQuerySchema = z.strictObject({
   abilityIncrease: flag.optional(),
   /** Черты: требует расу или размер. */
   raceRequired: flag.optional(),
+  /** Подклассы: класс. */
+  classId: z.enum(CLASS_IDS).optional(),
+  /** Классы — накладывает заклинания; подклассы — заклинатель или есть дополнительные заклинания. */
+  spellcaster: flag.optional(),
   sort: z.enum(['relevance', 'name']).default('relevance'),
 });
 
@@ -290,6 +302,8 @@ export const referenceFacetsResponseSchema = z.object({
   prerequisite: z.number().int().min(0),
   abilityIncrease: z.number().int().min(0),
   raceRequired: z.number().int().min(0),
+  classId: z.array(facetValue(z.string())),
+  spellcaster: z.number().int().min(0),
 });
 
 /** `GET /api/catalog/categories` */
@@ -433,6 +447,22 @@ export const featEntityResponseSchema = z.object({
   rules: featRulesSchema,
 });
 
+/** Карточка класса. */
+export const classEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('class'),
+  data: classDataSchema,
+  rules: classRulesSchema,
+});
+
+/** Карточка подкласса. */
+export const subclassEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('subclass'),
+  data: subclassDataSchema,
+  rules: subclassRulesSchema,
+});
+
 /** `GET /api/catalog/entity/:id` и `…/revisions/:rev` — карточка объекта любой категории. */
 export const entityResponseSchema = z.discriminatedUnion('category', [
   spellEntityResponseSchema,
@@ -443,6 +473,8 @@ export const entityResponseSchema = z.discriminatedUnion('category', [
   conditionEntityResponseSchema,
   backgroundEntityResponseSchema,
   featEntityResponseSchema,
+  classEntityResponseSchema,
+  subclassEntityResponseSchema,
 ]);
 
 export const entityParamsSchema = z.strictObject({ id: entityIdSchema });
@@ -470,6 +502,8 @@ export type LanguageEntityResponse = z.infer<typeof languageEntityResponseSchema
 export type ConditionEntityResponse = z.infer<typeof conditionEntityResponseSchema>;
 export type BackgroundEntityResponse = z.infer<typeof backgroundEntityResponseSchema>;
 export type FeatEntityResponse = z.infer<typeof featEntityResponseSchema>;
+export type ClassEntityResponse = z.infer<typeof classEntityResponseSchema>;
+export type SubclassEntityResponse = z.infer<typeof subclassEntityResponseSchema>;
 export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
 export type RaceListItem = z.infer<typeof raceListItemSchema>;
 export type ReferenceListItem = z.infer<typeof referenceListItemSchema>;

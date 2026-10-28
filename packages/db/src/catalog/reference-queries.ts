@@ -10,7 +10,7 @@ import { toFtsQuery } from './search-query.ts';
 import { normalizeSearchText } from './search-text.ts';
 
 // Списки справочных категорий этапа 3 (раздел 7, «Каталог»): навыки, языки, состояния,
-// предыстории, черты. Один запрос на все пять: фильтры своей категории берутся из её
+// предыстории, черты, классы, подклассы. Один запрос на все: фильтры своей категории берутся из её
 // таблицы индекса, у чужой категории условие пустое. Снятые объекты не показываются.
 
 interface ReferenceRow {
@@ -36,6 +36,11 @@ const DETAIL: Record<ReferenceListCategory, string> = {
       WHERE json_extract(value, '$.label') IN ('Владение навыками', 'Навыки') LIMIT 1
     ) END`,
   feat: `'Требование: ' || json_extract(r.data_json, '$.prerequisite')`,
+  class: `'Кость хитов к' || ci.hit_die || CASE WHEN ca.name_ru IS NOT NULL
+      THEN ' · заклинания: ' || ca.name_ru ELSE '' END`,
+  subclass: `parent.name_ru || ' · с ' || (
+      SELECT json_extract(value, '$.levels[0]') FROM json_each(r.data_json, '$.features') LIMIT 1
+    ) || '-го уровня'`,
 };
 
 const JOINS = `LEFT JOIN skill_index si ON si.entity_id = e.id
@@ -43,7 +48,11 @@ const JOINS = `LEFT JOIN skill_index si ON si.entity_id = e.id
     LEFT JOIN language_index li ON li.entity_id = e.id
     LEFT JOIN content_entities dialect ON dialect.id = li.dialect_of
     LEFT JOIN background_index bi ON bi.entity_id = e.id
-    LEFT JOIN feat_index fi ON fi.entity_id = e.id`;
+    LEFT JOIN feat_index fi ON fi.entity_id = e.id
+    LEFT JOIN class_index ci ON ci.entity_id = e.id
+    LEFT JOIN abilities ca ON ca.id = ci.spellcasting_ability
+    LEFT JOIN subclass_index sci ON sci.entity_id = e.id
+    LEFT JOIN content_entities parent ON parent.id = sci.class_id`;
 
 export function listReference(
   catalog: CatalogConnection,
@@ -75,6 +84,16 @@ export function listReference(
   if (query.kind && category === 'background') {
     where.push('bi.kind = @kind');
     params['kind'] = query.kind;
+  }
+  if (query.classId && category === 'subclass') {
+    where.push('sci.class_id = @classId');
+    params['classId'] = query.classId;
+  }
+  if (query.spellcaster !== undefined && category === 'class') {
+    where.push(`ci.spellcasting_ability IS ${query.spellcaster ? 'NOT ' : ''}NULL`);
+  }
+  if (query.spellcaster !== undefined && category === 'subclass') {
+    where.push(`(sci.spellcaster = 1 OR sci.has_spell_list = 1) = ${query.spellcaster ? 1 : 0}`);
   }
   const flags: [boolean | undefined, string, ReferenceListCategory][] = [
     [query.grantsFeat, 'bi.grants_feat', 'background'],
@@ -179,6 +198,25 @@ export function referenceFacets(
   const sum = (sql: string) =>
     (catalog.sqlite.prepare(sql).get() as { value: number | null }).value ?? 0;
   const feat = category === 'feat';
+  const classId =
+    category === 'subclass'
+      ? all<{ value: string; label: string; count: number }>(
+          `SELECT t.class_id AS value, parent.name_ru AS label, COUNT(*) AS count
+           FROM subclass_index t ${active} JOIN content_entities parent ON parent.id = t.class_id
+           GROUP BY t.class_id ORDER BY parent.name_ru`,
+        )
+      : [];
+  const spellcaster =
+    category === 'class'
+      ? sum(
+          `SELECT COUNT(*) AS value FROM class_index t ${active} WHERE t.spellcasting_ability IS NOT NULL`,
+        )
+      : category === 'subclass'
+        ? sum(
+            `SELECT COUNT(*) AS value FROM subclass_index t ${active}
+             WHERE t.spellcaster = 1 OR t.has_spell_list = 1`,
+          )
+        : 0;
   return {
     ability,
     kind,
@@ -200,5 +238,7 @@ export function referenceFacets(
     raceRequired: feat
       ? sum(`SELECT SUM(t.race_required) AS value FROM feat_index t ${active}`)
       : 0,
+    classId,
+    spellcaster,
   };
 }

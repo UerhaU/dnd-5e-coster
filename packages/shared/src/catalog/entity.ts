@@ -11,6 +11,8 @@ export const CATEGORIES = [
   'condition',
   'background',
   'feat',
+  'class',
+  'subclass',
 ] as const;
 export const categorySchema = z.enum(CATEGORIES);
 
@@ -24,6 +26,8 @@ export const CATEGORY_NAMES_RU = {
   condition: 'Состояния',
   background: 'Предыстории',
   feat: 'Черты',
+  class: 'Классы',
+  subclass: 'Подклассы',
 } as const satisfies Record<(typeof CATEGORIES)[number], string>;
 
 /** Статусы проверки: raw → parsed → reviewed → rules_verified. */

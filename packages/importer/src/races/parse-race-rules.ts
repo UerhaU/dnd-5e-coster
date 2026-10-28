@@ -18,7 +18,7 @@ type Skill = RaceRules['skills']['fixed'][number];
 type Language = RaceRules['languages']['fixed'][number];
 type DamageType = RaceRules['resistances'][number];
 
-const ABILITY_STEMS: [RegExp, Ability][] = [
+export const ABILITY_STEMS: [RegExp, Ability][] = [
   [/Сил[аыу]/, 'str'],
   [/Ловкост/, 'dex'],
   [/Телосложени/, 'con'],

@@ -119,3 +119,51 @@ describe('GET /api/catalog/{skill,language,condition,background,feat}', () => {
     expect(card.rules.mixed[0]?.count).toBe(3);
   });
 });
+
+describe('GET /api/catalog/{class,subclass}', () => {
+  it('классы: кость хитов и заклинания в строке, фильтр «заклинатель»', async () => {
+    const all = await list('class');
+    expect(all.items.map((item) => item.id)).toEqual([
+      'class:barbarian',
+      'class:fighter',
+      'class:cleric',
+      'class:warlock',
+      'class:monk',
+    ]);
+    expect(all.items.find((item) => item.id === 'class:cleric')?.detail).toBe(
+      'Кость хитов к8 · заклинания: Мудрость',
+    );
+    const casters = await list('class', 'spellcaster=true');
+    expect(casters.items.map((item) => item.id).sort()).toEqual(['class:cleric', 'class:warlock']);
+  });
+
+  it('подклассы: класс и уровень в строке, фильтр по классу', async () => {
+    const barbarian = await list('subclass', 'classId=class:barbarian&pageSize=100');
+    expect(barbarian.total).toBe(9);
+    expect(barbarian.items.find((item) => item.id === 'subclass:barbarian-berserker')?.detail).toBe(
+      'Варвар · с 3-го уровня',
+    );
+    const facets = referenceFacetsResponseSchema.parse(
+      (await get('/api/catalog/subclass/facets')).body,
+    );
+    expect(facets.classId.find((entry) => entry.value === 'class:cleric')?.count).toBe(14);
+    expect(facets.spellcaster).toBeGreaterThan(0);
+  });
+
+  it('карточки класса и подкласса проходят схему, подкласс связан с классом', async () => {
+    const card = entityResponseSchema.parse((await get('/api/catalog/entity/class:monk')).body);
+    expect(card.category).toBe('class');
+    if (card.category !== 'class') return;
+    expect(card.rules.table).toHaveLength(20);
+    expect(
+      card.links.filter((link) => link.kind === 'subclass_of' && link.direction === 'from'),
+    ).toHaveLength(10);
+    const sub = entityResponseSchema.parse(
+      (await get('/api/catalog/entity/subclass:fighter-eldritch-knight')).body,
+    );
+    expect(sub.category).toBe('subclass');
+    expect(sub.links).toContainEqual(
+      expect.objectContaining({ id: 'class:fighter', kind: 'subclass_of', direction: 'to' }),
+    );
+  });
+});

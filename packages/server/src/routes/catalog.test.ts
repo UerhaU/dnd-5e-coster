@@ -63,6 +63,8 @@ describe('GET /api/catalog/categories', () => {
       { id: 'condition', nameRu: 'Состояния', count: 15 },
       { id: 'background', nameRu: 'Предыстории', count: 5 },
       { id: 'feat', nameRu: 'Черты', count: 8 },
+      { id: 'class', nameRu: 'Классы', count: 5 },
+      { id: 'subclass', nameRu: 'Подклассы', count: 52 },
     ]);
   });
 });

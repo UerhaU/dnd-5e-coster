@@ -14,6 +14,8 @@ const CATEGORY_LABELS: Record<SearchResultItem['category'], string> = {
   condition: 'Состояние',
   background: 'Предыстория',
   feat: 'Черта',
+  class: 'Класс',
+  subclass: 'Подкласс',
 };
 
 export function categoryLabel(category: SearchResultItem['category']): string {

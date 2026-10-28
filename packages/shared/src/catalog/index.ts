@@ -1,5 +1,6 @@
 export * from './background.ts';
 export * from './choices.ts';
+export * from './class.ts';
 export * from './codes.ts';
 export * from './entity.ts';
 export * from './feat.ts';

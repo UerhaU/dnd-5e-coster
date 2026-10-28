@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useApi } from '../api/api-context';
 import { QueryError } from '../components/QueryError';
+import { ClassCardBody, SubclassCardBody } from './ClassCard';
 import { ItemCardBody } from './ItemCard';
 import { RaceCardBody } from './RaceCard';
 import {
@@ -40,6 +41,8 @@ export function EntityCard() {
       {card.data?.category === 'condition' && <ConditionCardBody card={card.data} />}
       {card.data?.category === 'background' && <BackgroundCardBody card={card.data} />}
       {card.data?.category === 'feat' && <FeatCardBody card={card.data} />}
+      {card.data?.category === 'class' && <ClassCardBody card={card.data} />}
+      {card.data?.category === 'subclass' && <SubclassCardBody card={card.data} />}
     </main>
   );
 }

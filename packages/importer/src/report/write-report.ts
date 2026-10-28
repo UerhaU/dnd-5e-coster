@@ -11,7 +11,18 @@ const SEVERITY_TITLES = {
 } as const;
 
 export function summaryLines(result: BuildResult): string[] {
-  const { collect, items, races, reference, backgrounds, feats, materials, write, issues } = result;
+  const {
+    collect,
+    items,
+    races,
+    reference,
+    backgrounds,
+    feats,
+    classes,
+    materials,
+    write,
+    issues,
+  } = result;
   const count = (severity: keyof typeof SEVERITY_TITLES) =>
     issues.filter((issue) => issue.severity === severity).length;
   return [
@@ -52,6 +63,11 @@ export function summaryLines(result: BuildResult): string[] {
     ...(feats
       ? [
           `Черты: страниц ${feats.pages} (нет в кэше ${feats.missingPages}, не разобрано ${feats.failedPages}); черт ${feats.feats}, с требованиями ${feats.withPrerequisites} (условий только текстом ${feats.textRequirements}), с увеличением характеристик ${feats.withAbilityIncrease}, с выбором только текстом ${feats.withTextOnly}, без механики ${feats.displayOnly}`,
+        ]
+      : []),
+    ...(classes
+      ? [
+          `Классы: страниц ${classes.pages} (нет в кэше ${classes.missingPages}, не разобрано ${classes.failedPages}); классов ${classes.classes}, особенностей ${classes.features} (опциональных TCE ${classes.optionalFeatures}); подклассов ${classes.subclasses} (не собрано ${classes.failedSubclasses}), особенностей ${classes.subclassFeatures}, списков заклинаний ${classes.spellLists}; снаряжение: частей ${classes.equipmentParts}, с предметом или группой ${classes.equipmentLinked}`,
         ]
       : []),
     `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : write.restoredFromLedger > 0 ? ' (без прошлого файла, номера из журнала)' : ' (собран с нуля)'}`,

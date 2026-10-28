@@ -265,6 +265,38 @@ test('справочник: черты — «Одарённый» и требо�
   await expect(window.getByTestId('feat-abilities')).toContainText('из: Сил, Лов');
 });
 
+// Этап 3, часть Б: классы и подклассы. Монах и мистический рыцарь есть в обоих каталогах.
+test('справочник: класс «Монах» — таблица 1–20, вариант правил TCE, подкласс', async () => {
+  const window = await openList('class', 'Классы');
+  await window.getByRole('searchbox', { name: 'Поиск: классы' }).fill('Монах');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Монах/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Монах' })).toBeVisible();
+  await expect(window.getByTestId('class-hit-die')).toHaveText('к8');
+  await expect(window.getByTestId('class-multiclass')).toHaveText('Мудрость 13 и Ловкость 13');
+  await expect(window.getByTestId('class-table').locator('tbody tr')).toHaveCount(20);
+  await expect(window.getByTestId('optional-rule').first()).toContainText('вариант правил');
+  await window
+    .getByTestId('class-subclasses')
+    .getByRole('link', { name: 'Путь открытой ладони' })
+    .click();
+  await expect(
+    window.getByRole('heading', { level: 1, name: 'Путь открытой ладони' }),
+  ).toBeVisible();
+  await expect(window.getByTestId('subclass-class')).toHaveText('Монах');
+});
+
+test('справочник: подклассы воина → «Мистический рыцарь», переход к классу', async () => {
+  const window = await openList('subclass', 'Подклассы');
+  await window.getByLabel('Класс').selectOption('class:fighter');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Мистический рыцарь/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Мистический рыцарь' })).toBeVisible();
+  await expect(window.getByRole('heading', { name: 'Таблица заклинателя' })).toBeVisible();
+  await window.getByTestId('subclass-class').getByRole('link', { name: 'Воин' }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Воин' })).toBeVisible();
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);

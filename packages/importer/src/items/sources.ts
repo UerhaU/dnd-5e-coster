@@ -40,6 +40,10 @@ const BOOKS: [code: string, title: string][] = [
   ['IDRF', 'Icewind Dale: Rime of the Frostmaiden'],
   ['SKT', "Storm King's Thunder"],
   ['TYP', 'Tales from the Yawning Portal'],
+  // Подклассы (этап 3, часть Б).
+  ['XGE', "Xanathar's Guide to Everything"],
+  ['DMG14', 'Dungeon Master Guide'],
+  ['BGG', 'Bigby Presents: Glory of the Giants'],
 ];
 const BOOKS_BY_TITLE = new Map(BOOKS.map(([code, title]) => [titleKey(title), code]));
 /** Название книги для метки без подсказки: «(MOT)» → «Mythic Odysseys of Theros». */
@@ -48,6 +52,7 @@ const TITLE_BY_CODE = new Map([...BOOKS].reverse().map(([code, title]) => [code,
 /** «Mordenkainen’s Tome of Foes» и «Mordenkainen's tome of foes» — одна книга. */
 export function titleKey(title: string): string {
   return title
+    .replace(/[‎‏]/g, '')
     .replace(/[’‘]/g, "'")
     .replace(/[“”«»"]/g, '')
     .trim()

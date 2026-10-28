@@ -5,6 +5,7 @@ import type { CatalogEntity } from './catalog-entity.ts';
 
 const {
   backgroundIndex,
+  classIndex,
   featIndex,
   itemIndex,
   itemIndexProperties,
@@ -13,6 +14,7 @@ const {
   skillIndex,
   spellIndex,
   spellIndexClasses,
+  subclassIndex,
 } = catalogSchema;
 
 type Transaction = Parameters<Parameters<CatalogConnection['db']['transaction']>[0]>[0];
@@ -23,6 +25,8 @@ type SkillEntity = Extract<CatalogEntity, { category: 'skill' }>;
 type LanguageEntity = Extract<CatalogEntity, { category: 'language' }>;
 type BackgroundEntity = Extract<CatalogEntity, { category: 'background' }>;
 type FeatEntity = Extract<CatalogEntity, { category: 'feat' }>;
+type ClassEntity = Extract<CatalogEntity, { category: 'class' }>;
+type SubclassEntity = Extract<CatalogEntity, { category: 'subclass' }>;
 
 export function writeSpellIndex(tx: Transaction, entity: SpellEntity): void {
   tx.insert(spellIndex)
@@ -111,6 +115,29 @@ export function writeFeatIndex(tx: Transaction, entity: FeatEntity): void {
       raceRequired: entity.rules.prerequisites.some((group) =>
         group.some((requirement) => requirement.kind === 'race' || requirement.kind === 'size'),
       ),
+    })
+    .run();
+}
+
+export function writeClassIndex(tx: Transaction, entity: ClassEntity): void {
+  tx.insert(classIndex)
+    .values({
+      entityId: entity.id,
+      hitDie: entity.rules.hitDie,
+      spellcastingAbility: entity.rules.spellcasting?.ability ?? null,
+      casterProgression: entity.rules.spellcasting?.progression ?? null,
+      subclassLevel: entity.rules.subclass.level,
+    })
+    .run();
+}
+
+export function writeSubclassIndex(tx: Transaction, entity: SubclassEntity): void {
+  tx.insert(subclassIndex)
+    .values({
+      entityId: entity.id,
+      classId: entity.rules.subclassOf,
+      hasSpellList: entity.rules.spellLists.length > 0,
+      spellcaster: entity.rules.spellcasting !== null,
     })
     .run();
 }

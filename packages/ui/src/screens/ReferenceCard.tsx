@@ -26,13 +26,13 @@ import { TextBlocks } from '../components/TextBlocks';
 // Карточки справочных категорий этапа 3: навык, язык, состояние, предыстория, черта.
 // Механика — строками фактов, тексты DnD.su — блоками; связи — ссылками на карточки.
 
-const ARMOR_NAMES = { light: 'лёгкие', medium: 'средние', heavy: 'тяжёлые', shield: 'щиты' };
+export const ARMOR_NAMES = { light: 'лёгкие', medium: 'средние', heavy: 'тяжёлые', shield: 'щиты' };
 
 /** Названия целей связей карточки: ID → русское название. */
-const namesOf = (card: EntityResponse) =>
+export const namesOf = (card: EntityResponse) =>
   new Map(card.links.filter((link) => link.direction === 'to').map((l) => [l.id, l.nameRu]));
 
-function Header({ card, kind }: { card: EntityResponse; kind?: ReactNode }) {
+export function Header({ card, kind }: { card: EntityResponse; kind?: ReactNode }) {
   return (
     <header className="card-header">
       <CategoryIcon category={card.category} large />
@@ -46,7 +46,13 @@ function Header({ card, kind }: { card: EntityResponse; kind?: ReactNode }) {
 }
 
 /** Строки фактов: пустые значения не показываются. */
-function Facts({ card, rows }: { card: EntityResponse; rows: [string, ReactNode, string?][] }) {
+export function Facts({
+  card,
+  rows,
+}: {
+  card: EntityResponse;
+  rows: [string, ReactNode, string?][];
+}) {
   return (
     <dl className="facts">
       {rows
@@ -61,7 +67,7 @@ function Facts({ card, rows }: { card: EntityResponse; rows: [string, ReactNode,
   );
 }
 
-function LinkList({ links }: { links: EntityLink[] }) {
+export function LinkList({ links }: { links: EntityLink[] }) {
   return (
     <>
       {links.map((link, index) => (
@@ -74,10 +80,10 @@ function LinkList({ links }: { links: EntityLink[] }) {
   );
 }
 
-const linksOf = (card: EntityResponse, kind: string, direction: 'to' | 'from') =>
+export const linksOf = (card: EntityResponse, kind: string, direction: 'to' | 'from') =>
   card.links.filter((link) => link.kind === kind && link.direction === direction);
 
-function AllLink({ category }: { category: EntityResponse['category'] }) {
+export function AllLink({ category }: { category: EntityResponse['category'] }) {
   return (
     <p className="muted">
       <Link to={`/reference/${category}`}>Все: {CATEGORY_NAMES_RU[category].toLowerCase()}</Link>
@@ -224,7 +230,7 @@ function EquipmentList({
   );
 }
 
-function Section({ name, children }: { name: string; children: ReactNode }) {
+export function Section({ name, children }: { name: string; children: ReactNode }) {
   return (
     <section>
       <h2>{name}</h2>

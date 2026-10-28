@@ -22,11 +22,13 @@ const PLACEHOLDERS: Record<ReferenceListCategory, string> = {
   condition: 'Поиск по названию и тексту: «ничком», «poisoned»',
   background: 'Поиск по названию и тексту: «артист», «sage»',
   feat: 'Поиск по названию и тексту: «доспех», «lucky»',
+  class: 'Поиск по названию и умениям: «ярость», «wizard»',
+  subclass: 'Поиск по названию и умениям: «домен», «berserker»',
 };
 
 /**
  * Экран списка справочной категории этапа 3: навыки, языки, состояния, предыстории,
- * черты. Поиск, фильтры своей категории, страницы.
+ * черты, классы, подклассы. Поиск, фильтры своей категории, страницы.
  */
 export function ReferenceList({ category }: { category: ReferenceListCategory }) {
   const api = useApi();
@@ -136,6 +138,14 @@ function Filters({ category, facets, search, onChange }: FiltersProps) {
           {select('prerequisite', 'Требование', yesNo('Есть', 'Нет'), 'Все')}
           {select('raceRequired', 'Требует расу', yesNo('Да', 'Нет'), 'Все')}
           {select('abilityIncrease', 'Увеличение характеристики', yesNo('Да', 'Нет'), 'Все')}
+        </>
+      )}
+      {category === 'class' &&
+        select('spellcaster', 'Заклинания', yesNo('Заклинатель', 'Без заклинаний'), 'Все')}
+      {category === 'subclass' && (
+        <>
+          {select('classId', 'Класс', facets?.classId ?? [])}
+          {select('spellcaster', 'Заклинания', yesNo('Есть', 'Нет'), 'Все')}
         </>
       )}
       {select('source', 'Источник', facets?.source ?? [])}

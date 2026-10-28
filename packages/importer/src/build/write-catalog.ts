@@ -15,6 +15,8 @@ import {
   writeLanguageIndex,
   writeBackgroundIndex,
   writeFeatIndex,
+  writeClassIndex,
+  writeSubclassIndex,
   writeRaceIndex,
   writeSkillIndex,
   writeSpellIndex,
@@ -26,7 +28,12 @@ import {
 // Нумерация берётся и из прошлого catalog.db, и из журнала ревизий в git (Р51):
 // без прошлого файла неизменившийся объект получает ту же ревизию из журнала.
 
-const STRICT_LINK_KINDS: ReadonlySet<LinkKind> = new Set(['skill_proficiency', 'language']);
+const STRICT_LINK_KINDS: ReadonlySet<LinkKind> = new Set([
+  'skill_proficiency',
+  'language',
+  'subclass_of',
+  'subclass_spell',
+]);
 
 const { catalogInfo, contentEntities, contentLinks, contentRevisions, entitySources, sources } =
   catalogSchema;
@@ -364,6 +371,10 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
           writeBackgroundIndex(tx, entity);
         } else if (entity.category === 'feat') {
           writeFeatIndex(tx, entity);
+        } else if (entity.category === 'class') {
+          writeClassIndex(tx, entity);
+        } else if (entity.category === 'subclass') {
+          writeSubclassIndex(tx, entity);
         }
         for (const link of entity.links) {
           if (!currentIds.has(link.toId)) {
