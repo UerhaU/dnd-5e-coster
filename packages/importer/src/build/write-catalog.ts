@@ -88,6 +88,11 @@ export interface WriteOptions {
   builtAt: string;
   /** Дополнительные строки catalog_info: откуда данные. */
   sourceInfo: Record<string, string>;
+  /**
+   * ID, убранные до релиза (Р80: ID черты по книге): не помечаются withdrawn, их ревизии
+   * не переносятся из прошлого файла и уходят из журнала.
+   */
+  removedIds?: ReadonlySet<string>;
 }
 
 export interface WriteStats {
@@ -149,9 +154,46 @@ function knownRevisions(
   return known;
 }
 
+/** Прошлая сборка и журнал без убранных ID. */
+function withoutRemoved(
+  previous: PreviousCatalog | null,
+  ledger: Ledger | null,
+  removed: ReadonlySet<string>,
+): { previous: PreviousCatalog | null; ledger: Ledger | null } {
+  if (removed.size === 0) return { previous, ledger };
+  return {
+    previous: previous && {
+      ...previous,
+      entities: new Map([...previous.entities].filter(([id]) => !removed.has(id))),
+      revisions: previous.revisions.filter((row) => !removed.has(row.entityId)),
+      entitySources: previous.entitySources.filter((row) => !removed.has(row.entityId)),
+    },
+    ledger: ledger && {
+      ...ledger,
+      revisions: ledger.revisions.filter((row) => !removed.has(row.entityId)),
+    },
+  };
+}
+
 export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): WriteResult {
-  const previous = readPrevious(options.previousFile);
-  const known = knownRevisions(previous, options.ledger, issues);
+  const removed = options.removedIds ?? new Set<string>();
+  const { previous, ledger } = withoutRemoved(
+    readPrevious(options.previousFile),
+    options.ledger,
+    removed,
+  );
+  for (const entity of options.entities) {
+    if (removed.has(entity.id)) {
+      issues.push({
+        severity: 'error',
+        entityId: entity.id,
+        dndsuId: null,
+        field: 'entity',
+        message: 'ID в списке убранных (removed-ids.json), но объект собран',
+      });
+    }
+  }
+  const known = knownRevisions(previous, ledger, issues);
   const latest = new Map<string, LedgerRevision>();
   for (const entry of known.values()) {
     const last = latest.get(entry.entityId);
@@ -281,54 +323,103 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
   }
   stats.revisionsTotal = revisions.length;
 
+  // Источники: текущие и те, на которые ссылаются снятые объекты; прочие прошлые
+  // (код книги сменился: BGG → BPGG, Р79) не переносятся.
+  const withdrawnIds = new Set(withdrawn.map((row) => row.id));
+  const withdrawnSources = new Set(
+    (previous?.entitySources ?? [])
+      .filter((row) => withdrawnIds.has(row.entityId))
+      .map((row) => row.sourceId),
+  );
+  const sourceRows = new Map<string, SourceRow>();
+  for (const row of previous?.sources ?? []) {
+    if (withdrawnSources.has(row.id)) sourceRows.set(row.id, row);
+  }
+  const seenNow = new Set<string>();
+  for (const entity of entities) {
+    for (const { source } of entity.sources) {
+      const row: SourceRow = {
+        id: source.id,
+        code: source.code,
+        nameRu: null,
+        nameEn: source.nameEn,
+        dndsuSourceId: source.dndsuSourceId,
+        edition: source.edition,
+      };
+      const known = sourceRows.get(row.id);
+      if (known && seenNow.has(row.id) && canonicalJson(known) !== canonicalJson(row)) {
+        issues.push({
+          severity: 'warning',
+          entityId: entity.id,
+          dndsuId: null,
+          field: 'sources',
+          message: `Источник ${row.code} описан по-разному: «${known.nameEn}» и «${row.nameEn}»`,
+        });
+      }
+      sourceRows.set(row.id, row);
+      seenNow.add(row.id);
+    }
+  }
+
+  // Хеш каталога (Р80): ревизии, а также имена, книги и связи объектов — версия растёт,
+  // даже если изменились только связи или английское название.
+  const writtenLinks = (entity: CatalogEntity) =>
+    entity.links.filter((link) => currentIds.has(link.toId));
+  const catalogHash = sha256(
+    [...currentRevision.entries()]
+      .sort(([a], [b]) => (a < b ? -1 : 1))
+      .map(([id, revisionId]) => `${id}@${revisionId}`)
+      .concat(withdrawn.map((row) => `${row.id}:withdrawn`).sort())
+      .concat(
+        entities.map((entity) =>
+          canonicalJson({
+            id: entity.id,
+            nameRu: entity.nameRu,
+            nameEn: entity.nameEn,
+            aliases: entity.aliases,
+            edition: entity.edition,
+            reviewStatus: entity.reviewStatus,
+            automation: entity.automation,
+            sources: entity.sources,
+            links: [
+              ...new Set(writtenLinks(entity).map((link) => `${link.kind}>${link.toId}`)),
+            ].sort(),
+          }),
+        ),
+      )
+      .concat([...sourceRows.values()].map((row) => canonicalJson(row)).sort())
+      .join('\n'),
+  );
+
   // Без прошлого файла версия и дата берутся из журнала: если ничего не изменилось,
   // восстановленный каталог совпадает с потерянным.
   const previousInfo = previous
-    ? { version: Number(previous.info['catalog_version'] ?? 0), builtAt: previous.info['built_at'] }
-    : options.ledger?.info
-      ? { version: options.ledger.info.catalogVersion, builtAt: options.ledger.info.builtAt }
+    ? {
+        version: Number(previous.info['catalog_version'] ?? 0),
+        builtAt: previous.info['built_at'],
+        hash: previous.info['content_hash'],
+      }
+    : ledger?.info
+      ? {
+          version: ledger.info.catalogVersion,
+          builtAt: ledger.info.builtAt,
+          hash: ledger.info.contentHash,
+        }
       : null;
-  const changedSomething = stats.newRevisions > 0 || stats.withdrawn > 0 || previousInfo === null;
+  const changedSomething =
+    stats.newRevisions > 0 ||
+    stats.withdrawn > 0 ||
+    previousInfo === null ||
+    previousInfo.hash !== catalogHash;
   const previousVersion = previousInfo?.version ?? 0;
   stats.catalogVersion = changedSomething ? previousVersion + 1 : previousVersion;
   const builtAt = changedSomething ? options.builtAt : (previousInfo?.builtAt ?? options.builtAt);
-  let catalogHash = '';
 
   const temp = `${options.outFile}.building`;
   fs.rmSync(temp, { force: true });
   const catalog = createCatalog(temp);
   try {
     catalog.db.transaction((tx) => {
-      // Источники: текущие и те, на которые ссылаются снятые объекты.
-      const sourceRows = new Map<string, SourceRow>();
-      for (const row of previous?.sources ?? []) {
-        sourceRows.set(row.id, row);
-      }
-      const seenNow = new Set<string>();
-      for (const entity of entities) {
-        for (const { source } of entity.sources) {
-          const row: SourceRow = {
-            id: source.id,
-            code: source.code,
-            nameRu: null,
-            nameEn: source.nameEn,
-            dndsuSourceId: source.dndsuSourceId,
-            edition: source.edition,
-          };
-          const known = sourceRows.get(row.id);
-          if (known && seenNow.has(row.id) && canonicalJson(known) !== canonicalJson(row)) {
-            issues.push({
-              severity: 'warning',
-              entityId: entity.id,
-              dndsuId: null,
-              field: 'sources',
-              message: `Источник ${row.code} описан по-разному: «${known.nameEn}» и «${row.nameEn}»`,
-            });
-          }
-          sourceRows.set(row.id, row);
-          seenNow.add(row.id);
-        }
-      }
       if (sourceRows.size > 0) {
         tx.insert(sources)
           .values([...sourceRows.values()])
@@ -422,13 +513,6 @@ export function writeCatalog(options: WriteOptions, issues: ImportIssue[]): Writ
         );
       }
 
-      catalogHash = sha256(
-        [...currentRevision.entries()]
-          .sort(([a], [b]) => (a < b ? -1 : 1))
-          .map(([id, revisionId]) => `${id}@${revisionId}`)
-          .concat(withdrawn.map((row) => `${row.id}:withdrawn`).sort())
-          .join('\n'),
-      );
       const info: Record<string, string> = {
         ...options.sourceInfo,
         catalog_version: String(stats.catalogVersion),

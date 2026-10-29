@@ -10,6 +10,18 @@
       "url": "https://5e14.dnd.su/backgrounds/763-folk-hero/"
     },
     {
+      "id": 820,
+      "url": "https://5e14.dnd.su/backgrounds/820-giant-foundling/"
+    },
+    {
+      "id": 772,
+      "url": "https://5e14.dnd.su/backgrounds/772-city-watch/"
+    },
+    {
+      "id": 777,
+      "url": "https://5e14.dnd.su/backgrounds/777-far-traveler/"
+    },
+    {
       "id": 782,
       "url": "https://5e14.dnd.su/backgrounds/782-uthgardt-tribe-member/"
     },
@@ -20,6 +32,10 @@
     {
       "id": 790,
       "url": "https://5e14.dnd.su/backgrounds/790-investigator/"
+    },
+    {
+      "id": 789,
+      "url": "https://5e14.dnd.su/backgrounds/789-haunted-one/"
     }
   ]
 }

@@ -39,8 +39,8 @@ describe('классы (тестовые страницы)', () => {
   it('собирает все страницы без ошибок; таблица — 20 строк', () => {
     const { stats, issues, entities } = collect();
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(stats.classes).toBe(5);
-    expect(stats.subclasses).toBe(52);
+    expect(stats.classes).toBe(8);
+    expect(stats.subclasses).toBe(77);
     for (const entity of entities) {
       if (entity.category === 'class') {
         expect(entity.rules.table).toHaveLength(20);
@@ -64,7 +64,7 @@ describe('классы (тестовые страницы)', () => {
     expect(r.table[0]).toMatchObject({
       level: 1,
       proficiencyBonus: 2,
-      features: ['unarmored-defence', 'rage'],
+      features: ['unarmored-defense', 'rage'],
       values: { rages: 2, rageDamage: 2 },
     });
     expect(r.table[19]?.values).toEqual({ rages: 'unlimited', rageDamage: 4 });
@@ -102,6 +102,26 @@ describe('классы (тестовые страницы)', () => {
     expect(get('subclass:barbarian-battlerager', 'subclass').sources[0]?.source.code).toBe('SCAG');
   });
 
+  it('книга подкласса — из «Источник» в начале раздела (ручная проверка: 9 случаев, BPGG)', () => {
+    const { get } = collect();
+    const book = (id: string) => get(id, 'subclass').sources[0]?.source.code;
+    // Голый <strong> без <p>, дальше текст.
+    expect(book('subclass:cleric-death')).toBe('DMG14');
+    expect(book('subclass:cleric-twilight')).toBe('TCE');
+    expect(book('subclass:ranger-drakewarden')).toBe('FTD');
+    // Точка после кавычки: «Источник: «Xanathar’s Guide to Everything».»
+    expect(book('subclass:paladin-redemption')).toBe('XGE');
+    expect(book('subclass:paladin-conquest')).toBe('XGE');
+    expect(book('subclass:sorcerer-divine-soul')).toBe('XGE');
+    expect(book('subclass:sorcerer-shadow')).toBe('XGE');
+    expect(book('subclass:sorcerer-storm')).toBe('XGE');
+    // «Источник» TCE у вложенного раздела «Спутники повелителя зверей» — не книга подкласса.
+    expect(book('subclass:ranger-beast-master')).toBe('PH14');
+    expect(book('subclass:paladin-oathbreaker')).toBe('DMG14');
+    // Р79: один код книги Bigby.
+    expect(book('subclass:barbarian-giant')).toBe('BPGG');
+  });
+
   it('жрец: ячейки 1–9, заклинательная характеристика, домены — списки заклинаний', () => {
     const { get } = collect();
     const cleric = get('class:cleric', 'class');
@@ -114,10 +134,31 @@ describe('классы (тестовые страницы)', () => {
     expect(cleric.rules.table[19]?.spellSlots).toEqual([4, 3, 3, 3, 3, 2, 2, 1, 1]);
     expect(cleric.rules.subclass.level).toBe(1);
     expect(cleric.rules.proficiencies.armor).toEqual(['light', 'medium', 'shield']);
-    // «Дополнительные заклинания жреца» (TCE) — без якоря на странице.
+    // «Дополнительные заклинания жреца» (TCE) — без якоря на странице, ключ как у других классов.
     expect(
-      cleric.data.features.some((feature) => feature.key === null && feature.optionalRule),
-    ).toBe(true);
+      cleric.data.features.find((feature) => feature.nameRu === 'Дополнительные заклинания жреца'),
+    ).toMatchObject({ key: 'extra-spells', optionalRule: true });
+    // Строка 8: «Умение божественного домена» и «Благословлённые удары» (TCE) — подряд без запятой.
+    expect(cleric.data.table.rows[7]?.[2]).toBe(
+      'Увеличение характеристик, Уничтожение Нежити (ПО 1), Умение божественного домена, Благословленные удары',
+    );
+    expect(cleric.rules.table[7]?.features).toEqual([
+      'ASI',
+      'destroy-undead',
+      'divine-domain',
+      'blessed-strikes',
+    ]);
+  });
+
+  it('ключи особенностей — без опечаток якорей сайта (Р80)', () => {
+    const { get } = collect();
+    const keys = (id: string) => get(id, 'class').data.features.map((feature) => feature.key ?? '');
+    expect(keys('class:warlock')).toContain('otherworldly-patron');
+    expect(keys('class:barbarian')).toContain('unarmored-defense');
+    expect(keys('class:monk')).toContain('unarmored-defense');
+    const all = ['class:warlock', 'class:barbarian', 'class:monk'].flatMap(keys);
+    expect(all.filter((key) => /defence|otherwordly/.test(key))).toEqual([]);
+    expect(get('class:warlock', 'class').rules.subclass.featureKey).toBe('otherworldly-patron');
   });
 
   it('воин: списки вариантов, мистический рыцарь — заклинатель на треть', () => {

@@ -50,11 +50,29 @@ export function backgroundLookup(
   }
   const languageStems = new Map<string, string>();
   for (const [stem, id] of stems) if (id) languageStems.set(stem, id);
+  const names = new Map<string, string>();
+  for (const entity of entities) {
+    if (entity.category === 'language') names.set(nameKey(entity.nameRu), entity.id);
+  }
+  for (const [synonym, name] of Object.entries(LANGUAGE_SYNONYMS)) {
+    const id = names.get(nameKey(name));
+    if (id) names.set(nameKey(synonym), id);
+  }
   const sorted = Object.entries(phrases)
     .map(([phrase, id]): [string, string] => [nameKey(phrase), id])
     .sort(([a], [b]) => b.length - a.length);
-  return { languageStems, items, phrases: sorted };
+  return {
+    languageStems,
+    languageNames: [...names].sort(([a], [b]) => b.length - a.length),
+    items,
+    phrases: sorted,
+  };
 }
+
+/** Названия языков на страницах предысторий, которые расходятся с объектом языка. */
+const LANGUAGE_SYNONYMS: Record<string, string> = {
+  Небожителей: 'Небесный',
+};
 
 const equipmentFileSchema = z.strictObject({
   $comment: z.string().optional(),
@@ -122,7 +140,8 @@ export function collectBackgrounds(
       continue;
     }
     const source = sources.fromMark({ code: plaque.code, title: plaque.title });
-    const nameEn = raw.nameEn ?? names.get(page.id) ?? null;
+    // Ручное название — первым: на сайте бывает не как в книге («Folk hero»).
+    const nameEn = names.get(page.id) ?? raw.nameEn ?? null;
     if (!nameEn) {
       stats.failedPages += 1;
       issue(

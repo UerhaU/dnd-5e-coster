@@ -4,6 +4,7 @@ import { openArticleCache } from '../dndsu/article-cache.ts';
 import { DEFAULT_PATHS } from '../paths.ts';
 import type { ImportIssue } from '../report/issues.ts';
 import { collectFeats } from './collect-feats.ts';
+import { loadReferenceNames } from './collect-reference.ts';
 import { parsePrerequisites, type FeatLookup } from './normalize-feat.ts';
 
 const folder = path.join(DEFAULT_PATHS.characterFixtures, 'feats');
@@ -16,7 +17,13 @@ const lookup: Omit<FeatLookup, 'feats'> = {
 
 function collect() {
   const issues: ImportIssue[] = [];
-  const result = collectFeats(openArticleCache(folder), lookup, issues, { knownSources: [] });
+  const result = collectFeats(
+    openArticleCache(folder),
+    lookup,
+    loadReferenceNames(DEFAULT_PATHS.reviewedCharacter).feats,
+    issues,
+    { knownSources: [] },
+  );
   const get = (id: string) => {
     const entity = result.entities.find((candidate) => candidate.id === id);
     if (!entity) throw new Error(`нет ${id}`);

@@ -61,10 +61,10 @@ describe('GET /api/catalog/categories', () => {
       { id: 'skill', nameRu: 'Навыки', count: 18 },
       { id: 'language', nameRu: 'Языки', count: 65 },
       { id: 'condition', nameRu: 'Состояния', count: 15 },
-      { id: 'background', nameRu: 'Предыстории', count: 5 },
+      { id: 'background', nameRu: 'Предыстории', count: 9 },
       { id: 'feat', nameRu: 'Черты', count: 8 },
-      { id: 'class', nameRu: 'Классы', count: 5 },
-      { id: 'subclass', nameRu: 'Подклассы', count: 52 },
+      { id: 'class', nameRu: 'Классы', count: 8 },
+      { id: 'subclass', nameRu: 'Подклассы', count: 77 },
     ]);
   });
 });
@@ -248,8 +248,8 @@ describe('GET /api/catalog/entity/:id — карточка', () => {
     expect(to('spell_subclass').map((link) => link.id)).toEqual(
       expect.arrayContaining(['subclass:cleric-light', 'subclass:warlock-fiend']),
     );
-    // В тестовом каталоге 5 классов: волшебника и чародея нет — связей с ними тоже.
-    expect(to('spell_class')).toEqual([]);
+    // В тестовом каталоге 8 классов: волшебника нет — связи с ним нет, с чародеем есть.
+    expect(to('spell_class').map((link) => link.id)).toEqual(['class:sorcerer']);
     const detect = spellEntityResponseSchema.parse(
       (await get('/api/catalog/entity/spell:detect-magic')).body,
     );

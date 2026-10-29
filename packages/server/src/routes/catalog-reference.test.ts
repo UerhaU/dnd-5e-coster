@@ -129,12 +129,21 @@ describe('GET /api/catalog/{class,subclass}', () => {
       'class:cleric',
       'class:warlock',
       'class:monk',
+      'class:paladin',
+      'class:ranger',
+      'class:sorcerer',
     ]);
     expect(all.items.find((item) => item.id === 'class:cleric')?.detail).toBe(
       'Кость хитов к8 · заклинания: Мудрость',
     );
     const casters = await list('class', 'spellcaster=true');
-    expect(casters.items.map((item) => item.id).sort()).toEqual(['class:cleric', 'class:warlock']);
+    expect(casters.items.map((item) => item.id).sort()).toEqual([
+      'class:cleric',
+      'class:paladin',
+      'class:ranger',
+      'class:sorcerer',
+      'class:warlock',
+    ]);
   });
 
   it('подклассы: класс и уровень в строке, фильтр по классу', async () => {

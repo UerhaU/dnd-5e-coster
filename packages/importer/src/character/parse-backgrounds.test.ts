@@ -9,7 +9,7 @@ import {
   loadEquipmentPhrases,
 } from './collect-backgrounds.ts';
 import { collectReference, loadReferenceNames } from './collect-reference.ts';
-import { parseTools } from './normalize-background.ts';
+import { coinsIn, parseTools } from './normalize-background.ts';
 
 const folder = DEFAULT_PATHS.characterFixtures;
 const names = loadReferenceNames(DEFAULT_PATHS.reviewedCharacter);
@@ -43,7 +43,7 @@ describe('предыстории', () => {
   it('без ошибок; адаптация — отдельный вид, название из names.json', () => {
     const { issues, stats, get } = collect();
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(stats).toMatchObject({ pages: 5, backgrounds: 4, adaptations: 1 });
+    expect(stats).toMatchObject({ pages: 9, backgrounds: 8, adaptations: 1 });
     expect(get('background:ravenloft-background-adaptations').data.kind).toBe('adaptation');
   });
 
@@ -89,6 +89,71 @@ describe('предыстории', () => {
   });
 });
 
+describe('ручная проверка этапа 3', () => {
+  const texts = (id: string) =>
+    collect()
+      .get(id)
+      .rules.equipment.items.map((item) => item.text);
+
+  it('деньги — только кошель: «украшение стоимостью 10 зм» не прибавляется (Дальний путешественник)', () => {
+    const traveler = collect().get('background:far-traveler');
+    expect(traveler.rules.equipment.coinsCp).toBe(500);
+  });
+
+  it('части снаряжения не режутся по запятой придаточного', () => {
+    expect(texts('background:far-traveler')).toEqual([
+      'Комплект дорожной одежды',
+      'любой музыкальный инструмент или игровой набор, которым вы владеете',
+      'схематичная карта с вашей родины, на которой отмечено ваше местонахождение на Фаэруне',
+      'небольшое ювелирное украшение стоимостью 10 зм, украшенное в стиле вашей родины',
+      'кошель с 5 зм',
+    ]);
+    expect(texts('background:giant-foundling')).toContain(
+      'маленький камень или ветка, напоминающие вам о доме',
+    );
+    expect(texts('background:city-watch')).toContain('рожок, которым можно позвать на помощь');
+  });
+
+  it('синоним «наручники» → «Кандалы»; кошель — предмет по началу части', () => {
+    const watch = collect().get('background:city-watch');
+    expect(watch.rules.equipment.items).toContainEqual({
+      text: 'наручники',
+      itemId: 'item:manacles',
+      quantity: 1,
+    });
+    expect(watch.rules.equipment.items).toHaveLength(4);
+  });
+
+  it('обрывки строки инструментов не попадают в «только текстом»', () => {
+    const traveler = collect().get('background:far-traveler');
+    expect(traveler.rules.mixed).toHaveLength(1);
+    expect(
+      traveler.rules.textOnly.filter((line) => line.startsWith('Владение инструментами')),
+    ).toEqual([]);
+  });
+
+  it('«два языка, один из которых должен быть …» — 1 из 8 и 1 любой (Преследуемый)', () => {
+    const haunted = collect().get('background:haunted-one');
+    expect(haunted.rules.languages.choices).toEqual([
+      {
+        count: 1,
+        from: [
+          'language:abyssal',
+          'language:celestial',
+          'language:deep-speech',
+          'language:draconic',
+          'language:infernal',
+          'language:primordial',
+          'language:sylvan',
+          'language:undercommon',
+        ],
+      },
+      { count: 1, from: null },
+    ]);
+    expect(haunted.rules.equipment.coinsCp).toBe(10);
+  });
+});
+
 describe('владение инструментами', () => {
   it('число — вне скобок: «один игровой набор (… ставка трёх драконов)» — один (Награждённый)', () => {
     const rules = { tools: { fixed: [], choices: [] }, mixed: [], vehicles: [] };
@@ -102,5 +167,17 @@ describe('владение инструментами', () => {
       rules as unknown as Parameters<typeof parseTools>[1],
     );
     expect(rules.tools.choices).toEqual([{ count: 1, from: null, group: 'gaming_set' }]);
+  });
+});
+
+describe('деньги части снаряжения', () => {
+  it('кошель и монеты прописью — деньги, «стоимостью …» — цена предмета', () => {
+    expect(coinsIn('кошель с 5 зм')).toBe(500);
+    expect(coinsIn('небольшое ювелирное украшение стоимостью 10 зм')).toBeNull();
+    // Клановый ремесленник.
+    expect(coinsIn('мешочек с 5 золотыми монетами и самоцветом стоимостью 10 золотых монет')).toBe(
+      500,
+    );
+    expect(coinsIn('и 1 см')).toBe(10);
   });
 });

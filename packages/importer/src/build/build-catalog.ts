@@ -7,6 +7,7 @@ import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
 import {
   collectReference,
   loadReferenceNames,
+  loadRemovedIds,
   type ReferenceCollectStats,
 } from '../character/collect-reference.ts';
 import {
@@ -155,6 +156,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
       ? collectFeats(
           characterCache.feats,
           featLookup([...spells.entities, ...(races?.entities ?? []), ...backgrounds.entities]),
+          loadReferenceNames(options.reviewedCharacterDir).feats,
           issues,
           { knownSources },
         )
@@ -217,6 +219,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         source_checked_on: cache.list.checkedOn,
         source_kind: options.sourceKind,
       },
+      removedIds: loadRemovedIds(options.reviewedCharacterDir),
     },
     issues,
   );

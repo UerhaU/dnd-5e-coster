@@ -115,6 +115,8 @@ const hasMechanics = (rules: FeatRules) =>
 export function collectFeats(
   cache: ArticleCache,
   lookup: Omit<FeatLookup, 'feats'>,
+  /** Английские названия как в книге (data/reviewed/character/names.json, `feats`). */
+  names: Map<number, string>,
   issues: ImportIssue[],
   options: { knownSources: NormalizedSource[] },
 ): { entities: FeatEntity[]; stats: FeatCollectStats } {
@@ -158,6 +160,8 @@ export function collectFeats(
       issue('skip', `«${raw.nameRu}»: только редакция 2024 (Р12)`);
       continue;
     }
+    // Ручное название — первым: от него строится ID («Ember of the Fire Giant», Р80).
+    raw.nameEn = names.get(page.id) ?? raw.nameEn;
     if (!raw.nameEn) {
       stats.failedPages += 1;
       issue('error', `«${raw.nameRu}»: нет английского названия на странице`);

@@ -34,15 +34,23 @@ const namesFileSchema = z.strictObject({
   $comment: z.string().optional(),
   languages: z.record(z.string().min(1), z.string().min(1)),
   conditions: z.record(z.string().min(1), z.string().min(1)),
-  /** Страницы без английского названия («Адаптация предысторий VRGR»): номер → название. */
+  /**
+   * Английские названия предысторий и черт по номеру страницы: нет на странице («Адаптация
+   * предысторий VRGR») или на сайте не как в книге («Embar of the fire giant», Р80).
+   */
   backgrounds: z.record(z.string().regex(/^\d+$/), z.string().min(1)),
+  feats: z.record(z.string().regex(/^\d+$/), z.string().min(1)),
 });
 
 export interface ReferenceNames {
   languages: Map<string, string>;
   conditions: Map<string, string>;
   backgrounds: Map<number, string>;
+  feats: Map<number, string>;
 }
+
+const byPage = (record: Record<string, string>) =>
+  new Map(Object.entries(record).map(([page, en]) => [Number(page), en]));
 
 export function loadReferenceNames(folder: string): ReferenceNames {
   const file = path.join(folder, 'names.json');
@@ -52,9 +60,8 @@ export function loadReferenceNames(folder: string): ReferenceNames {
   return {
     languages: toMap(parsed.languages),
     conditions: toMap(parsed.conditions),
-    backgrounds: new Map(
-      Object.entries(parsed.backgrounds).map(([page, en]) => [Number(page), en]),
-    ),
+    backgrounds: byPage(parsed.backgrounds),
+    feats: byPage(parsed.feats),
   };
 }
 
@@ -302,4 +309,16 @@ export function collectReference(
   }
 
   return { entities, stats };
+}
+
+const removedFileSchema = z.strictObject({
+  $comment: z.string().optional(),
+  ids: z.array(z.string().regex(/^[a-z]+:[a-z0-9-]+$/)),
+});
+
+/** ID, убранные до релиза (data/reviewed/character/removed-ids.json, Р80). */
+export function loadRemovedIds(folder: string): Set<string> {
+  const file = path.join(folder, 'removed-ids.json');
+  if (!fs.existsSync(file)) return new Set();
+  return new Set(removedFileSchema.parse(JSON.parse(fs.readFileSync(file, 'utf8'))).ids);
 }

@@ -128,16 +128,37 @@ function blocksOf($: CheerioAPI, chunks: Chunk[]): TextBlock[] {
 const pageNumber = (href: string, part: string) =>
   Number(new RegExp(`/${part}/(\\d+)-`).exec(href)?.[1] ?? NaN);
 
+/** Опечатки якорей сайта (Р80): ключи особенностей попадут в сохранения персонажей. */
+const FEATURE_KEY_FIXES: Record<string, string> = {
+  'otherwordly-patron': 'otherworldly-patron',
+  'unarmored-defence': 'unarmored-defense',
+};
+
+/** `feature.otherwordly-patron` (якорь или ссылка `#feature.…`) → ключ особенности. */
+function featureKeyOf(anchor: string): string {
+  const key = anchor.replace(/^#?feature./, '');
+  return FEATURE_KEY_FIXES[key] ?? key;
+}
+
 function cellOf($: CheerioAPI, cell: Cheerio<Element>): RawCell {
   const clone = cell.clone();
-  clone.find('.TCE-feature-off, .short').remove();
+  clone.find('.short').remove();
+  // `.TCE-feature-off` — то, что сайт прячет при включённом TCE. Прочерк («-» вместо
+  // «Формул заговоров») убирается; умение остаётся: у жреца на 8-м «Умение божественного
+  // домена» и «Благословлённые удары» (TCE) идут подряд без запятой.
+  for (const node of clone.find('.TCE-feature-off').toArray()) {
+    const off = $(node);
+    const text = cleanText(off.text());
+    if (!/[а-яёa-z]/i.test(text)) off.remove();
+    else if (off.next().is('.TCE-feature-on') && !/^\s*,/.test(off.next().text())) off.append(', ');
+  }
   return {
     text: inlineText($, clone).replace(/\n/g, ' '),
     features: cell
       .find('a[href^="#feature."]')
       .toArray()
       .map((a) => ({
-        key: ($(a).attr('href') ?? '').slice('#feature.'.length),
+        key: featureKeyOf($(a).attr('href') ?? ''),
         text: cleanText($(a).text()),
       })),
     spellPages: cell
@@ -191,11 +212,15 @@ function headingText($: CheerioAPI, element: Cheerio<Element>): string {
   return cleanText(element.text()).replace(/\n/g, ' ');
 }
 
-/** «Источник: «Xanathar’s Guide to Everything»» → название книги. */
+/**
+ * «Источник: «Xanathar’s Guide to Everything»» → название книги. После кавычки бывают
+ * точка («…Everything».») и текст того же абзаца — они не часть названия.
+ */
 function sourceTitleOf(text: string): string | null {
-  const match = /^Источник:\s*«?([^»]+?)»?\s*$/.exec(cleanText(text));
+  const match = /^Источник:\s*(?:«([^»]+)»|([^«».\n]+))/.exec(cleanText(text));
+  const title = match?.[1] ?? match?.[2];
   // Апостроф и невидимые метки направления: «Tasha’s» с меткой U+200E — как у плашек книг.
-  return match?.[1]?.replace(/[‎‏]/g, '').replace(/’/g, "'").trim() ?? null;
+  return title?.replace(/[‎‏]/g, '').replace(/’/g, "'").trim() || null;
 }
 
 interface FeatureDraft extends RawFeature {
@@ -391,9 +416,15 @@ export function parseClassPage(html: string): RawClassPage {
       if (levelMatch && (mode === 'proficiency' || mode === 'features' || mode === 'sub')) {
         closeFeature();
         if (mode === 'proficiency') mode = 'features';
-        const key = element.find('span[id^="feature."]').attr('id')?.slice('feature.'.length);
+        const anchor = element.find('span[id^="feature."]').attr('id');
+        // «Дополнительные заклинания жреца» (TCE) — без якоря; у других классов — `extra-spells`.
+        const key = anchor
+          ? featureKeyOf(anchor)
+          : /^Дополнительные заклинания /.test(heading)
+            ? 'extra-spells'
+            : null;
         feature = {
-          key: subclass ? null : (key ?? null),
+          key: subclass ? null : key,
           nameRu: heading,
           subtitle,
           level: Number(levelMatch[1]),
@@ -451,7 +482,17 @@ export function parseClassPage(html: string): RawClassPage {
       continue;
     }
 
-    if (subclass && !feature && tag === 'p' && !subclass.sourceTitle) {
+    // Книга подкласса — строка «Источник» в самом начале раздела (`<p>` или голый `<strong>`).
+    // Ниже, во вложенных разделах, — книга дополнения («Спутники повелителя зверей», TCE).
+    if (
+      subclass &&
+      !feature &&
+      !subclass.sourceTitle &&
+      subclass.introChunks.length === 0 &&
+      subclass.secs.length === 0 &&
+      subclass.features.length === 0 &&
+      (tag === 'p' || tag === 'strong')
+    ) {
       const source = /^Источник:/.test(cleanText(element.text()))
         ? sourceTitleOf(element.text())
         : null;

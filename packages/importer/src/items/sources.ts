@@ -43,7 +43,8 @@ const BOOKS: [code: string, title: string][] = [
   // Подклассы (этап 3, часть Б).
   ['XGE', "Xanathar's Guide to Everything"],
   ['DMG14', 'Dungeon Master Guide'],
-  ['BGG', 'Bigby Presents: Glory of the Giants'],
+  // Р79: один код на книгу — как у плашек предысторий и черт.
+  ['BPGG', 'Bigby Presents: Glory of the Giants'],
 ];
 const BOOKS_BY_TITLE = new Map(BOOKS.map(([code, title]) => [titleKey(title), code]));
 /** Название книги для метки без подсказки: «(MOT)» → «Mythic Odysseys of Theros». */

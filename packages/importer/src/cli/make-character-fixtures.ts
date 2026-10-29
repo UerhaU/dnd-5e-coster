@@ -30,6 +30,10 @@ const FIXTURE_PAGES: Record<CharacterCachePart, Record<number, string>> = {
     782: 'утгардтский соплеменник: строки владений внутри раздела',
     790: 'следователь: двоеточие после <strong>, «Выберите два навыка из следующих»',
     845: 'адаптация предысторий VRGR: без владений, название — из names.json',
+    772: 'городской стражник: «рожок, которым можно позвать на помощь» — одна часть, наручники',
+    777: 'дальний путешественник: «украшение стоимостью 10 зм» — не деньги, части с придаточными',
+    789: 'преследуемый: «два языка, один из которых должен быть …», «Небожителей», «Глубинная речь»',
+    820: 'великаний подкидыш: «камень или ветка, напоминающие вам о доме» — одна часть',
   },
   feats: {
     104: 'боевой заклинатель: требование «способность накладывать заклинание»',
@@ -47,6 +51,9 @@ const FIXTURE_PAGES: Record<CharacterCachePart, Record<number, string>> = {
     91: 'воин: списки боевых стилей и приёмов (h2 внутри умений), мистический рыцарь — таблица заклинателя',
     93: 'монах: кость в таблице («1к4»), футы, «Ловкости и Мудрости», смешанный выбор инструментов',
     104: 'колдун: «Ячейки заклинаний» и «Уровень ячеек», воззвания, расширенные списки по уровню заклинаний',
+    94: 'паладин: «Источник» с точкой после кавычки (XGE) и «Dungeon Master Guide»',
+    97: 'следопыт: «Источник» в голом <strong> (FTD); «Источник» TCE вложенного раздела — не книга подкласса',
+    101: 'чародей: «Источник: «…».» с точкой у трёх подклассов XGE',
   },
 };
 
@@ -58,7 +65,7 @@ function shorten(text: string): string {
 }
 
 /** Абзац или пункт: термин в начале («<strong>Атлетика.</strong>») + начало текста. */
-function trimParagraphs($: CheerioAPI): void {
+function trimParagraphs($: CheerioAPI, part: CharacterCachePart): void {
   $('.card__body p, .card__body li').each((_, node) => {
     const element = $(node);
     if (element.find('p, li, table').length > 0) return;
@@ -69,7 +76,10 @@ function trimParagraphs($: CheerioAPI): void {
     // Предложение о диалектах нужно разбору языков целиком: из него берутся Акван и др.;
     // владения мультикласса и деньги вместо снаряжения — разбору классов.
     const whole = /включает диалекты|вот владения|никаких владений|откажетесь от этого снаряжения/;
-    const kept = whole.test(rest) ? rest : shorten(rest);
+    // Строки владений и снаряжения предысторий — перечни, нужные разбору целиком.
+    const listLine =
+      part === 'backgrounds' && /^(Владение [а-яё]+|Навыки|Языки|Снаряжение):?$/i.test(termText);
+    const kept = whole.test(rest) || listLine ? rest : shorten(rest);
     element.html(`${term}${term && rest ? ' ' : ''}${rest ? kept : ''}`);
   });
 }
@@ -93,7 +103,7 @@ function fixturePage(html: string, part: CharacterCachePart): string {
     trimCells($);
   }
   $('script, style, noscript, iframe, img, svg').remove();
-  trimParagraphs($);
+  trimParagraphs($, part);
   const url = $('meta[property="og:url"]').attr('content') ?? '';
   const title = $.html($('h2.card-title').first());
   const bodies = $('.card__body.new-article, .card__body:has(ul.params)')

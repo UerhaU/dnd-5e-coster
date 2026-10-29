@@ -17,6 +17,11 @@ import type { RawCardPage, RawLabeled, RawSection, RawTable } from './parse-back
 export interface BackgroundLookup {
   /** Основа названия языка (5 букв, без «язык») → ID; неоднозначные основы не попадают. */
   languageStems: Map<string, string>;
+  /**
+   * Полное название языка или синоним (`nameKey`) → ID, длинные — первыми: ищутся до основ
+   * («Глубинная речь» — основа «глуби» общая с «Языком глубинных воронов»).
+   */
+  languageNames: [name: string, id: string][];
   /** Название предмета (`nameKey`) → ID. */
   items: Map<string, string>;
   /** Начало части строки → ID (data/reviewed/character/equipment.json), длинные — первыми. */
@@ -74,7 +79,9 @@ function parseSkills(line: RawLabeled, rules: BackgroundRules): void {
 export function parseTools(line: RawLabeled, rules: BackgroundRules): void {
   const text = line.text.replace(/\.$/, '');
   // «транспорт (водный, наземный)»: запятая в скобках не делит строку.
-  for (const part of splitOutsideParens(text)) {
+  const parts = splitOutsideParens(text);
+  const unknown: string[] = [];
+  for (const part of parts) {
     const lower = part.toLowerCase();
     if (/транспорт/.test(lower)) {
       if (/водн/.test(lower)) rules.vehicles.push('water');
@@ -103,19 +110,38 @@ export function parseTools(line: RawLabeled, rules: BackgroundRules): void {
     } else if (tools.length > 0) {
       rules.tools.fixed.push(...tools);
     } else if (part.trim()) {
-      rules.textOnly.push(`${line.label}: ${part}`);
+      unknown.push(part);
     }
+  }
+  // Неразобранная часть рядом с разобранной — пояснение («…на ваш выбор, скорее всего,
+  // что-то свойственное на вашей родине»), а не отдельное условие: строка видна в сводке.
+  if (unknown.length === parts.length) {
+    rules.textOnly.push(...unknown.map((part) => `${line.label}: ${part}`));
   }
 }
 
 function languagesIn(text: string, lookup: BackgroundLookup): { id: string; at: number }[] {
   const result: { id: string; at: number }[] = [];
-  const words = text.matchAll(/[А-ЯЁа-яё][А-ЯЁа-яё-]+/g);
-  for (const word of words) {
-    const id = lookup.languageStems.get(word[0].toLowerCase().replaceAll('ё', 'е').slice(0, 5));
-    if (id && !result.some((entry) => entry.id === id)) result.push({ id, at: word.index });
+  const add = (id: string | undefined, at: number) => {
+    if (id && !result.some((entry) => entry.id === id)) result.push({ id, at });
+  };
+  // Найденное полное название закрывается пробелами: его слова не ищутся по основам.
+  // Та же длина, что у `text`: позиции сравниваются со словом выбора.
+  let rest = text.toLowerCase().replaceAll('ё', 'е');
+  for (const [name, id] of lookup.languageNames) {
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '\\s+');
+    const match = new RegExp(`(?<![а-я])${escaped}(?![а-я])`).exec(rest);
+    if (!match) continue;
+    add(id, match.index);
+    rest =
+      rest.slice(0, match.index) +
+      ' '.repeat(match[0].length) +
+      rest.slice(match.index + match[0].length);
   }
-  return result;
+  for (const word of rest.matchAll(/[а-я][а-я-]+/g)) {
+    add(lookup.languageStems.get(word[0].slice(0, 5)), word.index);
+  }
+  return result.sort((a, b) => a.at - b.at);
 }
 
 function parseLanguages(line: RawLabeled, rules: BackgroundRules, lookup: BackgroundLookup) {
@@ -128,6 +154,12 @@ function parseLanguages(line: RawLabeled, rules: BackgroundRules, lookup: Backgr
     return;
   }
   const count = countIn(text) ?? 1;
+  // «два языка, один из которых должен быть Бездны, …» — 1 из списка + остальные любые.
+  if (/один из которых/i.test(text) && languages.length > 1) {
+    rules.languages.choices.push({ count: 1, from: languages.map((entry) => entry.id) });
+    if (count > 1) rules.languages.choices.push({ count: count - 1, from: null });
+    return;
+  }
   const listed = /Выберите|один из|на выбор \(/.test(text);
   if (listed && languages.length > 1) {
     rules.languages.choices.push({ count, from: languages.map((entry) => entry.id) });
@@ -161,8 +193,31 @@ function splitOutsideParens(text: string): string[] {
   return parts.map((part) => part.trim().replace(/\.$/, '')).filter(Boolean);
 }
 
+/**
+ * Продолжение части после запятой: придаточное («…, которым вы владеете», «…, на которой
+ * отмечено…», «…, чтобы…») или причастный оборот («…, напоминающие вам о доме»,
+ * «…, украшенное в стиле…»).
+ */
+const CLAUSE_START =
+  /^((\S+\s+)?котор|(чтобы|такой как|такая как|такие как|битком)(?![а-яё])|[а-яё]+(ющ|ящ|ащ|ущ)(ий|ая|ее|ие|их|ую)(?![а-яё])|[а-яё]+[её]нн(ый|ая|ое|ые)\s+(в|во|на|с|из|для)\s)/i;
+
+/** Части строки снаряжения: «;» и запятые вне скобок; придаточное остаётся в своей части. */
+export function equipmentParts(text: string): string[] {
+  const parts: string[] = [];
+  for (const segment of text.split(/\s*;\s*/)) {
+    const start = parts.length;
+    for (const part of splitOutsideParens(segment)) {
+      if (parts.length > start && CLAUSE_START.test(part)) parts[parts.length - 1] += `, ${part}`;
+      else parts.push(part);
+    }
+  }
+  return parts;
+}
+
 function itemFor(text: string, lookup: BackgroundLookup): string | null {
-  const plain = nameKey(text.replace(/\([^)]*\)/g, ' ').replace(/^(и|а также)\s+/, ''));
+  // Придаточное после запятой («рожок, которым можно позвать на помощь») — не название.
+  const head = text.replace(/\([^)]*\)/g, ' ').split(',')[0] ?? '';
+  const plain = nameKey(head.replace(/^(и|а также)\s+/, ''));
   return (
     lookup.items.get(plain) ??
     lookup.phrases.find(([phrase]) => plain === phrase || plain.startsWith(`${phrase} `))?.[1] ??
@@ -170,12 +225,38 @@ function itemFor(text: string, lookup: BackgroundLookup): string | null {
   );
 }
 
+const COIN_WORDS: [RegExp, number][] = [
+  [/^медн/, 1],
+  [/^серебр/, 10],
+  [/^электрум/, 50],
+  [/^золот/, 100],
+  [/^платин/, 1000],
+];
+
+/**
+ * Деньги части в медных: «кошель с 5 зм», «мешочек с 5 золотыми монетами». Цена предмета
+ * («украшение стоимостью 10 зм», «самоцвет стоимостью 10 золотых монет») — не деньги.
+ */
+export function coinsIn(part: string): number | null {
+  let total: number | null = null;
+  const amounts = part.matchAll(/(\d+)\s*(?:(мм|см|эм|зм|пм)(?![а-яё])|([а-яё]+)\s+монет)/gi);
+  for (const match of amounts) {
+    if (/стоимост[а-яё]*\s*$/i.test(part.slice(0, match.index))) continue;
+    const word = match[3]?.toLowerCase();
+    const rate = match[2]
+      ? COINS[match[2]]
+      : COIN_WORDS.find(([pattern]) => word && pattern.test(word))?.[1];
+    if (rate) total = (total ?? 0) + Number(match[1]) * rate;
+  }
+  return total;
+}
+
 function parseEquipment(line: RawLabeled, rules: BackgroundRules, lookup: BackgroundLookup) {
   let coins: number | null = null;
-  for (const raw of splitOutsideParens(line.text)) {
+  for (const raw of equipmentParts(line.text)) {
     for (const part of raw.split(/\s+и\s+(?=[а-яё]+\s+с\s+\d|кошел|поясн)/i)) {
-      const money = /(\d+)\s*(мм|см|эм|зм|пм)(?![а-яё])/.exec(part);
-      if (money) coins = (coins ?? 0) + Number(money[1]) * (COINS[money[2] ?? ''] ?? 0);
+      const money = coinsIn(part);
+      if (money !== null) coins = (coins ?? 0) + money;
       const text = part.replace(/^(и|а также)\s+/i, '').trim();
       if (!text) continue;
       const count = /^(\d+)\s+(?!фут)/.exec(text);
