@@ -84,7 +84,7 @@ describe('классы (тестовые страницы)', () => {
     expect(barbarian.data.features.find((feature) => feature.key === 'rage')?.optionalRule).toBe(
       false,
     );
-    expect(barbarian.data.features.find((feature) => feature.key === 'ASI')?.levels).toEqual([
+    expect(barbarian.data.features.find((feature) => feature.key === 'asi')?.levels).toEqual([
       4, 8, 12, 16, 19,
     ]);
     expect(barbarian.links).toContainEqual({ toId: 'item:greataxe', kind: 'starting_equipment' });
@@ -143,14 +143,14 @@ describe('классы (тестовые страницы)', () => {
       'Увеличение характеристик, Уничтожение Нежити (ПО 1), Умение божественного домена, Благословленные удары',
     );
     expect(cleric.rules.table[7]?.features).toEqual([
-      'ASI',
+      'asi',
       'destroy-undead',
       'divine-domain',
       'blessed-strikes',
     ]);
   });
 
-  it('ключи особенностей — без опечаток якорей сайта (Р80)', () => {
+  it('ключи особенностей — без опечаток якорей сайта, строчными, единообразно (Р80, Р81)', () => {
     const { get } = collect();
     const keys = (id: string) => get(id, 'class').data.features.map((feature) => feature.key ?? '');
     expect(keys('class:warlock')).toContain('otherworldly-patron');
@@ -159,6 +159,22 @@ describe('классы (тестовые страницы)', () => {
     const all = ['class:warlock', 'class:barbarian', 'class:monk'].flatMap(keys);
     expect(all.filter((key) => /defence|otherwordly/.test(key))).toEqual([]);
     expect(get('class:warlock', 'class').rules.subclass.featureKey).toBe('otherworldly-patron');
+    const classes = [
+      'class:barbarian',
+      'class:cleric',
+      'class:fighter',
+      'class:monk',
+      'class:paladin',
+      'class:ranger',
+      'class:sorcerer',
+      'class:warlock',
+    ];
+    const every = classes.flatMap((id) => [
+      ...keys(id),
+      ...get(id, 'class').rules.table.flatMap((row) => row.features),
+    ]);
+    expect(every.filter((key) => /[A-Z]/.test(key))).toEqual([]);
+    expect(keys('class:paladin')).toEqual(expect.arrayContaining(['asi', 'extra-spells']));
   });
 
   it('воин: списки вариантов, мистический рыцарь — заклинатель на треть', () => {

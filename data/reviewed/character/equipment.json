@@ -39,6 +39,9 @@
     "контейнер для свитков": "item:map-or-scroll-case",
     "колода карт": "item:playing-card-set",
     "игральные карты": "item:playing-card-set",
-    "наручники": "item:manacles"
+    "наручники": "item:manacles",
+    "бутылочка с чёрными чернилами": "item:ink",
+    "листов бумаги": "item:paper",
+    "лист бумаги": "item:paper"
   }
 }

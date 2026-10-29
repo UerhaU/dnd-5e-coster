@@ -128,15 +128,21 @@ function blocksOf($: CheerioAPI, chunks: Chunk[]): TextBlock[] {
 const pageNumber = (href: string, part: string) =>
   Number(new RegExp(`/${part}/(\\d+)-`).exec(href)?.[1] ?? NaN);
 
-/** Опечатки якорей сайта (Р80): ключи особенностей попадут в сохранения персонажей. */
+/**
+ * Ключи особенностей попадут в сохранения персонажей: опечатки якорей сайта (Р80) и
+ * ключи не как у других классов (Р81: паладин — `TCE-spells`, у остальных `extra-spells`).
+ * Ключи — строчными (`ASI` → `asi`), здесь — уже строчные.
+ */
 const FEATURE_KEY_FIXES: Record<string, string> = {
   'otherwordly-patron': 'otherworldly-patron',
   'unarmored-defence': 'unarmored-defense',
+  'tce-spells': 'extra-spells',
+  'tce-fighting-styles': 'fighting-style-variants',
 };
 
 /** `feature.otherwordly-patron` (якорь или ссылка `#feature.…`) → ключ особенности. */
 function featureKeyOf(anchor: string): string {
-  const key = anchor.replace(/^#?feature./, '');
+  const key = anchor.replace(/^#?feature\./, '').toLowerCase();
   return FEATURE_KEY_FIXES[key] ?? key;
 }
 

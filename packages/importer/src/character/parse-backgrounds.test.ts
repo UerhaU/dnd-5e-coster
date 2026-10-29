@@ -9,7 +9,7 @@ import {
   loadEquipmentPhrases,
 } from './collect-backgrounds.ts';
 import { collectReference, loadReferenceNames } from './collect-reference.ts';
-import { coinsIn, parseTools } from './normalize-background.ts';
+import { coinsIn, parseTools, quantityOf } from './normalize-background.ts';
 
 const folder = DEFAULT_PATHS.characterFixtures;
 const names = loadReferenceNames(DEFAULT_PATHS.reviewedCharacter);
@@ -43,7 +43,7 @@ describe('предыстории', () => {
   it('без ошибок; адаптация — отдельный вид, название из names.json', () => {
     const { issues, stats, get } = collect();
     expect(issues.filter((issue) => issue.severity === 'error')).toEqual([]);
-    expect(stats).toMatchObject({ pages: 9, backgrounds: 8, adaptations: 1 });
+    expect(stats).toMatchObject({ pages: 10, backgrounds: 9, adaptations: 1 });
     expect(get('background:ravenloft-background-adaptations').data.kind).toBe('adaptation');
   });
 
@@ -124,6 +124,16 @@ describe('ручная проверка этапа 3', () => {
     expect(watch.rules.equipment.items).toHaveLength(4);
   });
 
+  it('награждённый: чернила и бумага — ссылками, «пять листов» — 5 (Р81)', () => {
+    const items = collect().get('background:rewarded').rules.equipment.items;
+    expect(items).toContainEqual({
+      text: 'Бутылочка с чёрными чернилами',
+      itemId: 'item:ink',
+      quantity: 1,
+    });
+    expect(items).toContainEqual({ text: 'пять листов бумаги', itemId: 'item:paper', quantity: 5 });
+  });
+
   it('обрывки строки инструментов не попадают в «только текстом»', () => {
     const traveler = collect().get('background:far-traveler');
     expect(traveler.rules.mixed).toHaveLength(1);
@@ -179,5 +189,15 @@ describe('деньги части снаряжения', () => {
       500,
     );
     expect(coinsIn('и 1 см')).toBe(10);
+  });
+});
+
+describe('число в начале части снаряжения', () => {
+  it('цифрами и словом; «один» и «50 футов» — не число', () => {
+    expect(quantityOf('5 палочек благовоний')).toEqual({ quantity: 5, length: 2 });
+    expect(quantityOf('пять листов бумаги')).toEqual({ quantity: 5, length: 5 });
+    expect(quantityOf('три маленьких ножа')?.quantity).toBe(3);
+    expect(quantityOf('одна безделушка')).toBeNull();
+    expect(quantityOf('50 футов шёлковой верёвки')).toBeNull();
   });
 });

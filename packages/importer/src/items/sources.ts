@@ -41,6 +41,7 @@ const BOOKS: [code: string, title: string][] = [
   ['SKT', "Storm King's Thunder"],
   ['TYP', 'Tales from the Yawning Portal'],
   // Подклассы (этап 3, часть Б).
+  ['BGDA', "Baldur's Gate: Descent Into Avernus"],
   ['XGE', "Xanathar's Guide to Everything"],
   ['DMG14', 'Dungeon Master Guide'],
   // Р79: один код на книгу — как у плашек предысторий и черт.
@@ -71,6 +72,8 @@ const CODE_ALIASES: Record<string, string> = {
   MOOT: 'MOT',
   MTOF: 'MTF',
   AM: 'AWM',
+  // Р81: одна книга — один код, как у большинства объектов (предыстории — BGDA).
+  BGDIA: 'BGDA',
 };
 
 export class ItemSources {

@@ -251,6 +251,30 @@ export function coinsIn(part: string): number | null {
   return total;
 }
 
+/** «один/одна» — и так одна штука: начало части не отрезается, предмет ищется как раньше. */
+const QUANTITY_WORDS: [RegExp, number][] = [
+  [/^(два|две)\s/i, 2],
+  [/^три\s/i, 3],
+  [/^четыре\s/i, 4],
+  [/^пять\s/i, 5],
+  [/^шесть\s/i, 6],
+  [/^семь\s/i, 7],
+  [/^восемь\s/i, 8],
+  [/^девять\s/i, 9],
+  [/^десять\s/i, 10],
+];
+
+/** Число в начале части: «5 палочек благовоний», «пять листов бумаги»; «50 футов …» — не число. */
+export function quantityOf(text: string): { quantity: number; length: number } | null {
+  const digits = /^(\d+)\s+(?!фут)/.exec(text);
+  if (digits) return { quantity: Number(digits[1]), length: digits[0].length };
+  for (const [pattern, quantity] of QUANTITY_WORDS) {
+    const word = pattern.exec(text);
+    if (word) return { quantity, length: word[0].length };
+  }
+  return null;
+}
+
 function parseEquipment(line: RawLabeled, rules: BackgroundRules, lookup: BackgroundLookup) {
   let coins: number | null = null;
   for (const raw of equipmentParts(line.text)) {
@@ -259,11 +283,11 @@ function parseEquipment(line: RawLabeled, rules: BackgroundRules, lookup: Backgr
       if (money !== null) coins = (coins ?? 0) + money;
       const text = part.replace(/^(и|а также)\s+/i, '').trim();
       if (!text) continue;
-      const count = /^(\d+)\s+(?!фут)/.exec(text);
+      const count = quantityOf(text);
       rules.equipment.items.push({
         text,
-        itemId: itemFor(count ? text.slice(count[0].length) : text, lookup),
-        quantity: count ? Number(count[1]) : 1,
+        itemId: itemFor(count ? text.slice(count.length) : text, lookup),
+        quantity: count?.quantity ?? 1,
       });
     }
   }

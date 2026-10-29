@@ -61,7 +61,7 @@ describe('GET /api/catalog/categories', () => {
       { id: 'skill', nameRu: 'Навыки', count: 18 },
       { id: 'language', nameRu: 'Языки', count: 65 },
       { id: 'condition', nameRu: 'Состояния', count: 15 },
-      { id: 'background', nameRu: 'Предыстории', count: 9 },
+      { id: 'background', nameRu: 'Предыстории', count: 10 },
       { id: 'feat', nameRu: 'Черты', count: 8 },
       { id: 'class', nameRu: 'Классы', count: 8 },
       { id: 'subclass', nameRu: 'Подклассы', count: 77 },
