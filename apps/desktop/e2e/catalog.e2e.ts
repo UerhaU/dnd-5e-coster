@@ -184,6 +184,157 @@ test('справочник: поиск везде, огненный шар → �
   await expect(window.getByRole('link', { name: 'Огненный шар', exact: true })).toBeVisible();
 });
 
+// Этап 3, часть А: справочные категории — по сценарию на категорию. Навыки, «Акван»,
+// «Сбитый с ног», «Артист» и черты «Одарённый», «Знаток средних доспехов» есть в обоих
+// каталогах. Каждый сценарий открывает свой список адресом: не зависит от прошлого.
+async function openList(category: string, title: string) {
+  const { window } = running;
+  // Строкой: в типах сценариев нет DOM (tsconfig.node.json).
+  await window.evaluate("location.hash = '#/reference'");
+  await window.getByRole('link', { name: new RegExp(title) }).click();
+  await expect(window.getByRole('heading', { level: 1, name: title })).toBeVisible();
+  expect(await window.evaluate('location.hash')).toBe(`#/reference/${category}`);
+  return window;
+}
+
+test('справочник: навыки Ловкости → «Акробатика»', async () => {
+  const window = await openList('skill', 'Навыки');
+  await window.getByLabel('Характеристика').selectOption('dex');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await expect(results.getByRole('link')).toHaveCount(3);
+  await results.getByRole('link', { name: /Акробатика/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Акробатика' })).toBeVisible();
+  await expect(window.getByTestId('skill-ability')).toHaveText('Ловкость');
+});
+
+test('справочник: язык «Акван» — диалект Первичного', async () => {
+  const window = await openList('language', 'Языки');
+  await window.getByRole('searchbox', { name: 'Поиск: языки' }).fill('Акван');
+  const aquan = window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Акван/ });
+  await expect(aquan).toContainText('Диалект: Первичный');
+  await aquan.click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Акван' })).toBeVisible();
+  await window.getByRole('link', { name: 'Первичный' }).first().click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Первичный' })).toBeVisible();
+});
+
+test('справочник: состояние «Сбитый с ног» по синониму «ничком»', async () => {
+  const window = await openList('condition', 'Состояния');
+  await window.getByRole('searchbox', { name: 'Поиск: состояния' }).fill('ничком');
+  await window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Сбитый с ног/ })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Сбитый с ног' })).toBeVisible();
+  await expect(window.getByTestId('entity-kind')).toHaveText('Состояние');
+});
+
+test('справочник: предыстория «Артист» — навыки ссылками на объекты, характер', async () => {
+  const window = await openList('background', 'Предыстории');
+  await window.getByRole('searchbox', { name: 'Поиск: предыстории' }).fill('Артист');
+  await window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Артист Entertainer/ })
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Артист' })).toBeVisible();
+  await expect(window.getByTestId('background-skills')).toHaveText('Акробатика; Выступление');
+  await expect(window.getByTestId('background-tools')).toContainText('музыкальн');
+  await expect(window.getByRole('heading', { name: 'Разновидность: Гладиатор' })).toBeVisible();
+  await expect(window.getByRole('heading', { name: /Черты характера/ })).toBeVisible();
+});
+
+test('справочник: черты — «Одарённый» и требование «Знатока средних доспехов»', async () => {
+  const window = await openList('feat', 'Черты');
+  await window.getByLabel('Требование').selectOption('false');
+  await window.getByRole('searchbox', { name: 'Поиск: черты' }).fill('Одарённый');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Одарённый/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Одарённый' })).toBeVisible();
+  await expect(window.getByTestId('feat-mixed')).toHaveText(
+    '3 на выбор в любой комбинации: любой навык, любой инструмент',
+  );
+  await expect(window.getByTestId('feat-prerequisite')).toHaveText('нет');
+
+  await window.getByRole('button', { name: '← К списку' }).click();
+  await window.getByLabel('Требование').selectOption('true');
+  await window.getByRole('searchbox', { name: 'Поиск: черты' }).fill('средних доспехов');
+  await results.getByRole('link', { name: /Знаток средних доспехов/ }).click();
+  await expect(window.getByTestId('feat-prerequisite')).toHaveText('владение: лёгкие доспехи');
+  await expect(window.getByTestId('feat-abilities')).toContainText('из: Сил, Лов');
+});
+
+// Этап 3, часть Б: классы и подклассы. Монах и мистический рыцарь есть в обоих каталогах.
+test('справочник: класс «Монах» — таблица 1–20, вариант правил TCE, подкласс', async () => {
+  const window = await openList('class', 'Классы');
+  await window.getByRole('searchbox', { name: 'Поиск: классы' }).fill('Монах');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Монах/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Монах' })).toBeVisible();
+  await expect(window.getByTestId('class-hit-die')).toHaveText('к8');
+  await expect(window.getByTestId('class-multiclass')).toHaveText('Мудрость 13 и Ловкость 13');
+  await expect(window.getByTestId('class-table').locator('tbody tr')).toHaveCount(20);
+  await expect(window.getByTestId('optional-rule').first()).toContainText('вариант правил');
+  await window
+    .getByTestId('class-subclasses')
+    .getByRole('link', { name: 'Путь открытой ладони' })
+    .click();
+  await expect(
+    window.getByRole('heading', { level: 1, name: 'Путь открытой ладони' }),
+  ).toBeVisible();
+  await expect(window.getByTestId('subclass-class')).toHaveText('Монах');
+});
+
+test('справочник: подклассы воина → «Мистический рыцарь», переход к классу', async () => {
+  const window = await openList('subclass', 'Подклассы');
+  await window.getByRole('combobox', { name: /^Класс/ }).selectOption('class:fighter');
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  await results.getByRole('link', { name: /Мистический рыцарь/ }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Мистический рыцарь' })).toBeVisible();
+  await expect(window.getByRole('heading', { name: 'Таблица заклинателя' })).toBeVisible();
+  await window.getByTestId('subclass-class').getByRole('link', { name: 'Воин' }).click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Воин' })).toBeVisible();
+});
+
+// Этап 3, часть В: общий поиск (Р54) видит новые категории с подписью категории;
+// фильтр по классу (Р53) — по объектам, пометка с названием подкласса. Все объекты —
+// в обоих каталогах (огненный шар у жреца — через «Домен света»).
+test('справочник: поиск везде — навык, язык, состояние, предыстория, черта, класс, подкласс', async () => {
+  const { window } = running;
+  await window.evaluate("location.hash = '#/reference'");
+  const search = window.getByRole('searchbox', { name: 'Поиск по всему справочнику' });
+  const results = window.getByRole('list', { name: 'Результаты поиска' });
+  for (const [query, label] of [
+    ['акробатика', /^Навык · Ловкость/],
+    ['акван', /^Язык · Диалект: Первичный/],
+    ['сбитый с ног', /^Состояние/],
+    ['артист', /^Предыстория/],
+    ['одарённый', /^Черта/],
+    ['монах', /^Класс/],
+    ['мистический рыцарь', /^Подкласс/],
+  ] as const) {
+    await search.fill(query);
+    await expect(results.getByTestId('result-category').first()).toHaveText(label);
+  }
+  await results
+    .getByRole('link', { name: /Мистический рыцарь/ })
+    .first()
+    .click();
+  await expect(window.getByRole('heading', { level: 1, name: 'Мистический рыцарь' })).toBeVisible();
+});
+
+test('справочник: заклинания жреца — огненный шар «через подкласс: Домен света»', async () => {
+  const window = await openList('spell', 'Заклинания');
+  await window.getByRole('combobox', { name: /^Класс/ }).selectOption('class:cleric');
+  await window.getByRole('searchbox', { name: 'Поиск заклинаний' }).fill('огненный шар');
+  const fireball = window
+    .getByRole('list', { name: 'Результаты поиска' })
+    .getByRole('link', { name: /Огненный шар/ })
+    .first();
+  await expect(fireball).toContainText('через подкласс: Домен света');
+});
+
 test('программа пишет только в data/ рядом с Koster.exe', async () => {
   const data = path.join(running.folder, 'data');
   expect(fs.existsSync(data)).toBe(true);

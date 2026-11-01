@@ -2,7 +2,15 @@ import { describe, expect, it } from 'vitest';
 import { searchResultSummary } from './search-format';
 
 describe('подписи поиска по каталогу', () => {
-  const base = { nameRu: '', nameEn: '', spell: null, item: null, race: null };
+  const base = {
+    nameRu: '',
+    nameEn: '',
+    spell: null,
+    item: null,
+    race: null,
+    skill: null,
+    language: null,
+  };
 
   it('категория и короткое описание своей категории', () => {
     expect(

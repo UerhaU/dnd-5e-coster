@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CLASS_IDS, DAMAGE_TYPES, idsOf, MAGIC_SCHOOLS } from '../catalog/codes.ts';
+import { ABILITIES, CLASS_IDS, DAMAGE_TYPES, idsOf, MAGIC_SCHOOLS } from '../catalog/codes.ts';
 import {
   automationSchema,
   categorySchema,
@@ -13,6 +13,15 @@ import { itemDataSchema } from '../catalog/item.ts';
 import { SIZES } from '../catalog/race-codes.ts';
 import { raceRulesSchema } from '../catalog/race-rules.ts';
 import { raceDataSchema } from '../catalog/race.ts';
+import { backgroundDataSchema, backgroundRulesSchema } from '../catalog/background.ts';
+import { featDataSchema, featRulesSchema } from '../catalog/feat.ts';
+import {
+  classDataSchema,
+  classRulesSchema,
+  subclassDataSchema,
+  subclassRulesSchema,
+} from '../catalog/class.ts';
+import { conditionDataSchema, languageDataSchema, skillDataSchema } from '../catalog/reference.ts';
 import { spellRulesSchema } from '../catalog/spell-rules.ts';
 import { spellDataSchema } from '../catalog/spell.ts';
 
@@ -94,6 +103,46 @@ export const raceListQuerySchema = z.strictObject({
 export type RaceListQuery = z.infer<typeof raceListQuerySchema>;
 export type RaceListParams = Partial<RaceListQuery>;
 
+/** Справочные категории этапа 3: один вид списка, фильтры — своей категории. */
+export const REFERENCE_LIST_CATEGORIES = [
+  'skill',
+  'language',
+  'condition',
+  'background',
+  'feat',
+  'class',
+  'subclass',
+] as const;
+export type ReferenceListCategory = (typeof REFERENCE_LIST_CATEGORIES)[number];
+
+/**
+ * `GET /api/catalog/{skill,language,condition,background,feat}?…`. Фильтр чужой
+ * категории не ошибка, а пустое условие: так у всех пяти списков одна схема.
+ */
+export const referenceListQuerySchema = z.strictObject({
+  ...listPaging,
+  /** Навыки: характеристика проверки. */
+  ability: z.enum(idsOf(ABILITIES)).optional(),
+  /** Языки: `standard` / `exotic`; предыстории: `background` / `adaptation`. */
+  kind: z.enum(['standard', 'exotic', 'background', 'adaptation']).optional(),
+  /** Предыстории: умение даёт черту. */
+  grantsFeat: flag.optional(),
+  /** Черты: есть требование. */
+  prerequisite: flag.optional(),
+  /** Черты: увеличивает характеристику. */
+  abilityIncrease: flag.optional(),
+  /** Черты: требует расу или размер. */
+  raceRequired: flag.optional(),
+  /** Подклассы: класс. */
+  classId: z.enum(CLASS_IDS).optional(),
+  /** Классы — накладывает заклинания; подклассы — заклинатель или есть дополнительные заклинания. */
+  spellcaster: flag.optional(),
+  sort: z.enum(['relevance', 'name']).default('relevance'),
+});
+
+export type ReferenceListQuery = z.infer<typeof referenceListQuerySchema>;
+export type ReferenceListParams = Partial<ReferenceListQuery>;
+
 /** `GET /api/catalog/search?…` — поиск по всему каталогу (Р54). */
 export const catalogSearchQuerySchema = z.strictObject({
   q: z.string().trim().min(1).max(CATALOG_QUERY_MAX),
@@ -130,6 +179,11 @@ export const spellListItemSchema = z.object({
   reviewStatus: reviewStatusSchema,
   /** Доступ к классу из фильтра `class`; без фильтра по классу — `null`. */
   classAccess: classAccessSchema.nullable(),
+  /**
+   * Подклассы класса из фильтра, через которые доступно заклинание (связи
+   * `spell_subclass`, Р53), по алфавиту; без фильтра по классу — пусто.
+   */
+  classSubclasses: z.array(z.string()),
 });
 
 export const spellListResponseSchema = z.object({
@@ -191,6 +245,27 @@ export const raceListResponseSchema = z.object({
   pageSize: z.number().int().min(1),
 });
 
+export const referenceListItemSchema = z.object({
+  id: entityIdSchema,
+  category: z.enum(REFERENCE_LIST_CATEGORIES),
+  nameRu: z.string(),
+  nameEn: z.string(),
+  /**
+   * Короткая строка списка: характеристика навыка, вид языка, требование черты,
+   * владения навыками предыстории; `null` — нечего показать.
+   */
+  detail: z.string().nullable(),
+  sources: z.array(z.string()),
+  reviewStatus: reviewStatusSchema,
+});
+
+export const referenceListResponseSchema = z.object({
+  items: z.array(referenceListItemSchema),
+  total: z.number().int().min(0),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+});
+
 const facetValue = <T extends z.ZodType>(value: T) =>
   z.object({ value, label: z.string(), count: z.number().int().min(0) });
 
@@ -223,6 +298,19 @@ export const raceFacetsResponseSchema = z.object({
   darkvision: z.number().int().min(0),
 });
 
+/** `GET /api/catalog/{skill,language,…}/facets`: пустые списки и нули — фильтр не для этой категории. */
+export const referenceFacetsResponseSchema = z.object({
+  ability: z.array(facetValue(z.string())),
+  kind: z.array(facetValue(z.string())),
+  source: z.array(facetValue(z.string())),
+  grantsFeat: z.number().int().min(0),
+  prerequisite: z.number().int().min(0),
+  abilityIncrease: z.number().int().min(0),
+  raceRequired: z.number().int().min(0),
+  classId: z.array(facetValue(z.string())),
+  spellcaster: z.number().int().min(0),
+});
+
 /** `GET /api/catalog/categories` */
 /** Найденный объект любой категории: общие поля и короткое описание своей категории. */
 export const searchResultItemSchema = z.object({
@@ -242,6 +330,10 @@ export const searchResultItemSchema = z.object({
     .nullable(),
   race: z
     .object({ kind: z.enum(['race', 'variant']), variantOfName: z.string().nullable() })
+    .nullable(),
+  skill: z.object({ ability: z.enum(idsOf(ABILITIES)) }).nullable(),
+  language: z
+    .object({ kind: z.enum(['standard', 'exotic']).nullable(), dialectOf: z.string().nullable() })
     .nullable(),
 });
 
@@ -322,11 +414,72 @@ export const raceEntityResponseSchema = z.object({
   rules: raceRulesSchema,
 });
 
+/** Карточки справочных категорий этапа 3: механики у них нет (`rules` — `null`). */
+export const skillEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('skill'),
+  data: skillDataSchema,
+  rules: z.null(),
+});
+
+export const languageEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('language'),
+  data: languageDataSchema,
+  rules: z.null(),
+});
+
+export const conditionEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('condition'),
+  data: conditionDataSchema,
+  rules: z.null(),
+});
+
+/** Карточка предыстории. */
+export const backgroundEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('background'),
+  data: backgroundDataSchema,
+  rules: backgroundRulesSchema,
+});
+
+/** Карточка черты. */
+export const featEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('feat'),
+  data: featDataSchema,
+  rules: featRulesSchema,
+});
+
+/** Карточка класса. */
+export const classEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('class'),
+  data: classDataSchema,
+  rules: classRulesSchema,
+});
+
+/** Карточка подкласса. */
+export const subclassEntityResponseSchema = z.object({
+  ...entityCardBase,
+  category: z.literal('subclass'),
+  data: subclassDataSchema,
+  rules: subclassRulesSchema,
+});
+
 /** `GET /api/catalog/entity/:id` и `…/revisions/:rev` — карточка объекта любой категории. */
 export const entityResponseSchema = z.discriminatedUnion('category', [
   spellEntityResponseSchema,
   itemEntityResponseSchema,
   raceEntityResponseSchema,
+  skillEntityResponseSchema,
+  languageEntityResponseSchema,
+  conditionEntityResponseSchema,
+  backgroundEntityResponseSchema,
+  featEntityResponseSchema,
+  classEntityResponseSchema,
+  subclassEntityResponseSchema,
 ]);
 
 export const entityParamsSchema = z.strictObject({ id: entityIdSchema });
@@ -349,8 +502,18 @@ export type EntityLink = z.infer<typeof entityLinkSchema>;
 export type ItemListItem = z.infer<typeof itemListItemSchema>;
 export type ItemListResponse = z.infer<typeof itemListResponseSchema>;
 export type ItemFacetsResponse = z.infer<typeof itemFacetsResponseSchema>;
+export type SkillEntityResponse = z.infer<typeof skillEntityResponseSchema>;
+export type LanguageEntityResponse = z.infer<typeof languageEntityResponseSchema>;
+export type ConditionEntityResponse = z.infer<typeof conditionEntityResponseSchema>;
+export type BackgroundEntityResponse = z.infer<typeof backgroundEntityResponseSchema>;
+export type FeatEntityResponse = z.infer<typeof featEntityResponseSchema>;
+export type ClassEntityResponse = z.infer<typeof classEntityResponseSchema>;
+export type SubclassEntityResponse = z.infer<typeof subclassEntityResponseSchema>;
 export type RaceEntityResponse = z.infer<typeof raceEntityResponseSchema>;
 export type RaceListItem = z.infer<typeof raceListItemSchema>;
+export type ReferenceListItem = z.infer<typeof referenceListItemSchema>;
+export type ReferenceListResponse = z.infer<typeof referenceListResponseSchema>;
+export type ReferenceFacetsResponse = z.infer<typeof referenceFacetsResponseSchema>;
 export type RaceListResponse = z.infer<typeof raceListResponseSchema>;
 export type SearchResultItem = z.infer<typeof searchResultItemSchema>;
 export type CatalogSearchResponse = z.infer<typeof catalogSearchResponseSchema>;

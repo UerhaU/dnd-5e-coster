@@ -1,4 +1,4 @@
-import { raceDataSchema, raceRulesSchema, textBlocksToPlain } from '@koster/shared';
+import { raceDataSchema, raceRulesSchema, textBlocksToPlain, type RaceRules } from '@koster/shared';
 import { z } from 'zod';
 import type { ArticleCache } from '../dndsu/article-cache.ts';
 import { ItemSources } from '../items/sources.ts';
@@ -30,6 +30,28 @@ export interface CollectRacesOptions {
 
 /** Страницы `/race/…` раньше `/multiverse/race/…`: ID без суффикса — у ранней книги (Р67). */
 const pageOrder = (url: string) => (url.includes('/multiverse/') ? 1 : 0);
+
+/**
+ * Навыки и языки расы — связи на объекты этапа 3 (долг этапа 2): в race-rules/v1
+ * они остаются кодами (`animal_handling` → `skill:animal-handling`), чтобы не менять
+ * ревизии рас. Объекта нет — ошибка сборки (write-catalog.ts).
+ */
+export function proficiencyLinks(rules: RaceRules): CatalogEntity['links'] {
+  const skills = [
+    ...rules.skills.fixed,
+    ...rules.skills.choices.flatMap((choice) => choice.from ?? []),
+  ];
+  return [
+    ...[...new Set(skills)].map((id) => ({
+      toId: `skill:${id.replace(/_/g, '-')}`,
+      kind: 'skill_proficiency' as const,
+    })),
+    ...rules.languages.fixed.map((id) => ({
+      toId: `language:${id.replace(/_/g, '-')}`,
+      kind: 'language' as const,
+    })),
+  ];
+}
 
 export function collectRaces(
   cache: ArticleCache,
@@ -182,7 +204,7 @@ export function collectRaces(
         data: data.data,
         rules: rules.data,
         sources: [{ source: race.source, dndsuId: page.id, url: page.url }],
-        links: race.links,
+        links: [...race.links, ...proficiencyLinks(rules.data)],
         searchBody: [
           ...data.data.features.map(
             (feature) => `${feature.name}. ${textBlocksToPlain(feature.blocks)}`,

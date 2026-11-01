@@ -4,6 +4,7 @@ import {
   type AbilityOption,
   type RaceRules,
 } from '@koster/shared';
+import { skillOrToolChoice } from '../character/proficiency-choices.ts';
 import { emptyRaceBody, parseRaceBody } from './parse-race-body.ts';
 import type { RawFeature } from './parse-race-page.ts';
 
@@ -17,7 +18,7 @@ type Skill = RaceRules['skills']['fixed'][number];
 type Language = RaceRules['languages']['fixed'][number];
 type DamageType = RaceRules['resistances'][number];
 
-const ABILITY_STEMS: [RegExp, Ability][] = [
+export const ABILITY_STEMS: [RegExp, Ability][] = [
   [/Сил[аыу]/, 'str'],
   [/Ловкост/, 'dex'],
   [/Телосложени/, 'con'],
@@ -49,7 +50,7 @@ const CREATURE_WORDS: [RegExp, NonNullable<RaceRules['creatureType']>][] = [
   [/нежит/i, 'undead'],
 ];
 
-const SKILL_STEMS: [RegExp, Skill][] = [
+export const SKILL_STEMS: [RegExp, Skill][] = [
   [/Акробатик/, 'acrobatics'],
   [/Уход[а-яё]* за животными/, 'animal_handling'],
   [/Маги[яюи](?![а-яё])/, 'arcana'],
@@ -138,7 +139,7 @@ const WEAPON_STEMS: [RegExp, string[]][] = [
 ];
 
 /** Инструменты из текста владений → ID предметов каталога: «инструменты кузнеца, пивовара или каменщика». */
-const TOOL_STEMS: [RegExp, string][] = [
+export const TOOL_STEMS: [RegExp, string][] = [
   [/алхимик/, 'item:alchemists-supplies'],
   [/пивовар/, 'item:brewers-supplies'],
   [/каллиграф/, 'item:calligraphers-supplies'],
@@ -164,7 +165,7 @@ const TOOL_STEMS: [RegExp, string][] = [
   [/фальсификац/, 'item:forgery-kit'],
 ];
 
-const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']][] = [
+export const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']][] = [
   [/ремесленн/, 'artisans_tools'],
   [/музыкальн/, 'musical_instrument'],
   [/игров[а-яё]* набор/, 'gaming_set'],
@@ -172,7 +173,8 @@ const TOOL_GROUP_WORDS: [RegExp, RaceRules['tools']['choices'][number]['group']]
 
 /**
  * Владение «навыком или инструментом», «оружием или инструментом» — один выбор из
- * разных видов: механикой не записывается, особенность остаётся текстом.
+ * разных видов. Постоянный «навык или инструмент» — смешанный выбор (`proficiencyChoices`);
+ * «оружие или инструмент» и выбор до следующего отдыха — только текстом.
  */
 const MIXED_PROFICIENCY = /(навык[а-яё]*|оружи[а-яё]*) или (одним )?инструмент/;
 
@@ -197,11 +199,11 @@ const STANDARD_FEATURES =
 
 const sentences = (text: string) => text.split(/(?<=[.!?])\s+/);
 
-function found<T>(text: string, table: [RegExp, T][]): T[] {
+export function found<T>(text: string, table: [RegExp, T][]): T[] {
   return table.filter(([pattern]) => pattern.test(text)).map(([, value]) => value);
 }
 
-function countIn(text: string): number | null {
+export function countIn(text: string): number | null {
   return COUNT_WORDS.find(([pattern]) => pattern.test(text))?.[1] ?? null;
 }
 
@@ -272,7 +274,7 @@ export interface ParsedRaceRules {
   rules: RaceRules;
   /** Особенности, текст которых узнан, но не разобран: в отчёт. */
   failed: string[];
-  /** Языки из текста, которых нет в справочнике LANGUAGES: в механику не попали. */
+  /** Языки из текста, которых нет в справочнике LANGUAGE_CODES: в механику не попали. */
   unknownLanguages: string[];
 }
 
@@ -345,7 +347,7 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     if (/^(Языки?|Дополнительный язык)$/.test(name)) {
       const first = sentences(text)[0] ?? '';
       rules.languages.fixed.push(...found(first, LANGUAGE_STEMS));
-      // «…писать на Общем и Гитском»: язык, которого нет в LANGUAGES, — в отчёт.
+      // «…писать на Общем и Гитском»: язык, которого нет в LANGUAGE_CODES, — в отчёт.
       const named =
         /(?:писать|пишете|читать|читаете|говорить|говорите) на (.+?)(?:[.;]|$)/.exec(first)?.[1] ??
         '';
@@ -386,7 +388,12 @@ export function parseRaceRules(features: RawFeature[]): ParsedRaceRules {
     rules.speed.burrow ??= parseSpeed(text, /скорост[а-яё]* (копания|рытья)/);
 
     for (const sentence of sentences(text)) {
-      if (MIXED_PROFICIENCY.test(sentence) || CONDITIONAL_PROFICIENCY.test(sentence)) continue;
+      if (CONDITIONAL_PROFICIENCY.test(sentence)) continue;
+      if (MIXED_PROFICIENCY.test(sentence)) {
+        const mixed = skillOrToolChoice(sentence, null);
+        if (mixed) (rules.proficiencyChoices ??= []).push(mixed);
+        continue;
+      }
       if (/навык/.test(sentence) && /владе/.test(sentence)) {
         // «…навыками Выступление и Убеждение, а также (получаете владение) одним
         // инструментом по вашему выбору»: выбор относится к инструменту, а не к навыкам.

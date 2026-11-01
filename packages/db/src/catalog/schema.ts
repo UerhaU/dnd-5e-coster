@@ -137,7 +137,9 @@ export const spellIndex = sqliteTable(
 
 /**
  * Классы, которым доступно заклинание: списком класса, по TCE или через подкласс.
- * `class_id` — код (`class:wizard`) без внешнего ключа: таблица классов появится на этапе 3.
+ * `class_id` — ID объекта класса (`class:wizard`). Внешнего ключа нет (индекс пишется
+ * вместе с заклинанием, раньше классов); у заклинания есть связи `spell_class` и
+ * `spell_subclass`, цель без объекта — ошибка полной сборки (этап 3, часть В).
  */
 export const spellIndexClasses = sqliteTable(
   'spell_index_classes',
@@ -209,6 +211,81 @@ export const raceIndex = sqliteTable(
   },
   (table) => [index('race_index_variant_of').on(table.variantOf)],
 );
+
+/** Поля для фильтров списка навыков (этап 3). */
+export const skillIndex = sqliteTable('skill_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** Характеристика проверки: `str`, `dex`… */
+  abilityId: text('ability_id')
+    .notNull()
+    .references(() => abilities.id),
+});
+
+/** Поля для фильтров списка языков (этап 3). */
+export const languageIndex = sqliteTable(
+  'language_index',
+  {
+    entityId: text('entity_id')
+      .primaryKey()
+      .references(() => contentEntities.id),
+    /** `standard` или `exotic`; `null` — книга вид не указывает. */
+    kind: text('kind', { enum: ['standard', 'exotic'] }),
+    /** Язык, диалектом которого является этот. */
+    dialectOf: text('dialect_of').references(() => contentEntities.id),
+  },
+  (table) => [index('language_index_kind').on(table.kind)],
+);
+
+/** Поля для фильтров списка предысторий (этап 3). */
+export const backgroundIndex = sqliteTable('background_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** `background` — предыстория, `adaptation` — статья «Адаптация предысторий». */
+  kind: text('kind', { enum: ['background', 'adaptation'] }).notNull(),
+  /** Есть умение, дающее черту (связь `grants_feat`). */
+  grantsFeat: integer('grants_feat', { mode: 'boolean' }).notNull(),
+});
+
+/** Поля для фильтров списка черт (этап 3). */
+export const featIndex = sqliteTable('feat_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  /** Есть требование. */
+  hasPrerequisite: integer('has_prerequisite', { mode: 'boolean' }).notNull(),
+  /** Даёт увеличение характеристики. */
+  abilityIncrease: integer('ability_increase', { mode: 'boolean' }).notNull(),
+  /** Требует расу или разновидность. */
+  raceRequired: integer('race_required', { mode: 'boolean' }).notNull(),
+});
+
+/** Поля для фильтров списка классов (этап 3). */
+export const classIndex = sqliteTable('class_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  hitDie: integer('hit_die').notNull(),
+  /** Заклинательная характеристика: `int`; `null` — класс без заклинаний. */
+  spellcastingAbility: text('spellcasting_ability'),
+  /** `full`, `half`, `artificer`, `pact`; `null` — без заклинаний. */
+  casterProgression: text('caster_progression'),
+  subclassLevel: integer('subclass_level').notNull(),
+});
+
+/** Поля для фильтров списка подклассов (этап 3). */
+export const subclassIndex = sqliteTable('subclass_index', {
+  entityId: text('entity_id')
+    .primaryKey()
+    .references(() => contentEntities.id),
+  classId: text('class_id').notNull(),
+  /** Есть дополнительные заклинания (домен, клятва, расширенный список). */
+  hasSpellList: integer('has_spell_list', { mode: 'boolean' }).notNull(),
+  /** Подкласс-заклинатель (мистический рыцарь, мистический ловкач). */
+  spellcaster: integer('spellcaster', { mode: 'boolean' }).notNull(),
+});
 
 /** Свойства оружия: для фильтра «фехтовальное», «метательное»… */
 export const itemIndexProperties = sqliteTable(

@@ -25,6 +25,10 @@ interface SearchRow {
   itemCategory: NonNullable<SearchResultItem['item']>['category'];
   raceKind: NonNullable<SearchResultItem['race']>['kind'] | null;
   variantOfName: string | null;
+  skillAbility: NonNullable<SearchResultItem['skill']>['ability'] | null;
+  languageKind: NonNullable<SearchResultItem['language']>['kind'];
+  dialectOfName: string | null;
+  isLanguage: number;
 }
 
 export function searchCatalog(
@@ -53,6 +57,8 @@ export function searchCatalog(
         si.level, si.school_id AS school,
         ii.kind_id AS itemKind, ii.category_id AS itemCategory,
         ri.kind AS raceKind, base.name_ru AS variantOfName,
+        ski.ability_id AS skillAbility, li.kind AS languageKind, parent.name_ru AS dialectOfName,
+        li.entity_id IS NOT NULL AS isLanguage,
         (SELECT group_concat(s.code, ',') FROM entity_sources es JOIN sources s ON s.id = es.source_id
           WHERE es.entity_id = e.id) AS sources
        ${from}
@@ -60,6 +66,9 @@ export function searchCatalog(
        LEFT JOIN item_index ii ON ii.entity_id = e.id
        LEFT JOIN race_index ri ON ri.entity_id = e.id
        LEFT JOIN content_entities base ON base.id = ri.variant_of
+       LEFT JOIN skill_index ski ON ski.entity_id = e.id
+       LEFT JOIN language_index li ON li.entity_id = e.id
+       LEFT JOIN content_entities parent ON parent.id = li.dialect_of
        ${where}
        ORDER BY
          CASE WHEN content_search.name_ru = @exact OR content_search.name_en = @exact THEN 0
@@ -86,6 +95,8 @@ export function searchCatalog(
         row.level !== null && row.school !== null ? { level: row.level, school: row.school } : null,
       item: row.itemKind ? { kind: row.itemKind, category: row.itemCategory } : null,
       race: row.raceKind ? { kind: row.raceKind, variantOfName: row.variantOfName } : null,
+      skill: row.skillAbility ? { ability: row.skillAbility } : null,
+      language: row.isLanguage ? { kind: row.languageKind, dialectOf: row.dialectOfName } : null,
     })),
     total,
     page: query.page,

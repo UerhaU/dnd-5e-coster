@@ -40,8 +40,13 @@ describe('подписи рас', () => {
     expect(skillsText({ fixed: ['perception'], choices: [{ count: 2, from: null }] })).toBe(
       'Восприятие; 2 на выбор',
     );
-    expect(languagesText({ fixed: ['common', 'elvish'], choose: 1 })).toBe(
-      'Общий, Эльфийский, ещё 1 на выбор',
+    // Названия — объектов-языков из связей; без связи — код.
+    const names = new Map([
+      ['language:common', 'Общий'],
+      ['language:deep-speech', 'Глубинная речь'],
+    ]);
+    expect(languagesText({ fixed: ['common', 'deep_speech', 'gith'], choose: 1 }, names)).toBe(
+      'Общий, Глубинная речь, gith, ещё 1 на выбор',
     );
   });
 

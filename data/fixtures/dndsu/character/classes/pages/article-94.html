@@ -1,0 +1,774 @@
+<!doctype html>
+<html><head><meta property="og:url" content="https://5e14.dnd.su/class/94-paladin/"></head>
+<body>
+<h2 class="card-title" itemprop="name"><a href="/class/94-paladin/" itemprop="url" class="item-link">Паладин [Paladin]</a></h2>
+<div class="card__body new-article" itemprop="articleBody">			<ul class="params card__article-body">
+				<li><strong>Источник:</strong> «Player's Handbook»</li>				
+			</ul>
+			
+			<div class="desc card__article-body" itemprop="articleBody">
+				<div>
+    <div class="spoiler_head_body" data-key="class.paladin.intro">
+        <blockquote>Закованный в латы, сверкающие на солнце, несмотря на пыль и грязь долгого путешествия, человек складывает свой меч и щит и касается ладонями смертельно раненного мужчины. Божественное сияние исходит из его рук, и раны мужчины затягиваются, а глаза широко раскрываются в изумлении.<br>
+        Дварф пригнулся к земле за камнем. Его чёрный плащ делал его почти невидимым в ночи, и он смотрел, как шайка орков праздновала недавнюю победу. Он тихо крадётся к ним и шепчет свою присягу, и двое орков умирают еще до того, как понимают, что он здесь был.<br>Серебряные волосы сверкают в лучах света, которые, кажется, льются только на торжественно смеющегося эльфа. Его копьё вспыхивает, подобно его глазам, когда он снова и снова наносит удары уродливому великану, до тех пор, пока его свет не преодолевает отвратительную тьму.</blockquote><br>
+        <p>Вне зависимости от происхождения и миссии, паладинов объединяет их клятва противостоять силам зла.</p>
+    </div>
+    
+</div>
+<p></p><ul class="new-article-menu"><li class="new-article-menu__li">Паладин</li><li class="new-article-menu__li">Создание паладина</li><li class="new-article-menu__li">Классовые умения</li><li class="new-article-menu__li">Священные клятвы</li><li class="new-article-menu__li">Unearthed Arcana &amp; Unofficial</li><li class="new-article-menu__break" data-parent="sacred-oaths"></li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Священные клятвы</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва преданности</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва древних</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва мести</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятвопреступник</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва короны</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва искупления</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва покорения</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва славы</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="sacred-oaths">Клятва смотрителей</li></ul><p></p>
+<h4 class="tableTitle"><span id="paladin">Паладин</span></h4>
+<span class="content-switch tce-content">
+    <span class="content-switch__title">Использовать <span tooltip-for="option.TCE" title="option.TCE"><strong>TCE</strong></span></span>
+    <span class="content-switch__button form__checkbox checkbox-sm">
+    <input type="checkbox" onchange="FeatureArranger.toggleTasha()"><div class="checkbox__button"></div></span>
+</span>
+<table class="class_table"><tbody>
+<tr class="table_header">
+    <td rowspan="2"><span class="long">Уровень</span><span class="short tooltip" title="Уровень">ур</span></td>
+    <td rowspan="2"><span class="long">Бонус<br>мастерства</span><span class="short tooltip" title="Бонус Мастерства">бм</span></td>
+        <td rowspan="2">Умения</td>
+        <td colspan="5">Ячейки заклинаний на уровень заклинанийячейки</td>
+    </tr>
+<tr class="table_header spell-slots-row"><td>1</td><td>2</td><td style="text-align: center;">3</td><td>4</td><td>5</td></tr>
+<tr><td>1</td><td>+2</td>
+<td><a href="#feature.divine-sense">Божественное чувство</a>, <a href="#feature.lay-on-hands">Наложение рук</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>2</td><td>+2</td>
+<td><a href="#feature.fighting-style">Боевой стиль</a>, <a href="#feature.spellcasting">Использование заклинаний</a>, <a href="#feature.divine-smite">Божественная кара</a><span class="TCE-feature-on" style="display: inline;">, <a href="#feature.TCE-fighting-styles">Варианты боевых стилей</a></span></td>
+<td>2</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>3</td><td>+2</td>
+<td><a href="#feature.divine-health">Божественное здоровье</a>, <a href="#feature.sacred-oath">Священная клятва</a><span class="TCE-feature-on" style="display: inline;">, <a href="#feature.harness-divine-power">Праведное восстановление</a></span></td>
+<td>3</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>4</td><td>+2</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a><span class="TCE-feature-on" style="display: inline;">, <a href="#feature.martial-versatility">Универсальность воина</a></span></td>
+<td>3</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>5</td><td>+3</td>
+<td><a href="#feature.extra-attack">Дополнительная атака</a></td>
+<td>4</td><td>2</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>6</td><td>+3</td>
+<td><a href="#feature.aura-of-protection">Аура защиты</a></td>
+<td>4</td><td>2</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>7</td><td>+3</td>
+<td><a href="#feature.sacred-oath">Умение священной клятвы</a></td>
+<td>4</td><td>3</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>8</td><td>+3</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>3</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>9</td><td>+4</td>
+<td>-</td>
+<td>4</td><td>3</td><td>2</td><td>-</td><td>-</td></tr>
+<tr><td>10</td><td>+4</td>
+<td><a href="#feature.aura-of-courage">Аура отваги</a></td>
+<td>4</td><td>3</td><td>2</td><td>-</td><td>-</td></tr>
+<tr><td>11</td><td>+4</td>
+<td><a href="#feature.improved-divine-smite">Улучшенная божественная кара</a></td>
+<td>4</td><td>3</td><td>3</td><td>-</td><td>-</td></tr>
+<tr><td>12</td><td>+4</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>3</td><td>3</td><td>-</td><td>-</td></tr>
+<tr><td>13</td><td>+5</td>
+<td>-</td>
+<td>4</td><td>3</td><td>3</td><td>1</td><td>-</td></tr>
+<tr><td>14</td><td>+5</td>
+<td><a href="#feature.cleansing-touch">Очищающее касание</a></td>
+<td>4</td><td>3</td><td>3</td><td>1</td><td>-</td></tr>
+<tr><td>15</td><td>+5</td>
+<td><a href="#feature.sacred-oath">Умение священной клятвы</a></td>
+<td>4</td><td>3</td><td>3</td><td>2</td><td>-</td></tr>
+<tr><td>16</td><td>+5</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>3</td><td>3</td><td>2</td><td>-</td></tr>
+<tr><td>17</td><td>+6</td>
+<td>-</td>
+<td>4</td><td>3</td><td>3</td><td>3</td><td>1</td></tr>
+<tr><td>18</td><td>+6</td>
+<td><a href="#feature.aura-of-protection">Улучшения ауры</a></td>
+<td>4</td><td>3</td><td>3</td><td>3</td><td>1</td></tr>
+<tr><td>19</td><td>+6</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>3</td><td>3</td><td>3</td><td>2</td></tr>
+<tr><td>20</td><td>+6</td>
+<td><a href="#feature.sacred-oath">Умение священной клятвы</a></td>
+<td>4</td><td>3</td><td>3</td><td>3</td><td>2</td></tr>
+</tbody>
+</table>
+<br>
+<h3 class="underlined spoiler_head">ИСТОЧНИК ПРАВЕДНОСТИ</h3><span><p>Паладин клянётся защищать справедливость и праведность, отстаивать добродетели мира перед вторжениям…</p>
+<p>Паладины тренируются годами, чтобы обучиться навыкам боя, осваивая владение различными видами оружия…</p>
+<br></span>
+<h3 class="underlined spoiler_head">ЗА МИРСКОЙ ЖИЗНЬЮ</h3><span><p>Жизнь паладина это жизнь искателя приключений.</p>
+<p>Ставшие искателями приключений паладины относятся к своему делу серьёзно.</p><br></span>
+<h3 class="underlined spoiler_head"><span id="sozdanie_paladina">Создание паладина</span></h3><div><p>Наиболее важным аспектом персонажа-паладина является природа его святого задания.</p>
+<p>Как вы получили призыв к тому, чтобы стать паладином?</p>
+<p>Противостоящие силам зла паладины редко имеют любое злое мировоззрение.</p>
+
+<br><h3 class="smallSectionTitle">БЫСТРОЕ СОЗДАНИЕ</h3><p>Вы можете быстро создать паладина, следуя этим рекомендациям.</p>
+<br>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2">Углублённая предыстория Паладина (XGE)</h2>
+<div class="hide-wrapper">
+<p>Паладин являет собой живое олицетворение клятвы — обета или присяги, воплощённой в лице святого воин…</p>
+<p>И хотя в мире нельзя найти паладина, которого можно было бы назвать типичным, некоторая часть из них…</p>
+<p>Вы можете более полно воплотить своего паладина, используя предложенные ниже варианты.</p><br>
+<h3 class="underlined">Личная цель</h3><p>Слова клятвы паладина предоставляют персонажу цель и устремления или обобщённые намерения, которые п…</p>
+<p>Если ваш паладин имеет личную цель, она может происходить из какого-то жизненного события и потому м…</p>
+<h4 class="tableTitle">Личные цели </h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Цель</td></tr>
+<tr><td>1</td><td>Мир.</td></tr>
+<tr><td>2</td><td>Месть.</td></tr>
+<tr><td>3</td><td>Долг.</td></tr>
+<tr><td>4</td><td>Лидерство.</td></tr>
+<tr><td>5</td><td>Вера.</td></tr>
+<tr><td>6</td><td>Слава.</td></tr>
+</tbody></table>
+
+<br><h3 class="underlined">Символ</h3><p>Паладины осознают влияние символов, и многие из них перенимают или самостоятельно придумывают какое-…</p>
+<p>Ваш символ может быть изображён на штандарте, флаге или одежде, которые видны всем.</p>
+<h4 class="tableTitle">Символы</h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Символ</td></tr>
+<tr><td>1</td><td>Дракон, символ вашего благородства в мирное время и свирепости в бою.</td></tr>
+<tr><td>2</td><td>Сжатый кулак, показывающий вашу постоянную готовность сражаться за свои убеждения</td></tr>
+<tr><td>3</td><td>Поднятая открытая ладонь, демонстрирующая ваше предпочтение дипломатии прежде боя</td></tr>
+<tr><td>4</td><td>Красное сердце, показывающее миру вашу приверженность справедливости</td></tr>
+<tr><td>5</td><td>Чёрное сердце, символизирующее, что эмоции вроде жалости не мешают вашей приверженности клятве</td></tr>
+<tr><td>6</td><td>Немигающее око, означающее, что вы всегда находитесь на страже вашего дела от угроз</td></tr>
+</tbody></table>
+
+<br><h3 class="underlined">Супостат</h3><p>Приверженность священной клятве требует от паладинов занимать активную позицию в воплощении их ценно…</p>
+<p>Паладин может иметь врага, который появился ещё до того, как он стал на этот путь.</p>
+<h4 class="tableTitle">Супостаты</h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Супостат</td></tr>
+<tr><td>1</td><td>Могучий вождь орков, угрожающий уничтожить и растоптать всё, что для вас священно</td></tr>
+<tr><td>2</td><td>Исчадие или Небожитель, посланник Внешних Планов, который намеревается развратить или наставить вас…</td></tr>
+<tr><td>3</td><td>Дракон, чьи слуги идут по вашему следу</td></tr>
+<tr><td>4</td><td>Первосвященник, который считает вас запутавшимся глупцом и желающий, чтобы вы оставили свою религию</td></tr>
+<tr><td>5</td><td>Соперник-паладин, обучавшийся вместе с вами, но ставший клятвопреступником и считающий вас виновным…</td></tr>
+<tr><td>6</td><td>Вампир, который поклялся отомстить всем паладинам после того, как был побеждён одним из них</td></tr>
+</tbody></table>
+
+<br><h3 class="underlined">Искушение</h3><p>Хотя паладины преданы своим клятвам, они всё ещё являются смертными, а потому у них есть недостатки.</p>
+<p>Что служит искушением, которому подвергается ваш персонаж и чему он с трудом может противиться?</p>
+<h4 class="tableTitle">Искушения</h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Искушение</td></tr>
+<tr><td>1</td><td>Гнев.</td></tr>
+<tr><td>2</td><td>Гордыня.</td></tr>
+<tr><td>3</td><td>Похоть.</td></tr>
+<tr><td>4</td><td>Зависть.</td></tr>
+<tr><td>5</td><td>Отчаяние.</td></tr>
+<tr><td>6</td><td>Алчность.</td></tr>
+</tbody></table></div>
+
+<div class="additionalInfo">
+    <h3 class="smallSectionTitle spoiler_head">МУЛЬТИКЛАССИРОВАНИЕ И Паладин</h3><div><p>Если вы используете опциональное правило по мультиклассированию из «Книги игрока», вот что вам нужно…</p>
+    <p><strong><em>Минимальные значения характеристик</em>.</strong> Вы должны иметь значение Силы и Харизмы не ниже 13, чтобы взять уровень в этом классе или взять уров…</p>
+    <p><strong><em>Получаемые владения</em>.</strong> Если паладин не является вашим начальным классом, вот владения, которые вы приобретаете, когда берете свой первый уровень паладина: лёгкие доспехи, средние доспехи, щиты, простое оружие, воинское оружие.</p>
+    <p><strong><em>Ячейки заклинаний</em>.</strong> Добавьте половину ваших уровней (округленных в меньшую сторону) в классе паладина к соответствующим…</p></div>
+</div>
+
+<h2 class="bigSectionTitle"><span id="klassovye_umeniya">Классовые умения</span></h2><p>Паладины обладают следующими классовыми умениями.</p>
+
+<div class="additionalInfo"><h3 class="smallSectionTitle spoiler_head">Хиты, владение и снаряжение</h3><span>
+<h4 class="smallSectionTitle">ХИТЫ </h4><p><strong>Кость Хитов:</strong> 1к10 за каждый уровень паладина</p>
+<p><strong>Хиты на 1 уровне:</strong> 10 + модификатор Телосложения</p>
+<p><strong>Хиты на следующих уровнях: </strong> 1к10 (или 6) + модификатор Телосложения (суммарно минимум 1) за каждый уровень паладина после первог…</p>
+<br><h4 class="smallSectionTitle">ВЛАДЕНИЕ </h4><p><strong>Доспехи:</strong> Все виды доспехов, щиты</p>
+<p><strong>Оружие: </strong> Простое оружие, воинское оружие</p>
+<p><strong>Инструменты:</strong> нет</p>
+<p><strong>Спасброски:</strong> Мудрость, Харизма</p>
+<p><strong>Навыки:</strong> Выберите два навыка из следующих: Атлетика, Запугивание, Медицина, Проницательность, Религия, Убежде…</p>
+<br><h4 class="smallSectionTitle">СНАРЯЖЕНИЕ </h4><p>Вы начинаете со следующим снаряжением в дополнение к снаряжению, полученному за вашу предысторию:</p>
+<ul>
+<li>а) воинское оружие и щит или б) два воинских оружия</li>
+<li>а) пять метательных копий или б) любое простое рукопашное оружие</li>
+<li>а) набор священника или б) набор путешественника</li>
+<li>Кольчуга и священный символ</li>
+</ul>
+<p>Если вы откажетесь от этого снаряжения, а также от предметов, предлагаемых вашей предысторией, то вы начнёте игру с 5к4×10 зм для покупки снаряжения.</p>
+</span></div>
+
+<br><h3 class="underlined"><span id="feature.divine-sense">БОЖЕСТВЕННОЕ ЧУВСТВО</span></h3><p><em>1-й уровень, умение паладина</em></p>
+<p>Присутствие сильного зла воспринимается вашими чувствами как неприятный запах, а могущественное добр…</p>
+<p>Вы можете использовать это умение количество раз, равное 1 + модификатор Харизмы.</p>
+<br><h3 class="underlined"><span id="feature.lay-on-hands">НАЛОЖЕНИЕ РУК</span></h3><p><em>1-й уровень, умение паладина</em></p>
+<p>Ваше благословенное касание может лечить раны.</p>
+<p>Вы можете действием коснуться существа и, зачерпнув силу из запаса, восстановить количество хитов эт…</p>
+<p>В качестве альтернативы, вы можете потратить 5 хитов из вашего запаса хитов для излечения цели от од…</p>
+<p>Это умение не оказывает никакого эффекта на Нежить и Конструктов.</p>
+<br><h3 class="underlined"><span id="feature.fighting-style">Боевой стиль</span></h3><p><em>2-й уровень, умение паладина</em></p>
+<p>Вы выбираете боевой стиль, соответствующий вашей специализации.</p>
+<h4 class="smallSectionTitle">Дуэлянт</h4><p>Пока вы держите рукопашное оружие в одной руке, и не используете другого оружия, вы получаете бонус…</p>
+<h4 class="smallSectionTitle">Защита</h4><p>Если существо, которое вы видите, атакует не вас, а другое существо, находящееся в пределах 5 футов…</p>
+<h4 class="smallSectionTitle">Оборона</h4><p>Пока вы носите доспехи, вы получаете бонус +1 к КД.</p>
+<h4 class="smallSectionTitle">Сражение большим оружием</h4><p>Если у вас выпало «1» или «2» на кости урона при атаке, которую вы совершали рукопашным оружием, уде…</p>
+<div class="TCE-feature-on" style="display: block;">
+<h4 class="smallSectionTitle"><span id="feature.TCE-fighting-styles">Благословенный воин</span></h4>
+<p><em><span tooltip-for="option.TCE" title="option.TCE">Опциональный</span> вариант боевого стиля</em></p>
+<p>Вы узнаёте два заговора по вашему выбору из списка заклинаний жреца.</p>
+<h4 class="smallSectionTitle">Перехват</h4>
+<p><em><span tooltip-for="option.TCE" title="option.TCE">Опциональный</span> вариант боевого стиля</em></p>
+<p>Когда существо, которое вы можете видеть, попадает атакой по цели в пределах 5 футов от вас (но не п…</p>
+<h4 class="smallSectionTitle">Сражение вслепую</h4>
+<p><em><span tooltip-for="option.TCE" title="option.TCE">Опциональный</span> вариант боевого стиля</em></p>
+<p>Вы получаете слепое зрение в пределах 10 футов.</p>
+</div>
+
+<br><h3 class="underlined"><span id="feature.spellcasting">Использование заклинаний</span></h3><p><em>2-й уровень, умение паладина</em></p>
+<p>Вы узнаёте, как черпать божественную магию посредством медитации и молитв, чтобы творить заклятья по…</p>
+<h4 class="smallSectionTitle">Подготовка и сотворение заклинаний</h4><p>Таблица «Паладин» демонстрирует, какое количество ячеек для накладывания заклинаний паладина у вас е…</p>
+<p>Вы подготавливаете список заклинаний паладина, доступных для накладывания.</p>
+<p>Вы можете изменить список подготовленных заклинаний, когда завершаете продолжительный отдых.</p>
+<h4 class="smallSectionTitle">Базовая характеристика заклинаний</h4><p>Заклинания паладина накладываются с помощью Харизмы, так как их мощь проистекает из силы ваших убежд…</p>
+<p style="text-align:center;"><strong>Сл спасброска</strong> = 8 + ваш бонус мастерства + ваш модификатор Харизмы</p>
+<p style="text-align:center;"><strong>Модификатор броска атаки</strong> = ваш бонус мастерства + ваш модификатор Харизмы</p>
+<h4 class="smallSectionTitle">Фокусировка заклинания</h4><p>Вы можете использовать священный символ в качестве заклинательной фокусировки для заклинаний паладин…</p>
+<div class="TCE-feature-on" style="display: block;">
+<br><h3 class="underlined"><span id="feature.TCE-spells">Дополнительные заклинания паладина</span></h3><p><em>2-й уровень, <span tooltip-for="option.TCE" title="option.TCE">опциональное</span> умение паладина</em></p>
+<p>Заклинания из представленного ниже списка расширяют ваш список заклинаний паладина, представленный в…</p>
+<br><table><tbody>
+<tr class="table_header"><td>Уровень заклинания</td><td>Заклинания</td></tr>
+<tr><td>2</td><td><a href="/spells/186-gentle_repose/" target="_blank">нетленные останки [gentle repose]</a>, <a href="/spells/173-prayer_of_healing/" target="_blank">молебен лечения [prayer of healing]</a>, <a href="/spells/220-warding_bond/" target="_blank">охраняющая связь [wanding bond]</a></td></tr>
+<tr><td>3</td><td><a href="/spells/3051-spirit_shroud/" target="_blank">покров духа [spirit shroud]</a></td></tr>
+<tr><td>5</td><td><a href="/spells/3066-summon_celestial/" target="_blank">призыв духа небожителя [summon celestial]</a></td></tr>
+</tbody></table>
+</div>
+<br><h3 class="underlined"><span id="feature.divine-smite">БОЖЕСТВЕННАЯ КАРА</span></h3><p><em>2-й уровень, умение паладина</em></p>
+<p>Если вы попадаете по существу рукопашной атакой оружием, вы можете потратить одну ячейку заклинаний…</p>
+<br><h3 class="underlined"><span id="feature.divine-health">БОЖЕСТВЕННОЕ ЗДОРОВЬЕ</span></h3><p><em>3-й уровень, умение паладина</em></p>
+<p>Божественная магия, текущая через вас, даёт вам иммунитет к болезням.</p>
+<br><h3 class="underlined"><span id="feature.sacred-oath">СВЯЩЕННАЯ КЛЯТВА</span></h3><p><em>3-й уровень, умение паладина</em></p>
+<p>Вы даёте клятву, навсегда связывающую вас как паладина.</p>
+<h4 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h4><p>Каждая клятва имеет список связанных с ней заклинаний.</p>
+<h4 class="smallSectionTitle"><span id="channel-divinity">БОЖЕСТВЕННЫЙ КАНАЛ</span></h4><p><em></em> Ваша клятва позволяет направлять божественную энергию, чтобы подпитывать магические эффекты.</p>
+<p><em></em> Когда вы используете ваш «Божественный канал», вы выбираете, какой эффект создать.</p>
+<p>Некоторые эффекты «Божественного канала» требуют совершить спасбросок.</p>
+<div class="TCE-feature-on" style="display: block;">
+<br><h3 class="underlined"><span id="feature.harness-divine-power">Праведное восстановление</span></h3><p><em>3-й уровень, <span tooltip-for="option.TCE" title="option.TCE">опциональное</span> умение паладина</em></p>
+<p>Вы можете использовать «Божественный канал», чтобы подпитать свои заклинания.</p>
+</div>
+<br><h3 class="underlined"><span id="feature.ASI">УВЕЛИЧЕНИЕ ХАРАКТЕРИСТИК</span></h3><p><em>4-й уровень, умение паладина</em></p>
+<p>При достижении 4-го, 8-го, 12-го, 16-го и 19-го уровней вы можете повысить значение одной из ваших х…</p>
+<p>Если ваш Мастер разрешает использование черт, вы можете отказаться от преимуществ этого умения при п…</p>
+<div class="TCE-feature-on" style="display: block;">
+<br><h3 class="underlined"><span id="feature.martial-versatility">Универсальность воина</span></h3><p><em>4-й уровень, <span tooltip-for="option.TCE" title="option.TCE">опциональное</span> умение паладина</em></p>
+<p>Каждый раз, когда вы достигаете определённого уровня в этом классе, и получаете умение «Увеличение х…</p>
+</div>
+<br><h3 class="underlined"><span id="feature.extra-attack">ДОПОЛНИТЕЛЬНАЯ АТАКА</span></h3><p><em>5-й уровень, умение паладина</em></p>
+<p>Если вы в свой ход совершаете действие Атака, вы можете совершить две атаки вместо одной.</p>
+<br><h3 class="underlined"><span id="feature.aura-of-protection">АУРА ЗАЩИТЫ</span></h3><p><em>6-й уровень, умение паладина</em></p>
+<p>Если вы или дружественное существо в пределах 10 футов от вас должны совершить спасбросок, это сущес…</p>
+<br><h3 class="underlined"><span id="feature.aura-of-courage">АУРА ОТВАГИ</span></h3><p><em>10-й уровень, умение паладина</em></p>
+<p>Вы и дружественные существа в пределах 10 футов от вас не можете быть испуганы, пока вы находитесь в…</p>
+<br><h3 class="underlined"><span id="feature.improved-divine-smite">УЛУЧШЕННАЯ БОЖЕСТВЕННАЯ КАРА</span></h3><p><em>11-й уровень, умение паладина</em></p>
+<p>Вы проникаетесь праведной мощью, что даёт всем вашим ударам рукопашным оружием божественную силу.</p>
+<br><h3 class="underlined"><span id="feature.cleansing-touch">ОЧИЩАЮЩЕЕ КАСАНИЕ</span></h3><p><em>14-й уровень, умение паладина</em></p>
+<p>Вы можете действием окончить действие заклинания на себе или на одном согласном существе, которого в…</p>
+
+
+<br><br><h2 class="bigSectionTitle spoiler_head"><span id="sacred-oaths">Священные клятвы</span></h2>
+<div><p>Становление паладином подразумевает под собой принятие обетов, которые обращают паладина к праведным…</p>
+<div class="additionalInfo"><h3 class="smallSectionTitle">НАРУШЕНИЕ КЛЯТВЫ</h3><p>Паладин старается придерживаться высочайших стандартов поведения, но даже самым добродетельным палад…</p>
+<p>Паладин, который нарушил клятву, обычно стремится к отпущению грехов у жреца, разделяющего его веру,…</p>
+<p>Если паладин умышленно нарушил свою клятву и не проявляет никаких признаков раскаяния, последствия м…</p>
+</div>
+</div>
+<br><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.devotion">Клятва преданности</span> </h2><div class="hide-wrapper" style="display: none;"><p>Клятва паладина связывает его с возвышенными идеалами справедливости, добродетели и порядка.</p>
+<br><h3 class="smallSectionTitle">ДОГМАТЫ ПРЕДАННОСТИ</h3><p>Хотя точные слова и смысл клятвы преданности варьируются, паладины данной клятвы разделяют следующие…</p>
+<p><strong><em>Честность</em>.</strong> Не лгите и не обманывайте.</p>
+<p><strong><em>Отвага</em>.</strong> Никогда не бойтесь действовать, хотя и проявляя мудрость в осторожности.</p>
+<p><strong><em>Сострадание</em>. </strong> Помогайте другим, защищайте слабых и карайте тех, кто угрожает им.</p>
+<p><strong><em>Честь</em>.</strong> Относитесь к людям по справедливости, и пусть ваши благородные дела будут примером для них.</p>
+<p><strong><em>Долг</em>.</strong> Отвечайте за свои действия и их последствия, защищая тех, кого оберегаете, и подчиняйтесь тем, кто и…</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы преданности</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<h4 class="tableTitle">ЗАКЛИНАНИЯ КЛЯТВЫ ПРЕДАННОСТИ</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень паладина</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/99-protection_from_evil_and_good/" target="_blank">защита от зла и добра [protection from evil and good]</a>, <a href="/spells/354-sanctuary/" target="_blank">убежище [sanctuary]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/155-lesser_restoration/" target="_blank">малое восстановление [lesser restoration]</a>, <a href="/spells/192-zone_of_truth/" target="_blank">область истины [zone of truth]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/158-beacon_of_hope/" target="_blank">маяк надежды [beacon of hope]</a>, <a href="/spells/301-dispel_magic/" target="_blank">рассеивание магии [dispel magic]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/308-freedom_of_movement/" target="_blank">свобода перемещения [freedom of movement]</a>, <a href="/spells/340-guardian_of_faith/" target="_blank">страж веры [guardian of faith]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/181-flame_strike/" target="_blank">небесный огонь [flame strike]</a>, <a href="/spells/198-commune/" target="_blank">общение [commune]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы преданности</em></p>
+<p>Когда вы даёте эту клятву, вы получаете следующие два варианта использования «Божественного канала».</p>
+<p><em><strong>Священное оружие.</strong> </em> Вы можете действием наполнить одно оружие, которое вы держите, позитивной энергией, используя «Божес…</p>
+<p><strong><em>Изгнать нечистого.</em></strong> Вы действием показываете свой священный символ и произносите слова молитвы, осуждающей Исчадия и Неж…</p>
+<p>Изгнанные существа должны весь свой ход пытаться убежать от вас так далеко, как только могут, и не м…</p>
+<br><h3 class="smallSectionTitle">АУРА ПРЕДАННОСТИ</h3><p><em>7-й уровень, умение клятвы преданности</em></p>
+<p>Вы и дружественные вам существа в пределах 10 футов от вас не могут быть очарованы, пока вы находите…</p>
+<br><h3 class="smallSectionTitle">ЧИСТОТА ДУХА</h3><p><em>15-й уровень, умение клятвы преданности</em></p>
+<p>Вы всегда находитесь под эффектом заклинания защита от зла и добра [protection from evil and good].</p>
+<br><h3 class="smallSectionTitle">СВЯТОЙ НИМБ</h3><p><em>20-й уровень, умение клятвы преданности</em></p>
+<p>Вы можете действием создать ауру солнечного света.</p>
+<p>Каждый раз, когда враждебное существо начинает ход в этом ярком свете, оно получает урон излучением…</p>
+<p>Кроме того, в течение этого времени вы совершаете с преимуществом спасброски от заклинаний, наложенн…</p>
+<p>Один раз использовав это умение, вы не можете использовать его повторно, пока не закончите продолжит…</p>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.ancients">Клятва древних</span> </h2><div class="hide-wrapper" style="display: none;"><p>Клятва Древних так же стара, как раса эльфов и ритуалы друидов.</p>
+<br><h3 class="smallSectionTitle">ДОГМАТЫ ДРЕВНИХ</h3><p>Догматы клятвы Древних сохранялись в течение бессчётных веков.</p>
+<p><strong><em>Разожги свет</em>.</strong> Делами милосердия, доброты и прощения разжигай свет надежды в мире, повергая ниц отчаяние.</p>
+<p><strong><em>Сохраняй свет</em>.</strong> Там, где есть добро, красота, любовь и смех в мире, стой против бесчестья, чтобы побороть его.</p>
+<p><strong><em>Храни свет в себе</em>.</strong> Восторгайся песней и смехом, красотой и искусством.</p>
+<p><strong><em>Будь светом</em>.</strong> Будь маяком великолепия для тех, кто живёт в отчаянии.</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы древних</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<h4 class="tableTitle">ЗАКЛИНАНИЯ КЛЯТВЫ ДРЕВНИХ</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень паладина</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/212-ensnaring_strike/" target="_blank">опутывающий удар [ensnaring strike]</a>, <a href="/spells/292-speak_with_animals/" target="_blank">разговор с животными [speak with animals]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/146-moonbeam/" target="_blank">лунный луч [moonbeam]</a>, <a href="/spells/352-misty_step/" target="_blank">туманный шаг [misty step]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/106-protection_from_energy/" target="_blank">защита от энергии [protection from energy]</a><strong>, </strong><a href="/spells/304-plant_growth/" target="_blank">рост растений [plant growth]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/49-ice_storm/" target="_blank">град [ice storm]</a>, <a href="/spells/129-stoneskin/" target="_blank">каменная кожа [stoneskin]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/65-tree_stride/" target="_blank">древесный путь [tree stride]</a>, <a href="/spells/199-commune_with_nature/" target="_blank">общение с природой [commune with nature]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы древних</em></p>
+<p><em></em> Когда вы даёте эту клятву, вы получаете следующие два варианта использования «Божественного канала».</p>
+<p><strong><em>Гнев природы.</em></strong> Вы можете использовать «Божественный канал», чтобы призвать первородные силы для опутывания врага.</p>
+<p><em><strong>Изгнать неверного.</strong> </em> Вы можете использовать «Божественный канал» для произнесения древних слов, причиняющих боль Феям и И…</p>
+<p>Изгнанные существа должны весь свой ход пытаться убежать от вас так далеко, как только могут, и не м…</p>
+<p>Если истинная форма существа скрыта иллюзией, изменением облика, или другим эффектом, скрывающим её,…</p>
+<br><h3 class="smallSectionTitle">АУРА ОПЕКИ</h3><p><em>7-й уровень, умение клятвы древних</em></p>
+<p>Древняя магия так сильно вас пропитывает, что образует мистическую защиту.</p>
+<p>На 18-м уровне радиус ауры увеличивается до 30 футов.</p>
+<br><h3 class="smallSectionTitle">БЕССМЕРТНЫЙ СТРАЖ</h3><p><em>15-й уровень, умение клятвы древних</em></p>
+<p>Если ваши хиты опускаются до 0, но вы не были убиты, вы можете решить, чтобы вы вместо этого осталис…</p>
+<br><h3 class="smallSectionTitle">ДРЕВНИЙ ЧЕМПИОН</h3><p><em>20-й уровень, умение клятвы древних</em></p>
+<p>Вы можете принимать форму древней силы природы, выбрав её внешний вид.</p>
+<p>Вы можете действием подвергнуться этой трансформации.</p>
+<ul>
+<li>В начале каждого своего хода вы восстанавливаете 10 хитов.</li>
+<li>Каждый раз, когда вы накладываете заклинание паладина, которое накладывается «1 действием», вы может…</li>
+<li>Вражеские существа в пределах 10 футов от вас совершают с помехой спасброски от ваших заклинаний пал…</li>
+</ul>
+<p>Использовав это умение, вы сможете использовать его повторно только после окончания продолжительного…</p>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.vengeance">Клятва мести</span> </h2><div class="hide-wrapper" style="display: none;"><p>Давая клятву мести, вы берёте на себя торжественное обязательство карать тех, кто совершил тяжкий гр…</p>
+<br><h3 class="smallSectionTitle">ДОГМАТЫ МЕСТИ</h3><p>Догматы клятвы мести разнятся от паладина к паладину, но все принципы сводятся к наказанию преступни…</p>
+<p><strong><em>Сражайся с большим злом</em>.</strong> При выборе между борьбой с заклятыми врагами и боем с меньшим злом, я выбираю большее зло.</p>
+<p><strong><em>Не щадить зло</em>.</strong> Обычные враги могут рассчитывать на пощаду, но только не мои заклятые враги.</p>
+<p><strong><em>Любой ценой</em>.</strong> Мои угрызения совести не могут встать на пути истребления моих врагов.</p>
+<p><strong><em>Возмещение</em>.</strong> Если мои враги сеют разруху в мире, то это потому, что мне не удалось их остановить.</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы мести</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<h4 class="tableTitle">ЗАКЛИНАНИЯ КЛЯТВЫ МЕСТИ</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень паладина</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/164-hunter_s_mark/" target="_blank">метка охотника [hunter’s mark]</a>, <a href="/spells/254-bane/" target="_blank">порча [bane]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/352-misty_step/" target="_blank">туманный шаг [misty step]</a>, <a href="/spells/356-hold_person/" target="_blank">удержание личности [hold person]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/106-protection_from_energy/" target="_blank">защита от энергии [protection from energy]</a>, <a href="/spells/100-haste/" target="_blank">ускорение [haste]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/116-banishment/" target="_blank">изгнание [banishment]</a>, <a href="/spells/228-dimension_door/" target="_blank">переносящая дверь [dimension door]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/176-scrying/" target="_blank">наблюдение [scrying]</a>, <a href="/spells/110-hold_monster/" target="_blank">удержание чудовища [hold monster]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы мести</em></p>
+<p>Когда вы даёте эту клятву, вы получаете следующие два варианта использования «Божественного канала».</p>
+<p><strong><em>Порицание врага.</em></strong> Вы действием демонстрируете свой священный символ и произносите обличающую молитву, используя «Божес…</p>
+<p>Если спасбросок провален, существо становится испуганным на 1 минуту, или пока не получит урон.</p>
+<p>Если спасбросок был успешен, скорость существа на 1 минуту, или пока оно не получает урон, уменьшает…</p>
+<p><em><strong><span id="channel.vow-of-enmity">Обет вражды</span>.</strong> </em> Вы можете бонусным действием произнести слова обета вражды по отношению к существу, которое вы может…</p>
+<br><h3 class="smallSectionTitle">НЕУМОЛИМЫЙ МСТИТЕЛЬ</h3><p><em>7-й уровень, умение клятвы мести</em></p>
+<p>Ваше сверхъестественное внимание помогает вам предотвратить бегство врага.</p>
+<br><h3 class="smallSectionTitle">ДУША МЕСТИ</h3><p><em>15-й уровень, умение клятвы мести</em></p>
+<p>Суть вашего «Обета вражды» даёт вам большую власть над врагом.</p>
+<br><h3 class="smallSectionTitle">МСТЯЩИЙ АНГЕЛ</h3><p><em>20-й уровень, умение клятвы мести</em></p>
+<p>Вы можете принять облик ангельского мстителя.</p>
+<ul>
+<li>Из вашей спины вырастают крылья, дающие вам скорость полёта 60 футов.</li>
+<li>Вы излучаете ауру угрозы в радиусе 30 футов.</li>
+</ul>
+<p>Использовав это умение, вы можете использовать его повторно только после окончания продолжительного…</p>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.oathbreaker">Клятвопреступник</span></h2><div class="hide-wrapper"><p><strong>Источник: «Dungeon Master Guide» </strong></p>
+<div class="article-body__finik">Хотя этот подкласс официально опубликован в троекнижии, он не относится к числу доступных по умолчанию. Будучи опубликованным в «Руководстве Мастера», этот подкласс затрагивает темы и методы, обычно идущие вразрез с классическим образом искателя приключений. Если вы хотите выбрать этот подкласс, то обсудите эту возможность с вашим Мастером.</div>
+<p>Клятвопреступник — это паладин, нарушивший священную клятву и заимевший тёмные желания или ушедший н…</p>
+<h4 class="tableTitle">ЗАКЛИНАНИЯ КЛЯТВОПРЕСТУПНИКА</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/1-hellish_rebuke/" target="_blank">адское возмездие [hellish rebuke]</a>, <a href="/spells/177-inflict_wounds/" target="_blank">нанесение ран [inflict wounds]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/134-crown_of_madness/" target="_blank">корона безумия [crown of madness]</a>, <a href="/spells/353-darkness/" target="_blank">тьма [darkness]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/35-animate_dead/" target="_blank">восставший труп [animate dead]</a>, <a href="/spells/285-bestow_curse/" target="_blank">проклятие [bestow curse]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/325-confusion/" target="_blank">смятение [confusion]</a>, <a href="/spells/96-blight/" target="_blank">усыхание [blight]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/92-contagion/" target="_blank">заражение [contagion]</a>, <a href="/spells/240-dominate_person/" target="_blank">подчинение личности [dominate person]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвопреступника</em></p>
+<p><em></em> Когда вы даёте эту клятву, вы получаете следующие два варианта использования «Божественного канала»:</p>
+<p><em><strong>Контроль Нежити.</strong> </em> Вы можете действием выбрать целью одно существо-Нежить, видимое вами и находящееся в пределах 30 фут…</p>
+<p><strong><em>Жуткий вид. </em></strong> Вы можете действием собрать все свои самые тёмные эмоции и выдать их вспышкой.</p>
+<br><h3 class="smallSectionTitle">АУРА НЕНАВИСТИ</h3><p><em>7-й уровень, умение клятвопреступника</em></p>
+<p>Паладин, а также все Исчадия и Нежить в пределах 10 футов от него, получают бонус к броскам урона ру…</p>
+<p>На 18-м уровне радиус ауры увеличивается до 30 футов.</p>
+<br><h3 class="smallSectionTitle">СВЕРХЪЕСТЕСТВЕННОЕ СОПРОТИВЛЕНИЕ</h3><p><em>15-й уровень, умение клятвопреступника</em></p>
+<p>Вы получаете сопротивление дробящему, колющему и рубящему урону от немагического оружия.</p>
+<br><h3 class="smallSectionTitle">ЖУТКИЙ ЛОРД</h3><p><em>20-й уровень, умение клятвопреступника</em></p>
+<p>Вы можете действием окружить себя аурой мрака, существующей 1 минуту.</p>
+<p>Эта аура уменьшает яркий свет в пределах 30 футов от вас до тусклого света.</p>
+<p>Каждый раз, когда враг, испуганный вами, начинает ход в этой ауре, он получает урон психической энер…</p>
+<p>Кроме того, вы и выбранные вами существа, находящиеся в ауре, окутываются плотными тенями.</p>
+<p>Пока аура активна, вы можете в свой ход бонусным действием заставить теней в ауре атаковать одно сущ…</p>
+<p>Активировав ауру, вы не можете этого сделать еще раз, пока не закончите продолжительный отдых.</p><div class="additionalInfo"><h3 class="smallSectionTitle">Искупление клятвопреступника</h3><p>Если вы позволяете игроку выбрать опцию Клятвопреступник, вы можете позже позволить паладину искупит…</p><p>Паладин, желающий искупления, должен вначале избавиться от злого мировоззрения и продемонстрировать…</p><p>Паладин, нарушивший священную клятву второй раз, может снова стать Клятвопреступником, но уже не мож…</p></div>
+</div>
+<div class="addition-wrapper addition-7"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.crown">Клятва короны</span></h2><div class="hide-wrapper"><p><strong>Источник: «Sword Coast Adventurer’s Guide»</strong></p>
+<br><p>Клятва короны — это присяга идеалам цивилизации, будь то дух нации, верность государю или служение б…</p>
+<br><h3 class="smallSectionTitle">ПРИНЦИПЫ КОРОНЫ</h3><p>Принципы клятвы короны часто разрабатываются властителями, которым даётся клятва, но в целом они опи…</p>
+<p><strong><em>Закон</em>.</strong> Закон превыше всего.</p>
+<p><strong><em>Преданность</em>.</strong> Ваше слово — ваши узы.</p>
+<p><strong><em>Мужество</em>.</strong> Вы должны быть готовы сделать то, что должно быть сделано ради порядка, даже перед лицом превосходящ…</p>
+<p><strong><em>Обязанности</em>.</strong> Вы должны понимать и принимать последствия своих действий, и вы несёте ответственность за выполнение…</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы короны</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<br><table>
+<tbody>
+<tr class="table_header"><td>Уровень</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/276-command/" target="_blank">приказ [command]</a>, <a href="/spells/37-compelled_duel/" target="_blank">вызов на дуэль [compelled duel]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/220-warding_bond/" target="_blank">охраняющая связь [warding bond]</a>, <a href="/spells/192-zone_of_truth/" target="_blank">область истины [zone of truth]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/3-aura_of_vitality/" target="_blank">аура живучести [aura of vitality]</a>, <a href="/spells/75-spirit_guardians/" target="_blank">духовные стражи [spirit guardians]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/116-banishment/" target="_blank">изгнание [banishment]</a>, <a href="/spells/340-guardian_of_faith/" target="_blank">страж веры [guardian of faith]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/135-circle_of_power/" target="_blank">круг силы [circle of power]</a>, <a href="/spells/189-geas/" target="_blank">обет [geas]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы короны</em></p>
+<p>Вы получаете следующие варианты использования «Божественного канала».</p>
+<p><em><strong>Вызов Чемпиона.</strong> </em> Бонусным действием, вы бросаете вызов, который заставляет других существ сражаться с вами.</p>
+<p><strong><em>Повернуть вспять.</em></strong> Бонусным действием вы можете поддержать раненых союзников с помощью вашего умения «Божественный кана…</p>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННАЯ ПРЕДАННОСТЬ</h3><p><em>7-й уровень, умение клятвы короны</em></p>
+<p>Когда существо, находящееся в 5 футах от вас, получает урон, вы можете использовать вашу реакцию, чт…</p>
+<br><h3 class="smallSectionTitle">НЕПОКОЛЕБИМЫЙ ДУХ</h3><p><em>15-й уровень, умение клятвы короны</em></p>
+<p>Спасброски против паралича или ошеломления вы совершаете с преимуществом.</p>
+<br><h3 class="smallSectionTitle">ВОЗВЫШЕННЫЙ ЧЕМПИОН</h3><p><em>20-й уровень, умение клятвы короны</em></p>
+<p>Ваше присутствие на поле битвы вдохновляет посвященных вашему делу.</p>
+<ul>
+<li>Вы получаете сопротивление дробящему, колющему и рубящему урону от немагического оружия.</li>
+<li>Ваши союзники совершают с преимуществом спасброски от смерти в пределах 30 футов от вас.</li>
+<li>Вы и ваши союзники в 30 футах от вас совершаете с преимуществом спасброски Мудрости.</li>
+</ul>
+<p>Эффект преждевременно закончится, если вы окажетесь недееспособным или умрете.</p>
+<p>Использовав это умение, вы не сможете использовать его снова, пока вы не закончите продолжительный о…</p>
+</div>
+</div>
+<div class="addition-wrapper addition-6"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.redemption">Клятва искупления</span></h2><div class="hide-wrapper" style="display: none;"><p><strong>Источник: «Xanathar’s Guide to Everything».</strong></p>
+<br><p>Клятва Искупления ставит паладина на тяжёлый путь, требующий от святого воителя использовать силу ли…</p>
+<p>Эти паладины ищут злых существ с надеждой обратить их к свету, а противников убивают только если это…</p>
+<p>Они знают, что нежить, демоны, дьяволы и другие сверхъестественные угрозы могут быть злыми по своей…</p><br>
+<h3 class="smallSectionTitle">ДОГМАТЫ ИСКУПЛЕНИЯ</h3><p>Догматы Клятвы Искупления ведут паладина дорогой высоких идеалов мира и правосудия.</p>
+<p><strong><em>Мир</em></strong> .</p>
+<p><strong><em>Невинность</em></strong> .</p>
+<p><strong><em>Терпение</em></strong> .</p>
+<p><strong><em>Мудрость</em>.</strong> Твоё сердце и разум должны быть чисты, ибо в конце концов тебе придется признать поражение.</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы искупления</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/354-sanctuary/" target="_blank">убежище [sanctuary]</a>, <a href="/spells/98-sleep/" target="_blank">усыпление [sleep]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/102-calm_emotions/" target="_blank">умиротворение [calm emotions]</a>, <a href="/spells/356-hold_person/" target="_blank">удержание личности [hold person]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/132-counterspell/" target="_blank">контрзаклинание [counterspell]</a>, <a href="/spells/44-hypnotic_pattern/" target="_blank">гипнотический узор [hypnotic pattern]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/216-otiluke_s_resilient_sphere/" target="_blank">Отилюков упругий шар [Otiluke’s resilient sphere]</a>, <a href="/spells/129-stoneskin/" target="_blank">каменная кожа [stoneskin]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/110-hold_monster/" target="_blank">удержание чудовища [hold monster]</a>, <a href="/spells/314-wall_of_force/" target="_blank">силовая стена [wall of force]</a><br></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы искупления</em></p>
+<p><em></em> Когда вы принимаете эту клятву, вы получаете следующие два варианта применения «Божественного канала…</p>
+<p><em><strong>Посол мира</strong>.</em> Вы можете использовать своё умение «Божественный канал», чтобы наделить своё присутствие божественно…</p>
+<p><em><strong>Возмездие жестокости.</strong></em> Вы можете использовать свой «Божественный канал», чтобы дать отпор жестоким врагам.</p>
+<br><h3 class="smallSectionTitle">АУРА Защитника</h3><p><em>7-й уровень, умение клятвы искупления</em></p>
+<p>Вы можете прикрыть других от вреда ценой собственных хитов.</p>
+<br><h3 class="smallSectionTitle">ДУХ ЗАЩИТНИК</h3><p><em>15-й уровень, умение клятвы искупления</em></p>
+<p>Святой дух лечит ваши раны в бою.</p>
+<br><h3 class="smallSectionTitle">ЭМИССАР ИСКУПЛЕНИЯ</h3><p><em>20-й уровень, умение клятвы искупления</em></p>
+<p>Вы становитесь аватаром мира, что даёт вам два преимущества:</p>
+<ul>
+<li>Вы получаете сопротивление всему урону, который наносят другие существа (атаками, заклинаниями и дру…</li>
+<li>Когда существо попадает по вам атакой, оно получает урон излучением, равный половине урона, который…</li>
+</ul>
+<p>Если вы атакуете существо, накладываете заклинание на него или наносите урон ему каким-либо другим о…</p>
+</div>
+</div>
+<div class="addition-wrapper addition-6"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.conquest">Клятва покорения</span></h2><div class="hide-wrapper"><p><strong>Источник: «Xanathar’s Guide to Everything».</strong></p>
+<br><p>Клятва покорения взывает к паладинам, которые ищут славы в бою и покорения своих врагов.</p>
+<p>Иногда принёсших эту клятву называют рыцарями-тиранами или железными воителями.</p>
+<p>Некоторые из паладинов заходят так далеко, что связываются с силами Девяти Преисподней, оценивая гла…</p>
+<p>Адские рыцари покрывают свои доспехи трофеями, взятыми у падших врагов — зловещее предупреждение люб…</p>
+<br>
+<h3 class="smallSectionTitle">ДОГМАТЫ ПОКОРЕНИЯ</h3><p>Паладин, который приносит эту клятву, выжигает догматы покорения на своём плече.</p>
+<p><strong><em>Тушите огонь надежды</em></strong> .</p>
+<p><strong><em>Правь железным кулаком</em></strong> .</p>
+<p><strong><em>Сила превыше всего</em></strong> .</p>
+<br><h3 class="smallSectionTitle">ЗАКЛИНАНИЯ КЛЯТВЫ</h3><p><em>3-й уровень, умение клятвы покорения</em></p>
+<p>Вы получаете заклинания клятвы на указанных уровнях паладина.</p>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/59-armor_of_agathys/" target="_blank">доспех Агатиса [armor of Agathys]</a>, <a href="/spells/276-command/" target="_blank">приказ [command]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/356-hold_person/" target="_blank">удержание личности [hold person]</a>, <a href="/spells/11-spiritual_weapon/" target="_blank">божественное оружие [spiritual weapon]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/285-bestow_curse/" target="_blank">проклятие [bestow curse]</a>, <a href="/spells/109-fear/" target="_blank">ужас [fear]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/239-dominate_beast/" target="_blank">подчинение зверя [dominate beast]</a>, <a href="/spells/129-stoneskin/" target="_blank">каменная кожа [stoneskin]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/191-cloudkill/" target="_blank">облако смерти [cloudkill]</a>, <a href="/spells/240-dominate_person/" target="_blank">подчинение личности [dominate person]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">БОЖЕСТВЕННЫЙ КАНАЛ</h3><p><em>3-й уровень, умение клятвы покорения</em></p>
+<p><em></em> Когда вы принимаете эту клятву, вы получаете два следующих варианта применения «Божественного канала…</p>
+<p><em><strong>Покоряющее присутствие.</strong></em> Вы можете использовать ваш «Божественный канал», чтобы источать ужасающее присутствие.</p>
+<p><em><strong>Направленный удар</strong>.</em> Вы можете использовать свой «Божественный канал», чтобы наносить удары со сверхъестественной точност…</p>
+<br><h3 class="smallSectionTitle">АУРА ПОКОРЕНИЯ</h3><p><em>7-й уровень, умение клятвы покорения</em></p>
+<p>Вы постоянно излучаете ауру угрозы, пока вы не становитесь недееспособны.</p>
+<p>Аура распространяется на 10 футов от вас в каждом направлении, но не проходит через полные укрытия.</p>
+<p>Если существо испугано вами, его скорость падает до 0, пока оно находится в области действия ауры, и…</p>
+<br><h3 class="smallSectionTitle">ПРЕЗРИТЕЛЬНОЕ ВОЗМЕЗДИЕ</h3><p><em>15-й уровень, умение клятвы покорения</em></p>
+<p>Те, кто дерзнут вас ударить, психически караются за свою наглость.</p>
+<p>Когда существо попадает по вам атакой, это существо получает урон психической энергией, равный вашем…</p>
+<br><h3 class="smallSectionTitle">НЕПОБЕДИМЫЙ ПОКОРИТЕЛЬ</h3><p><em>20-й уровень, умение клятвы покорения</em></p>
+<p>Вы получаете способность овладевать необычайной воинской удалью.</p>
+<ul>
+<li>Вы получаете сопротивление ко всему урону.</li>
+<li>Когда вы совершаете действие Атака в ваш ход, вы можете совершить одну дополнительную атаку частью э…</li>
+<li>Ваши рукопашные атаки оружием наносят критический урон при результатах «19» и «20» броска к20.</li>
+</ul>
+<p>Использовав это умение, вы не можете использовать его повторно до окончания продолжительного отдыха.</p>
+</div>
+</div>
+<div class="addition-wrapper addition-9"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.glory">Клятва славы</span></h2><div class="hide-wrapper"><p><strong>Источник: «Tasha’‎s Cauldron of Everything»</strong></p>
+<p><strong>Источник: «Mythic Odysseys of Theros»</strong></p><blockquote>Ты. Ты особенный. Ты — победитель вселенской лотереи удачи. О, и ты собираешься рассказать об этом абсолютно всем? Просто замечательно.<br>-ТАША</blockquote><br><p>Паладины, приносящие клятву cлавы, верят, что им и их товарищам суждено прославиться через героическ…</p>
+<br><h3 class="smallSectionTitle">Догматы славы</h3><p>Догматы клятвы славы побуждают паладина совершать героические подвиги, которые в один прекрасный ден…</p>
+<p><em><strong>Действия превыше слов.</strong></em> Стремитесь быть известными по своим славным делам, а не словам.</p>
+<p><em><strong>Испытания — это всего лишь испытания.</strong></em> Смело встречайте трудности и вдохновляйте своих союзников на то, чтобы они преодолевали их вместе с…</p>
+<p><em><strong>Тренируй своё тело.</strong></em> Как и с неотёсанным камнем, с вашим телом нужно работать, чтобы раскрыть весь его потенциал.</p>
+<p><em><strong>Дисциплинируй душу.</strong></em> Вы должны дисциплинировать себя, чтобы победить свои слабости, угрожающие затмить славу ваших сверше…</p>
+<br><h3 class="smallSectionTitle">Заклинания клятвы</h3><p><em>3-й уровень, умение клятвы славы</em></p>
+<p>Вы получаете доступ к заклинаниям клятвы согласно таблице «Заклинания клятвы славы».</p>
+<h4 class="tableTitle">Заклинания клятвы cлавы </h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень паладина</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/42-heroism/" target="_blank">героизм [heroism]</a>, <a href="/spells/178-guiding_bolt/" target="_blank">направляющий снаряд [guiding bolt]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/153-magic_weapon/" target="_blank">магическое оружие [magic weapon]</a>, <a href="/spells/103-enhance_ability/" target="_blank">улучшение характеристики [enhance ability]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/106-protection_from_energy/" target="_blank">защита от энергии [protection from energy]</a>, <a href="/spells/100-haste/" target="_blank">ускорение [haste]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/278-compulsion/" target="_blank">принуждение [compulsion]</a>, <a href="/spells/308-freedom_of_movement/" target="_blank">свобода перемещения [freedom of movement]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/181-flame_strike/" target="_blank">небесный огонь [flame strike]</a>, <a href="/spells/198-commune/" target="_blank">общение [commune]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">Божественный канал</h3><p><em>3-й уровень, умение клятвы славы</em></p>
+<p>Вы получаете два варианта применения «Божественного канала», описанные ниже.</p>
+<p><em><strong>Несравненный спортсмен.</strong></em> Бонусным действием вы можете использовать свой «Божественный канал», чтобы усилить свои атлетические…</p>
+<p><em><strong>Впечатляющий удар.</strong></em> Сразу же после того, как вы нанесете урон существу с помощью своей «Божественной кары», вы можете бо…</p>
+<br><h3 class="smallSectionTitle">Аура рвения</h3><p><em>7-й уровень, умение клятвы славы</em></p>
+<p>Вы излучаете ауру, наделяющую вас и ваших союзников сверхъестественной скоростью, позволяя вам мчать…</p>
+<p>Когда вы достигаете 18-го уровня в этом классе, радиус ауры увеличивается до 10 футов.</p>
+<br><h3 class="smallSectionTitle">Блестящая оборона</h3><p><em>15-й уровень, умение клятвы славы</em></p>
+<p>Вы получаете возможность обернуть защиту в неожиданную атаку.</p>
+<p>Вы можете использовать это умение количество раз, равное вашему модификатору Харизмы (минимум один р…</p>
+<br><h3 class="smallSectionTitle">Живая легенда</h3><p><em>20-й уровень, умение клятвы славы</em></p>
+<p>Вы можете усиливать себя легендами о своих великих подвигах, правдивыми или преувеличенными.</p>
+<ul>
+<li>Вы благословлены потусторонними силами и совершаете все проверки Харизмы с преимуществом.</li>
+<li>Один раз в свой ход, когда вы совершаете рукопашную атаку оружием и промахиваетесь, вы можете измени…</li>
+<li>Если вы проваливаете спасбросок, то вы можете реакцией повторить его.</li>
+</ul>
+<p>Использовав это бонусное действие, вы не можете сделать это вновь, пока не закончите продолжительный…</p>
+</div>
+</div>
+<div class="addition-wrapper addition-9"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="oath.watchers">Клятва смотрителей</span></h2><div class="hide-wrapper"><p><strong>Источник: «Tasha’‎s Cauldron of Everything»</strong></p><blockquote>Эти паладины совсем не такие, как я ожидала. Самое плохое, что они отправляют домой лучших гостей вашей вечеринки.<br>-ТАША</blockquote><br><p>Клятва смотрителей обязывает паладинов защищать миры смертных от экстрапланарных существ, многие из…</p>
+<p>Паладины, следующие клятве смотрителей, всегда бдительны при обнаружении влияния экстрапланарных сил…</p>
+<br><h3 class="smallSectionTitle">Догматы смотрителей</h3><p>Паладин, принявший клятву смотрителей, поклялся защищать смертных от угроз из других миров.</p>
+<p><em><strong>Бдительность.</strong></em> Угрозы, с которыми ты сталкиваешься, хитры, могущественны и разрушительны.</p>
+<p><em><strong>Верность.</strong></em> Никогда не принимай дары от Исчадий и тех, кто им служит.</p>
+<p><em><strong>Дисциплина.</strong></em> Ты — это защита от бесконечных угроз, скрывающихся далеко за звездами.</p>
+<br><h3 class="smallSectionTitle">Заклинания клятвы</h3><p><em>3-й уровень, умение клятвы смотрителей</em></p>
+<p>Вы получаете доступ к заклинаниям клятвы согласно таблице «Заклинания клятвы смотрителей».</p>
+<h4 class="tableTitle">Заклинания клятвы смотрителей </h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень паладина</td>
+<td>Заклинание</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/195-detect_magic/" target="_blank">обнаружение магии [detect magic]</a>, <a href="/spells/313-alarm/" target="_blank">сигнал тревоги [alarm]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/20-see_invisibility/" target="_blank">видение невидимого [see invisibility]</a>, <a href="/spells/146-moonbeam/" target="_blank">лунный луч [moonbeam]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/132-counterspell/" target="_blank">контрзаклинание [counterspell]</a>, <a href="/spells/185-nondetection/" target="_blank">необнаружимость [nondetection]</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="/spells/5-aura_of_purity/" target="_blank">аура очищения [aura of purity]</a>, <a href="/spells/116-banishment/" target="_blank">изгнание [banishment]</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="/spells/176-scrying/" target="_blank">наблюдение [scrying]</a>, <a href="/spells/110-hold_monster/" target="_blank">удержание чудовища [hold monster]</a></td>
+</tr>
+</tbody>
+</table>
+<br><h3 class="smallSectionTitle">Божественный канал</h3><p><em>3-й уровень, умение клятвы смотрителей</em></p>
+<p>Вы получаете следующие варианты применения «Божественного канала».</p>
+<p><em><strong>Воля смотрителей.</strong></em> Вы можете использовать «Божественный канал», чтобы усилить своё присутствие могущественной силой ваш…</p>
+<p><em><strong>Изгнание экстрапланара.</strong></em> Вы можете использовать свой «Божественный канал», чтобы наказывать потусторонних существ.</p>
+<p>Изгнанные существа должны весь свой ход пытаться убежать от вас так далеко, как только могут, и не м…</p>
+<br><h3 class="smallSectionTitle">Аура стража</h3><p><em>7-й уровень, умение клятвы смотрителей</em></p>
+<p>Вы излучаете ауру бдительности, пока не являетесь недееспособным.</p>
+<p>На 18-м уровне радиус ауры увеличивается до 30 футов.</p>
+<br><h3 class="smallSectionTitle">Бдительное возмездие</h3><p><em>15-й уровень, умение клятвы смотрителей</em></p>
+<p>Вы научились магическим образом наказывать любого, кто посмеет использовать чары против вас или ваши…</p>
+<br><h3 class="smallSectionTitle">Оплот смертных</h3><p><em>20-й уровень, умение клятвы смотрителей</em></p>
+<p>Вы пробуждаете искру вашей божественной силы ради защиты мира смертных.</p>
+<ul>
+<li>Вы получаете истинное зрение в пределах 120 футов.</li>
+<li>Вы совершаете с преимуществом броски атаки против Аберраций, Исчадий, Небожителей, Фей и Элементалей…</li>
+<li>Когда вы попадаете по существу атакой и наносите ему урон, вы также можете заставить это существо со…</li>
+</ul>
+<p>Использовав это бонусное действие, вы не можете сделать это вновь, пока не закончите продолжительный…</p>
+</div>
+</div>
+
+<br><h2 class="bigSectionTitle underlined"></h2></div></div>
+</body></html>

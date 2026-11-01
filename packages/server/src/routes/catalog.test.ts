@@ -58,6 +58,13 @@ describe('GET /api/catalog/categories', () => {
       { id: 'spell', nameRu: 'Заклинания', count: 22 },
       { id: 'item', nameRu: 'Снаряжение', count: 61 },
       { id: 'race', nameRu: 'Расы', count: 19 },
+      { id: 'skill', nameRu: 'Навыки', count: 18 },
+      { id: 'language', nameRu: 'Языки', count: 65 },
+      { id: 'condition', nameRu: 'Состояния', count: 15 },
+      { id: 'background', nameRu: 'Предыстории', count: 10 },
+      { id: 'feat', nameRu: 'Черты', count: 8 },
+      { id: 'class', nameRu: 'Классы', count: 8 },
+      { id: 'subclass', nameRu: 'Подклассы', count: 77 },
     ]);
   });
 });
@@ -122,6 +129,20 @@ describe('GET /api/catalog/spell — список', () => {
     });
   });
 
+  it('через подкласс — с названиями подклассов этого класса (связи spell_subclass)', async () => {
+    const items = spellListResponseSchema.parse(
+      (await get('/api/catalog/spell?class=class:cleric&pageSize=100')).body,
+    ).items;
+    expect(items.find((item) => item.id === 'spell:fireball')?.classSubclasses).toEqual([
+      'Домен света',
+    ]);
+    // Обнаружение магии — в списке жреца и ещё у домена магии; пометку список не показывает.
+    expect(items.find((item) => item.id === 'spell:detect-magic')).toMatchObject({
+      classAccess: 'standard',
+      classSubclasses: ['Домен магии'],
+    });
+  });
+
   it('сортировка по уровню', async () => {
     const levels = spellListResponseSchema
       .parse((await get('/api/catalog/spell?sort=level&pageSize=100')).body)
@@ -143,6 +164,7 @@ describe('GET /api/catalog/spell — список', () => {
         sources: ['POA', 'XGE'],
         reviewStatus: 'rules_verified',
         classAccess: null,
+        classSubclasses: [],
       },
     ]);
   });
@@ -215,6 +237,28 @@ describe('GET /api/catalog/entity/:id — карточка', () => {
     expect(card.sources[0]).toMatchObject({ code: 'PH14', dndsuId: 205 });
     expect(card.sources[0]?.url).toMatch(/dnd\.su\/spells\/205/);
     expect(card.rules?.effects[0]).toMatchObject({ dice: '8d6' });
+  });
+
+  it('классы и подклассы — связями на объекты (этап 3, часть В)', async () => {
+    const card = spellEntityResponseSchema.parse(
+      (await get('/api/catalog/entity/spell:fireball')).body,
+    );
+    const to = (kind: string) =>
+      card.links.filter((link) => link.kind === kind && link.direction === 'to');
+    expect(to('spell_subclass').map((link) => link.id)).toEqual(
+      expect.arrayContaining(['subclass:cleric-light', 'subclass:warlock-fiend']),
+    );
+    // В тестовом каталоге 8 классов: волшебника нет — связи с ним нет, с чародеем есть.
+    expect(to('spell_class').map((link) => link.id)).toEqual(['class:sorcerer']);
+    const detect = spellEntityResponseSchema.parse(
+      (await get('/api/catalog/entity/spell:detect-magic')).body,
+    );
+    expect(
+      detect.links
+        .filter((link) => link.kind === 'spell_class')
+        .map((link) => link.id)
+        .sort(),
+    ).toEqual(expect.arrayContaining(['class:cleric']));
   });
 
   it('компонент А — отдельно от М, с ценой', async () => {

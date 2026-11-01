@@ -64,6 +64,9 @@ describe('подписи карточки', () => {
 
   it('пометка доступа при фильтре по классу', () => {
     expect(classAccessText('subclass')).toBe('через подкласс');
+    expect(classAccessText('subclass', ['Домен света', 'Домен войны'])).toBe(
+      'через подкласс: Домен света, Домен войны',
+    );
     expect(classAccessText('optional')).toBe('доп. список TCE');
     expect(classAccessText('standard')).toBeNull();
     expect(classAccessText(null)).toBeNull();

@@ -11,7 +11,19 @@ const SEVERITY_TITLES = {
 } as const;
 
 export function summaryLines(result: BuildResult): string[] {
-  const { collect, items, races, materials, write, issues } = result;
+  const {
+    collect,
+    items,
+    races,
+    reference,
+    backgrounds,
+    feats,
+    classes,
+    materials,
+    spellClasses,
+    write,
+    issues,
+  } = result;
   const count = (severity: keyof typeof SEVERITY_TITLES) =>
     issues.filter((issue) => issue.severity === severity).length;
   return [
@@ -37,6 +49,31 @@ export function summaryLines(result: BuildResult): string[] {
     ...(races
       ? [
           `Расы: страниц ${races.pages} (нет в кэше ${races.missingPages}, не разобрано ${races.failedPages}); рас ${races.races}, разновидностей ${races.variants}, с особенностями только текстом ${races.withTextOnly}, не попало ${races.failed}`,
+        ]
+      : []),
+    ...(reference
+      ? [
+          `Навыки: ${reference.skills}; языки: ${reference.languages}; состояния: ${reference.conditions}`,
+        ]
+      : []),
+    ...(backgrounds
+      ? [
+          `Предыстории: страниц ${backgrounds.pages} (нет в кэше ${backgrounds.missingPages}, не разобрано ${backgrounds.failedPages}); предысторий ${backgrounds.backgrounds}, адаптаций ${backgrounds.adaptations}, с частью только текстом ${backgrounds.withTextOnly}; снаряжение: частей ${backgrounds.equipmentParts}, со ссылкой на предмет ${backgrounds.equipmentLinked}`,
+        ]
+      : []),
+    ...(feats
+      ? [
+          `Черты: страниц ${feats.pages} (нет в кэше ${feats.missingPages}, не разобрано ${feats.failedPages}); черт ${feats.feats}, с требованиями ${feats.withPrerequisites} (условий только текстом ${feats.textRequirements}), с увеличением характеристик ${feats.withAbilityIncrease}, с выбором только текстом ${feats.withTextOnly}, без механики ${feats.displayOnly}`,
+        ]
+      : []),
+    ...(classes
+      ? [
+          `Классы: страниц ${classes.pages} (нет в кэше ${classes.missingPages}, не разобрано ${classes.failedPages}); классов ${classes.classes}, особенностей ${classes.features} (опциональных TCE ${classes.optionalFeatures}); подклассов ${classes.subclasses} (не собрано ${classes.failedSubclasses}), особенностей ${classes.subclassFeatures}, списков заклинаний ${classes.spellLists}; снаряжение: частей ${classes.equipmentParts}, с предметом или группой ${classes.equipmentLinked}`,
+        ]
+      : []),
+    ...(spellClasses
+      ? [
+          `Классы у заклинаний: связей с классами ${spellClasses.classLinks}, с подклассами ${spellClasses.subclassLinks}; целей без объекта ${spellClasses.missing}${spellClasses.notBuilt > 0 ? `, классов нет в сборке ${spellClasses.notBuilt}` : ''}`,
         ]
       : []),
     `Версия каталога: ${write.catalogVersion}${write.previousFound ? '' : write.restoredFromLedger > 0 ? ' (без прошлого файла, номера из журнала)' : ' (собран с нуля)'}`,

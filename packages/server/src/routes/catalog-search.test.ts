@@ -59,6 +59,21 @@ describe('GET /api/catalog/search', () => {
     expect((await search('q=Longsword')).items[0]?.id).toBe('item:longsword');
   });
 
+  // Этап 3: все новые категории видны в общем поиске, у каждой — своя категория.
+  it.each([
+    ['акробатика', 'skill:acrobatics', 'skill'],
+    ['акван', 'language:aquan', 'language'],
+    ['сбитый с ног', 'condition:prone', 'condition'],
+    ['артист', 'background:entertainer', 'background'],
+    ['одарённый', 'feat:skilled', 'feat'],
+    ['монах', 'class:monk', 'class'],
+    ['мистический рыцарь', 'subclass:fighter-eldritch-knight', 'subclass'],
+  ] as const)('«%s» → %s (категория %s)', async (q, id, category) => {
+    const result = await search(`q=${encodeURIComponent(q)}`);
+    expect(result.items[0]).toMatchObject({ id, category });
+    expect(result.byCategory.map((entry) => entry.id)).toContain(category);
+  });
+
   it('страницы; запрос из одних знаков — пусто; без q и с лишним параметром — 400', async () => {
     const first = await search(`q=${encodeURIComponent('эльф')}&pageSize=2`);
     const second = await search(`q=${encodeURIComponent('эльф')}&pageSize=2&page=2`);

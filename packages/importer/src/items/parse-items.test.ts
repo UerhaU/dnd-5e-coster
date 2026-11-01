@@ -263,7 +263,7 @@ describe('скакуны и транспорт (Р66)', () => {
       label: 'Экипаж / Пассажиры',
       value: '1',
     });
-    expect(byId.get('item:devils-ride')?.sources[0]?.source.code).toBe('BGDIA');
+    expect(byId.get('item:devils-ride')?.sources[0]?.source.code).toBe('BGDA');
   });
 
   it('строка «Доспех ×4 ×2» — не предмет, в отчёт пропуском', () => {

@@ -1,4 +1,4 @@
-import { CATEGORY_NAMES_RU, type SearchResultItem } from '@koster/shared';
+import { ABILITIES, CATEGORY_NAMES_RU, type SearchResultItem } from '@koster/shared';
 import { categoryName, kindName } from './item-format';
 import { levelAndSchool } from './spell-format';
 
@@ -9,6 +9,13 @@ const CATEGORY_LABELS: Record<SearchResultItem['category'], string> = {
   spell: 'Заклинание',
   item: 'Снаряжение',
   race: 'Раса',
+  skill: 'Навык',
+  language: 'Язык',
+  condition: 'Состояние',
+  background: 'Предыстория',
+  feat: 'Черта',
+  class: 'Класс',
+  subclass: 'Подкласс',
 };
 
 export function categoryLabel(category: SearchResultItem['category']): string {
@@ -18,6 +25,16 @@ export function categoryLabel(category: SearchResultItem['category']): string {
 /** «Расы: 3» для счётчиков по категориям. */
 export function categoryCountText(entry: { id: SearchResultItem['category']; count: number }) {
   return `${CATEGORY_NAMES_RU[entry.id]}: ${entry.count}`;
+}
+
+/** «Обычный», «Экзотический», «Диалект: Первичный». */
+export function languageSummary(language: NonNullable<SearchResultItem['language']>) {
+  if (language.dialectOf) return `Диалект: ${language.dialectOf}`;
+  return language.kind === 'standard'
+    ? 'Обычный'
+    : language.kind === 'exotic'
+      ? 'Экзотический'
+      : null;
 }
 
 /** «Заклинание · 3 уровень, воплощение», «Разновидность расы · «Эльф»». */
@@ -30,7 +47,11 @@ export function searchResultSummary(item: SearchResultItem): string {
         : kindName(item.item.kind)
       : item.race?.variantOfName
         ? `«${item.race.variantOfName}»`
-        : null;
+        : item.skill
+          ? (ABILITIES.find((ability) => ability.id === item.skill?.ability)?.nameRu ?? null)
+          : item.language
+            ? languageSummary(item.language)
+            : null;
   const label = item.race?.kind === 'variant' ? 'Разновидность расы' : categoryLabel(item.category);
   return [label, detail, item.sources.join(', ') || null]
     .filter((part) => part !== null)

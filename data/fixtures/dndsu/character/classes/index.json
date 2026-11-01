@@ -1,0 +1,37 @@
+{
+  "checkedOn": "2026-10-28",
+  "pages": [
+    {
+      "id": 87,
+      "url": "https://5e14.dnd.su/class/87-barbarian/"
+    },
+    {
+      "id": 89,
+      "url": "https://5e14.dnd.su/class/89-cleric/"
+    },
+    {
+      "id": 91,
+      "url": "https://5e14.dnd.su/class/91-fighter/"
+    },
+    {
+      "id": 93,
+      "url": "https://5e14.dnd.su/class/93-monk/"
+    },
+    {
+      "id": 94,
+      "url": "https://5e14.dnd.su/class/94-paladin/"
+    },
+    {
+      "id": 97,
+      "url": "https://5e14.dnd.su/class/97-ranger/"
+    },
+    {
+      "id": 101,
+      "url": "https://5e14.dnd.su/class/101-sorcerer/"
+    },
+    {
+      "id": 104,
+      "url": "https://5e14.dnd.su/class/104-warlock/"
+    }
+  ]
+}

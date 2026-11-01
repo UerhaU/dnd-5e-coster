@@ -2,10 +2,12 @@ import {
   catalogSearchQuerySchema,
   itemListQuerySchema,
   raceListQuerySchema,
+  referenceListQuerySchema,
   spellListQuerySchema,
   type CatalogSearchParams,
   type ItemListParams,
   type RaceListParams,
+  type ReferenceListParams,
   type SpellListParams,
 } from '@koster/shared';
 
@@ -87,6 +89,31 @@ export function itemParamsFromSearch(search: URLSearchParams): ItemListParams {
 
 export function raceParamsFromSearch(search: URLSearchParams): RaceListParams {
   return parseParams(search, raceListQuerySchema, RACE_FILTER_KEYS) as RaceListParams;
+}
+
+/** Фильтры списков навыков, языков, состояний, предысторий, черт, классов и подклассов. */
+export const REFERENCE_FILTER_KEYS = [
+  'q',
+  'ability',
+  'kind',
+  'grantsFeat',
+  'prerequisite',
+  'abilityIncrease',
+  'raceRequired',
+  'classId',
+  'spellcaster',
+  'source',
+  'sort',
+] as const;
+
+export type ReferenceFilterKey = (typeof REFERENCE_FILTER_KEYS)[number];
+
+export function referenceParamsFromSearch(search: URLSearchParams): ReferenceListParams {
+  return parseParams(
+    search,
+    referenceListQuerySchema,
+    REFERENCE_FILTER_KEYS,
+  ) as ReferenceListParams;
 }
 
 /** Поиск по всему каталогу: `?q=…&page=…` экрана «Справочник». */

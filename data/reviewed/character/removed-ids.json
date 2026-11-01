@@ -1,0 +1,9 @@
+{
+  "$comment": "ID, убранные до релиза: объект переименован, старый ID никем не сохранён. Не помечаются withdrawn, их ревизии уходят из каталога и журнала. Только до релиза (Р80); после — объект помечается withdrawn.",
+  "ids": [
+    "feat:embar-of-the-fire-giant",
+    "feat:gift-of-chromatic-dragon",
+    "feat:gift-of-gem-dragon",
+    "feat:gift-of-metallic-dragon"
+  ]
+}

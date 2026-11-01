@@ -1,0 +1,1292 @@
+<!doctype html>
+<html><head><meta property="og:url" content="https://5e14.dnd.su/class/104-warlock/"></head>
+<body>
+<h2 class="card-title" itemprop="name"><a href="/class/104-warlock/" itemprop="url" class="item-link">Колдун [Warlock]</a></h2>
+<div class="card__body new-article" itemprop="articleBody">			<ul class="params card__article-body">
+				<li><strong>Источник:</strong> «Player's Handbook»</li>				
+			</ul>
+			
+			<div class="desc card__article-body" itemprop="articleBody">
+				<div style="">
+    <div class="spoiler_head_body" data-key="class.warlock.intro" style="">
+        <blockquote style="">Молодой эльф в золотых одеждах, с псевдодраконом, свернувшимся у него на плече, тепло улыбается дворцовому стражу, вплетая магическое очарование в свои сладкие речи, чтобы подчинить его своей воле.<br> Когда в руках морщинистой старухи оживает пламя, она шепчет тайное имя своего демонического покровителя, вливая в заклинание зловещую магию.<br> Переведя взгляд с потрёпанного тома на необычное сочетание звёзд над головой, тифлинг с дикими глазами начинает мистический ритуал, который откроет проход в далёкий мир.</blockquote><br><br>
+        <p>Колдуны — искатели знаний, что скрываются в ткани мультивселенной.</p>
+    </div>
+    
+</div>
+<p></p><ul class="new-article-menu"><li class="new-article-menu__li">Колдун</li><li class="new-article-menu__li">Создание колдуна</li><li class="new-article-menu__li">Классовые умения</li><li class="new-article-menu__li">Таинственные воззвания</li><li class="new-article-menu__li">Потусторонние покровители</li><li class="new-article-menu__li">Unearthed Arcana &amp; Unofficial</li><li class="new-article-menu__break" data-parent="patrons"></li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Потусторонние покровители</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Архифея</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Исчадие</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Великий Древний</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Бессмертный</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Ведьмовской клинок</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Небожитель</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Бездонный</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Гений</li><li class="new-article-menu__li new-article-menu__li-second" data-parent="patrons">Нежить</li></ul><p></p>
+<h4 class="tableTitle"><span id="warlock">Колдун</span></h4>
+<span class="content-switch tce-content" style="">
+    <span class="content-switch__title">Использовать <span tooltip-for="option.TCE" title="option.TCE"><strong>TCE</strong></span></span>
+    <span class="content-switch__button form__checkbox checkbox-sm">
+    <input type="checkbox" onchange="FeatureArranger.toggleTasha()"><div class="checkbox__button"></div></span>
+</span>
+<table class="class_table"><tbody>
+<tr class="table_header">
+<td><span class="long">Уровень</span><span class="short tooltip" title="Уровень">ур</span></td>
+<td><span class="long">Бонус<br>мастерства</span><span class="short tooltip" title="Бонус Мастерства">бм</span></td>
+<td>Умения</td>
+<td><span class="long">Известные<br>заговоры</span><span class="short tooltip" title="Известные заговоры">из</span></td>
+<td><span class="long">Известные<br>заклинания</span><span class="short tooltip" title="Известные заклинания">иЗ</span></td>
+<td><span class="long">Ячейки<br>заклинаний</span><span class="short tooltip" title="Ячейки заклинаний">яЗ</span></td>
+<td><span class="long">Уровень<br>ячеек</span><span class="short tooltip" title="Уровень ячеек">уя</span></td>
+<td><span class="long">Известные<br>воззвания</span><span class="short tooltip" title="Известные воззвания">ив</span></td>
+</tr>
+<tr><td>1</td><td>+2</td>
+<td><a href="#feature.otherwordly-patron">Потусторонний покровитель</a>, <a href="#feature.pact-magic">Магия договора</a><span class="TCE-feature-on">, <a href="#feature.extra-spells">Дополнительные заклинания</a></span></td>
+<td>2</td><td>2</td><td>1</td><td>1</td><td>-</td></tr>
+<tr><td>2</td><td>+2</td>
+<td><a href="#feature.eldritch-invocations">Таинственные воззвания</a></td>
+<td>2</td><td>3</td><td>2</td><td>1</td><td>2</td></tr>
+<tr><td>3</td><td>+2</td>
+<td><a href="#feature.pact-boon">Предмет договора</a><span class="TCE-feature-on">, <a href="#pact.talisman">Вариант договора</a></span></td>
+<td>2</td><td>4</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>4</td><td>+2</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a><span class="TCE-feature-on">, <a href="#feature.eldritch-versatility">Мистическая универсальность</a></span></td>
+<td>3</td><td>5</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>5</td><td>+3</td>
+<td>-</td>
+<td>3</td><td>6</td><td>2</td><td>3</td><td>3</td></tr>
+<tr><td>6</td><td>+3</td>
+<td><a href="#feature.otherwordly-patron">Умение покровителя</a></td>
+<td>3</td><td>7</td><td>2</td><td>3</td><td>3</td></tr>
+<tr><td>7</td><td>+3</td>
+<td>-</td>
+<td>3</td><td>8</td><td>2</td><td>4</td><td>4</td></tr>
+<tr><td>8</td><td>+3</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>3</td><td>9</td><td>2</td><td>4</td><td>4</td></tr>
+<tr><td>9</td><td>+4</td>
+<td>-</td>
+<td>3</td><td>10</td><td>2</td><td>5</td><td>5</td></tr>
+<tr><td>10</td><td>+4</td>
+<td><a href="#feature.otherwordly-patron">Умение покровителя</a></td>
+<td>4</td><td>10</td><td>2</td><td>5</td><td>5</td></tr>
+<tr><td>11</td><td>+4</td>
+<td><a href="#feature.mystic-arcanum">Таинственный арканум (6 уровень)</a></td>
+<td>4</td><td>11</td><td>3</td><td>5</td><td>5</td></tr>
+<tr><td>12</td><td>+4</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>11</td><td>3</td><td>5</td><td>6</td></tr>
+<tr><td>13</td><td>+5</td>
+<td><a href="#feature.mystic-arcanum">Таинственный арканум (7 уровень)</a></td>
+<td>4</td><td>12</td><td>3</td><td>5</td><td>6</td></tr>
+<tr><td>14</td><td>+5</td>
+<td><a href="#feature.otherwordly-patron">Умение покровителя</a></td>
+<td>4</td><td>12</td><td>3</td><td>5</td><td>6</td></tr>
+<tr><td>15</td><td>+5</td>
+<td><a href="#feature.mystic-arcanum">Таинственный арканум (8 уровень)</a></td>
+<td>4</td><td>13</td><td>3</td><td>5</td><td>7</td></tr>
+<tr><td>16</td><td>+5</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>13</td><td>3</td><td>5</td><td>7</td></tr>
+<tr><td>17</td><td>+6</td>
+<td><a href="#feature.mystic-arcanum">Таинственный арканум (9 уровень)</a></td>
+<td>4</td><td>14</td><td>4</td><td>5</td><td>7</td></tr>
+<tr><td>18</td><td>+6</td>
+<td>-</td>
+<td>4</td><td>14</td><td>4</td><td>5</td><td>8</td></tr>
+<tr><td>19</td><td>+6</td>
+<td><a href="#feature.ASI">Увеличение характеристик</a></td>
+<td>4</td><td>15</td><td>4</td><td>5</td><td>8</td></tr>
+<tr><td>20</td><td>+6</td>
+<td><a href="#feature.eldritch-master">Таинственный мастер</a></td>
+<td>4</td><td>15</td><td>4</td><td>5</td><td>8</td></tr>
+</tbody>
+</table>
+<br>
+
+<h3 class="underlined spoiler_head">КЛЯТВА И ДОЛГ</h3><span>
+<p>Колдун заключает договор с потусторонней сущностью.</p>
+<p>Магия, которой наделён колдун, может вносить незначительные изменения в его сущность (например, спос…</p>
+<br></span>
+<h3 class="underlined spoiler_head">ПОИСКИ ТАЙН</h3><span>
+<p>Колдунами управляет ненасытная жажда знаний и власти, это вынуждает их заключать договоры и определя…</p>
+<p>Истории о колдунах, связавших себя с исчадиями, широко известны.</p>
+<p>Как только договор заключён, жажда колдуна к знаниям и власти не может быть утолена обычной учёбой и…</p>
+<p>Подавляющее большинство колдунов проводит свои дни в погоне за своими собственными целями.</p>
+<br></span>
+<h3 class="underlined spoiler_head"><span id="creation">Создание колдуна</span></h3><div>
+<p>Когда вы создаёте персонажа колдуна, потратьте немного времени и подумайте о том, каков будет ваш по…</p>
+<p>Посоветуйтесь со своим Мастером, чтобы определить, какую роль будет играть ваш договор во время прик…</p>
+<p>Какие отношения у вас с покровителем?</p><br>
+<h3 class="smallSectionTitle">БЫСТРОЕ СОЗДАНИЕ</h3>
+<p>Вы можете быстро создать колдуна, следуя этим рекомендациям.</p>
+<br></div>
+<h2 class="bigSectionTitle hide-next hide-next-h2">Углублённая предыстория Колдуна (XGE)</h2>
+<div class="hide-wrapper">
+<p>Колдуны – искатели и хранители секретов.</p>
+<p>Следующие разделы содержат способы, как приукрасить колдуна-персонажа, которые при этом могут создат…</p><br>
+<h3 class="underlined">Отношение покровителя</h3>
+<p>Любые отношения – это двусторонняя улица, но в случае колдунов и их покровителей совершенно не обяза…</p>
+<p>Когда вы определяете отношение вашего колдуна-персонаж к покровителю, также подумайте, как всё выгля…</p>
+<h4 class="tableTitle">Отношение покровителя </h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Отношение</td></tr>
+<tr><td>1</td><td>Ваш покровитель направлял и помогал вашей семье в течение нескольких поколений и милостиво относится…</td></tr>
+<tr><td>2</td><td>Каждое взаимодействие с вашим капризным покровителем – это сюрприз, приятный или болезненный.</td></tr>
+<tr><td>3</td><td>Ваш покровитель – дух давно умершего героя, который видит ваш договор как способ для него продолжать…</td></tr>
+<tr><td>4</td><td>Ваш покровитель – суровый педант и относится к вам с уважением.</td></tr>
+<tr><td>5</td><td>Ваш покровитель обманул вас при заключении договора и относился к вам как к рабу.</td></tr>
+<tr><td>6</td><td>По большей части вам предоставлена свобода действий и покровитель не вмешивается в них.</td></tr>
+</tbody></table>
+<br>
+<h3 class="underlined">Специальные условия договора</h3>
+<p>Договор может варьироваться от свободного соглашения до официального контракта с длинными, подробным…</p>
+<p>Есть ли у вашего персонажа договор, который требует от вас изменить свое поведение необычным или, ка…</p>
+<h4 class="tableTitle">Специальные условия</h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Условие</td></tr>
+<tr><td>1</td><td>Когда ваш покровитель обратится к вам, вы должны принять немедленные меры против конкретного врага с…</td></tr>
+<tr><td>2</td><td>Ваш договор проверяет вашу силу воли; вы должны воздерживаться от алкоголя и других опьяняющих вещес…</td></tr>
+<tr><td>3</td><td>По крайней мере один раз в день вы должны написать или вырезать имя или символ своего покровителя на…</td></tr>
+<tr><td>4</td><td>Иногда вы должны проводить причудливые ритуалы для поддержания своего договора.</td></tr>
+<tr><td>5</td><td>Вы никогда не можете надевать один и тот же наряд дважды, так как ваш покровитель считает такую пред…</td></tr>
+<tr><td>6</td><td>Когда вы используете таинственные воззвания, вы должны произнести имя своего покровителя вслух или р…</td></tr>
+</tbody></table>
+<br>
+<h3 class="underlined">Связывающий знак</h3>
+<p>У некоторых покровителей есть привычка и им частенько нравится каким-то образом маркировать колдунов…</p>
+<p>Если ваш договор колдуна обязывает вас иметь связывающий знак, как вы относитесь к его демонстрации,…</p>
+<h4 class="tableTitle">Связывающие знаки</h4>
+<table><tbody>
+<tr class="table_header"><td>к6</td><td>Знак</td></tr>
+<tr><td>1</td><td>Один из ваших глаз выглядит так же, как глаз вашего покровителя.</td></tr>
+<tr><td>2</td><td>Каждый раз, когда вы просыпаетесь, маленькая родинка на вашем лице появляется в другом месте.</td></tr>
+<tr><td>3</td><td>Вы проявляете симптомы болезни, но не страдаете от неё.</td></tr>
+<tr><td>4</td><td>Ваш язык неестественного цвета.</td></tr>
+<tr><td>5</td><td>У вас есть рудиментарный хвост. </td></tr>
+<tr><td>6</td><td>Ваш нос светится в темноте.</td></tr>
+</tbody></table>
+</div>
+
+<div class="additionalInfo"><h3 class="smallSectionTitle spoiler_head">МУЛЬТИКЛАССИРОВАНИЕ И колдун</h3>
+<div><p>Если вы используете опциональное правило по мультиклассированию из «Книги игрока», вот что вам нужно…</p>
+<p><strong><em>Минимальные значения характеристик</em>.</strong> Вы должны иметь значение Харизмы не ниже 13, чтобы взять уровень в этом классе или взять уровень дру…</p>
+<p><strong><em>Получаемые владения</em>.</strong> Если колдун не является вашим начальным классом, вот владения, которые вы приобретаете, когда берете свой первый уровень колдуна: лёгкие доспехи, простое оружие.</p>
+<p><strong><em>Магия договора.</em></strong> Если у вас есть и умение «Использование заклинаний» и умение «Магия договора» от класса колдуна, вы…</p></div>
+</div>
+
+
+<br><h2 class="bigSectionTitle"><span id="class-features">Классовые умения</span></h2>
+<p>Колдуны обладают следующими классовыми умениями.</p>
+
+<div class="additionalInfo"><h3 class="smallSectionTitle spoiler_head">Хиты, владение и снаряжение</h3><span>
+<h4 class="smallSectionTitle">ХИТЫ</h4>
+<p><strong>Кость Хитов:</strong> 1к8 за каждый уровень колдуна</p>
+<p><strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения</p>
+<p><strong>Хиты на следующих уровнях:</strong> 1к8 (или 5) + модификатор Телосложения (суммарно минимум 1) за каждый уровень колдуна после первого</p>
+<br>
+<h4 class="smallSectionTitle">ВЛАДЕНИЕ</h4>
+<p><strong>Доспехи</strong> : Лёгкие доспехи</p>
+<p><strong>Оружие</strong> : Простое оружие</p>
+<p><strong>Инструменты</strong> : Нет</p>
+<p><strong>Спасброски</strong> : Мудрость, Харизма</p>
+<p><strong>Навыки</strong> : Выберите два навыка из следующих: Запугивание, История, Магия, Обман, Природа, Расследование, Рели…</p>
+<br>
+<h4 class="smallSectionTitle">СНАРЯЖЕНИЕ</h4>
+<p>Вы начинаете со следующим снаряжением в дополнение к снаряжению, полученному за вашу предысторию:</p>
+<ul>
+<li>а) лёгкий арбалет и 20 болтов или б) любое простое оружие</li>
+<li>а) мешочек с компонентами или б) магическая фокусировка</li>
+<li>а) набор учёного или б) набор исследователя подземелий</li>
+<li>Кожаный доспех, любое простое оружие и два кинжала</li>
+</ul>
+<p>Если вы откажетесь от этого снаряжения, а также от предметов, предлагаемых вашей предысторией, то вы начнёте игру с 4к4 × 10 зм для покупки снаряжения.</p>
+</span></div>
+
+
+<br>
+<h3 class="underlined"><span id="feature.otherwordly-patron">ПОТУСТОРОННИЙ ПОКРОВИТЕЛЬ</span></h3>
+<p><em>1-й уровень, умение колдуна</em></p>
+<p>Вы заключаете сделку с потусторонним существом на ваш выбор.</p>
+<br>
+<h3 class="underlined"><span id="feature.pact-magic">МАГИЯ ДОГОВОРА</span></h3>
+<p><em>1-й уровень, умение колдуна</em></p>
+<p>Исследования тайн и магия, дарованная покровителем, дают вам возможность использовать заклинания.</p>
+<h4 class="smallSectionTitle">Заговоры (заклинания 0-го уровня)</h4>
+<p>Вы знаете два заговора на свой выбор из списка заклинаний колдуна.</p>
+<h4 class="smallSectionTitle">Ячейки заклинаний</h4>
+<p>Таблица «Колдун» показывает, какое количество ячеек для накладывания заклинаний колдуна с 1-го по 5-…</p>
+<p>Например, если ваш персонаж 5-го уровня, у вас есть две ячейки заклинаний 3-го уровня.</p>
+<h4 class="smallSectionTitle">Известные заклинания первого и более высоких уровней</h4>
+<p>На 1-м уровне вы знаете два заклинания 1-го уровня по своему выбору из списка заклинаний колдуна.</p>
+<p>Колонка «Известные заклинания» показывает, когда вы сможете выучить новые заклинания 1-го уровня и в…</p>
+<p>Кроме того, когда вы получаете уровень в этом классе, вы можете выбрать одно из известных вам заклин…</p>
+<h4 class="smallSectionTitle">Базовая характеристика заклинаний</h4>
+<p>При накладывании заклинаний колдун использует Харизму.</p>
+<p style="text-align: center;"><strong>Сл спасброска</strong> = 8 + ваш бонус мастерства + ваш модификатор Харизмы</p>
+<p style="text-align: center;"><strong>Модификатор броска атаки</strong> = ваш бонус мастерства + ваш модификатор Харизмы</p>
+<h4 class="smallSectionTitle">Фокусировка заклинания</h4>
+<p>Вы можете использовать магическую фокусировку в качестве заклинательной фокусировки для заклинаний к…</p>
+<div class="TCE-feature-on">
+<br>
+<h3 class="underlined"><span id="feature.extra-spells">Дополнительные заклинания колдуна</span></h3>
+<p><em>1-й уровень, <span tooltip-for="option.TCE" title="option.TCE">опциональное</span> умение колдуна</em></p>
+<p>Заклинания из представленного ниже списка расширяют ваш список заклинаний колдуна, представленный в…</p>
+<br><table><tbody>
+<tr class="table_header"><td>Уровень<br>заклинания</td><td>Заклинание</td></tr>
+<tr><td>Заговор</td><td><a href="/spells/461-sword_burst/">вспышка мечей [sword burst]</a>, <a href="/spells/458-booming_blade/">громовой клинок [booming blade]</a>, <a href="/spells/459-green_flame_blade/">клинок зеленого пламени [green-flame blade]</a>, <a href="/spells/460-lightning_lure/">лассо молнии [lightning lure]</a>, <a href="/spells/3050-mind_sliver/">расщепление разума [mind sliver]</a></td></tr>
+<tr><td>3</td><td><a href="/spells/3051-spirit_shroud/">покров духа [spirit shroud]</a>, <a href="/spells/3049-intellect_fortress/">крепость интеллекта [intellect fortress]</a>, <a href="/spells/3067-summon_undead/">призыв духа нежити [summon undead]</a>, <a href="/spells/3069-summon_shadowspawn/">призыв духа тени [summon shadowspawn]</a>, <a href="/spells/3070-summon_fey/">призыв духа феи [summon fey]</a></td></tr>
+<tr><td>4</td><td><a href="/spells/3062-summon_aberration/">призыв духа аберрации [summon aberration]</a></td></tr>
+<tr><td>5</td><td><a href="/spells/137-teleportation_circle/">круг телепортации [teleportation circle]</a>, <a href="/spells/231-planar_binding/">планарные узы [planar binding]</a>, <a href="/spells/93-mislead/">фальшивый двойник [mislead]</a></td></tr>
+<tr><td>6</td><td><a href="/spells/3064-summon_fiend/">призыв духа исчадия [summon fiend]</a>, <a href="/spells/3052-tasha_s_otherworldly_guise/">потусторонний облик Таши [Tasha’s otherwordly guise]</a></td></tr>
+<tr><td>7</td><td><a href="/spells/3054-dream_of_the_blue_veil/">сон синей вуали [dream of the blue veil]</a></td></tr>
+<tr><td>9</td><td><a href="/spells/36-gate/">врата [gate]</a>, <a href="/spells/3048-blade_of_disaster/">клинок разрушения [blade of disaster]</a>, <a href="/spells/324-weird/">смертный ужас [weird]</a></td></tr>
+</tbody></table>
+</div>
+
+<br>
+<h3 class="underlined"><span id="feature.eldritch-invocations">ТАИНСТВЕННЫЕ ВОЗЗВАНИЯ</span></h3>
+<p><em>2-й уровень, умение колдуна</em></p>
+<p>В процессе изучения оккультных знаний вы раскопали таинственные воззвания: фрагменты запрещенных зна…</p>
+<p>Вы получаете два воззвания на свой выбор.</p>
+<p>Кроме того, когда вы получаете новый уровень этого класса, вы можете выбрать одно известное вам возз…</p>
+<br>
+<h3 class="underlined"><span id="feature.pact-boon">ПРЕДМЕТ ДОГОВОРА</span></h3>
+<p><em>3-й уровень, умение колдуна</em></p>
+<p>Потусторонний покровитель дарует вам подарок за верную службу.</p>
+<h4 class="smallSectionTitle"><span id="pact.tome">Договор гримуара</span></h4>
+<p>Ваш покровитель дарует вам гримуар, который называется «Книга теней».</p>
+<p>Если вы теряете книгу, вам нужно провести ритуал длительностью в 1 час, чтобы получить замену от сво…</p>
+<h4 class="smallSectionTitle"><span id="pact.blade">Договор клинка</span></h4>
+<p>Вы можете действием создать оружие договора в своей пустой руке.</p>
+<p>Оружие договора исчезает, если оно в течение 1 минуты находится дальше 5 футов от вас.</p>
+<div class="TCE-feature-on">
+<h4 class="smallSectionTitle"><span id="pact.talisman">Договор талисмана</span></h4>
+<p><em><span tooltip-for="option.TCE" title="option.TCE">Опциональный</span> вариант договора</em></p>
+<p>Ваш покровитель даровал вам уникальный амулет — талисман, который может помогать как вам, так и тому…</p>
+<p>Если вы теряете талисман, вы можете провести 1-часовую церемонию и получить замену от своего покрови…</p>
+</div>
+<h4 class="smallSectionTitle"><span id="pact.chain">Договор цепи</span></h4>
+<p>Вы узнаёте заклинание поиск фамильяра [find familiar] и можете сотворять его как ритуал.</p>
+<p>Когда вы накладываете это заклинание, вы можете выбрать один из обычных обликов для вашего фамильяра…</p>
+<p>Кроме того, когда вы совершаете действие Атака, вы можете вместо одной своей атаки позволить атакова…</p>
+<div class="additionalInfo"><h3 class="smallSectionTitle">Ваш Предмет договора.</h3><p>Каждый вариант предмета договора создаёт особое существо или предмет, отражающий природу вашего покр…</p><p><strong>Договор гримуара</strong> .</p><p><strong>Договор клинка</strong> .</p><p><strong>Договор цепи</strong> .</p></div>
+
+<br>
+<h3 class="underlined"><span id="feature.ASI">УВЕЛИЧЕНИЕ ХАРАКТЕРИСТИК</span></h3>
+<p><em>4-й уровень, умение колдуна</em></p>
+<p>При достижении 4-го, 8-го, 12-го, 16-го и 19-го уровней вы можете повысить значение одной из ваших х…</p>
+<p>Если ваш Мастер разрешает использование черт, вы можете отказаться от преимуществ этого умения при п…</p>
+
+<div class="TCE-feature-on">
+<br>
+<h3 class="underlined"><span id="feature.eldritch-versatility">Мистическая универсальность</span></h3>
+<p><em>4-й уровень, <span tooltip-for="option.TCE" title="option.TCE">опциональное</span> умение колдуна</em></p>
+<p>Каждый раз, когда вы достигаете определённого уровня в этом классе, и получаете умение «Увеличение х…</p>
+<ul>
+<li>Замените один заговор, который вы узнали благодаря умению «Магия договора» этого класса, другим заго…</li>
+<li>Замените дар, полученный вами от умения «Предмет договора», на один из других даров, предлагаемых эт…</li>
+<li>Если вы имеете 12-й уровень в этом классе или выше, замените одно заклинание от умения «Таинственный…</li>
+</ul>
+<p>Если это изменение делает вас непригодным для любого из ваших таинственных воззваний, вы незамедлите…</p>
+</div>
+
+<br>
+<h3 class="underlined"><span id="feature.mystic-arcanum">ТАИНСТВЕННЫЙ АРКАНУМ</span></h3>
+<p><em>11-й уровень, умение колдуна</em></p>
+<p>Ваш покровитель дарует вам магический секрет, называемый арканумом.</p>
+<p>Вы можете наложить это заклинание, не используя ячейку заклинаний.</p>
+<p>На следующих уровнях вы получаете новые заклинания, которые можно применить таким образом — одно 7-г…</p>
+<br>
+<h3 class="underlined"><span id="feature.eldritch-master">ТАИНСТВЕННЫЙ МАСТЕР</span></h3>
+<p><em>20-й уровень, умение колдуна</em></p>
+<p>Вы можете обратиться к внутреннему резерву мистической силы, умоляя при этом покровителя восстановит…</p>
+
+
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="invocations">Таинственные воззвания</span></h2><div class="hide-wrapper" style="display: none;">
+    <p><strong>Источник: Player's Handbook, Tasha’‎s Cauldron of Everything, Xanathar’s Guide to Everything</strong></p>
+    
+    <p>Если таинственное воззвание имеет требования, вы должны выполнить их, чтобы познать его.</p>
+    
+    <div data-sort="block" data-name="warlock.invocations">
+        <div class="inline-links" data-sort="sorter" data-name="warlock.invocations.sort">
+            <span class="inline-links__title">Сортировка:</span>
+            <ul class="inline-links__list">
+                <li class="inline-links__item" data-sort="option" data-sort-function="level">По уровню</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="rname" data-sort-default="1">По названию</li>
+            </ul>
+        </div> 
+    
+        <div class="inline-links" data-sort="multifilter" data-name="warlock.invocations.source" data-field="data-source" data-dependent="warlock.invocations.pact">
+            <span class="inline-links__title">Источники:</span>
+            <ul class="inline-links__list">
+                <li class="inline-links__item" data-sort="option" data-sort-function="PH" data-sort-default="1">PH</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="XGE" data-sort-default="1">XGE</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="TCE" data-sort-default="1">TCE</li>
+            </ul>
+        </div> 
+        
+        <div class="inline-links" data-sort="multifilter" data-name="warlock.invocations.pact" data-field="data-pact" data-pass-empty="1" data-dependent="warlock.invocations.source">
+            <span class="inline-links__title">Договор:</span>
+            <ul class="inline-links__list">
+                <li class="inline-links__item" data-sort="option" data-sort-function="blade" data-sort-default="1">Клинок</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="tome" data-sort-default="1">Гримуар</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="chain" data-sort-default="1">Цепь</li>
+                <li class="inline-links__item" data-sort="option" data-sort-function="talisman" data-sort-default="1">Талисман</li>
+            </ul>
+        </div> 
+        
+    <div data-sort="container">
+    <div data-sort="element" data-level="15" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ВЕДЬМАЧИЙ ВЗОР</h3>
+<p><em>Требование: 15-й уровень колдуна</em></p>
+    <p>Вы можете видеть истинный облик всех перевёртышей и существ, скрытых магией школы Иллюзия или Преобр…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ВЗОР ДВУХ УМОВ</h3>
+<p>Вы можете действием коснуться согласного Гуманоида и до конца своего следующего хода воспринимать вс…</p>
+    </div>
+    <div data-sort="element" data-level="15" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ВИДЕНИЯ ДАЛЁКИХ КОРОЛЕВСТВ</h3>
+<p><em>Требование: 15-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать заклинание магический глаз [arcane eye], не тратя ячейки заклина…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ВОР ПЯТИ СУДЕБ</h3>
+<p>Вы можете один раз наложить заклинание порча [bane], используя ячейку заклинаний колдуна.</p>
+    </div>
+    <div data-sort="element" data-level="9" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ВОСХОДЯЩИЙ ШАГ</h3>
+<p><em>Требование: 9-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать на себя заклинание левитация [levitate], не тратя ячейки заклина…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ГЛАЗА ХРАНИТЕЛЯ РУН</h3>
+<p>Вы можете читать любые письмена.</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="PH" data-pact="chain">
+    <br>
+<h3 class="smallSectionTitle">ГЛАС ЦЕПНОГО МАСТЕРА</h3>
+<p><em>Требование: умение «Договор цепи»</em></p>
+    <p>Вы можете телепатически общаться со своим фамильяром и воспринимать всё чувствами фамильяра, пока вы…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ДОСПЕХ ТЕНЕЙ</h3>
+<p>Вы можете неограниченно накладывать на себя заклинание доспехи мага [mage armor], не тратя ячейки за…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ДЬЯВОЛЬСКИЙ ВЗГЛЯД</h3>
+<p>Вы можете нормально видеть в темноте, как магической, так и немагической, на расстоянии 120 футов.</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="PH" data-pact="blade">
+    <br>
+<h3 class="smallSectionTitle"><span id="invocation.thirsting-blade">ЖАЖДУЩИЙ КЛИНОК</span></h3>
+<p><em>Требование: 5-й уровень колдуна, умение «Договор клинка»</em></p>
+    <p>Вы можете атаковать своим оружием договора два раза вместо одного, когда в свой ход используете дейс…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ЖИВОТНАЯ РЕЧЬ</h3>
+<p>Вы можете неограниченно накладывать заклинание разговор с животными [speak with animals], не тратя я…</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ЗАВОРАЖИВАЮЩИЙ ШЁПОТ</h3>
+<p><em>Требование: 7-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание принуждение [compulsion], используя ячейку заклинаний колдуна…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ЗНАК ДУРНОГО ПРЕДЗНАМЕНОВАНИЯ</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание проклятие [bestow curse], используя ячейку заклинаний колдуна…</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="PH" data-pact="tome">
+    <br>
+<h3 class="smallSectionTitle">КНИГА ДРЕВНИХ СЕКРЕТОВ</h3>
+<p><em>Требование: умение «Договор гримуара»</em></p>
+    <p>Теперь вы можете вписывать магические ритуалы в свою Книгу Теней.</p>
+    <p>Во время приключений вы можете добавлять другие ритуальные заклинания в свою Книгу Теней.</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МАСКА МНОГИХ ЛИЦ</h3>
+<p>Вы можете неограниченно накладывать заклинание маскировка [disguise self], не тратя ячейки заклинани…</p>
+    </div>
+    <div data-sort="element" data-level="15" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МАСТЕР БЕСЧИСЛЕННЫХ ОБЛИКОВ</h3>
+<p><em>Требование: 15-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать заклинание смена обличья [alter self], не тратя ячейки заклинани…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МИСТИЧЕСКОЕ КОПЬЁ</h3>
+<p><em>Требование: заговор </em> мистический заряд [eldritch blast]</p>
+    <p>Когда вы накладываете мистический заряд [eldritch blast], его дистанция равна 300 футам.</p>
+    </div>
+    <div data-sort="element" data-level="9" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МОГИЛЬНЫЙ ШЁПОТ</h3>
+<p><em>Требование: 9-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать заклинание разговор с мёртвыми [speak with dead], не тратя ячейк…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МОЩЬ ИСЧАДИЯ</h3>
+<p>Вы можете неограниченно накладывать на себя заклинание псевдожизнь [false life] как заклинание 1-го…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">МУЧИТЕЛЬНЫЙ ВЗРЫВ</h3>
+<p><em>Требование: заговор <a href="/spells/168-eldritch_blast/">мистический заряд [eldritch blast]</a></em></p>
+    <p>Когда вы накладываете мистический заряд [eldritch blast], добавьте модификатор Харизмы к урону, прич…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ОБМАНЧИВОЕ ВЛИЯНИЕ</h3>
+<p>Вы получаете владение навыками Обман и Убеждение.</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ОДИН СРЕДИ ТЕНЕЙ</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Когда вы находитесь в области тусклого света или в темноте, вы можете действием стать невидимым, пок…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ОТТАЛКИВАЮЩИЙ ЗАРЯД</h3>
+<p><em>Требование: заговор <a href="/spells/168-eldritch_blast/">мистический заряд [eldritch blast]</a></em></p>
+    <p>Если вы попадаете по существу мистическим зарядом [eldritch blast], вы можете толкнуть его на 10 фут…</p>
+    </div>
+    <div data-sort="element" data-level="9" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ПОТУСТОРОННИЙ ПРЫЖОК</h3>
+<p><em>Требование: 9-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать на себя заклинание прыжок [jump], не тратя ячейки заклинаний и м…</p>
+    </div>
+    <div data-sort="element" data-level="12" data-source="PH" data-pact="blade">
+    <br>
+<h3 class="smallSectionTitle">ПЬЮЩИЙ ЖИЗНЬ</h3>
+<p><em>Требование: 12-й уровень колдуна, умение «Договор клинка»</em></p>
+    <p>Когда вы попадаете по существу оружием договора, это существо получает дополнительный урон некротиче…</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">СКУЛЬПТОР ПЛОТИ</h3>
+<p><em>Требование: 7-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание превращение [polymorph], используя ячейку заклинаний колдуна.</p>
+    </div>
+    <div data-sort="element" data-level="9" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">СЛУГИ ХАОСА</h3>
+<p><em>Требование: 9-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание призыв элементаля [conjure elemental], используя ячейку закли…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ТАИНСТВЕННЫЙ ВЗГЛЯД</h3>
+<p>Вы можете неограниченно накладывать заклинание обнаружение магии [detect magic], не тратя ячейки зак…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ТРЯСИНА РАЗУМА</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание замедление [slow], используя ячейку заклинаний колдуна.</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">ТУМАННЫЕ ВИДЕНИЯ</h3>
+<p>Вы можете неограниченно накладывать заклинание безмолвный образ [silent image], не тратя ячейки закл…</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="PH">
+    <br>
+<h3 class="smallSectionTitle">УЖАСАЮЩЕЕ СЛОВО</h3>
+<p><em>Требование: 7-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить заклинание смятение [confusion], используя ячейку заклинаний колдуна.</p>
+    </div>
+    <div data-sort="element" data-level="15" data-source="PH" data-pact="chain">
+    <br>
+<h3 class="smallSectionTitle">ЦЕПИ КАРЦЕРИ</h3>
+<p><em>Требование: 15-й уровень колдуна, умение «Договор цепи»</em></p>
+    <p>Вы можете неограниченно накладывать заклинание удержание чудовища [hold monster], если цель — Исчади…</p>
+    </div>
+    
+    
+    <div data-sort="element" data-level="3" data-source="XGE" data-pact="tome">
+    <br>
+<h3 class="smallSectionTitle">Аспект луны</h3>
+<p><em>Требование: умение «Договор гримуара»</em></p>
+    <p>Вам больше не нужно спать и вас невозможно усыпить любым способом.</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Безжалостное проклятие</h3>
+<p><em>Требование: 7-й уровень колдуна, заклинание <a href="/spells/312-hex/">сглаз [hex]</a> или способность колдуна к проклятию</em></p>
+    <p>Ваше проклятие создаёт временную связь между вами и вашей целью.</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Безумное проклятие</h3>
+<p><em>Требование: 5-й уровень колдуна, заклинание <a href="/spells/312-hex/">сглаз [hex]</a> или способность колдуна к проклятию</em></p>
+    <p>Бонусным действием вы вызываете психическое возмущение вокруг цели, проклятой вашим заклинанием сгла…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Гробница Левистуса</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Если вы получаете урон, то вы можете реакцией покрыть себя льдом, который тает в конце вашего следую…</p>
+    <p>Использовав это воззвание, вы не можете использовать его повторно до окончания короткого или продолж…</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="XGE" data-pact="chain">
+    <br>
+<h3 class="smallSectionTitle">Дар вечноживых</h3>
+<p><em>Требование: умение «Договор цепи»</em></p>
+    <p>Всякий раз, когда вы восстанавливаете хиты и ваш фамильяр находится в пределах 100 футов от вас, все…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Дар глубин</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Вы можете дышать под водой, и вы получаете скорость плавания, равную вашей скорости ходьбы.</p>
+    <p>Вы также можете один раз наложить заклинание подводное дыхание [water breathing], не расходуя ячейку…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Копье Летаргии</h3>
+<p><em>Требование: заговор <a href="/spells/168-eldritch_blast/">мистический заряд [eldritch blast]</a></em></p>
+    <p>Один раз на каждом из ваших ходов, когда вы попадаете по существу мистическим зарядом [eldritch blas…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="XGE" data-pact="blade">
+    <br>
+<h3 class="smallSectionTitle">Мистическая кара</h3>
+<p><em>Требование: 5-й уровень колдуна, умение «Договор клинка»</em></p>
+    <p>Один раз за ход, когда вы попадаете по существу своим оружием договора, вы можете потратить ячейку з…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Плащ мух</h3>
+<p><em>Требование: 5-й уровень колдуна</em></p>
+    <p>Бонусным действием вы можете окружить себя волшебной аурой, которая выглядит как множество мух.</p>
+    <p>Аура даёт вам преимущество на проверки Харизмы (Запугивание), но даёт помеху на все другие проверки…</p>
+    <p>Использовав это воззвание, вы не можете использовать его повторно до окончания короткого или продолж…</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Побег обманщика</h3>
+<p><em>Требование: 7-й уровень колдуна</em></p>
+    <p>Вы можете один раз наложить на себя свободу перемещения [freedom of movement], не тратя ячейки закли…</p>
+    </div>
+    <div data-sort="element" data-level="7" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Призрачный взор</h3>
+<p><em>Требование: 7-й уровень колдуна</em></p>
+    <p>Вы получаете возможность действием видеть сквозь твёрдые объекты в радиусе 30 футов.</p>
+    <p>Использовав это воззвание, вы не сможете использовать его повторно до окончания короткого или продол…</p>
+    </div>
+    <div data-sort="element" data-level="15" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Саван теней</h3>
+<p><em>Требование: 15-й уровень колдуна</em></p>
+    <p>Вы можете неограниченно накладывать заклинание невидимость [invisibility], не тратя ячейки заклинани…</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="XGE" data-pact="blade">
+    <br>
+<h3 class="smallSectionTitle">Улучшенное оружие договора</h3>
+<p><em>Требование: умение «Договор клинка»</em></p>
+    <p>Вы можете использовать любое оружие, призванное с помощью умения «Договор клинка», в качестве своей…</p>
+    <p>Кроме того, это оружие получает +1 бонус к атакам и броскам урона, если это не магическое оружие, ко…</p>
+    <p>Наконец, призванное оружие может быть коротким луком, длинным луком, лёгким арбалетом или тяжёлым ар…</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="XGE">
+    <br>
+<h3 class="smallSectionTitle">Хватка Хадара</h3>
+<p><em>Требование: заговор <a href="/spells/168-eldritch_blast/">мистический заряд [eldritch blast]</a></em></p>
+    <p>Один раз на каждом из ваших ходов, когда вы попадаете по существу мистическим зарядом [eldritch blas…</p>
+    </div>
+    
+    
+    <div data-sort="element" data-level="5" data-source="TCE">
+    <br>
+<h3 class="smallSectionTitle">Бессмертный раб</h3>
+<p><em>Требование: 5-й уровень колдуна </em></p>
+    <p>Вы можете накладывать заклинание восставший труп [animate dead] без затраты ячеек заклинаний.</p>
+    </div>
+    <div data-sort="element" data-level="9" data-source="TCE" data-pact="tome">
+    <br>
+<h3 class="smallSectionTitle">Дар защитников</h3>
+<p><em>Требование: 9-й уровень колдуна, умение «Договор гримуара» </em></p>
+    <p>В вашей книге теней появляется новая страница.</p>
+    <p>Каждый раз, когда хиты существа, чьё имя записано на этой странице, опускаются до 0 и при этом оно н…</p>
+    <p>Действием вы можете магическим образом удалить имя со страницы, просто коснувшись его.</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="TCE" data-pact="chain">
+    <br>
+<h3 class="smallSectionTitle">Дар мастера цепи</h3>
+<p><em>Требование: умение «Договор цепи» </em></p>
+    <p>Когда вы накладываете заклинание поиск фамильяра [find familiar], вы наделяете призванное существо ч…</p>
+    <ul>
+    <li>Фамильяр получает либо скорость полёта, либо скорость плавания (по вашему выбору), равную 40 футам.</li>
+    <li>Бонусным действием вы можете приказать фамильяру совершить действие Атака.</li>
+    <li>Атаки оружием фамильяра считаются магическими, когда требуется преодолеть иммунитет или сопротивлени…</li>
+    <li>Если фамильяр заставляет цель совершить спасбросок, то его Сл равна Сл спасброска ваших заклинаний.</li>
+    <li>Когда фамильяр получает урон, вы можете реакцией даровать ему сопротивление против этого урона.</li>
+    </ul>
+    </div>
+    <div data-sort="element" data-level="7" data-source="TCE" data-pact="talisman">
+    <br>
+<h3 class="smallSectionTitle">Защита талисмана</h3>
+<p><em>Требование: 7-й уровень колдуна, умение «Договор талисмана» </em></p>
+    <p>Когда носитель вашего талисмана проваливает спасбросок, он может бросить к4 и добавить выпавшее знач…</p>
+    </div>
+    <div data-sort="element" data-level="5" data-source="TCE" data-pact="tome">
+    <br>
+<h3 class="smallSectionTitle">Книжник из дали</h3>
+<p><em>Требование: 5-й уровень колдуна, умение «Договор гримуара» </em></p>
+    <p>В вашей книге теней появляется новая страница.</p>
+    <p>Вы можете наложить заклинание послание [sending] на цель, имя которой указано на этой странице.</p>
+    <p>Действием вы можете магическим образом удалить имя со страницы, просто коснувшись его.</p>
+    </div>
+    <div data-sort="element" data-level="0" data-source="TCE">
+    <br>
+<h3 class="smallSectionTitle">Мистический разум</h3>
+<p>Вы совершаете с преимуществом спасброски Телосложения для поддержания концентрации на вашем заклинан…</p>
+    </div>
+    <div data-sort="element" data-level="3" data-source="TCE" data-pact="talisman">
+    <br>
+<h3 class="smallSectionTitle">Порицание талисмана</h3>
+<p><em>Требование: умение «Договор талисмана» </em></p>
+    <p>Когда по носителю вашего талисмана попадают атакой и вы можете видеть атакующего в пределах 30 футов…</p>
+    </div>
+    <div data-sort="element" data-level="12" data-source="TCE" data-pact="talisman">
+    <br>
+<h3 class="smallSectionTitle">Связь с талисманом</h3>
+<p><em>Требование: 12-й уровень колдуна, умение «Договор талисмана» </em></p>
+    <p>Пока кто-то другой носит ваш талисман, вы можете действием телепортироваться в ближайшее к нему своб…</p>
+    </div>
+    </div>
+    </div>
+</div>
+    
+<br><br><h2 class="bigSectionTitle spoiler_head"><span id="patrons">Потусторонние покровители</span></h2><div><p>Существа, выступающие покровителями колдунов, являются могущественными обитателями других планов сущ…</p>
+<br></div>
+
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.archfey">Архифея</span></h2><div class="hide-wrapper">
+<p>Ваш покровитель это лорд или леди фей.</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение архифеи</em></p>
+<p>Архифея позволяет вам при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<h4 class="tableTitle">ДОПОЛНИТЕЛЬНЫЕ ЗАКЛИНАНИЯ АРХИФЕИ</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень<br>заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/207-faerie_fire/">огонь фей [faerie fire]</a>, <a href="/spells/98-sleep/">усыпление [sleep]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/31-phantasmal_force/">воображаемая сила [phantasmal force]</a>, <a href="/spells/102-calm_emotions/">умиротворение [calm emotions]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/161-blink/">мерцание [blink]</a>, <a href="/spells/304-plant_growth/">рост растений [plant growth]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/38-greater_invisibility/">высшая невидимость [greater invisibility]</a>, <a href="/spells/239-dominate_beast/">подчинение зверя [dominate beast]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/240-dominate_person/">подчинение личности [dominate person]</a>, <a href="/spells/281-seeming/">притворство [seeming]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">Фейское присутствие</h3>
+<p><em>1-й уровень, умение архифеи</em></p>
+<p>Ваш покровитель дарует вам возможность демонстрировать притягательную и пугающую фейскую внешность.</p>
+<p>Использовав это умение, вы не можете использовать его снова, не завершив короткого либо продолжитель…</p>
+<br>
+<h3 class="smallSectionTitle">ТУМАННОЕ ИСЧЕЗНОВЕНИЕ</h3>
+<p><em>6-й уровень, умение архифеи</em></p>
+<p>Получив урон, вы можете раствориться облачком тумана.</p>
+<br>
+<h3 class="smallSectionTitle">ЧАРУЮЩАЯ ЗАЩИТА</h3>
+<p><em>10-й уровень, умение архифеи</em></p>
+<p>Ваш покровитель обучает вас, как обращать воздействующую на разум магию ваших врагов против них сами…</p>
+<br>
+<h3 class="smallSectionTitle">ТЁМНОЕ ИССТУПЛЕНИЕ</h3>
+<p><em>14-й уровень, умение архифеи</em></p>
+<p>Вы можете погружать существ в иллюзорное пространство.</p>
+<p>Использовав это умение, вы не можете использовать его снова, не завершив короткого либо продолжитель…</p>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.fiend">Исчадие</span></h2><div class="hide-wrapper">
+    <p>Вы заключили договор с исчадием из нижних планов бытия, сущностью, обладающей злыми устремлениями, д…</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение исчадия</em></p>
+<p>Исчадие позволяет вам при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<h4 class="tableTitle">ДОПОЛНИТЕЛЬНЫЕ ЗАКЛИНАНИЯ ИСЧАДИЯ</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень<br>заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/203-burning_hands/">огненные ладони [burning hands]</a>, <a href="/spells/276-command/">приказ [command]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/45-blindness_deafness/">глухота/слепота [blindness/deafness]</a>, <a href="/spells/225-scorching_ray/">палящий луч [scorching ray]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/113-stinking_cloud/">зловонное облако [stinking cloud]</a>, <a href="/spells/205-fireball/">огненный шар [fireball]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/202-wall_of_fire/">огненная стена [wall of fire]</a>, <a href="/spells/206-fire_shield/">огненный щит [fire shield]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/181-flame_strike/">небесный огонь [flame strike]</a>, <a href="/spells/310-hallow/">святилище [hallow]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">БЛАГОСЛОВЕНИЕ ТЕМНЕЙШЕГО</h3>
+<p><em>1-й уровень, умение исчадия</em></p>
+<p>Когда вы опускаете хиты враждебного существа до 0, вы получаете временные хиты, равные вашему модифи…</p>
+<br>
+<h3 class="smallSectionTitle">УДАЧА ТЕМНЕЙШЕГО</h3>
+<p><em>6-й уровень, умение исчадия</em></p>
+<p>Вы можете воззвать к своему покровителю, чтобы изменить судьбу в свою пользу.</p>
+<p>Использовав это умение, вы не можете использовать его снова до окончания короткого или продолжительн…</p>
+<br>
+<h3 class="smallSectionTitle">УСТОЙЧИВОСТЬ ИСЧАДИЯ</h3>
+<p><em>10-й уровень, умение исчадия</em></p>
+<p>Вы можете выбрать один вид урона, когда заканчиваете короткий или продолжительный отдых.</p>
+<br>
+<h3 class="smallSectionTitle">БРОСОК СКВОЗЬ АД</h3>
+<p><em>14-й уровень, умение исчадия</em></p>
+<p>Когда вы попадаете по существу атакой, вы можете использовать это умение, чтобы мгновенно переместит…</p>
+<p>В конце вашего следующего хода цель возвращается в пространство, которое занимало, или ближайшее сво…</p>
+<p>Использовав это умение, вы не можете использовать его снова до окончания продолжительного отдыха.</p>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.great-old-one">Великий Древний</span></h2><div class="hide-wrapper">
+    <p>Ваш покровитель — таинственная сущность, природа которой совершенно чужда ткани реальности.</p>
+<p>Сущностями этого типа могут быть Гонадар, зовущийся «Тот Кто Таится», Тариздун «Скованный Бог», Денд…</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение великого древнего</em></p>
+<p>Великий Древний позволяет вам при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<h4 class="tableTitle">ДОПОЛНИТЕЛЬНЫЕ ЗАКЛИНАНИЯ ВЕЛИКОГО ДРЕВНЕГО</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень<br>заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/56-dissonant_whisper/">диссонирующий шёпот [dissonant whisper]</a>, <a href="/spells/79-tasha_s_hideous_laughter/">жуткий смех Таши [Tasha’s hideous laughter]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/31-phantasmal_force/">воображаемая сила [phantasmal force]</a>, <a href="/spells/196-detect_thoughts/">обнаружение мыслей [detect thoughts]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/238-clairvoyance/">подсматривание [clairvoyance]</a>, <a href="/spells/256-sending/">послание [sending]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/239-dominate_beast/">подчинение зверя [dominate beast]</a>, <a href="/spells/67-evard_s_black_tentackles/">Эвардовы чёрные щупальца [Еvard’s black tentackles]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/240-dominate_person/">подчинение личности [dominate person]</a>, <a href="/spells/344-telekinesis/">телекинез [telekinesis]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">ПРОБУЖДЁННЫЙ РАЗУМ</h3>
+<p><em>1-й уровень, умение великого древнего</em></p>
+<p>Ваше чуждое знание даёт вам возможность касаться разума других существ.</p>
+<br>
+<h3 class="smallSectionTitle">ЭНТРОПИЧЕСКАЯ ОПЕКА</h3>
+<p><em>6-й уровень, умение великого древнего</em></p>
+<p>Вы научитесь магически опекать себя от атак и использовать неудачную вражескую атаку на пользу себе.</p>
+<br>
+<h3 class="smallSectionTitle">МЕНТАЛЬНЫЙ ЩИТ</h3>
+<p><em>10-й уровень, умение великого древнего</em></p>
+<p>Ваши мысли не могут быть прочитаны телепатически или иными средствами, если вы не пожелаете обратног…</p>
+<br>
+<h3 class="smallSectionTitle">СОЗДАТЬ РАБА</h3>
+<p><em>14-й уровень, умение великого древнего</em></p>
+<p>Вы получаете способность инфицировать разум гуманоидов чужеродной магией своего покровителя.</p>
+</div>
+<div class="addition-wrapper addition-7"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.undying">Бессмертный</span></h2><div class="hide-wrapper">
+    <p><strong>Источник: «Sword Coast Adventurer’s Guide»</strong></p>
+<br><p>Смерть не властна более над вашим покровителем, который открыл секреты вечной жизни, хотя такая сила…</p>
+<p>Векна, Лорд Руки и Глаза; ужасный Йуз; королева-лич Вол; Бессмертный Двор Аэринала; Влаакит, королев…</p>
+<p>В Королевствах, Бессмертные покровители включают в себя Ларлоха, Теневого Короля, легендарного влады…</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение бессмертного</em></p>
+<p>Бессмертный позволяет вам выбирать заклинания из расширенного списка, когда вы узнаете заклинания ко…</p>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/287-false_life/">псевдожизнь [false life]</a>, <a href="/spells/147-ray_of_sickness/">луч болезни [ray of sickness]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/45-blindness_deafness/">глухота/слепота [blindness/deafness]</a>, <a href="/spells/349-silence/">тишина [silence]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/280-feign_death/">притворная смерть [feign death]</a>, <a href="/spells/293-speak_with_dead/">разговор с мёртвыми [speak with dead]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/4-aura_of_life/">аура жизни [aura of life]</a>, <a href="/spells/104-death_ward/">защита от смерти [death ward]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/92-contagion/">заражение [contagion]</a>, <a href="/spells/115-legend_lore/">знание легенд [legend lore]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">СРЕДИ МЁРТВЫХ</h3>
+<p><em>1-й уровень, умение бессмертного</em></p>
+<p>Вы изучаете заговор уход за умирающим [spare the dying], который считается для вас заговором колдуна…</p>
+<p>Также, вы получаете преимущество на спасброски против любых болезней.</p>
+<p>При провале спасброска, существо должно выбрать новую цель, отличную от вас, или совсем провалить за…</p>
+<br>
+<h3 class="smallSectionTitle">ОТРИНУВ СМЕРТЬ</h3>
+<p><em>6-й уровень, умение бессмертного</em></p>
+<p>Вы можете получить жизненную силу, когда обманываете смерть сами или помогаете кому-то другому сдела…</p>
+<p>Воспользовавшись этим умением, вы сможете использовать его снова лишь после окончания продолжительно…</p>
+<br>
+<h3 class="smallSectionTitle">БЕССМЕРТНАЯ ПРИРОДА</h3>
+<p><em>10-й уровень, умение бессмертного</em></p>
+<p>Вы можете задерживать дыхание на неопределённо долгий срок, вас не мучает жажда или голод и вам не н…</p>
+<p>Вдобавок, вы медленнее стареете.</p>
+<br>
+<h3 class="smallSectionTitle">НЕРУШИМАЯ ЖИЗНЬ</h3>
+<p><em>14-й уровень, умение бессмертного</em></p>
+<p>Вас посвящают в некоторые настоящие секреты Бессмертных.</p>
+<p>Воспользовавшись этим умением, вы сможете использовать его снова лишь после короткого или продолжите…</p>
+</div>
+</div>
+<div class="addition-wrapper addition-6"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.hexblade">Ведьмовской клинок</span></h2><div class="hide-wrapper">
+    <p><strong>Источник: «Xanathar’s Guide to Everything»</strong></p>
+<br><p>Вы заключили свой договор с таинственной сущностью из Царства Теней – силой, которая проявляется в р…</p>
+<p>Поскольку, как известно, Королева Воронов выковала первое из этих оружий, многие мудрецы предполагаю…</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение ведьмовского клинка</em></p>
+<p>Ваш покровитель позволяет при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1-й</td>
+<td><a href="/spells/70-shield/">щит [shield]</a>, <a href="/spells/46-wrathful_smite/">гневная кара [wrathful smite]</a></td>
+</tr>
+<tr>
+<td>2-й</td>
+<td><a href="/spells/295-blur/">размытый образ [blur]</a>, <a href="/spells/131-branding_smite/">клеймящая кара [branding smite]</a></td>
+</tr>
+<tr>
+<td>3-й</td>
+<td><a href="/spells/161-blink/">мерцание [blink]</a>, <a href="/spells/339-elemental_weapon/">стихийное оружие [elemental weapon]</a></td>
+</tr>
+<tr>
+<td>4-й</td>
+<td><a href="/spells/32-phantasmal_killer/">воображаемый убийца [phantasmal killer]</a>, <a href="/spells/200-staggering_smite/">оглушающая кара [staggering smite]</a></td>
+</tr>
+<tr>
+<td>5-й</td>
+<td><a href="/spells/117-banishing_smite/">изгоняющая кара [banishing smite]</a>, <a href="/spells/133-cone_of_cold/">конус холода [cone of cold]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">ПРОКЛЯТИЕ ВЕДЬМОВСКОГО КЛИНКА</h3>
+<p><em>1-й уровень, умение ведьмовского клинка</em></p>
+<p>Вы получаете возможность наложить на кого-то жестокое проклятие.</p>
+<ul>
+<li>Вы получаете бонус к броскам урона по проклятой цели.</li>
+<li>Любой бросок атаки, который вы совершаете по проклятой цели, является критическим попаданием при рез…</li>
+<li>Если проклятая цель умирает, вы восстанавливаете количество хитов, равное вашему уровню колдуна + ва…</li>
+</ul>
+<p>Использовав это умение, вы не можете использовать его повторно до окончания короткого или продолжите…</p>
+<br>
+<h3 class="smallSectionTitle">ПРОКЛЯТЫЙ ВОИТЕЛЬ</h3>
+<p><em>1-й уровень, умение ведьмовского клинка</em></p>
+<p>Вы проходите необходимую подготовку, чтобы быть эффективнее в бою.</p>
+<p>Влияние вашего покровителя также позволяет мистически направлять вашу волю через оружие.</p>
+<p>Когда вы атакуете этим оружием, вы можете использовать для бросков атаки и урона свой модификатор Ха…</p>
+<br>
+<h3 class="smallSectionTitle">ПРОКЛЯТЫЙ СПЕКТР</h3>
+<p><em>6-й уровень, умение ведьмовского клинка</em></p>
+<p>Вы можете проклинать душу персоны, которую вы убиваете, временно обязывая её служить вам.</p>
+<p>Когда появляется спектр [specter], он получает временные хиты, равные половине вашего уровня колдуна…</p>
+<p>Спектр [specter] продолжает служить вам до конца вашего следующего продолжительного отдыха, после че…</p>
+<br>
+<h3 class="smallSectionTitle">ПРОКЛЯТЫЙ ДОСПЕХ</h3>
+<p><em>10-й уровень, умение ведьмовского клинка</em></p>
+<p>Ваше проклятие становится более мощным.</p>
+<br>
+<h3 class="smallSectionTitle">МАСТЕР ПРОКЛЯТИЙ</h3>
+<p><em>14-й уровень, умение ведьмовского клинка</em></p>
+<p>Вы можете перенести «Проклятие ведьмовского клинка» с убитого существа на другое существо.</p>
+</div>
+</div>
+<div class="addition-wrapper addition-6"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.celestial">Небожитель</span></h2><div class="hide-wrapper" style="display: none;">
+    <p><strong>Источник: «Xanathar’s Guide to Everything»</strong></p>
+<br><p>Ваш покровитель — могущественное существо с Верхних Планов.</p>
+<p>Нахождение в связи с такой силой может привести к изменениям в вашем поведении и убеждениях.</p>
+<br>
+<h3 class="smallSectionTitle">РАСШИРЕННЫЙ СПИСОК ЗАКЛИНАНИЙ</h3>
+<p><em>1-й уровень, умение небожителя</em></p>
+<p>Ваш покровитель позволяет вам при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/145-cure_wounds/">лечение ран [cure wounds]</a>, <a href="/spells/178-guiding_bolt/">направляющий снаряд [guiding bolt]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/289-flaming_sphere/">пылающий шар [flaming sphere]</a>, <a href="/spells/155-lesser_restoration/">малое восстановление [lesser restoration]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/58-daylight/">дневной свет [daylight]</a>, <a href="/spells/24-revivify/">возрождение [revivify]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/340-guardian_of_faith/">страж веры [guardian of faith]</a>, <a href="/spells/202-wall_of_fire/">огненная стена [wall of fire]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/181-flame_strike/">небесный огонь [flame strike]</a>, <a href="/spells/39-greater_restoration/">высшее восстановление [greater restoration]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">ДОПОЛНИТЕЛЬНЫЕ ЗАГОВОРЫ</h3>
+<p><em>1-й уровень, умение небожителя</em></p>
+<p>Вы узнаёте заговоры свет [light] и священное пламя [sacred flame].</p>
+<br>
+<h3 class="smallSectionTitle">ЛЕЧАЩИЙ СВЕТ</h3>
+<p><em>1-й уровень, умение небожителя</em></p>
+<p>Вы получаете способность направлять небесную энергию для лечения ран.</p>
+<p>Бонусным действием вы можете вылечить одно существо, которое вы можете видеть в 60 футах, потратив к…</p>
+<br>
+<h3 class="smallSectionTitle">СИЯЮЩАЯ ДУША</h3>
+<p><em>6-й уровень, умение небожителя</em></p>
+<p>Ваша связь с Небожителем позволяет вам служить проводником для сияющей энергии.</p>
+<br>
+<h3 class="smallSectionTitle">НЕБЕСНОЕ СОПРОТИВЛЕНИЕ</h3>
+<p><em>10-й уровень, умение небожителя</em></p>
+<p>Вы получаете временные хиты, когда вы заканчиваете короткий или продолжительный отдых.</p>
+<br>
+<h3 class="smallSectionTitle">ЖГУЧЕЕ ВОЗМЕЗДИЕ</h3>
+<p><em>14-й уровень, умение небожителя</em></p>
+<p>Сияющая энергия, которую вы используете, позволяет вам противостоять смерти.</p>
+<p>Использовав это умение, вы не можете использовать его повторно до окончания продолжительного отдыха.</p>
+</div>
+</div>
+<div class="addition-wrapper addition-9"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.fathomless">Бездонный</span></h2><div class="hide-wrapper">
+    <p><strong>Источник: «Tasha’‎s Cauldron of Everything»</strong></p><blockquote>Я никогда не понимала, почему некоторые люди так нервничают из-за щупалец. Вы когда-нибудь пробовали нигири из осьминога? Одно из немногих доказательств того, что мультивселенная доброжелательна.<br>-ТАША</blockquote><br><p>Вы заключили договор с пучиной.</p>
+<p>Возможно, вы родились в культе поклонников, почитающих бездонного и его порождений.</p>
+<p>Существа из глубин, которые могли бы наделить колдуна этой силой, включают в себя: кракенов, древних…</p>
+<br>
+<h3 class="smallSectionTitle">Расширенный список заклинаний </h3>
+<p><em>1-й уровень, умение бездонного</em></p>
+<p>Бездонный позволяет вам выбирать заклинания из расширенного списка, когда вы узнаете заклинания колд…</p>
+<h4 class="tableTitle">Дополнительные заклинания бездонного</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень<br>заклинания</td>
+<td>Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/25-thunderwave/">волна грома [thunderwave]</a>, <a href="/spells/333-create_or_destroy_water/">сотворение или уничтожение воды [create or destroy water]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/255-gust_of_wind/">порыв ветра [gust of wind]</a>, <a href="/spells/349-silence/">тишина [silence]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/162-sleet_storm/">метель [sleet storm]</a>, <a href="/spells/175-lightning_bolt/">молния [lightning bolt]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/21-control_water/">власть над водами [control water]</a>, <a href="/spells/3068-summon_elemental/">призыв духа элементаля [summon elemental]</a> (только вода) </td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/57-bigby_s_hand/">длань Бигби [Bigby’s hand]</a> (выглядит как щупальце), <a href="/spells/133-cone_of_cold/">конус холода [cone of cold]</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">Щупальце из глубин </h3>
+<p><em>1-й уровень, умение бездонного</em></p>
+<p>Вы можете магически призвать призрачное щупальце, атакующее ваших врагов.</p>
+<p>Когда вы создаёте щупальце, вы можете совершить рукопашную атаку заклинанием по одному существу в 10…</p>
+<p>Бонусным действием в свой ход вы можете переместить щупальце на расстояние до 30 футов и повторить а…</p>
+<p>Вы можете призывать щупальце количество раз, равное вашему бонусу мастерства.</p>
+<br>
+<h3 class="smallSectionTitle">Дар моря </h3>
+<p><em>1-й уровень, умение бездонного</em></p>
+<p>Вы получаете скорость плавания 40 футов, а также способность дышать под водой.</p>
+<br>
+<h3 class="smallSectionTitle">Океаническая душа </h3>
+<p><em>6-й уровень, умение бездонного</em></p>
+<p>Теперь в пучине вы чувствуете себя как дома.</p>
+<br>
+<h3 class="smallSectionTitle">Защитный изгиб </h3>
+<p><em>6-й уровень, умение бездонного</em></p>
+<p>Ваше «Щупальце из глубин» может защищать вас и других, ставя себя под удар.</p>
+<br>
+<h3 class="smallSectionTitle">Опутывающие щупальца</h3>
+<p><em>10-й уровень, умение бездонного</em></p>
+<p>Вы узнаете заклинание Эвардовы чёрные щупальца [Evard’s black tentackles].</p>
+<p>Каждый раз, когда вы накладываете это заклинание, магия вашего покровителя поддерживает вас, даруя в…</p>
+<br>
+<h3 class="smallSectionTitle">Бездонное погружение </h3>
+<p><em>14-й уровень, умение бездонного</em></p>
+<p>Вы можете магическим образом открыть временные пути к водоёмам.</p>
+<p>Использовав это умение, вы не сможете применить его повторно, пока не закончите короткий или продолж…</p>
+</div>
+</div>
+<div class="addition-wrapper addition-9"><h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.genie">Гений</span></h2><div class="hide-wrapper">
+    <p><strong>Источник: «Tasha’‎s Cauldron of Everything»</strong></p><blockquote>Я знаю, что найти жилье в Сером Ястребе проблематично, но когда гении или колдуны предлагают вам дешёвую аренду — убегайте.<br>-ТАША</blockquote><br><p>Вы заключили договор с одним из самых редких видов гениев — благородным гением.</p>
+<p>Вы сами выбираете вид своего покровителя или определяете его броском по таблице «Виды гениев».</p>
+<h4 class="tableTitle">Виды гениев </h4>
+<table>
+<tbody>
+<tr class="table_header"><td>к4</td>
+<td>Вид</td>
+<td>Стихия</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Дао</td>
+<td>Земля</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Джинн</td>
+<td>Воздух</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ифрит</td>
+<td>Огонь</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Марид</td>
+<td>Вода</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">Расширенный список заклинаний </h3>
+<p><em>1-й уровень, умение гения</em></p>
+<p>Ваш покровитель-гений позволяет вам выбирать заклинания из расширенного списка в тот момент, когда в…</p>
+<h4 class="tableTitle">Расширенный список заклинаний гениев </h4>
+<table>
+<tbody>
+<tr class="table_header"><td>Уровень заклинания</td>
+<td>Заклинание гения</td>
+<td>Заклинание дао </td>
+<td>Заклинание джинна</td>
+<td>Заклинание ифрита</td>
+<td>Заклинание марид</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/194-detect_evil_and_good/">обнаружение зла и добра [detect evil and good]</a></td>
+<td><a href="/spells/354-sanctuary/">убежище [sanctuary]</a></td>
+<td><a href="/spells/25-thunderwave/">волна грома [thunderwave]</a></td>
+<td><a href="/spells/203-burning_hands/">огненные ладони [burning hands]</a></td>
+<td><a href="/spells/351-fog_cloud/">туманное облако [fog cloud]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/31-phantasmal_force/">воображаемая сила [phantasmal force]</a></td>
+<td><a href="/spells/77-spike_growth/">шипы [spike growth]</a></td>
+<td><a href="/spells/255-gust_of_wind/">порыв ветра [gust of wind]</a></td>
+<td><a href="/spells/225-scorching_ray/">палящий луч [scorching ray]</a></td>
+<td><a href="/spells/295-blur/">размытый образ [blur]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/335-create_food_and_water/">сотворение пищи и воды [create food and water]</a></td>
+<td><a href="/spells/318-meld_into_stone/">слияние с камнем [meld into stone]</a></td>
+<td><a href="/spells/337-wind_wall/">стена ветров [wind wall]</a></td>
+<td><a href="/spells/205-fireball/">огненный шар [fireball]</a></td>
+<td><a href="/spells/162-sleet_storm/">метель [sleet storm]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/32-phantasmal_killer/">воображаемый убийца [phantasmal killer]</a></td>
+<td><a href="/spells/121-stone_shape/">изменение формы камня [stone shape]</a></td>
+<td><a href="/spells/38-greater_invisibility/">высшая невидимость [greater invisibility]</a></td>
+<td><a href="/spells/206-fire_shield/">огненный щит [fire shield]</a></td>
+<td><a href="/spells/21-control_water/">власть над водами [control water]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/366-creation/">сотворение [creation]</a></td>
+<td><a href="/spells/130-wall_of_stone/">каменная стена [wall of stone]</a></td>
+<td><a href="/spells/281-seeming/">притворство [seeming]</a></td>
+<td><a href="/spells/181-flame_strike/">небесный огонь [flame strike]</a></td>
+<td><a href="/spells/133-cone_of_cold/">конус холода [cone of cold]</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="/spells/124-wish/">исполнение желаний [wish]</a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 class="smallSectionTitle">Сосуд гения </h3>
+<p><em>1-й уровень, умение гения</em></p>
+<p>Ваш покровитель дарует вам магический сосуд, содержащий частичку силы гения.</p>
+<h4 class="tableTitle">Сосуд гения</h4>
+<table>
+<tbody>
+<tr class="table_header"><td>к6</td>
+<td>Сосуд</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Масляная лампа </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Урна</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Кольцо с отделением</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Закупоренная бутылка</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Статуэтка с пустотой внутри</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Изысканный фонарь</td>
+</tr>
+</tbody>
+</table>
+<br><p>Когда вы прикасаетесь к сосуду гения, вы можете использовать его следующим образом:</p>
+<p><strong><em>Передышка на дне бутылки. </em></strong> Действием вы можете магически исчезнуть и войти в сосуд, который остаётся на том месте, где вы его д…</p>
+<p><strong><em>Гнев гения.</em></strong> Один раз в каждый свой ход, когда вы попадаете броском атаки, вы можете нанести дополнительный урон…</p>
+<p>Класс доспеха сосуда гения равен Сл спасброска ваших заклинаний.</p>
+<p>Если сосуд будет уничтожен или вы потеряете его, вы можете провести часовую церемонию, чтобы получит…</p>
+<br>
+<h3 class="smallSectionTitle">Стихийный дар</h3>
+<p><em>6-й уровень, умение гения</em></p>
+<p>Вы начинаете перенимать отличительные черты своего покровителя.</p>
+<p>Помимо этого вы можете бонусным действием даровать себе скорость полёта, равную 30 футам.</p>
+<br>
+<h3 class="smallSectionTitle">Спасительный сосуд </h3>
+<p><em>10-й уровень, умение гения</em></p>
+<p>Когда вы входите в сосуд гения при помощи умения «Передышка на дне бутылки», вы можете выбрать до пя…</p>
+<p>Бонусным действием вы можете высвободить любое количество существ из сосуда.</p>
+<p>Также кто угодно (включая вас), оставаясь в сосуде минимум 10 минут, получает все преимущества корот…</p>
+<br>
+<h3 class="smallSectionTitle">Ограниченное желание </h3>
+<p><em>14-й уровень, умение гения</em></p>
+<p>Вы упрашиваете своего покровителя исполнить ваше скромное желание.</p>
+<p>Использовав это умение, вы больше не сможете применить его повторно, пока не закончите 1к4 продолжит…</p>
+</div>
+</div>
+<h2 class="bigSectionTitle hide-next hide-next-h2"><span id="patron.undead">Нежить</span></h2><div class="hide-wrapper">
+    <p><strong>Источник: «Van Richten’s Guide to Ravenloft»</strong></p>
+<br> <p>Вы заключили договор с бессмертным существом — сущностью, неподвластной циклу жизни и смерти, остави…</p><p>К существам этого типа относятся демилич Ацерерак, тиран-вампир Кас Кроваворукий, королева-лич гитья…</p>
+<h3 class="smallSectionTitle"><br></h3><h3 class="smallSectionTitle">Расширенный список заклинаний</h3>
+<p><em>1-й уровень, умение нежити </em></p>
+<p>Нежить позволяет вам при изучении заклинаний колдуна выбирать из более широкого списка.</p>
+<h4 class="tableTitle">Дополнительные заклинания нежити</h4>
+<table>
+<tbody>
+<tr class="table_header"><td style="text-align: center;">Уровень<br>заклинания</td>
+<td> Заклинания</td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="/spells/254-bane/">порча [bane]</a>, <a href="/spells/287-false_life/">псевдожизнь [false life]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="/spells/45-blindness_deafness/">глухота/слепота [blindness/deafness]</a>, <a href="/spells/31-phantasmal_force/">воображаемая сила [phantasmal force]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="/spells/279-phantom_steed/">призрачный скакун [phantom steed]</a>, <a href="/spells/293-speak_with_dead/">разговор с мёртвыми [speak with dead]</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="/spells/104-death_ward/">защита от смерти [death ward]</a>, <a href="/spells/38-greater_invisibility/">высшая невидимость [greater invisibility]</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="/spells/262-antilife_shell/"> преграда жизни [antilife shell]</a>, <a href="/spells/191-cloudkill/">облако смерти [cloudkill]</a></td>
+</tr>
+<tr>
+</tr>
+</tbody>
+</table>
+<h3 class="smallSectionTitle"><br></h3><h3 class="smallSectionTitle">Ужасающий облик</h3>
+<p><em>1-й уровень, умение нежити </em></p>
+<p>Вы воплощаете аспект страшной силы своего покровителя.</p><ul><li>Вы получаете временные хиты в количестве, равном 1к10 + ваш уровень колдуна.</li><li>Один раз во время каждого из ваших ходов, когда вы попадаете по существу атакой, вы можете заставить…</li><li>Вы обладаете иммунитетом к состоянию «испуганный».</li></ul><p>Вы можете трансформироваться количество раз, равное вашему бонусу мастерства, и восстанавливаете все…</p><p>Проявление вашего «Ужасающего облика» отражает какой-то аспект вашего покровителя.</p>
+<br>
+<h3 class="smallSectionTitle">Затронутый могилой</h3>
+<p><em>6-й уровень, умение нежити </em></p>
+<p>Силы вашего покровителя оказывают глубокое влияние на ваше тело и магию.</p><p>Кроме того, один раз в течение каждого вашего хода, когда вы попадаете по существу атакой и причиняе…</p>
+<br>
+<h3 class="smallSectionTitle">Омертвевшая оболочка</h3>
+<p><em>10-й уровень, умение нежити </em></p>
+<p>Ваша связь с нежитью позволяет некротической энергии насыщать ваше тело.</p><p>Кроме того, когда ваши хиты опускаются до 0, вы можете вместо этого реакцией уменьшить свои хиты до…</p>
+<h3 class="smallSectionTitle"><br></h3><h3 class="smallSectionTitle">Духовная проекция</h3>
+<p><em>14-й уровень, умение нежити </em></p>
+<p>Ваш дух способен оторваться от вашей физической оболочки.</p><p>Ваш дух почти во всём похож на вашу смертную оболочку, и он обладает теми же игровыми характеристика…</p><p>Проецируя свой дух, вы получаете следующие преимущества:</p><ul><li>Ваш дух и тело получают сопротивление дробящему, колющему и рубящему урону.</li><li>Когда вы накладываете заклинание школы Вызова или Некромантии, заклинание не требует вербальных и со…</li><li>Вы получаете скорость полёта, равную вашей скорости ходьбы, и можете парить.</li><li>Пока вы используете свой «Ужасающий облик», один раз в течение каждого вашего хода, когда вы причиня…</li></ul><p>Использовав это умение, вы больше не сможете применить его повторно, пока не закончите продолжительн…</p>
+</div>
+<br><h2 class="bigSectionTitle underlined"></h2></div></div>
+</body></html>

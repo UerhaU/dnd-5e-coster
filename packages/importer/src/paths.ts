@@ -20,6 +20,14 @@ export const DEFAULT_PATHS = {
   /** Тестовые страницы рас в git: особенности урезаны до нужных тестам (Р47). */
   raceFixtures: path.join(REPO_ROOT, 'data', 'fixtures', 'dndsu', 'races'),
   reviewedRaces: path.join(REPO_ROOT, 'data', 'reviewed', 'races'),
+  /**
+   * Персонаж (этап 3): reference/ — статьи «Языки», «Состояния», «Использование
+   * характеристик» (навыки); backgrounds/ и feats/ — страницы предысторий и черт.
+   */
+  characterCache: path.join(REPO_ROOT, 'storage', 'dndsu-character'),
+  /** Тестовые страницы этапа 3 в git: урезаны до нужного тестам (Р47). */
+  characterFixtures: path.join(REPO_ROOT, 'data', 'fixtures', 'dndsu', 'character'),
+  reviewedCharacter: path.join(REPO_ROOT, 'data', 'reviewed', 'character'),
   /** Журнал ревизий без текстов (Р51): в git, пишется сборкой полного каталога. */
   catalogLedger: path.join(REPO_ROOT, 'data', 'catalog-ledger'),
   /** Каталог, который попадает в собранную программу (resources/). */

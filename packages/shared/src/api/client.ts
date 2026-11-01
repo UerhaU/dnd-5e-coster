@@ -8,6 +8,8 @@ import {
   itemListResponseSchema,
   raceFacetsResponseSchema,
   raceListResponseSchema,
+  referenceFacetsResponseSchema,
+  referenceListResponseSchema,
   spellFacetsResponseSchema,
   spellListResponseSchema,
   type CatalogSearchParams,
@@ -20,6 +22,10 @@ import {
   type RaceFacetsResponse,
   type RaceListParams,
   type RaceListResponse,
+  type ReferenceFacetsResponse,
+  type ReferenceListCategory,
+  type ReferenceListParams,
+  type ReferenceListResponse,
   type SpellFacetsResponse,
   type SpellListParams,
   type SpellListResponse,
@@ -51,6 +57,12 @@ export interface ApiClient {
   itemFacets(): Promise<ItemFacetsResponse>;
   races(params: RaceListParams): Promise<RaceListResponse>;
   raceFacets(): Promise<RaceFacetsResponse>;
+  /** Навыки, языки, состояния, предыстории, черты — один вид списка. */
+  reference(
+    category: ReferenceListCategory,
+    params: ReferenceListParams,
+  ): Promise<ReferenceListResponse>;
+  referenceFacets(category: ReferenceListCategory): Promise<ReferenceFacetsResponse>;
   /** Поиск по всему каталогу (Р54). */
   search(params: CatalogSearchParams): Promise<CatalogSearchResponse>;
   /** Карточка объекта любой категории. */
@@ -100,6 +112,10 @@ export function createApiClient(
     itemFacets: () => get('/api/catalog/item/facets', itemFacetsResponseSchema),
     races: (params) => get(`/api/catalog/race${toQueryString(params)}`, raceListResponseSchema),
     raceFacets: () => get('/api/catalog/race/facets', raceFacetsResponseSchema),
+    reference: (category, params) =>
+      get(`/api/catalog/${category}${toQueryString(params)}`, referenceListResponseSchema),
+    referenceFacets: (category) =>
+      get(`/api/catalog/${category}/facets`, referenceFacetsResponseSchema),
     search: (params) =>
       get(`/api/catalog/search${toQueryString(params)}`, catalogSearchResponseSchema),
     entity: (id, revision) =>

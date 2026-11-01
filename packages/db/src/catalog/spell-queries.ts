@@ -28,6 +28,7 @@ interface SpellRow {
   reviewStatus: SpellListItem['reviewStatus'];
   sources: string | null;
   classAccess: SpellListItem['classAccess'];
+  classSubclasses: string | null;
 }
 
 export function listSpells(catalog: CatalogConnection, query: SpellListQuery): SpellListResponse {
@@ -106,7 +107,17 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
             ? `(SELECT c.access FROM spell_index_classes c
                 WHERE c.entity_id = e.id AND c.class_id = @class)`
             : 'NULL'
-        } AS classAccess
+        } AS classAccess,
+        ${
+          query.class
+            ? `(SELECT group_concat(name_ru, '|') FROM (
+                SELECT sub.name_ru FROM content_links l
+                JOIN subclass_index sx ON sx.entity_id = l.to_id AND sx.class_id = @class
+                JOIN content_entities sub ON sub.id = l.to_id
+                WHERE l.from_id = e.id AND l.kind = 'spell_subclass'
+                ORDER BY sub.name_ru))`
+            : 'NULL'
+        } AS classSubclasses
        ${from}
        ORDER BY ${order}
        LIMIT @limit OFFSET @offset`,
@@ -130,6 +141,7 @@ export function listSpells(catalog: CatalogConnection, query: SpellListQuery): S
       sources: row.sources ? row.sources.split(',').sort() : [],
       reviewStatus: row.reviewStatus,
       classAccess: row.classAccess,
+      classSubclasses: row.classSubclasses ? row.classSubclasses.split('|') : [],
     })),
     total,
     page: query.page,
@@ -150,9 +162,11 @@ export function spellFacets(catalog: CatalogConnection): SpellFacetsResponse {
      FROM magic_schools ms JOIN spell_index si ON si.school_id = ms.id ${active}
      GROUP BY ms.id ORDER BY ms.name_ru`,
   );
-  const classes = all<{ value: string; count: number }>(
-    `SELECT c.class_id AS value, COUNT(*) AS count FROM spell_index_classes c
+  // Подпись — название объекта класса; код без объекта (каталог без классов) — по CLASS_NAMES_RU.
+  const classes = all<{ value: string; nameRu: string | null; count: number }>(
+    `SELECT c.class_id AS value, ce.name_ru AS nameRu, COUNT(*) AS count FROM spell_index_classes c
      JOIN spell_index si ON si.entity_id = c.entity_id ${active}
+     LEFT JOIN content_entities ce ON ce.id = c.class_id AND ce.category = 'class'
      GROUP BY c.class_id`,
   );
   const sources = all<{ value: string; code: string; nameEn: string; count: number }>(
@@ -173,7 +187,7 @@ export function spellFacets(catalog: CatalogConnection): SpellFacetsResponse {
     level: levels.map((row) => ({ ...row, label: levelLabel(row.value) })),
     school: schools,
     class: classes
-      .map((row) => ({ ...row, label: className(row.value) }))
+      .map(({ value, nameRu, count }) => ({ value, count, label: nameRu ?? className(value) }))
       .sort((a, b) => a.label.localeCompare(b.label, 'ru')),
     source: sources.map((row) => ({
       value: row.value,

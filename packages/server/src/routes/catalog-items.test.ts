@@ -253,8 +253,8 @@ describe('ошибки', () => {
     }
   });
 
-  it('категория без списка — 404', async () => {
-    const { status } = await get('/api/catalog/class');
+  it('неизвестная категория — 404', async () => {
+    const { status } = await get('/api/catalog/monster');
     expect(status).toBe(404);
   });
 });

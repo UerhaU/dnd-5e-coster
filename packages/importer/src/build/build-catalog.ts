@@ -4,9 +4,36 @@ import type { ImportIssue } from '../report/issues.ts';
 import { loadReviewedItems } from '../reviewed/reviewed-items.ts';
 import { loadReviewedRaces } from '../reviewed/reviewed-races.ts';
 import { loadReviewedSpells } from '../reviewed/reviewed-spells.ts';
+import {
+  collectReference,
+  loadReferenceNames,
+  loadRemovedIds,
+  type ReferenceCollectStats,
+} from '../character/collect-reference.ts';
+import {
+  backgroundLookup,
+  loadEquipmentPhrases,
+  collectBackgrounds,
+  type BackgroundCollectStats,
+} from '../character/collect-backgrounds.ts';
+import { openCharacterCache } from '../character/character-cache.ts';
+import {
+  classLookup,
+  collectClasses,
+  loadSubclassNames,
+  subclassSpellListNames,
+  type ClassCollectStats,
+} from '../character/collect-classes.ts';
+import {
+  collectFeats,
+  featLookup,
+  linkBackgroundFeats,
+  type FeatCollectStats,
+} from '../character/collect-feats.ts';
 import { collectItems, type ItemCollectStats } from './collect-items.ts';
 import { collectRaces, type RaceCollectStats } from './collect-races.ts';
 import { collectSpells, type CollectStats } from './collect-spells.ts';
+import { linkSpellClasses, type SpellClassLinkStats } from './link-spell-classes.ts';
 import { linkSpellMaterials, type MaterialLinkStats } from './link-spell-materials.ts';
 import { readLedger, writeLedger } from './ledger.ts';
 import { writeCatalog, type WriteStats } from './write-catalog.ts';
@@ -24,6 +51,9 @@ export interface BuildOptions {
   /** Кэш страниц рас; `null` — каталог без рас. */
   raceCacheDir: string | null;
   reviewedRacesDir: string;
+  /** Кэш страниц этапа 3 (reference/, backgrounds/, feats/); `null` — без них. */
+  characterCacheDir: string | null;
+  reviewedCharacterDir: string;
   outFile: string;
   /** Прошлая сборка; `null` — с нуля, без переноса ревизий. */
   previousFile: string | null;
@@ -41,8 +71,14 @@ export interface BuildResult {
   collect: CollectStats;
   items: ItemCollectStats | null;
   races: RaceCollectStats | null;
+  reference: ReferenceCollectStats | null;
+  backgrounds: BackgroundCollectStats | null;
+  feats: FeatCollectStats | null;
+  classes: ClassCollectStats | null;
   /** Связи материальных компонентов (без снаряжения в сборке — `null`). */
   materials: MaterialLinkStats | null;
+  /** Связи заклинаний с классами и подклассами (без классов в сборке — `null`). */
+  spellClasses: SpellClassLinkStats | null;
   write: WriteStats;
   issues: ImportIssue[];
 }
@@ -91,11 +127,82 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         },
       )
     : null;
+  const characterCache = options.characterCacheDir
+    ? openCharacterCache(options.characterCacheDir)
+    : null;
+  const reference = characterCache
+    ? collectReference(
+        characterCache.reference,
+        loadReferenceNames(options.reviewedCharacterDir),
+        issues,
+        { knownSources },
+      )
+    : null;
+  const backgrounds =
+    characterCache && reference
+      ? collectBackgrounds(
+          characterCache.backgrounds,
+          backgroundLookup(
+            [...(items?.entities ?? []), ...reference.entities],
+            loadEquipmentPhrases(options.reviewedCharacterDir),
+          ),
+          loadReferenceNames(options.reviewedCharacterDir).backgrounds,
+          issues,
+          { knownSources },
+        )
+      : null;
+  const feats =
+    characterCache && backgrounds
+      ? collectFeats(
+          characterCache.feats,
+          featLookup([...spells.entities, ...(races?.entities ?? []), ...backgrounds.entities]),
+          loadReferenceNames(options.reviewedCharacterDir).feats,
+          issues,
+          { knownSources },
+        )
+      : null;
+  const subclassNames = characterCache ? loadSubclassNames(options.reviewedCharacterDir) : null;
+  const classes =
+    characterCache && subclassNames
+      ? collectClasses(
+          characterCache.classes,
+          classLookup([...spells.entities, ...(items?.entities ?? [])]),
+          subclassNames,
+          issues,
+          { knownSources, reportUnusedNames: options.sourceKind === 'full' },
+        )
+      : null;
+  const spellClasses =
+    classes && subclassNames
+      ? linkSpellClasses(
+          spells.entities.filter(
+            (entity): entity is Extract<typeof entity, { category: 'spell' }> =>
+              entity.category === 'spell',
+          ),
+          new Set(
+            classes.entities.filter((entity) => entity.category === 'class').map(({ id }) => id),
+          ),
+          classes.entities.filter(
+            (entity): entity is Extract<typeof entity, { category: 'subclass' }> =>
+              entity.category === 'subclass',
+          ),
+          subclassSpellListNames(subclassNames),
+          issues,
+          { full: options.sourceKind === 'full' },
+        )
+      : null;
+  if (backgrounds && feats) {
+    linkBackgroundFeats(backgrounds.entities, backgrounds.featPages, feats.entities);
+  }
   const entities = [
     ...spells.entities,
     ...(items?.entities ?? []),
     ...(materials?.components ?? []),
     ...(races?.entities ?? []),
+    ...(reference?.entities ?? []),
+    ...(backgrounds?.entities ?? []),
+    ...(feats?.entities ?? []),
+    ...(classes?.entities ?? []),
   ];
   const ledger = options.ledgerDir ? readLedger(options.ledgerDir) : null;
 
@@ -112,6 +219,7 @@ export function buildCatalog(options: BuildOptions): BuildResult {
         source_checked_on: cache.list.checkedOn,
         source_kind: options.sourceKind,
       },
+      removedIds: loadRemovedIds(options.reviewedCharacterDir),
     },
     issues,
   );
@@ -122,7 +230,12 @@ export function buildCatalog(options: BuildOptions): BuildResult {
     collect: spells.stats,
     items: items?.stats ?? null,
     races: races?.stats ?? null,
+    reference: reference?.stats ?? null,
+    backgrounds: backgrounds?.stats ?? null,
+    feats: feats?.stats ?? null,
+    classes: classes?.stats ?? null,
     materials: materials?.stats ?? null,
+    spellClasses,
     write: written.stats,
     issues,
   };

@@ -32,6 +32,20 @@ const BOOKS: [code: string, title: string][] = [
   ['VRGR', "Van Richten's Guide to Ravenloft"],
   ['TCE', "Tasha's Cauldron of Everything"],
   ['AWM', 'Adventure with Muk'],
+  // Таблицы статьи «Языки» (этап 3).
+  ['MM14', 'Monster Manual'],
+  ['OTA', 'Out of the Abyss'],
+  ['HDQ', 'Hoard of the Dragon Queen'],
+  ['ROT', 'Rise of Tiamat'],
+  ['IDRF', 'Icewind Dale: Rime of the Frostmaiden'],
+  ['SKT', "Storm King's Thunder"],
+  ['TYP', 'Tales from the Yawning Portal'],
+  // Подклассы (этап 3, часть Б).
+  ['BGDA', "Baldur's Gate: Descent Into Avernus"],
+  ['XGE', "Xanathar's Guide to Everything"],
+  ['DMG14', 'Dungeon Master Guide'],
+  // Р79: один код на книгу — как у плашек предысторий и черт.
+  ['BPGG', 'Bigby Presents: Glory of the Giants'],
 ];
 const BOOKS_BY_TITLE = new Map(BOOKS.map(([code, title]) => [titleKey(title), code]));
 /** Название книги для метки без подсказки: «(MOT)» → «Mythic Odysseys of Theros». */
@@ -39,11 +53,15 @@ const TITLE_BY_CODE = new Map([...BOOKS].reverse().map(([code, title]) => [code,
 
 /** «Mordenkainen’s Tome of Foes» и «Mordenkainen's tome of foes» — одна книга. */
 export function titleKey(title: string): string {
-  return title
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”«»"]/g, '')
-    .trim()
-    .toLowerCase();
+  return (
+    title
+      // Невидимые метки направления U+200E, U+200F: «Tasha’s» на страницах классов.
+      .replace(/[‎‏]/g, '')
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”«»"]/g, '')
+      .trim()
+      .toLowerCase()
+  );
 }
 
 /** В тексте страниц метки иногда отличаются от плашек сайта. */
@@ -54,6 +72,8 @@ const CODE_ALIASES: Record<string, string> = {
   MOOT: 'MOT',
   MTOF: 'MTF',
   AM: 'AWM',
+  // Р81: одна книга — один код, как у большинства объектов (предыстории — BGDA).
+  BGDIA: 'BGDA',
 };
 
 export class ItemSources {
